@@ -17,7 +17,6 @@ public class GameGrid : MonoBehaviour
     private int currentPieceRotation = 0;
     private int prevPieceRotation = 0;
 
-
     private Transform nextPieceHolder;
 
     private float timeSinceLastMove = 0;
