@@ -39,6 +39,7 @@ public class GameGrid : MonoBehaviour
         nextPiece.transform.localPosition = Vector3.zero;
     }
 
+    /*REPLACE: This moves the graphical representation of the piece.*/
     private void updateCurrentPieceTransform()
     {
         timeSinceLastMove += Time.deltaTime * 1000;
@@ -63,13 +64,14 @@ public class GameGrid : MonoBehaviour
     // Update is called once per frame
     void Update ()
     {
+        /*REPLACE: All the movement commands. Rotation and dropping is fine to stay.*/
         if (Input.GetKeyDown(KeyCode.UpArrow))
         {
             for (int x = 0; x < 3; x++)
             {
                 for (int y = 0; y < 3; y++)
                 {
-                    if (currentPiece.hasBlockAt(x, y)&&IsObstructedAt(currentPiecePosition.x+x-1, currentPiecePosition.y + y - 1 + 1))
+                    if (currentPiece.HasBlockAt(x, y)&&IsObstructedAt(currentPiecePosition.x+x-1, currentPiecePosition.y + y - 1 + 1))
                     {
                         return;
                     }
@@ -85,7 +87,7 @@ public class GameGrid : MonoBehaviour
             {
                 for (int y = 0; y < 3; y++)
                 {
-                    if (currentPiece.hasBlockAt(x, y) && IsObstructedAt(currentPiecePosition.x + x - 1, currentPiecePosition.y + y - 1 - 1))
+                    if (currentPiece.HasBlockAt(x, y) && IsObstructedAt(currentPiecePosition.x + x - 1, currentPiecePosition.y + y - 1 - 1))
                     {
                         return;
                     }
@@ -101,7 +103,7 @@ public class GameGrid : MonoBehaviour
             {
                 for (int y = 0; y < 3; y++)
                 {
-                    if (currentPiece.hasBlockAt(x, y) && IsObstructedAt(currentPiecePosition.x + x - 1 - 1, currentPiecePosition.y + y - 1))
+                    if (currentPiece.HasBlockAt(x, y) && IsObstructedAt(currentPiecePosition.x + x - 1 - 1, currentPiecePosition.y + y - 1))
                     {
                         return;
                     }
@@ -117,7 +119,7 @@ public class GameGrid : MonoBehaviour
             {
                 for (int y = 0; y < 3; y++)
                 {
-                    if (currentPiece.hasBlockAt(x, y) && IsObstructedAt(currentPiecePosition.x + x - 1 + 1, currentPiecePosition.y + y - 1))
+                    if (currentPiece.HasBlockAt(x, y) && IsObstructedAt(currentPiecePosition.x + x - 1 + 1, currentPiecePosition.y + y - 1))
                     {
                         return;
                     }
@@ -135,7 +137,7 @@ public class GameGrid : MonoBehaviour
             {
                 for (int y = 0; y < 3; y++)
                 {
-                    if (currentPiece.hasBlockAt(x, y) && IsInInvalidArea(currentPiecePosition.x + x - 1, currentPiecePosition.y + y - 1))
+                    if (currentPiece.HasBlockAt(x, y) && IsInInvalidArea(currentPiecePosition.x + x - 1, currentPiecePosition.y + y - 1))
                     {
                         return;
                     }
@@ -209,7 +211,7 @@ public class GameGrid : MonoBehaviour
         {
             for (int y = 0; y < 3; y++)
             {
-                if (currentPiece.hasBlockAt(x,y))
+                if (currentPiece.HasBlockAt(x,y))
                 {
                     GameCube cube = currentPiece.getCubeAt(x, y);
                     grid[currentPiecePosition.x+x-1, currentPiecePosition.y+y-1] = cube;
@@ -297,11 +299,15 @@ public class GameGrid : MonoBehaviour
         }
     }
 
+    /*REPLACE: Checks to see if the piece is even partially on the red line.
+    
+        Come to think of it, this is wrong anyway. (Consider a 1x1 piece, for instance.)*/
     private bool IsInInvalidArea(float x, float y)
     {
         return y < 3;
     }
 
+    /*REPLACE: Is there a block in the square? (Also, is it off the edge of the board?)*/
     private bool IsObstructedAt(int x, int y)
     {
         if (x < 0||x>=numCells.x||y<0||y>=numCells.y)
@@ -314,21 +320,5 @@ public class GameGrid : MonoBehaviour
         }
         return false;
     }
-
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = new Color(.5f, 0, 1f, .5f);
-        for (int x = 0; x <= numCells.x; x++)
-        {
-            Vector3 from = transform.position + (new Vector3(numCells.x*.5f-x, 0, numCells.y * .5f));
-            Vector3 to = transform.position + (new Vector3(numCells.x*.5f-x, 0, numCells.y * -.5f));
-            Gizmos.DrawLine(to, from);
-        }
-        for (int y = 0; y <= numCells.y; y++)
-        {
-            Vector3 from = transform.position + (new Vector3(numCells.x * .5f, 0, numCells.y * .5f-y));
-            Vector3 to = transform.position + (new Vector3(numCells.x * -.5f, 0, numCells.y * .5f-y));
-            Gizmos.DrawLine(to, from);
-        }
-    }
+    
 }

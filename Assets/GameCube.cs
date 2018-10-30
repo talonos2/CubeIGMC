@@ -47,8 +47,4 @@ public class GameCube : MonoBehaviour
         
     }
 
-    internal void Explode()
-    {
-        GameObject.Destroy(this);
-    }
 }
