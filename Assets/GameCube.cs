@@ -13,7 +13,7 @@ public class GameCube : MonoBehaviour
     public MeshRenderer coloredSection;
 
     Combatant owner;
-    CubeType type;
+    public CubeType type;
 
 	// Use this for initialization
 	void Start () {

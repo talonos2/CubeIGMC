@@ -11,6 +11,15 @@ public class GameGrid : MonoBehaviour
 
     private PlayingPiece currentPiece;
     private PlayingPiece nextPiece;
+
+    private Combatant player = new Combatant();
+    private Combatant enemy;
+
+    internal void SetEnemy(GameGrid other)
+    {
+        this.enemy = other.player;
+    }
+
     private Vector2Int prevPiecePosition = new Vector2Int(1, 1);//(7, 16);
     private Vector2Int currentPiecePosition = new Vector2Int(1, 1);//(7, 16);
 
@@ -28,7 +37,7 @@ public class GameGrid : MonoBehaviour
 	// Use this for initialization
 	void Start ()
     {
-        currentPiece = GameObject.Instantiate(piecePrefab);
+        currentPiece = MakeAPiece();
         currentPiece.transform.parent = this.transform;
         updateCurrentPieceTransform();
 
@@ -36,6 +45,13 @@ public class GameGrid : MonoBehaviour
         nextPiece = GameObject.Instantiate(piecePrefab);
         nextPiece.transform.parent = nextPieceHolder;
         nextPiece.transform.localPosition = Vector3.zero;
+    }
+
+    private PlayingPiece MakeAPiece()
+    {
+        PlayingPiece toReturn = GameObject.Instantiate(piecePrefab);
+        toReturn.Initialize(this.player);
+        return toReturn;
     }
 
     /*REPLACE: This moves the graphical representation of the piece.*/
@@ -63,6 +79,8 @@ public class GameGrid : MonoBehaviour
     // Update is called once per frame
     void Update ()
     {
+        player.Update();
+
         /*REPLACE: All the movement commands. Rotation and dropping is fine to stay.*/
         if (Input.GetKeyDown(KeyCode.UpArrow))
         {
@@ -223,6 +241,10 @@ public class GameGrid : MonoBehaviour
 
         //Check for squares
         List<GameCube> cubesToExplode = new List<GameCube>();
+        int attackCubes = 0;
+        int energyCubes = 0;
+        int shieldCube = 0;
+        int psiCubes = 0;
         for (int x = 0; x < numCells.x-2; x++)
         {
             for (int y = 0; y < numCells.y-2; y++)
@@ -230,9 +252,17 @@ public class GameGrid : MonoBehaviour
                 if (IsCornerOfSquare(x, y))
                 {
                     AddCubesFromSquareToList(x, y, cubesToExplode);
+                    attackCubes += GetCubesInSquare(x, y, CubeType.ATTACK);
+                    energyCubes += GetCubesInSquare(x, y, CubeType.ENERGY);
+                    shieldCube += GetCubesInSquare(x, y, CubeType.SHIELDS);
+                    psiCubes += GetCubesInSquare(x, y, CubeType.PSI);
                 }
             }
         }
+
+        player.ChargeAttack(attackCubes);
+        player.ChargeShields(shieldCube);
+        player.ChargeEnergy(energyCubes);
 
         foreach (GameCube cube in cubesToExplode)
         {
@@ -250,6 +280,27 @@ public class GameGrid : MonoBehaviour
         nextPiece.transform.localPosition = Vector3.zero;
 
         prevPieceRotation = currentPieceRotation = 0;
+    }
+
+    private int GetCubesInSquare(int xCorner, int yCorner, CubeType type)
+    {
+        int toReturn = 0;
+        for (int x = 0; x < 3; x++)
+        {
+            for (int y = 0; y < 3; y++)
+            {
+                GameCube cube = grid[x + xCorner, y + yCorner];
+                if (cube == null)
+                {
+                    throw new InvalidOperationException("Somehow we're trying to check the type of a null cube in GameGrid.getCubesInSquare");
+                }
+                if (type == cube.type)
+                {
+                    toReturn += 1;
+                }
+            }
+        }
+        return toReturn;
     }
 
     private void RemoveCubeFromGrid(GameCube cube)

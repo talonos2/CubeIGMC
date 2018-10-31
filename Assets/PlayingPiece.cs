@@ -13,7 +13,6 @@ public class PlayingPiece : MonoBehaviour
 	// Use this for initialization
 	void Start ()
     {
-        this.owner = new Combatant();
         CreateRandomPiece();
 	}
 
@@ -43,6 +42,11 @@ public class PlayingPiece : MonoBehaviour
     internal bool HasBlockAt(int x, int y)
     {
         return piecemap[x, y] != null;
+    }
+
+    public void Initialize(Combatant owner)
+    {
+        this.owner = owner;
     }
 
     /*REPLACE: This is only ever called by CreateRandomPiece, and can probably be folded into it.*/

@@ -2,13 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-internal class Combatant
+public class Combatant
 {
     private float HP;
     private float energy;
     private float shields;
     private float psi;
-
+    private float attackCharge;
+    private Combatant enemy;
+    private float queuedDamage;
 
     internal CubeType GetRandomCubeType()
     {
@@ -45,5 +47,95 @@ internal class Combatant
     private int AttackCubes()
     {
         return 10;
+    }
+
+    internal void Update()
+    {
+        energy *= EnergyDecayFactor();
+        shields *= ShieldDecayFactor();
+        if (AttackIsQueued())
+        {
+            attackCharge -= (1f / 60f);
+            if (attackCharge < 0)
+            {
+                attackCharge = 0;
+                Fire();
+            }
+         }
+    }
+
+    private void Fire()
+    {
+        enemy.TakeDamage(DamageAmount());
+        this.queuedDamage = 0;
+    }
+
+    private void TakeDamage(float damage)
+    {
+        if (shields > damage)
+        {
+            shields -= damage;
+        }
+        else
+        {
+            damage -= shields;
+            shields = 0;
+            HP -= damage;
+        }
+    }
+
+    private float DamageAmount()
+    {
+        //queuedDamage is the number of AttackCubes that have been submitted since attack charging began.
+        return queuedDamage;
+    }
+
+    private bool AttackIsQueued()
+    {
+        return attackCharge > 0;
+    }
+
+    private float ShieldDecayFactor()
+    {
+        return .98f;
+    }
+
+    private float EnergyDecayFactor()
+    {
+        return .99f;
+    }
+
+    public void ChargeAttack(int attackCubes)
+    {
+        queuedDamage += attackCubes;
+        if (attackCharge == 0)
+        {
+            attackCharge = AttackChargeTime();
+        }
+    }
+
+    public void ChargeShields(int shieldCubes)
+    {
+        shields += getShieldChargeAmount(shieldCubes);
+    }
+
+    public void ChargeEnergy(int energyCubes)
+    {
+        shields += GetEnergyChargeAmount(energyCubes);
+    }
+
+    private float getShieldChargeAmount(int shieldCubes)
+    {
+        return shieldCubes * 2;
+    }
+
+    private float GetEnergyChargeAmount(int energyCubes)
+    {
+        return energyCubes * 2;
+    }
+
+    private float AttackChargeTime()
+    {
+        return 5;
     }
 }
