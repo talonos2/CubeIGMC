@@ -342,7 +342,10 @@ public class GameGrid : MonoBehaviour
                 {
                     throw new InvalidOperationException("Somehow we're trying to add a null cube to the destruction list.");
                 }
-                list.Add(grid[x+xCorner, y+yCorner]);
+                if (!list.Contains(grid[x + xCorner, y + yCorner]))
+                {
+                    list.Add(grid[x + xCorner, y + yCorner]);
+                }
             }
         }
     }

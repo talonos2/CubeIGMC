@@ -9,17 +9,20 @@ public class Combatant : MonoBehaviour
     private float shields;
     private float psi;
     private float attackCharge;
-    private Combatant enemy;
+    public Combatant enemy;
     private float queuedDamage;
+
 
     public Transform energyBar;
     public Transform healthBar;
     public Transform shieldBar;
+    public Transform attackChargeBar;
 
     public void Start()
     {
         health = MaxHealth();
         energy = MaxEnergy() / 2;
+        shields = 0;
     }
 
     internal CubeType GetRandomCubeType()
@@ -73,23 +76,25 @@ public class Combatant : MonoBehaviour
             }
          }
 
-        energyBar.localScale = new Vector3(1, (energy / MaxEnergy()), 1);
-        shieldBar.localScale = new Vector3(1, Math.Min(shields / MaxHealth(), 1), 1);
-        healthBar.localScale = new Vector3(1, (health / MaxHealth()), 1);
+        energyBar.localScale = new Vector3(.2f, (energy / MaxEnergy()), .2f);
+        shieldBar.localScale = new Vector3(.2f, Math.Min(shields / MaxHealth(), 1), .2f);
+        healthBar.localScale = new Vector3(.2f, (health / MaxHealth()), .2f);
+        attackChargeBar.localScale = new Vector3(.2f, (attackCharge / AttackChargeTime()), .2f);
     }
 
     private float MaxHealth()
     {
-        return 250;
+        return 100;
     }
 
     private float MaxEnergy()
     {
-        return 1000;
+        return 100;
     }
 
     private void Fire()
     {
+        Debug.Log(DamageAmount());
         enemy.TakeDamage(DamageAmount());
         this.queuedDamage = 0;
     }
@@ -111,7 +116,7 @@ public class Combatant : MonoBehaviour
     private float DamageAmount()
     {
         //queuedDamage is the number of AttackCubes that have been submitted since attack charging began.
-        return queuedDamage*(energy/500f);
+        return queuedDamage*5*EnergyMultiplier();
     }
 
     private bool AttackIsQueued()
@@ -121,16 +126,20 @@ public class Combatant : MonoBehaviour
 
     private float ShieldDecayFactor()
     {
-        return .98f;
+        return .998f;
     }
 
     private float EnergyDecayFactor()
     {
-        return .99f;
+        return .999f;
     }
 
     public void ChargeAttack(int attackCubes)
     {
+        if (attackCubes == 0)
+        {
+            return;
+        }
         queuedDamage += attackCubes;
         if (attackCharge == 0)
         {
@@ -138,22 +147,27 @@ public class Combatant : MonoBehaviour
         }
     }
 
-    public void ChargeShields(int shieldCubes)
+    public void ChargeShields(float shieldCubes)
     {
-        shields += getShieldChargeAmount(shieldCubes);
+        shields += GetShieldChargeAmount(shieldCubes);
     }
 
     public void ChargeEnergy(int energyCubes)
     {
-        shields += GetEnergyChargeAmount(energyCubes);
+        energy += GetEnergyChargeAmount(energyCubes);
     }
 
-    private float getShieldChargeAmount(int shieldCubes)
+    private float GetShieldChargeAmount(float shieldCubes)
     {
-        return shieldCubes * 2;
+        return shieldCubes * 10 * EnergyMultiplier();
     }
 
-    private float GetEnergyChargeAmount(int energyCubes)
+    private float EnergyMultiplier()
+    {
+        return 2 * energy / MaxEnergy();
+    }
+
+    private float GetEnergyChargeAmount(float energyCubes)
     {
         return energyCubes * 2;
     }
