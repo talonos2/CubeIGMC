@@ -12,7 +12,7 @@ public class GameGrid : MonoBehaviour
     private PlayingPiece currentPiece;
     private PlayingPiece nextPiece;
 
-    private Combatant player = new Combatant();
+    public Combatant player;
     private Combatant enemy;
 
     internal void SetEnemy(GameGrid other)
@@ -42,7 +42,7 @@ public class GameGrid : MonoBehaviour
         updateCurrentPieceTransform();
 
         nextPieceHolder = transform.Find("PieceHolder");
-        nextPiece = GameObject.Instantiate(piecePrefab);
+        nextPiece = MakeAPiece();
         nextPiece.transform.parent = nextPieceHolder;
         nextPiece.transform.localPosition = Vector3.zero;
     }
@@ -79,8 +79,6 @@ public class GameGrid : MonoBehaviour
     // Update is called once per frame
     void Update ()
     {
-        player.Update();
-
         /*REPLACE: All the movement commands. Rotation and dropping is fine to stay.*/
         if (Input.GetKeyDown(KeyCode.UpArrow))
         {
@@ -275,7 +273,7 @@ public class GameGrid : MonoBehaviour
         currentPiecePosition = new Vector2Int(1, 1);
         updateCurrentPieceTransform();
 
-        nextPiece = GameObject.Instantiate(piecePrefab);
+        nextPiece = MakeAPiece();
         nextPiece.transform.parent = nextPieceHolder;
         nextPiece.transform.localPosition = Vector3.zero;
 

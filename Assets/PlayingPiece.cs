@@ -11,15 +11,21 @@ public class PlayingPiece : MonoBehaviour
     public GameCube cube;
 
 	// Use this for initialization
-	void Start ()
+	public void Start ()
     {
-        CreateRandomPiece();
 	}
+
+    public void Initialize(Combatant c)
+    {
+        owner = c;
+        CreateRandomPiece();
+    }
 
 
     /*REPLACE*/
     public void CreateRandomPiece ()
     {
+        Debug.Log("Making a Piece");
         piecemap[1, 1] = MakeCube();
         if (UnityEngine.Random.Range(0,2) == 0) { piecemap[0, 1] = MakeCube(); }
         if (UnityEngine.Random.Range(0, 2) == 0) { piecemap[2, 1] = MakeCube(); }
@@ -42,11 +48,6 @@ public class PlayingPiece : MonoBehaviour
     internal bool HasBlockAt(int x, int y)
     {
         return piecemap[x, y] != null;
-    }
-
-    public void Initialize(Combatant owner)
-    {
-        this.owner = owner;
     }
 
     /*REPLACE: This is only ever called by CreateRandomPiece, and can probably be folded into it.*/

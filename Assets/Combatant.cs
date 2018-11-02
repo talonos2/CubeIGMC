@@ -2,15 +2,25 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Combatant
+public class Combatant : MonoBehaviour
 {
-    private float HP;
+    private float health;
     private float energy;
     private float shields;
     private float psi;
     private float attackCharge;
     private Combatant enemy;
     private float queuedDamage;
+
+    public Transform energyBar;
+    public Transform healthBar;
+    public Transform shieldBar;
+
+    public void Start()
+    {
+        health = MaxHealth();
+        energy = MaxEnergy() / 2;
+    }
 
     internal CubeType GetRandomCubeType()
     {
@@ -49,7 +59,7 @@ public class Combatant
         return 10;
     }
 
-    internal void Update()
+    public void Update()
     {
         energy *= EnergyDecayFactor();
         shields *= ShieldDecayFactor();
@@ -62,6 +72,20 @@ public class Combatant
                 Fire();
             }
          }
+
+        energyBar.localScale = new Vector3(1, (energy / MaxEnergy()), 1);
+        shieldBar.localScale = new Vector3(1, Math.Min(shields / MaxHealth(), 1), 1);
+        healthBar.localScale = new Vector3(1, (health / MaxHealth()), 1);
+    }
+
+    private float MaxHealth()
+    {
+        return 250;
+    }
+
+    private float MaxEnergy()
+    {
+        return 1000;
     }
 
     private void Fire()
@@ -80,14 +104,14 @@ public class Combatant
         {
             damage -= shields;
             shields = 0;
-            HP -= damage;
+            health -= damage;
         }
     }
 
     private float DamageAmount()
     {
         //queuedDamage is the number of AttackCubes that have been submitted since attack charging began.
-        return queuedDamage;
+        return queuedDamage*(energy/500f);
     }
 
     private bool AttackIsQueued()
