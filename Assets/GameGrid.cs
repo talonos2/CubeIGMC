@@ -13,6 +13,7 @@ public class GameGrid : MonoBehaviour
     private PlayingPiece nextPiece;
 
     public Combatant player;
+    public bool isPlayerOne = true;
     private Combatant enemy;
 
     internal void SetEnemy(GameGrid other)
@@ -76,12 +77,18 @@ public class GameGrid : MonoBehaviour
         currentPiece.transform.localRotation = animatedRotation;
     }
 
+    bool isUpBeingHeld;
+    bool isDownBeingHeld;
+    bool isLeftBeingHeld;
+    bool isRightBeingHeld;
+
     // Update is called once per frame
     void Update ()
     {
         /*REPLACE: All the movement commands. Rotation and dropping is fine to stay.*/
-        if (Input.GetKeyDown(KeyCode.UpArrow))
+        if ((isPlayerOne?Input.GetAxis("Vertical_P1") > 0: Input.GetAxis("Vertical_P2") > 0) && !isUpBeingHeld)
         {
+            isUpBeingHeld = true;
             for (int x = 0; x < 3; x++)
             {
                 for (int y = 0; y < 3; y++)
@@ -96,8 +103,15 @@ public class GameGrid : MonoBehaviour
             currentPiecePosition = currentPiecePosition + new Vector2Int(0, 1);
             timeSinceLastMove = 0f;
         }
-        if (Input.GetKeyDown(KeyCode.DownArrow))
+
+        if (!(isPlayerOne ? Input.GetAxis("Vertical_P1") > 0 : Input.GetAxis("Vertical_P2") > 0))
         {
+            isUpBeingHeld = false;
+        }
+
+        if ((isPlayerOne ? Input.GetAxis("Vertical_P1") < 0 : Input.GetAxis("Vertical_P2") < 0) && !isDownBeingHeld)
+        {
+            isDownBeingHeld = true;
             for (int x = 0; x < 3; x++)
             {
                 for (int y = 0; y < 3; y++)
@@ -112,8 +126,15 @@ public class GameGrid : MonoBehaviour
             currentPiecePosition = currentPiecePosition + new Vector2Int(0, -1);
             timeSinceLastMove = 0f;
         }
-        if (Input.GetKeyDown(KeyCode.LeftArrow))
+
+        if (!(isPlayerOne ? Input.GetAxis("Vertical_P1") < 0 : Input.GetAxis("Vertical_P2") < 0))
         {
+            isDownBeingHeld = false;
+        }
+
+        if ((isPlayerOne ? Input.GetAxis("Horizontal_P1") < 0 : Input.GetAxis("Horizontal_P2") < 0) && !isLeftBeingHeld)
+        {
+            isLeftBeingHeld = true;
             for (int x = 0; x < 3; x++)
             {
                 for (int y = 0; y < 3; y++)
@@ -128,8 +149,15 @@ public class GameGrid : MonoBehaviour
             currentPiecePosition = currentPiecePosition + new Vector2Int(-1, 0);
             timeSinceLastMove = 0f;
         }
-        if (Input.GetKeyDown(KeyCode.RightArrow))
+
+        if (!(isPlayerOne ? Input.GetAxis("Horizontal_P1") < 0 : Input.GetAxis("Horizontal_P2") < 0))
         {
+            isLeftBeingHeld = false;
+        }
+
+        if ((isPlayerOne ? Input.GetAxis("Horizontal_P1") > 0 : Input.GetAxis("Horizontal_P2") > 0) && !isRightBeingHeld)
+        {
+            isRightBeingHeld = true;
             for (int x = 0; x < 3; x++)
             {
                 for (int y = 0; y < 3; y++)
@@ -145,7 +173,12 @@ public class GameGrid : MonoBehaviour
             timeSinceLastMove = 0f;
         }
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (!(isPlayerOne ? Input.GetAxis("Horizontal_P1") > 0 : Input.GetAxis("Horizontal_P2") > 0))
+        {
+            isRightBeingHeld = false;
+        }
+
+        if (isPlayerOne?Input.GetButtonDown("Place_P1"): Input.GetButtonDown("Place_P2"))
         {
             //Fallback: If there's somebohw someting directly underneath you, do not place. Should never happen in practice.
             for (int x = 0; x < 3; x++)
@@ -161,7 +194,7 @@ public class GameGrid : MonoBehaviour
             DropPiece();
         }
 
-        if (Input.GetKeyDown(KeyCode.Z))
+        if (isPlayerOne ? Input.GetButtonDown("Rotate1_P1") : Input.GetButtonDown("Rotate1_P2"))
         {
             bool[,] surroundings = new bool[3, 3];
             for (int x = 0; x < 3; x++)
@@ -183,7 +216,7 @@ public class GameGrid : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.C))
+        if (isPlayerOne ? Input.GetButtonDown("Rotate2_P1") : Input.GetButtonDown("Rotate2_P2"))
         {
             bool[,] surroundings = new bool[3, 3];
             for (int x = 0; x < 3; x++)
