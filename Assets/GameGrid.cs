@@ -13,8 +13,16 @@ public class GameGrid : MonoBehaviour
     public AudioSource dropSound;
     public AudioSource matchSound;
 
+    private UnityEngine.Random gameplayDice;
     private PlayingPiece currentPiece;
     private PlayingPiece nextPiece;
+
+    internal void SetSeedAndStart(int randomSeed)
+    {
+        this.gameplayDice = new UnityEngine.Random();
+        //...uh... can I actually *do* anything with that? Doesn't seem like it...
+
+    }
 
     public Combatant player;
     public bool isPlayerOne = true;

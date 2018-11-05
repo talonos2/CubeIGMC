@@ -96,13 +96,11 @@ public class Combatant : MonoBehaviour
 
     private void Fire()
     {
-        Debug.Log(DamageAmount());
-        enemy.TakeDamage(DamageAmount());
-        pawn.FireBullet(DamageAmount(), 2);
+        pawn.FireBullet(DamageAmount(), enemy, 2);
         this.queuedDamage = 0;
     }
 
-    private void TakeDamage(float damage)
+    internal void TakeDamage(float damage)
     {
         if (shields > damage)
         {
