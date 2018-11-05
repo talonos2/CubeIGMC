@@ -8,6 +8,7 @@ public class GameGrid : MonoBehaviour
     public static Vector2Int numCells = new Vector2Int(15, 18);
     public GameCube[,] grid = new GameCube[numCells.x, numCells.y];
     public PlayingPiece piecePrefab;
+    public PowerupEffect powerUpEffect;
 
     private PlayingPiece currentPiece;
     private PlayingPiece nextPiece;
@@ -283,6 +284,7 @@ public class GameGrid : MonoBehaviour
                 if (IsCornerOfSquare(x, y))
                 {
                     AddCubesFromSquareToList(x, y, cubesToExplode);
+                    ExplodeCubesInSquare(x, y);
                     attackCubes += GetCubesInSquare(x, y, CubeType.ATTACK);
                     energyCubes += GetCubesInSquare(x, y, CubeType.ENERGY);
                     shieldCube += GetCubesInSquare(x, y, CubeType.SHIELDS);
@@ -311,6 +313,24 @@ public class GameGrid : MonoBehaviour
         nextPiece.transform.localPosition = Vector3.zero;
 
         prevPieceRotation = currentPieceRotation = 0;
+    }
+
+    private void ExplodeCubesInSquare(int xCorner, int yCorner)
+    {
+        for (int x = 0; x < 3; x++)
+        {
+            for (int y = 0; y < 3; y++)
+            {
+                GameCube cube = grid[x + xCorner, y + yCorner];
+                if (cube == null)
+                {
+                    throw new InvalidOperationException("Somehow we're trying to check the type of a null cube in GameGrid.ExplodeCubesInSquare");
+                }
+                PowerupEffect p = GameObject.Instantiate(powerUpEffect);
+                p.transform.position = cube.transform.position;
+                p.Initialize(p.transform.position, player.attackChargeBar.transform.position, 0);
+            }
+        }
     }
 
     private int GetCubesInSquare(int xCorner, int yCorner, CubeType type)

@@ -18,6 +18,8 @@ public class Combatant : MonoBehaviour
     public Transform shieldBar;
     public Transform attackChargeBar;
 
+    public SpaceshipPawn pawn;
+
     public void Start()
     {
         health = MaxHealth();
@@ -96,6 +98,7 @@ public class Combatant : MonoBehaviour
     {
         Debug.Log(DamageAmount());
         enemy.TakeDamage(DamageAmount());
+        pawn.FireBullet(DamageAmount(), 2);
         this.queuedDamage = 0;
     }
 
