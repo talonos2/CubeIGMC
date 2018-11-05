@@ -316,6 +316,8 @@ public class GameGrid : MonoBehaviour
             allExplosions.Sort(new ExplosionSorter());
         }
 
+        player.StartNewParticleBarrage();
+
         foreach (ExplosionWrapper ew in allExplosions)
         {
             ew.Explode(powerUpEffect, player);
@@ -466,7 +468,7 @@ public class GameGrid : MonoBehaviour
             p.transform.position = cube.transform.position;
             Color toInitialize = Color.white;
 
-            p.Initialize(p.transform.position, player.attackChargeBar.transform.position, delay, cube.type, player);
+            p.Initialize(p.transform.position, player.GetTargetOfParticle(cube.type), delay, cube.type, player);
         }
     }
 

@@ -72,10 +72,10 @@ public class PowerupEffect : MonoBehaviour
         switch (type)
         {
             case CubeType.ATTACK:
-                color = Color.red;
+                color = new Color(1,.5f,.5f);
                 break;
             case CubeType.SHIELDS:
-                color = Color.blue;
+                color = Color.cyan;
                 break;
             case CubeType.ENERGY:
                 color = Color.yellow;

@@ -198,4 +198,8 @@ MonoBehaviour:
   attackMaterial: {fileID: 2100000, guid: 56a1f2de95c7b7a4582bbae319d9e3d7, type: 2}
   shieldMaterial: {fileID: 2100000, guid: 9fbf69150b6ed4d49807549bbde9fc84, type: 2}
   psiMaterial: {fileID: 2100000, guid: 3f23e47eb4b5407448215afded1d18ac, type: 2}
+  glowMaterial: {fileID: 2100000, guid: 292e6402d3951ea4497302dd43b1215e, type: 2}
   coloredSection: {fileID: 23249281283509556}
+  lightOnTop: {fileID: 23990750340097902}
+  type: 0
+  fallSpeed: 3

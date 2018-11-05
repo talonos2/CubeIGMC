@@ -9,8 +9,10 @@ public class GameCube : MonoBehaviour
     public Material attackMaterial;
     public Material shieldMaterial;
     public Material psiMaterial;
+    public Material glowMaterial;
 
     public MeshRenderer coloredSection;
+    public MeshRenderer lightOnTop;
 
     Combatant owner;
     public CubeType type;
@@ -73,5 +75,6 @@ public class GameCube : MonoBehaviour
         isFalling = true;
         delayUntilFallStarts = v;
         height = this.transform.position.y;
+        lightOnTop.material = glowMaterial;
     }
 }
