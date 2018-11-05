@@ -277,6 +277,9 @@ public class GameGrid : MonoBehaviour
         int energyCubes = 0;
         int shieldCube = 0;
         int psiCubes = 0;
+
+        int numberOfExplosions = 0;
+
         for (int x = 0; x < numCells.x-2; x++)
         {
             for (int y = 0; y < numCells.y-2; y++)
@@ -284,23 +287,44 @@ public class GameGrid : MonoBehaviour
                 if (IsCornerOfSquare(x, y))
                 {
                     AddCubesFromSquareToList(x, y, cubesToExplode);
-                    ExplodeCubesInSquare(x, y);
+
                     attackCubes += GetCubesInSquare(x, y, CubeType.ATTACK);
                     energyCubes += GetCubesInSquare(x, y, CubeType.ENERGY);
                     shieldCube += GetCubesInSquare(x, y, CubeType.SHIELDS);
                     psiCubes += GetCubesInSquare(x, y, CubeType.PSI);
+                    numberOfExplosions++;
                 }
             }
         }
 
-        player.ChargeAttack(attackCubes);
-        player.ChargeShields(shieldCube);
-        player.ChargeEnergy(energyCubes);
+        float maxDelay = (float)Math.Sqrt(numberOfExplosions / 9f);
+
+        List<ExplosionWrapper> allExplosions = new List<ExplosionWrapper>();
+        for (int x = 0; x < numCells.x - 2; x++)
+        {
+            for (int y = 0; y < numCells.y - 2; y++)
+            {
+                if (IsCornerOfSquare(x, y))
+                {
+                    allExplosions.AddRange(ExplodeCubesInSquare(x, y, maxDelay));
+                }
+            }
+        }
+
+        //All explosions are in a list. Explode them I guess.
+        {
+            allExplosions.Sort(new ExplosionSorter());
+        }
+
+        foreach (ExplosionWrapper ew in allExplosions)
+        {
+            ew.Explode(powerUpEffect, player);
+        }
 
         foreach (GameCube cube in cubesToExplode)
         {
             RemoveCubeFromGrid(cube);
-            GameObject.Destroy(cube.gameObject);
+            cube.Sink(UnityEngine.Random.Range(0, maxDelay));
         }
 
         currentPiece = nextPiece;
@@ -315,8 +339,9 @@ public class GameGrid : MonoBehaviour
         prevPieceRotation = currentPieceRotation = 0;
     }
 
-    private void ExplodeCubesInSquare(int xCorner, int yCorner)
+    private List<ExplosionWrapper> ExplodeCubesInSquare(int xCorner, int yCorner, float maxDelay)
     {
+        List<ExplosionWrapper> toReturn = new List<ExplosionWrapper>();
         for (int x = 0; x < 3; x++)
         {
             for (int y = 0; y < 3; y++)
@@ -326,11 +351,10 @@ public class GameGrid : MonoBehaviour
                 {
                     throw new InvalidOperationException("Somehow we're trying to check the type of a null cube in GameGrid.ExplodeCubesInSquare");
                 }
-                PowerupEffect p = GameObject.Instantiate(powerUpEffect);
-                p.transform.position = cube.transform.position;
-                p.Initialize(p.transform.position, player.attackChargeBar.transform.position, 0);
+                toReturn.Add(new ExplosionWrapper(cube, UnityEngine.Random.Range(0, maxDelay)));
             }
         }
+        return toReturn;
     }
 
     private int GetCubesInSquare(int xCorner, int yCorner, CubeType type)
@@ -424,5 +448,42 @@ public class GameGrid : MonoBehaviour
         }
         return false;
     }
-    
+
+    private class ExplosionWrapper
+    {
+        private GameCube cube;
+        internal float delay;
+
+        internal ExplosionWrapper(GameCube cube, float delay)
+        {
+            this.cube = cube;
+            this.delay = delay;
+        }
+
+        internal void Explode(PowerupEffect powerupEffect, Combatant player)
+        {
+            PowerupEffect p = GameObject.Instantiate(powerupEffect);
+            p.transform.position = cube.transform.position;
+            Color toInitialize = Color.white;
+
+            p.Initialize(p.transform.position, player.attackChargeBar.transform.position, delay, cube.type, player);
+        }
+    }
+
+    private class ExplosionSorter : IComparer<ExplosionWrapper>
+    {
+        int IComparer<ExplosionWrapper>.Compare(ExplosionWrapper a, ExplosionWrapper b)
+        {
+
+            if (a.delay > b.delay)
+                return 1;
+
+            if (a.delay < b.delay)
+                return -1;
+
+            else
+                return 0;
+        }
+    }
+
 }

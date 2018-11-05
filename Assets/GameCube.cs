@@ -15,13 +15,34 @@ public class GameCube : MonoBehaviour
     Combatant owner;
     public CubeType type;
 
-	// Use this for initialization
-	void Start () {
+    public float fallSpeed = 3;
+
+    private bool isFalling;
+    private float timeSinceFallStarted;
+    private float delayUntilFallStarts;
+    private float height;
+
+    // Use this for initialization
+    void Start () {
 		
 	}
 	
 	// Update is called once per frame
 	void Update () {
+        if (isFalling)
+        {
+            timeSinceFallStarted += Time.deltaTime;
+            if (timeSinceFallStarted >= delayUntilFallStarts)
+            {
+                float timeFalling = timeSinceFallStarted - delayUntilFallStarts;
+                this.transform.position = new Vector3(transform.position.x, height - (fallSpeed * timeFalling * timeFalling), transform.position.z);
+
+                if (timeFalling > 1.5)
+                {
+                    GameObject.Destroy(this.gameObject);
+                }
+            }
+        }
 		
 	}
 
@@ -47,4 +68,10 @@ public class GameCube : MonoBehaviour
         
     }
 
+    internal void Sink(float v)
+    {
+        isFalling = true;
+        delayUntilFallStarts = v;
+        height = this.transform.position.y;
+    }
 }
