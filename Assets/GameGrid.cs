@@ -10,6 +10,9 @@ public class GameGrid : MonoBehaviour
     public PlayingPiece piecePrefab;
     public PowerupEffect powerUpEffect;
 
+    public AudioSource dropSound;
+    public AudioSource matchSound;
+
     private PlayingPiece currentPiece;
     private PlayingPiece nextPiece;
 
@@ -103,6 +106,7 @@ public class GameGrid : MonoBehaviour
             prevPiecePosition = currentPiecePosition;
             currentPiecePosition = currentPiecePosition + new Vector2Int(0, 1);
             timeSinceLastMove = 0f;
+            currentPiece.PlaySlideSound();
         }
 
         if (!(isPlayerOne ? Input.GetAxis("Vertical_P1") > 0 : Input.GetAxis("Vertical_P2") > 0))
@@ -126,6 +130,7 @@ public class GameGrid : MonoBehaviour
             prevPiecePosition = currentPiecePosition;
             currentPiecePosition = currentPiecePosition + new Vector2Int(0, -1);
             timeSinceLastMove = 0f;
+            currentPiece.PlaySlideSound();
         }
 
         if (!(isPlayerOne ? Input.GetAxis("Vertical_P1") < 0 : Input.GetAxis("Vertical_P2") < 0))
@@ -149,6 +154,7 @@ public class GameGrid : MonoBehaviour
             prevPiecePosition = currentPiecePosition;
             currentPiecePosition = currentPiecePosition + new Vector2Int(-1, 0);
             timeSinceLastMove = 0f;
+            currentPiece.PlaySlideSound();
         }
 
         if (!(isPlayerOne ? Input.GetAxis("Horizontal_P1") < 0 : Input.GetAxis("Horizontal_P2") < 0))
@@ -172,6 +178,7 @@ public class GameGrid : MonoBehaviour
             prevPiecePosition = currentPiecePosition;
             currentPiecePosition = currentPiecePosition + new Vector2Int(1,0);
             timeSinceLastMove = 0f;
+            currentPiece.PlaySlideSound();
         }
 
         if (!(isPlayerOne ? Input.GetAxis("Horizontal_P1") > 0 : Input.GetAxis("Horizontal_P2") > 0))
@@ -210,6 +217,7 @@ public class GameGrid : MonoBehaviour
                 prevPieceRotation = currentPieceRotation;
                 currentPieceRotation = (currentPieceRotation + 5) % 4;
                 timeSinceLastRot = 0f;
+                currentPiece.PlaySlideSound();
             }
             else
             {
@@ -232,6 +240,7 @@ public class GameGrid : MonoBehaviour
                 prevPieceRotation = currentPieceRotation;
                 currentPieceRotation = (currentPieceRotation + 3) % 4;
                 timeSinceLastRot = 0f;
+                currentPiece.PlaySlideSound();
             }
             else
             {
@@ -262,14 +271,13 @@ public class GameGrid : MonoBehaviour
             {
                 if (currentPiece.HasBlockAt(x,y))
                 {
-                    GameCube cube = currentPiece.getCubeAt(x, y);
+                    GameCube cube = currentPiece.GetCubeAt(x, y);
                     grid[currentPiecePosition.x+x-1, currentPiecePosition.y+y-1] = cube;
                     cube.transform.parent = this.transform;
                     cube.transform.localPosition = new Vector3(currentPiecePosition.x - numCells.x / 2f + x - 1+.5f, 0, currentPiecePosition.y - numCells.y / 2f + y - 1+.5f);
                 }
             }
         }
-        Destroy(currentPiece.gameObject);
 
         //Check for squares
         List<GameCube> cubesToExplode = new List<GameCube>();
@@ -328,6 +336,16 @@ public class GameGrid : MonoBehaviour
             RemoveCubeFromGrid(cube);
             cube.Sink(UnityEngine.Random.Range(0, maxDelay));
         }
+        if (allExplosions.Count!=0)
+        {
+            matchSound.Play();
+        }
+        else
+        {
+            dropSound.Play();
+        }
+
+        Destroy(currentPiece.gameObject);
 
         currentPiece = nextPiece;
         currentPiece.transform.parent = this.transform;

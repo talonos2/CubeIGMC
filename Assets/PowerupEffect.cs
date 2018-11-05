@@ -17,6 +17,8 @@ public class PowerupEffect : MonoBehaviour
     private Combatant owner;
     private CubeType type;
 
+    public AudioSource collectionSound;
+
 	// Use this for initialization
 	void Start ()
     {
@@ -106,6 +108,7 @@ public class PowerupEffect : MonoBehaviour
                 Debug.Log("We actually haven't done this one yet.");
                 break;
         }
+        collectionSound.Play();
     }
 
 }
