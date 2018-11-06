@@ -101,107 +101,28 @@ public class GameGrid : MonoBehaviour
     bool isLeftBeingHeld;
     bool isRightBeingHeld;
 
+    float fastButtonMashSpeed = (1f / 8f);
+    float buttonMashDebounceInput = .2f;
+
+    float timeSinceLastMoveUpEvent;
+    float timeSinceLastMoveDownEvent;
+    float timeSinceLastMoveLeftEvent;
+    float timeSinceLastMoveRightEvent;
+
+    bool justPressedUp;
+    bool justPressedDown;
+    bool justPressedLeft;
+    bool justPressedRight;
+
     // Update is called once per frame
     void Update ()
     {
-        /*REPLACE: All the movement commands. Rotation and dropping is fine to stay.*/
-        if ((isPlayerOne?Input.GetAxis("Vertical_P1") > 0: Input.GetAxis("Vertical_P2") > 0) && !isUpBeingHeld)
-        {
-            isUpBeingHeld = true;
-            for (int x = 0; x < 3; x++)
-            {
-                for (int y = 0; y < 3; y++)
-                {
-                    if (currentPiece.HasBlockAt(x, y)&&IsObstructedAt(currentPiecePosition.x+x-1, currentPiecePosition.y + y - 1 + 1))
-                    {
-                        return;
-                    }
-                }
-            }
-            prevPiecePosition = currentPiecePosition;
-            currentPiecePosition = currentPiecePosition + new Vector2Int(0, 1);
-            timeSinceLastMove = 0f;
-            currentPiece.PlaySlideSound();
-        }
+        HandleUpMovement();
+        HandleDownMovement();
+        HandleLeftMovement();
+        HandleRightMovement();
 
-        if (!(isPlayerOne ? Input.GetAxis("Vertical_P1") > 0 : Input.GetAxis("Vertical_P2") > 0))
-        {
-            isUpBeingHeld = false;
-        }
-
-        if ((isPlayerOne ? Input.GetAxis("Vertical_P1") < 0 : Input.GetAxis("Vertical_P2") < 0) && !isDownBeingHeld)
-        {
-            isDownBeingHeld = true;
-            for (int x = 0; x < 3; x++)
-            {
-                for (int y = 0; y < 3; y++)
-                {
-                    if (currentPiece.HasBlockAt(x, y) && IsObstructedAt(currentPiecePosition.x + x - 1, currentPiecePosition.y + y - 1 - 1))
-                    {
-                        return;
-                    }
-                }
-            }
-            prevPiecePosition = currentPiecePosition;
-            currentPiecePosition = currentPiecePosition + new Vector2Int(0, -1);
-            timeSinceLastMove = 0f;
-            currentPiece.PlaySlideSound();
-        }
-
-        if (!(isPlayerOne ? Input.GetAxis("Vertical_P1") < 0 : Input.GetAxis("Vertical_P2") < 0))
-        {
-            isDownBeingHeld = false;
-        }
-
-        if ((isPlayerOne ? Input.GetAxis("Horizontal_P1") < 0 : Input.GetAxis("Horizontal_P2") < 0) && !isLeftBeingHeld)
-        {
-            isLeftBeingHeld = true;
-            for (int x = 0; x < 3; x++)
-            {
-                for (int y = 0; y < 3; y++)
-                {
-                    if (currentPiece.HasBlockAt(x, y) && IsObstructedAt(currentPiecePosition.x + x - 1 - 1, currentPiecePosition.y + y - 1))
-                    {
-                        return;
-                    }
-                }
-            }
-            prevPiecePosition = currentPiecePosition;
-            currentPiecePosition = currentPiecePosition + new Vector2Int(-1, 0);
-            timeSinceLastMove = 0f;
-            currentPiece.PlaySlideSound();
-        }
-
-        if (!(isPlayerOne ? Input.GetAxis("Horizontal_P1") < 0 : Input.GetAxis("Horizontal_P2") < 0))
-        {
-            isLeftBeingHeld = false;
-        }
-
-        if ((isPlayerOne ? Input.GetAxis("Horizontal_P1") > 0 : Input.GetAxis("Horizontal_P2") > 0) && !isRightBeingHeld)
-        {
-            isRightBeingHeld = true;
-            for (int x = 0; x < 3; x++)
-            {
-                for (int y = 0; y < 3; y++)
-                {
-                    if (currentPiece.HasBlockAt(x, y) && IsObstructedAt(currentPiecePosition.x + x - 1 + 1, currentPiecePosition.y + y - 1))
-                    {
-                        return;
-                    }
-                }
-            }
-            prevPiecePosition = currentPiecePosition;
-            currentPiecePosition = currentPiecePosition + new Vector2Int(1,0);
-            timeSinceLastMove = 0f;
-            currentPiece.PlaySlideSound();
-        }
-
-        if (!(isPlayerOne ? Input.GetAxis("Horizontal_P1") > 0 : Input.GetAxis("Horizontal_P2") > 0))
-        {
-            isRightBeingHeld = false;
-        }
-
-        if (isPlayerOne?Input.GetButtonDown("Place_P1"): Input.GetButtonDown("Place_P2"))
+        if (isPlayerOne ? Input.GetButtonDown("Place_P1") : Input.GetButtonDown("Place_P2"))
         {
             //Fallback: If there's somebohw someting directly underneath you, do not place. Should never happen in practice.
             for (int x = 0; x < 3; x++)
@@ -269,11 +190,179 @@ public class GameGrid : MonoBehaviour
         {
             for (int y = 0; y < numCells.y; y++)
             {
-                if (grid[x,y]!=null)
+                if (grid[x, y] != null)
                 {
                     Debug.DrawLine(new Vector3(this.transform.position.x + x - numCells.x / 2, 0, this.transform.position.y + y - numCells.y / 2), new Vector3(this.transform.position.x + x - numCells.x / 2, 4, this.transform.position.y + y - numCells.y / 2));
                 }
             }
+        }
+    }
+
+    private void HandleUpMovement()
+    {
+        if ((isPlayerOne ? Input.GetAxis("Vertical_P1") > 0 : Input.GetAxis("Vertical_P2") > 0) && !isUpBeingHeld)
+        {
+            isUpBeingHeld = true;
+            timeSinceLastMoveUpEvent = fastButtonMashSpeed * -buttonMashDebounceInput;
+            justPressedUp = true;
+        }
+        if (isUpBeingHeld)
+        {
+            if (timeSinceLastMoveUpEvent > fastButtonMashSpeed || justPressedUp)
+            {
+                justPressedUp = false;
+                bool isBlocked = false;
+                for (int x = 0; x < 3; x++)
+                {
+                    for (int y = 0; y < 3; y++)
+                    {
+                        if (currentPiece.HasBlockAt(x, y) && IsObstructedAt(currentPiecePosition.x + x - 1, currentPiecePosition.y + y - 1 + 1))
+                        {
+                            isBlocked = true;
+                        }
+                    }
+                }
+                if (!isBlocked)
+                {
+                    prevPiecePosition = currentPiecePosition;
+                    currentPiecePosition = currentPiecePosition + new Vector2Int(0, 1);
+                    currentPiece.PlaySlideSound();
+                    timeSinceLastMove = 0f;
+                }
+
+                timeSinceLastMoveUpEvent %= fastButtonMashSpeed;
+            }
+            timeSinceLastMoveUpEvent += Time.deltaTime;
+        }
+        if (!(isPlayerOne ? Input.GetAxis("Vertical_P1") > 0 : Input.GetAxis("Vertical_P2") > 0))
+        {
+            isUpBeingHeld = false;
+        }
+    }
+
+    private void HandleDownMovement()
+    {
+        if ((isPlayerOne ? Input.GetAxis("Vertical_P1") < 0 : Input.GetAxis("Vertical_P2") < 0) && !isDownBeingHeld)
+        {
+            isDownBeingHeld = true;
+            timeSinceLastMoveDownEvent = fastButtonMashSpeed * -buttonMashDebounceInput;
+            justPressedDown = true;
+        }
+        if (isDownBeingHeld)
+        {
+            if (timeSinceLastMoveDownEvent > fastButtonMashSpeed || justPressedDown)
+            {
+                justPressedDown = false;
+                bool isBlocked = false;
+                for (int x = 0; x < 3; x++)
+                {
+                    for (int y = 0; y < 3; y++)
+                    {
+                        if (currentPiece.HasBlockAt(x, y) && IsObstructedAt(currentPiecePosition.x + x - 1, currentPiecePosition.y + y - 1 - 1))
+                        {
+                            isBlocked = true;
+                        }
+                    }
+                }
+                if (!isBlocked)
+                {
+                    prevPiecePosition = currentPiecePosition;
+                    currentPiecePosition = currentPiecePosition + new Vector2Int(0, -1);
+                    currentPiece.PlaySlideSound();
+                    timeSinceLastMove = 0f;
+                }
+
+                timeSinceLastMoveDownEvent %= fastButtonMashSpeed;
+            }
+            timeSinceLastMoveDownEvent += Time.deltaTime;
+        }
+        if (!(isPlayerOne ? Input.GetAxis("Vertical_P1") < 0 : Input.GetAxis("Vertical_P2") < 0))
+        {
+            isDownBeingHeld = false;
+        }
+    }
+
+    private void HandleLeftMovement()
+    {
+        if ((isPlayerOne ? Input.GetAxis("Horizontal_P1") < 0 : Input.GetAxis("Horizontal_P2") < 0) && !isLeftBeingHeld)
+        {
+            isLeftBeingHeld = true;
+            timeSinceLastMoveLeftEvent = fastButtonMashSpeed * -buttonMashDebounceInput;
+            justPressedLeft = true;
+        }
+        if (isLeftBeingHeld)
+        {
+            if (timeSinceLastMoveLeftEvent > fastButtonMashSpeed || justPressedLeft)
+            {
+                justPressedLeft = false;
+                bool isBlocked = false;
+                for (int x = 0; x < 3; x++)
+                {
+                    for (int y = 0; y < 3; y++)
+                    {
+                        if (currentPiece.HasBlockAt(x, y) && IsObstructedAt(currentPiecePosition.x + x - 1 - 1, currentPiecePosition.y + y - 1))
+                        {
+                            isBlocked = true;
+                        }
+                    }
+                }
+                if (!isBlocked)
+                {
+                    prevPiecePosition = currentPiecePosition;
+                    currentPiecePosition = currentPiecePosition + new Vector2Int(-1, 0);
+                    currentPiece.PlaySlideSound();
+                    timeSinceLastMove = 0f;
+                }
+
+                timeSinceLastMoveLeftEvent %= fastButtonMashSpeed;
+            }
+            timeSinceLastMoveLeftEvent += Time.deltaTime;
+        }
+        if (!(isPlayerOne ? Input.GetAxis("Horizontal_P1") < 0 : Input.GetAxis("Horizontal_P2") < 0))
+        {
+            isLeftBeingHeld = false;
+        }
+    }
+
+    private void HandleRightMovement()
+    {
+        if ((isPlayerOne ? Input.GetAxis("Horizontal_P1") > 0 : Input.GetAxis("Horizontal_P2") > 0) && !isRightBeingHeld)
+        {
+            isRightBeingHeld = true;
+            timeSinceLastMoveRightEvent = fastButtonMashSpeed * -buttonMashDebounceInput;
+            justPressedRight = true;
+        }
+        if (isRightBeingHeld)
+        {
+            if (timeSinceLastMoveRightEvent > fastButtonMashSpeed || justPressedRight)
+            {
+                justPressedRight = false;
+                bool isBlocked = false;
+                for (int x = 0; x < 3; x++)
+                {
+                    for (int y = 0; y < 3; y++)
+                    {
+                        if (currentPiece.HasBlockAt(x, y) && IsObstructedAt(currentPiecePosition.x + x - 1 + 1, currentPiecePosition.y + y - 1))
+                        {
+                            isBlocked = true;
+                        }
+                    }
+                }
+                if (!isBlocked)
+                {
+                    prevPiecePosition = currentPiecePosition;
+                    currentPiecePosition = currentPiecePosition + new Vector2Int(+1, 0);
+                    currentPiece.PlaySlideSound();
+                    timeSinceLastMove = 0f;
+                }
+
+                timeSinceLastMoveRightEvent %= fastButtonMashSpeed;
+            }
+            timeSinceLastMoveRightEvent += Time.deltaTime;
+        }
+        if (!(isPlayerOne ? Input.GetAxis("Horizontal_P1") > 0 : Input.GetAxis("Horizontal_P2") > 0))
+        {
+            isRightBeingHeld = false;
         }
     }
 
@@ -462,9 +551,7 @@ public class GameGrid : MonoBehaviour
         }
     }
 
-    /*REPLACE: Checks to see if the piece is even partially on the red line.
-    
-        Come to think of it, this is wrong anyway. (Consider a 1x1 piece, for instance.)*/
+    /*REPLACE: Checks to see if this block is in an invalid position. Right now, this means "In the Red Area.*/
     private bool IsInInvalidArea(float x, float y)
     {
         return y < 3;
