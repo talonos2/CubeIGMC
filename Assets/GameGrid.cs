@@ -68,33 +68,33 @@ public class GameGrid : MonoBehaviour
     {
         PlayingPiece toReturn = GameObject.Instantiate(piecePrefab);
 
-        switch (UnityEngine.Random.Range(1, 9))
+        switch (UnityEngine.Random.Range(0, 9))
         {
-            case 1:
+            case 0:
                 toReturn.Initialize(this.player, arra[1][0]);
                 break;
-            case 2:
+            case 1:
                 toReturn.Initialize(this.player, arra[2][0]);
                 break;
-            case 3:
+            case 2:
                 toReturn.Initialize(this.player, arra[3][UnityEngine.Random.Range(0, 3)]);
                 break;
-            case 4:
+            case 3:
                 toReturn.Initialize(this.player, arra[4][UnityEngine.Random.Range(0, 6)]);
                 break;
-            case 5:
+            case 4:
                 toReturn.Initialize(this.player, arra[5][UnityEngine.Random.Range(0, 9)]);
                 break;
-            case 6:
+            case 5:
                 toReturn.Initialize(this.player, arra[6][UnityEngine.Random.Range(0, 10)]);
                 break;
-            case 7:
+            case 6:
                 toReturn.Initialize(this.player, arra[7][UnityEngine.Random.Range(0, 7)]);
                 break;
-            case 8:
+            case 7:
                 toReturn.Initialize(this.player, arra[8][UnityEngine.Random.Range(0, 2)]);
                 break;
-            case 9:
+            case 8:
                 toReturn.Initialize(this.player, arra[9][0]);
                 break;
             default:
