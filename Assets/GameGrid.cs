@@ -8,20 +8,21 @@ public class GameGrid : MonoBehaviour
     public static Vector2Int numCells = new Vector2Int(15, 18);
     public GameCube[,] grid = new GameCube[numCells.x, numCells.y];
     public PlayingPiece piecePrefab;
-    public PlayingPiece[] piecePrefab1;
-    public PlayingPiece[] piecePrefab2;
-    public PlayingPiece[] piecePrefab3;
-    public PlayingPiece[] piecePrefab4;
-    public PlayingPiece[] piecePrefab5;
-    public PlayingPiece[] piecePrefab6;
-    public PlayingPiece[] piecePrefab7;
-    public PlayingPiece[] piecePrefab8;
-    public PlayingPiece[] piecePrefab9;
+    public PowerupEffect powerUpEffect;
 
-    int[][][,] arra = new int[10][][,];
+    public AudioSource dropSound;
+    public AudioSource matchSound;
 
+    private UnityEngine.Random gameplayDice;
     private PlayingPiece currentPiece;
     private PlayingPiece nextPiece;
+
+    internal void SetSeedAndStart(int randomSeed)
+    {
+        this.gameplayDice = new UnityEngine.Random();
+        //...uh... can I actually *do* anything with that? Doesn't seem like it...
+
+    }
 
     public Combatant player;
     public bool isPlayerOne = true;
@@ -49,8 +50,6 @@ public class GameGrid : MonoBehaviour
 	// Use this for initialization
 	void Start ()
     {
-        setupArra();
-
         currentPiece = MakeAPiece();
         currentPiece.transform.parent = this.transform;
         updateCurrentPieceTransform();
@@ -64,74 +63,7 @@ public class GameGrid : MonoBehaviour
     private PlayingPiece MakeAPiece()
     {
         PlayingPiece toReturn = GameObject.Instantiate(piecePrefab);
-//        toReturn.Initialize(this.player);
-
-        //PlayingPiece toReturn;
-        switch (UnityEngine.Random.Range(1, 9))
-        {
-            case 1:
-                toReturn.Initialize(this.player, arra[1][0]);
-                break;
-            case 2:
-                toReturn.Initialize(this.player, arra[2][0]);
-                break;
-            case 3:
-                toReturn.Initialize(this.player, arra[3][UnityEngine.Random.Range(0, 3)]);
-                break;
-            case 4:
-                toReturn.Initialize(this.player, arra[4][UnityEngine.Random.Range(0, 6)]);
-                break;
-            case 5:
-                toReturn.Initialize(this.player, arra[5][UnityEngine.Random.Range(0, 9)]);
-                break;
-            case 6:
-                toReturn.Initialize(this.player, arra[6][UnityEngine.Random.Range(0, 10)]);
-                break;
-            case 7:
-                toReturn.Initialize(this.player, arra[7][UnityEngine.Random.Range(0, 7)]);
-                break;
-            case 8:
-                toReturn.Initialize(this.player, arra[8][UnityEngine.Random.Range(0, 2)]);
-                break;
-            case 9:
-                toReturn.Initialize(this.player, arra[9][0]);
-                break;
-            default:
-                throw new InvalidOperationException("unknown item type");
-                /*           case 1:
-                               toReturn = GameObject.Instantiate(piecePrefab1[0]);        
-                               break;
-                           case 2:
-                               toReturn = GameObject.Instantiate(piecePrefab2[0]);
-                               break;
-                           case 3:
-                               toReturn = GameObject.Instantiate(piecePrefab3[UnityEngine.Random.Range(0, 3)]);
-                               break;
-                           case 4:
-                               toReturn = GameObject.Instantiate(piecePrefab4[UnityEngine.Random.Range(0, 6)]);
-                               break;
-                           case 5:
-                               toReturn = GameObject.Instantiate(piecePrefab5[UnityEngine.Random.Range(0, 9)]);
-                               break;
-                           case 6:
-                               toReturn = GameObject.Instantiate(piecePrefab6[UnityEngine.Random.Range(0, 10)]);
-                               break;
-                           case 7:
-                               toReturn = GameObject.Instantiate(piecePrefab7[UnityEngine.Random.Range(0, 7)]);
-                               break;
-                           case 8:
-                               toReturn = GameObject.Instantiate(piecePrefab8[UnityEngine.Random.Range(0, 2)]);
-                               break;
-                           case 9:
-                               toReturn = GameObject.Instantiate(piecePrefab9[0]);
-                               break;
-                           default:
-                               throw new InvalidOperationException("unknown item type");
-                               */
-        }
-
-       // toReturn.Initialize(this.player);
-
+        toReturn.Initialize(this.player);
         return toReturn;
     }
 
@@ -182,6 +114,7 @@ public class GameGrid : MonoBehaviour
             prevPiecePosition = currentPiecePosition;
             currentPiecePosition = currentPiecePosition + new Vector2Int(0, 1);
             timeSinceLastMove = 0f;
+            currentPiece.PlaySlideSound();
         }
 
         if (!(isPlayerOne ? Input.GetAxis("Vertical_P1") > 0 : Input.GetAxis("Vertical_P2") > 0))
@@ -205,6 +138,7 @@ public class GameGrid : MonoBehaviour
             prevPiecePosition = currentPiecePosition;
             currentPiecePosition = currentPiecePosition + new Vector2Int(0, -1);
             timeSinceLastMove = 0f;
+            currentPiece.PlaySlideSound();
         }
 
         if (!(isPlayerOne ? Input.GetAxis("Vertical_P1") < 0 : Input.GetAxis("Vertical_P2") < 0))
@@ -228,6 +162,7 @@ public class GameGrid : MonoBehaviour
             prevPiecePosition = currentPiecePosition;
             currentPiecePosition = currentPiecePosition + new Vector2Int(-1, 0);
             timeSinceLastMove = 0f;
+            currentPiece.PlaySlideSound();
         }
 
         if (!(isPlayerOne ? Input.GetAxis("Horizontal_P1") < 0 : Input.GetAxis("Horizontal_P2") < 0))
@@ -251,6 +186,7 @@ public class GameGrid : MonoBehaviour
             prevPiecePosition = currentPiecePosition;
             currentPiecePosition = currentPiecePosition + new Vector2Int(1,0);
             timeSinceLastMove = 0f;
+            currentPiece.PlaySlideSound();
         }
 
         if (!(isPlayerOne ? Input.GetAxis("Horizontal_P1") > 0 : Input.GetAxis("Horizontal_P2") > 0))
@@ -289,6 +225,7 @@ public class GameGrid : MonoBehaviour
                 prevPieceRotation = currentPieceRotation;
                 currentPieceRotation = (currentPieceRotation + 5) % 4;
                 timeSinceLastRot = 0f;
+                currentPiece.PlaySlideSound();
             }
             else
             {
@@ -311,6 +248,7 @@ public class GameGrid : MonoBehaviour
                 prevPieceRotation = currentPieceRotation;
                 currentPieceRotation = (currentPieceRotation + 3) % 4;
                 timeSinceLastRot = 0f;
+                currentPiece.PlaySlideSound();
             }
             else
             {
@@ -341,14 +279,13 @@ public class GameGrid : MonoBehaviour
             {
                 if (currentPiece.HasBlockAt(x,y))
                 {
-                    GameCube cube = currentPiece.getCubeAt(x, y);
+                    GameCube cube = currentPiece.GetCubeAt(x, y);
                     grid[currentPiecePosition.x+x-1, currentPiecePosition.y+y-1] = cube;
                     cube.transform.parent = this.transform;
                     cube.transform.localPosition = new Vector3(currentPiecePosition.x - numCells.x / 2f + x - 1+.5f, 0, currentPiecePosition.y - numCells.y / 2f + y - 1+.5f);
                 }
             }
         }
-        Destroy(currentPiece.gameObject);
 
         //Check for squares
         List<GameCube> cubesToExplode = new List<GameCube>();
@@ -356,6 +293,9 @@ public class GameGrid : MonoBehaviour
         int energyCubes = 0;
         int shieldCube = 0;
         int psiCubes = 0;
+
+        int numberOfExplosions = 0;
+
         for (int x = 0; x < numCells.x-2; x++)
         {
             for (int y = 0; y < numCells.y-2; y++)
@@ -363,23 +303,57 @@ public class GameGrid : MonoBehaviour
                 if (IsCornerOfSquare(x, y))
                 {
                     AddCubesFromSquareToList(x, y, cubesToExplode);
+
                     attackCubes += GetCubesInSquare(x, y, CubeType.ATTACK);
                     energyCubes += GetCubesInSquare(x, y, CubeType.ENERGY);
                     shieldCube += GetCubesInSquare(x, y, CubeType.SHIELDS);
                     psiCubes += GetCubesInSquare(x, y, CubeType.PSI);
+                    numberOfExplosions++;
                 }
             }
         }
 
-        player.ChargeAttack(attackCubes);
-        player.ChargeShields(shieldCube);
-        player.ChargeEnergy(energyCubes);
+        float maxDelay = (float)Math.Sqrt(numberOfExplosions / 9f);
+
+        List<ExplosionWrapper> allExplosions = new List<ExplosionWrapper>();
+        for (int x = 0; x < numCells.x - 2; x++)
+        {
+            for (int y = 0; y < numCells.y - 2; y++)
+            {
+                if (IsCornerOfSquare(x, y))
+                {
+                    allExplosions.AddRange(ExplodeCubesInSquare(x, y, maxDelay));
+                }
+            }
+        }
+
+        //All explosions are in a list. Explode them I guess.
+        {
+            allExplosions.Sort(new ExplosionSorter());
+        }
+
+        player.StartNewParticleBarrage();
+
+        foreach (ExplosionWrapper ew in allExplosions)
+        {
+            ew.Explode(powerUpEffect, player);
+        }
 
         foreach (GameCube cube in cubesToExplode)
         {
             RemoveCubeFromGrid(cube);
-            GameObject.Destroy(cube.gameObject);
+            cube.Sink(UnityEngine.Random.Range(0, maxDelay));
         }
+        if (allExplosions.Count!=0)
+        {
+            matchSound.Play();
+        }
+        else
+        {
+            dropSound.Play();
+        }
+
+        Destroy(currentPiece.gameObject);
 
         currentPiece = nextPiece;
         currentPiece.transform.parent = this.transform;
@@ -391,6 +365,24 @@ public class GameGrid : MonoBehaviour
         nextPiece.transform.localPosition = Vector3.zero;
 
         prevPieceRotation = currentPieceRotation = 0;
+    }
+
+    private List<ExplosionWrapper> ExplodeCubesInSquare(int xCorner, int yCorner, float maxDelay)
+    {
+        List<ExplosionWrapper> toReturn = new List<ExplosionWrapper>();
+        for (int x = 0; x < 3; x++)
+        {
+            for (int y = 0; y < 3; y++)
+            {
+                GameCube cube = grid[x + xCorner, y + yCorner];
+                if (cube == null)
+                {
+                    throw new InvalidOperationException("Somehow we're trying to check the type of a null cube in GameGrid.ExplodeCubesInSquare");
+                }
+                toReturn.Add(new ExplosionWrapper(cube, UnityEngine.Random.Range(0, maxDelay)));
+            }
+        }
+        return toReturn;
     }
 
     private int GetCubesInSquare(int xCorner, int yCorner, CubeType type)
@@ -485,68 +477,41 @@ public class GameGrid : MonoBehaviour
         return false;
     }
 
-    private void setupArra()
+    private class ExplosionWrapper
     {
-        arra[0] = new int[1][,];
+        private GameCube cube;
+        internal float delay;
 
-        arra[1] = new int[1][,];
-        arra[1][0] = new int[3, 3] { { 0, 0, 0 }, { 0, 1, 0 }, { 0, 0, 0 } };
+        internal ExplosionWrapper(GameCube cube, float delay)
+        {
+            this.cube = cube;
+            this.delay = delay;
+        }
 
-        arra[2] = new int[1][,];
-        arra[2][0] = new int[3, 3] { { 0, 1, 0 }, { 0, 1, 0 }, { 0, 0, 0 } };
+        internal void Explode(PowerupEffect powerupEffect, Combatant player)
+        {
+            PowerupEffect p = GameObject.Instantiate(powerupEffect);
+            p.transform.position = cube.transform.position;
+            Color toInitialize = Color.white;
 
-        arra[3] = new int[3][,];
-        arra[3][0] = new int[3, 3] { { 0, 1, 0 }, { 0, 1, 1 }, { 0, 0, 0 } };
-        arra[3][1] = new int[3, 3] { { 0, 1, 0 }, { 1, 1, 0 }, { 0, 0, 0 } };
-        arra[3][2] = new int[3, 3] { { 0, 1, 0 }, { 0, 1, 0 }, { 0, 1, 0 } };
-
-        arra[4] = new int[6][,];
-        arra[4][0] = new int[3, 3] { { 0, 1, 1 }, { 1, 1, 0 }, { 0, 0, 0 } };
-        arra[4][1] = new int[3, 3] { { 0, 1, 0 }, { 1, 1, 1 }, { 0, 0, 0 } };
-        arra[4][2] = new int[3, 3] { { 1, 1, 0 }, { 0, 1, 1 }, { 0, 0, 0 } };
-        arra[4][3] = new int[3, 3] { { 1, 1, 0 }, { 0, 1, 0 }, { 0, 1, 0 } };
-        arra[4][4] = new int[3, 3] { { 0, 1, 1 }, { 0, 1, 0 }, { 0, 1, 0 } };
-        arra[4][5] = new int[3, 3] { { 1, 1, 0 }, { 1, 1, 0 }, { 0, 0, 0 } };
-
-        arra[5] = new int[9][,];
-        arra[5][0] = new int[3, 3] { { 1, 1, 0 }, { 1, 1, 1 }, { 0, 0, 0 } };
-        arra[5][1] = new int[3, 3] { { 1, 1, 1 }, { 1, 1, 0 }, { 0, 0, 0 } };
-        arra[5][2] = new int[3, 3] { { 1, 0, 1 }, { 1, 1, 1 }, { 0, 0, 0 } };
-        arra[5][3] = new int[3, 3] { { 1, 0, 0 }, { 1, 1, 1 }, { 0, 0, 1 } };
-        arra[5][4] = new int[3, 3] { { 0, 0, 1 }, { 1, 1, 1 }, { 1, 0, 0 } };
-        arra[5][5] = new int[3, 3] { { 0, 1, 0 }, { 1, 1, 1 }, { 0, 1, 0 } };
-        arra[5][6] = new int[3, 3] { { 0, 1, 0 }, { 1, 1, 1 }, { 1, 0, 0 } };
-        arra[5][7] = new int[3, 3] { { 0, 1, 0 }, { 1, 1, 1 }, { 0, 0, 1 } };
-        arra[5][8] = new int[3, 3] { { 1, 1, 1 }, { 0, 1, 0 }, { 0, 1, 0 } };
-
-        arra[6] = new int[10][,];
-        arra[6][0] = new int[3, 3] { { 1, 1, 1 }, { 1, 1, 0 }, { 1, 0, 0 } };
-        arra[6][1] = new int[3, 3] { { 1, 1, 0 }, { 1, 1, 1 }, { 1, 0, 0 } };
-        arra[6][2] = new int[3, 3] { { 1, 1, 0 }, { 1, 1, 1 }, { 0, 1, 0 } };
-        arra[6][3] = new int[3, 3] { { 1, 1, 1 }, { 1, 1, 0 }, { 0, 1, 0 } };
-        arra[6][4] = new int[3, 3] { { 1, 1, 0 }, { 1, 1, 0 }, { 0, 1, 1 } };
-        arra[6][5] = new int[3, 3] { { 1, 1, 0 }, { 1, 1, 1 }, { 0, 0, 1 } };
-        arra[6][6] = new int[3, 3] { { 1, 1, 1 }, { 1, 1, 1 }, { 0, 0, 0 } };
-        arra[6][7] = new int[3, 3] { { 1, 0, 1 }, { 1, 1, 1 }, { 0, 1, 0 } };
-        arra[6][8] = new int[3, 3] { { 1, 0, 1 }, { 1, 1, 1 }, { 1, 0, 0 } };
-        arra[6][9] = new int[3, 3] { { 1, 0, 1 }, { 1, 1, 1 }, { 0, 0, 1 } };
-
-        arra[7] = new int[7][,];
-        arra[7][0] = new int[3, 3] { { 0, 0, 1 }, { 1, 1, 1 }, { 1, 1, 1 } };
-        arra[7][1] = new int[3, 3] { { 0, 1, 0 }, { 1, 1, 1 }, { 1, 1, 1 } };
-        arra[7][2] = new int[3, 3] { { 1, 0, 0 }, { 1, 1, 1 }, { 1, 1, 1 } };
-        arra[7][3] = new int[3, 3] { { 1, 1, 0 }, { 1, 1, 1 }, { 0, 1, 1 } };
-        arra[7][4] = new int[3, 3] { { 1, 1, 1 }, { 1, 1, 0 }, { 0, 1, 1 } };
-        arra[7][5] = new int[3, 3] { { 1, 1, 1 }, { 0, 1, 0 }, { 1, 1, 1 } };
-        arra[7][6] = new int[3, 3] { { 1, 1, 0 }, { 1, 1, 1 }, { 1, 0, 1 } };
-
-        arra[8] = new int[2][,];
-        arra[8][0] = new int[3, 3] { { 0, 1, 1 }, { 1, 1, 1 }, { 1, 1, 1 } };
-        arra[8][1] = new int[3, 3] { { 1, 0, 1 }, { 1, 1, 1 }, { 1, 1, 1 } };
-
-
-        arra[9] = new int[1][,];
-        arra[9][0] = new int[3, 3] { { 1, 1, 1 }, { 1, 1, 1 }, { 1, 1, 1 } };
+            p.Initialize(p.transform.position, player.GetTargetOfParticle(cube.type), delay, cube.type, player);
+        }
     }
-    
+
+    private class ExplosionSorter : IComparer<ExplosionWrapper>
+    {
+        int IComparer<ExplosionWrapper>.Compare(ExplosionWrapper a, ExplosionWrapper b)
+        {
+
+            if (a.delay > b.delay)
+                return 1;
+
+            if (a.delay < b.delay)
+                return -1;
+
+            else
+                return 0;
+        }
+    }
+
 }

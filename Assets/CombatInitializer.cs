@@ -18,5 +18,11 @@ public class CombatInitializer : MonoBehaviour {
         grid1.SetEnemy(grid2);
         grid2.SetEnemy(grid1);
         GameObject.Destroy(this);
-	}
+
+        int randomSeed = UnityEngine.Random.Range(1, 65535);
+
+        grid1.SetSeedAndStart(randomSeed);
+        grid1.SetSeedAndStart(randomSeed);
+
+    }
 }

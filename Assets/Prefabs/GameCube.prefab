@@ -194,8 +194,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c3e216d58bbcde45a494651f88e6f0c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  energyMaterial: {fileID: 2100000, guid: 79155e8d8f79ef44eb8f47efd3c22a19, type: 2}
-  attackMaterial: {fileID: 2100000, guid: 56a1f2de95c7b7a4582bbae319d9e3d7, type: 2}
-  shieldMaterial: {fileID: 2100000, guid: 9fbf69150b6ed4d49807549bbde9fc84, type: 2}
-  psiMaterial: {fileID: 2100000, guid: 3f23e47eb4b5407448215afded1d18ac, type: 2}
+  energyMaterial: {fileID: 2100000, guid: 3da66363a5dcb2649a3783f07ebd5d87, type: 2}
+  attackMaterial: {fileID: 2100000, guid: 5d490d9cb3b4e18479bb61b8f430b1c6, type: 2}
+  shieldMaterial: {fileID: 2100000, guid: d92c8d4bf3221a14aa6837e2d8238722, type: 2}
+  psiMaterial: {fileID: 2100000, guid: 284abb8305d461243ad38ccc9f7ec63f, type: 2}
+  glowMaterial: {fileID: 2100000, guid: 292e6402d3951ea4497302dd43b1215e, type: 2}
   coloredSection: {fileID: 23249281283509556}
+  lightOnTop: {fileID: 23990750340097902}
+  type: 0
+  fallSpeed: 3

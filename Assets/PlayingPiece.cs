@@ -9,6 +9,7 @@ public class PlayingPiece : MonoBehaviour
     private GameCube[,] piecemap = new GameCube[3, 3];
 
     public GameCube cube;
+    public AudioSource[] slideSounds;
 
 	// Use this for initialization
 	public void Start ()
@@ -130,8 +131,16 @@ public class PlayingPiece : MonoBehaviour
 		
 	}
 
-    internal GameCube getCubeAt(int x, int y)
+    internal GameCube GetCubeAt(int x, int y)
     {
         return piecemap[x, y];
+    }
+
+    private int lastPlayed = 0;
+
+    internal void PlaySlideSound()
+    {
+        slideSounds[lastPlayed++].Play();
+        lastPlayed %= slideSounds.Length;
     }
 }

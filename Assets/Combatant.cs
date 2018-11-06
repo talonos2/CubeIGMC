@@ -18,6 +18,8 @@ public class Combatant : MonoBehaviour
     public Transform shieldBar;
     public Transform attackChargeBar;
 
+    public SpaceshipPawn pawn;
+
     public void Start()
     {
         health = MaxHealth();
@@ -94,12 +96,11 @@ public class Combatant : MonoBehaviour
 
     private void Fire()
     {
-        Debug.Log(DamageAmount());
-        enemy.TakeDamage(DamageAmount());
+        pawn.FireBullet(DamageAmount(), enemy, 2);
         this.queuedDamage = 0;
     }
 
-    private void TakeDamage(float damage)
+    internal void TakeDamage(float damage)
     {
         if (shields > damage)
         {
@@ -175,5 +176,35 @@ public class Combatant : MonoBehaviour
     private float AttackChargeTime()
     {
         return 5;
+    }
+
+    public float lengthOfBar = 15;
+    private float pretendEnergy;
+    private float pretendShields;
+
+    internal Vector3 GetTargetOfParticle(CubeType type)
+    {
+
+        switch (type)
+        {
+            case CubeType.ATTACK:
+                return attackChargeBar.transform.position;
+            case CubeType.SHIELDS:
+                Vector3 toReturn = shieldBar.transform.position + new Vector3(-lengthOfBar * pretendShields / MaxHealth(), 0, 0);
+                pretendShields += GetShieldChargeAmount(1);
+                return toReturn;
+            case CubeType.ENERGY:
+                Vector3 toReturn2 = energyBar.transform.position + new Vector3(-lengthOfBar * pretendEnergy / MaxEnergy(), 0, 0);
+                pretendEnergy+= GetEnergyChargeAmount(1);
+                return toReturn2;
+            default:
+                return Vector3.zero; //We're not even handling Psi right now.
+        }
+    }
+
+    internal void StartNewParticleBarrage()
+    {
+        pretendEnergy = energy;
+        pretendShields = shields;
     }
 }
