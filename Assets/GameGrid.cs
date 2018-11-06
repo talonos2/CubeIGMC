@@ -10,7 +10,7 @@ public class GameGrid : MonoBehaviour
     public PlayingPiece piecePrefab;
     public PowerupEffect powerUpEffect;
 
-    int[][][,] arra = new int[10][][,];
+    int[][][,] pieceArray = new int[10][][,];
 
     public AudioSource dropSound;
     public AudioSource matchSound;
@@ -52,7 +52,7 @@ public class GameGrid : MonoBehaviour
 	// Use this for initialization
 	void Start ()
     {
-        setupArra();
+        SetupPieceArray();
 
         currentPiece = MakeAPiece();
         currentPiece.transform.parent = this.transform;
@@ -68,41 +68,9 @@ public class GameGrid : MonoBehaviour
     {
         PlayingPiece toReturn = GameObject.Instantiate(piecePrefab);
 
-        switch (UnityEngine.Random.Range(0, 9))
-        {
-            case 0:
-                toReturn.Initialize(this.player, arra[1][0]);
-                break;
-            case 1:
-                toReturn.Initialize(this.player, arra[2][0]);
-                break;
-            case 2:
-                toReturn.Initialize(this.player, arra[3][UnityEngine.Random.Range(0, 3)]);
-                break;
-            case 3:
-                toReturn.Initialize(this.player, arra[4][UnityEngine.Random.Range(0, 6)]);
-                break;
-            case 4:
-                toReturn.Initialize(this.player, arra[5][UnityEngine.Random.Range(0, 9)]);
-                break;
-            case 5:
-                toReturn.Initialize(this.player, arra[6][UnityEngine.Random.Range(0, 10)]);
-                break;
-            case 6:
-                toReturn.Initialize(this.player, arra[7][UnityEngine.Random.Range(0, 7)]);
-                break;
-            case 7:
-                toReturn.Initialize(this.player, arra[8][UnityEngine.Random.Range(0, 2)]);
-                break;
-            case 8:
-                toReturn.Initialize(this.player, arra[9][0]);
-                break;
-            default:
-                throw new InvalidOperationException("unknown item type");
-        }
+        int pieceSize = UnityEngine.Random.Range(1, 10);
+        toReturn.Initialize(this.player, pieceArray[pieceSize][UnityEngine.Random.Range(0, pieceArray[pieceSize].Length)]);
 
-        //PlayingPiece toReturn = GameObject.Instantiate(piecePrefab);
-        //toReturn.Initialize(this.player);
         return toReturn;
     }
 
@@ -282,7 +250,7 @@ public class GameGrid : MonoBehaviour
                     surroundings[x, y] = IsObstructedAt(currentPiecePosition.x + x - 1, currentPiecePosition.y + y - 1);
                 }
             }
-            if (currentPiece.rotateCW(surroundings))
+            if (currentPiece.RotateCW(surroundings))
             {
                 prevPieceRotation = currentPieceRotation;
                 currentPieceRotation = (currentPieceRotation + 3) % 4;
@@ -553,68 +521,68 @@ public class GameGrid : MonoBehaviour
         }
     }
 
-    private void setupArra()
+    private void SetupPieceArray()
     {
-        arra[0] = new int[1][,];
+        pieceArray[0] = new int[1][,];
 
-        arra[1] = new int[1][,];
-        arra[1][0] = new int[3, 3] { { 0, 0, 0 }, { 0, 1, 0 }, { 0, 0, 0 } };
+        pieceArray[1] = new int[1][,];
+        pieceArray[1][0] = new int[3, 3] { { 0, 0, 0 }, { 0, 1, 0 }, { 0, 0, 0 } };
 
-        arra[2] = new int[1][,];
-        arra[2][0] = new int[3, 3] { { 0, 1, 0 }, { 0, 1, 0 }, { 0, 0, 0 } };
+        pieceArray[2] = new int[1][,];
+        pieceArray[2][0] = new int[3, 3] { { 0, 1, 0 }, { 0, 1, 0 }, { 0, 0, 0 } };
 
-        arra[3] = new int[3][,];
-        arra[3][0] = new int[3, 3] { { 0, 1, 0 }, { 0, 1, 1 }, { 0, 0, 0 } };
-        arra[3][1] = new int[3, 3] { { 0, 1, 0 }, { 1, 1, 0 }, { 0, 0, 0 } };
-        arra[3][2] = new int[3, 3] { { 0, 1, 0 }, { 0, 1, 0 }, { 0, 1, 0 } };
+        pieceArray[3] = new int[3][,];
+        pieceArray[3][0] = new int[3, 3] { { 0, 1, 0 }, { 0, 1, 1 }, { 0, 0, 0 } };
+        pieceArray[3][1] = new int[3, 3] { { 0, 1, 0 }, { 1, 1, 0 }, { 0, 0, 0 } };
+        pieceArray[3][2] = new int[3, 3] { { 0, 1, 0 }, { 0, 1, 0 }, { 0, 1, 0 } };
 
-        arra[4] = new int[6][,];
-        arra[4][0] = new int[3, 3] { { 0, 1, 1 }, { 1, 1, 0 }, { 0, 0, 0 } };
-        arra[4][1] = new int[3, 3] { { 0, 1, 0 }, { 1, 1, 1 }, { 0, 0, 0 } };
-        arra[4][2] = new int[3, 3] { { 1, 1, 0 }, { 0, 1, 1 }, { 0, 0, 0 } };
-        arra[4][3] = new int[3, 3] { { 1, 1, 0 }, { 0, 1, 0 }, { 0, 1, 0 } };
-        arra[4][4] = new int[3, 3] { { 0, 1, 1 }, { 0, 1, 0 }, { 0, 1, 0 } };
-        arra[4][5] = new int[3, 3] { { 1, 1, 0 }, { 1, 1, 0 }, { 0, 0, 0 } };
+        pieceArray[4] = new int[6][,];
+        pieceArray[4][0] = new int[3, 3] { { 0, 1, 1 }, { 1, 1, 0 }, { 0, 0, 0 } };
+        pieceArray[4][1] = new int[3, 3] { { 0, 1, 0 }, { 1, 1, 1 }, { 0, 0, 0 } };
+        pieceArray[4][2] = new int[3, 3] { { 1, 1, 0 }, { 0, 1, 1 }, { 0, 0, 0 } };
+        pieceArray[4][3] = new int[3, 3] { { 1, 1, 0 }, { 0, 1, 0 }, { 0, 1, 0 } };
+        pieceArray[4][4] = new int[3, 3] { { 0, 1, 1 }, { 0, 1, 0 }, { 0, 1, 0 } };
+        pieceArray[4][5] = new int[3, 3] { { 1, 1, 0 }, { 1, 1, 0 }, { 0, 0, 0 } };
 
-        arra[5] = new int[9][,];
-        arra[5][0] = new int[3, 3] { { 1, 1, 0 }, { 1, 1, 1 }, { 0, 0, 0 } };
-        arra[5][1] = new int[3, 3] { { 1, 1, 1 }, { 1, 1, 0 }, { 0, 0, 0 } };
-        arra[5][2] = new int[3, 3] { { 1, 0, 1 }, { 1, 1, 1 }, { 0, 0, 0 } };
-        arra[5][3] = new int[3, 3] { { 1, 0, 0 }, { 1, 1, 1 }, { 0, 0, 1 } };
-        arra[5][4] = new int[3, 3] { { 0, 0, 1 }, { 1, 1, 1 }, { 1, 0, 0 } };
-        arra[5][5] = new int[3, 3] { { 0, 1, 0 }, { 1, 1, 1 }, { 0, 1, 0 } };
-        arra[5][6] = new int[3, 3] { { 0, 1, 0 }, { 1, 1, 1 }, { 1, 0, 0 } };
-        arra[5][7] = new int[3, 3] { { 0, 1, 0 }, { 1, 1, 1 }, { 0, 0, 1 } };
-        arra[5][8] = new int[3, 3] { { 1, 1, 1 }, { 0, 1, 0 }, { 0, 1, 0 } };
+        pieceArray[5] = new int[9][,];
+        pieceArray[5][0] = new int[3, 3] { { 1, 1, 0 }, { 1, 1, 1 }, { 0, 0, 0 } };
+        pieceArray[5][1] = new int[3, 3] { { 1, 1, 1 }, { 1, 1, 0 }, { 0, 0, 0 } };
+        pieceArray[5][2] = new int[3, 3] { { 1, 0, 1 }, { 1, 1, 1 }, { 0, 0, 0 } };
+        pieceArray[5][3] = new int[3, 3] { { 1, 0, 0 }, { 1, 1, 1 }, { 0, 0, 1 } };
+        pieceArray[5][4] = new int[3, 3] { { 0, 0, 1 }, { 1, 1, 1 }, { 1, 0, 0 } };
+        pieceArray[5][5] = new int[3, 3] { { 0, 1, 0 }, { 1, 1, 1 }, { 0, 1, 0 } };
+        pieceArray[5][6] = new int[3, 3] { { 0, 1, 0 }, { 1, 1, 1 }, { 1, 0, 0 } };
+        pieceArray[5][7] = new int[3, 3] { { 0, 1, 0 }, { 1, 1, 1 }, { 0, 0, 1 } };
+        pieceArray[5][8] = new int[3, 3] { { 1, 1, 1 }, { 0, 1, 0 }, { 0, 1, 0 } };
 
-        arra[6] = new int[10][,];
-        arra[6][0] = new int[3, 3] { { 1, 1, 1 }, { 1, 1, 0 }, { 1, 0, 0 } };
-        arra[6][1] = new int[3, 3] { { 1, 1, 0 }, { 1, 1, 1 }, { 1, 0, 0 } };
-        arra[6][2] = new int[3, 3] { { 1, 1, 0 }, { 1, 1, 1 }, { 0, 1, 0 } };
-        arra[6][3] = new int[3, 3] { { 1, 1, 1 }, { 1, 1, 0 }, { 0, 1, 0 } };
-        arra[6][4] = new int[3, 3] { { 1, 1, 0 }, { 1, 1, 0 }, { 0, 1, 1 } };
-        arra[6][5] = new int[3, 3] { { 1, 1, 0 }, { 1, 1, 1 }, { 0, 0, 1 } };
-        arra[6][6] = new int[3, 3] { { 1, 1, 1 }, { 1, 1, 1 }, { 0, 0, 0 } };
-        arra[6][7] = new int[3, 3] { { 1, 0, 1 }, { 1, 1, 1 }, { 0, 1, 0 } };
-        arra[6][8] = new int[3, 3] { { 1, 0, 1 }, { 1, 1, 1 }, { 1, 0, 0 } };
-        arra[6][9] = new int[3, 3] { { 1, 0, 1 }, { 1, 1, 1 }, { 0, 0, 1 } };
+        pieceArray[6] = new int[10][,];
+        pieceArray[6][0] = new int[3, 3] { { 1, 1, 1 }, { 1, 1, 0 }, { 1, 0, 0 } };
+        pieceArray[6][1] = new int[3, 3] { { 1, 1, 0 }, { 1, 1, 1 }, { 1, 0, 0 } };
+        pieceArray[6][2] = new int[3, 3] { { 1, 1, 0 }, { 1, 1, 1 }, { 0, 1, 0 } };
+        pieceArray[6][3] = new int[3, 3] { { 1, 1, 1 }, { 1, 1, 0 }, { 0, 1, 0 } };
+        pieceArray[6][4] = new int[3, 3] { { 1, 1, 0 }, { 1, 1, 0 }, { 0, 1, 1 } };
+        pieceArray[6][5] = new int[3, 3] { { 1, 1, 0 }, { 1, 1, 1 }, { 0, 0, 1 } };
+        pieceArray[6][6] = new int[3, 3] { { 1, 1, 1 }, { 1, 1, 1 }, { 0, 0, 0 } };
+        pieceArray[6][7] = new int[3, 3] { { 1, 0, 1 }, { 1, 1, 1 }, { 0, 1, 0 } };
+        pieceArray[6][8] = new int[3, 3] { { 1, 0, 1 }, { 1, 1, 1 }, { 1, 0, 0 } };
+        pieceArray[6][9] = new int[3, 3] { { 1, 0, 1 }, { 1, 1, 1 }, { 0, 0, 1 } };
 
-        arra[7] = new int[7][,];
-        arra[7][0] = new int[3, 3] { { 0, 0, 1 }, { 1, 1, 1 }, { 1, 1, 1 } };
-        arra[7][1] = new int[3, 3] { { 0, 1, 0 }, { 1, 1, 1 }, { 1, 1, 1 } };
-        arra[7][2] = new int[3, 3] { { 1, 0, 0 }, { 1, 1, 1 }, { 1, 1, 1 } };
-        arra[7][3] = new int[3, 3] { { 1, 1, 0 }, { 1, 1, 1 }, { 0, 1, 1 } };
-        arra[7][4] = new int[3, 3] { { 1, 1, 1 }, { 1, 1, 0 }, { 0, 1, 1 } };
-        arra[7][5] = new int[3, 3] { { 1, 1, 1 }, { 0, 1, 0 }, { 1, 1, 1 } };
-        arra[7][6] = new int[3, 3] { { 1, 1, 0 }, { 1, 1, 1 }, { 1, 0, 1 } };
+        pieceArray[7] = new int[7][,];
+        pieceArray[7][0] = new int[3, 3] { { 0, 0, 1 }, { 1, 1, 1 }, { 1, 1, 1 } };
+        pieceArray[7][1] = new int[3, 3] { { 0, 1, 0 }, { 1, 1, 1 }, { 1, 1, 1 } };
+        pieceArray[7][2] = new int[3, 3] { { 1, 0, 0 }, { 1, 1, 1 }, { 1, 1, 1 } };
+        pieceArray[7][3] = new int[3, 3] { { 1, 1, 0 }, { 1, 1, 1 }, { 0, 1, 1 } };
+        pieceArray[7][4] = new int[3, 3] { { 1, 1, 1 }, { 1, 1, 0 }, { 0, 1, 1 } };
+        pieceArray[7][5] = new int[3, 3] { { 1, 1, 1 }, { 0, 1, 0 }, { 1, 1, 1 } };
+        pieceArray[7][6] = new int[3, 3] { { 1, 1, 0 }, { 1, 1, 1 }, { 1, 0, 1 } };
 
-        arra[8] = new int[2][,];
-        arra[8][0] = new int[3, 3] { { 0, 1, 1 }, { 1, 1, 1 }, { 1, 1, 1 } };
-        arra[8][1] = new int[3, 3] { { 1, 0, 1 }, { 1, 1, 1 }, { 1, 1, 1 } };
+        pieceArray[8] = new int[2][,];
+        pieceArray[8][0] = new int[3, 3] { { 0, 1, 1 }, { 1, 1, 1 }, { 1, 1, 1 } };
+        pieceArray[8][1] = new int[3, 3] { { 1, 0, 1 }, { 1, 1, 1 }, { 1, 1, 1 } };
 
 
-        arra[9] = new int[1][,];
-        arra[9][0] = new int[3, 3] { { 1, 1, 1 }, { 1, 1, 1 }, { 1, 1, 1 } };
+        pieceArray[9] = new int[1][,];
+        pieceArray[9][0] = new int[3, 3] { { 1, 1, 1 }, { 1, 1, 1 }, { 1, 1, 1 } };
     }
 
 

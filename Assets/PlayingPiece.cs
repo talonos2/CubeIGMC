@@ -32,25 +32,6 @@ public class PlayingPiece : MonoBehaviour
                 }
             }
         }
-
-        //CreateRandomPiece();
-    }
-
-
-    /*REPLACE*/
-    public void CreateRandomPiece ()
-    {
-        Debug.Log("Making a Piece");
-        piecemap[1, 1] = MakeCube();
-        if (UnityEngine.Random.Range(0,2) == 0) { piecemap[0, 1] = MakeCube(); }
-        if (UnityEngine.Random.Range(0, 2) == 0) { piecemap[2, 1] = MakeCube(); }
-        if (UnityEngine.Random.Range(0, 2) == 0) { piecemap[1, 0] = MakeCube(); }
-        if (UnityEngine.Random.Range(0, 2) == 0) { piecemap[1, 2] = MakeCube(); }
-        if ((piecemap[0, 1] != null || piecemap[1, 0] != null) && UnityEngine.Random.Range(0, 2) == 0) { piecemap[0, 0] = MakeCube(); }
-        if ((piecemap[2, 1] != null || piecemap[1, 2] != null) && UnityEngine.Random.Range(0, 2) == 0) { piecemap[2, 2] = MakeCube(); }
-        if ((piecemap[0, 1] != null || piecemap[1, 2] != null) && UnityEngine.Random.Range(0, 2) == 0) { piecemap[0, 2] = MakeCube(); }
-        if ((piecemap[2, 1] != null || piecemap[1, 0] != null) && UnityEngine.Random.Range(0, 2) == 0) { piecemap[2, 0] = MakeCube(); }
-        PlaceCubesCorrectly();
     }
 
     private GameCube MakeCube()
@@ -65,24 +46,8 @@ public class PlayingPiece : MonoBehaviour
         return piecemap[x, y] != null;
     }
 
-    /*REPLACE: This is only ever called by CreateRandomPiece, and can probably be folded into it.*/
-    private void PlaceCubesCorrectly()
-    {
-        for (int x = 0; x < 3; x++)
-        {
-            for (int y = 0; y < 3; y++)
-            {
-                if (piecemap[x,y]!= null)
-                {
-                    piecemap[x, y].transform.parent = this.transform;
-                    piecemap[x, y].transform.localPosition = new Vector3(x - 1, 0, y - 1);
-                }
-            }
-        }
-    }
-
     /*REPLACE*/
-    public bool rotateCW(bool[,] surroundings)
+    public bool RotateCW(bool[,] surroundings)
     {
         GameCube[,] newPiecemap = new GameCube[3,3];
         newPiecemap[0,0] = piecemap[0,2];
