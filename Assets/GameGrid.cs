@@ -8,6 +8,17 @@ public class GameGrid : MonoBehaviour
     public static Vector2Int numCells = new Vector2Int(15, 18);
     public GameCube[,] grid = new GameCube[numCells.x, numCells.y];
     public PlayingPiece piecePrefab;
+    public PlayingPiece[] piecePrefab1;
+    public PlayingPiece[] piecePrefab2;
+    public PlayingPiece[] piecePrefab3;
+    public PlayingPiece[] piecePrefab4;
+    public PlayingPiece[] piecePrefab5;
+    public PlayingPiece[] piecePrefab6;
+    public PlayingPiece[] piecePrefab7;
+    public PlayingPiece[] piecePrefab8;
+    public PlayingPiece[] piecePrefab9;
+
+    int[][][,] arra = new int[10][][,];
 
     private PlayingPiece currentPiece;
     private PlayingPiece nextPiece;
@@ -38,6 +49,8 @@ public class GameGrid : MonoBehaviour
 	// Use this for initialization
 	void Start ()
     {
+        setupArra();
+
         currentPiece = MakeAPiece();
         currentPiece.transform.parent = this.transform;
         updateCurrentPieceTransform();
@@ -51,7 +64,74 @@ public class GameGrid : MonoBehaviour
     private PlayingPiece MakeAPiece()
     {
         PlayingPiece toReturn = GameObject.Instantiate(piecePrefab);
-        toReturn.Initialize(this.player);
+//        toReturn.Initialize(this.player);
+
+        //PlayingPiece toReturn;
+        switch (UnityEngine.Random.Range(1, 9))
+        {
+            case 1:
+                toReturn.Initialize(this.player, arra[1][0]);
+                break;
+            case 2:
+                toReturn.Initialize(this.player, arra[2][0]);
+                break;
+            case 3:
+                toReturn.Initialize(this.player, arra[3][UnityEngine.Random.Range(0, 3)]);
+                break;
+            case 4:
+                toReturn.Initialize(this.player, arra[4][UnityEngine.Random.Range(0, 6)]);
+                break;
+            case 5:
+                toReturn.Initialize(this.player, arra[5][UnityEngine.Random.Range(0, 9)]);
+                break;
+            case 6:
+                toReturn.Initialize(this.player, arra[6][UnityEngine.Random.Range(0, 10)]);
+                break;
+            case 7:
+                toReturn.Initialize(this.player, arra[7][UnityEngine.Random.Range(0, 7)]);
+                break;
+            case 8:
+                toReturn.Initialize(this.player, arra[8][UnityEngine.Random.Range(0, 2)]);
+                break;
+            case 9:
+                toReturn.Initialize(this.player, arra[9][0]);
+                break;
+            default:
+                throw new InvalidOperationException("unknown item type");
+                /*           case 1:
+                               toReturn = GameObject.Instantiate(piecePrefab1[0]);        
+                               break;
+                           case 2:
+                               toReturn = GameObject.Instantiate(piecePrefab2[0]);
+                               break;
+                           case 3:
+                               toReturn = GameObject.Instantiate(piecePrefab3[UnityEngine.Random.Range(0, 3)]);
+                               break;
+                           case 4:
+                               toReturn = GameObject.Instantiate(piecePrefab4[UnityEngine.Random.Range(0, 6)]);
+                               break;
+                           case 5:
+                               toReturn = GameObject.Instantiate(piecePrefab5[UnityEngine.Random.Range(0, 9)]);
+                               break;
+                           case 6:
+                               toReturn = GameObject.Instantiate(piecePrefab6[UnityEngine.Random.Range(0, 10)]);
+                               break;
+                           case 7:
+                               toReturn = GameObject.Instantiate(piecePrefab7[UnityEngine.Random.Range(0, 7)]);
+                               break;
+                           case 8:
+                               toReturn = GameObject.Instantiate(piecePrefab8[UnityEngine.Random.Range(0, 2)]);
+                               break;
+                           case 9:
+                               toReturn = GameObject.Instantiate(piecePrefab9[0]);
+                               break;
+                           default:
+                               throw new InvalidOperationException("unknown item type");
+                               */
+        }
+
+       // toReturn.Initialize(this.player);
+
         return toReturn;
     }
 
@@ -403,6 +483,70 @@ public class GameGrid : MonoBehaviour
             return true;
         }
         return false;
+    }
+
+    private void setupArra()
+    {
+        arra[0] = new int[1][,];
+
+        arra[1] = new int[1][,];
+        arra[1][0] = new int[3, 3] { { 0, 0, 0 }, { 0, 1, 0 }, { 0, 0, 0 } };
+
+        arra[2] = new int[1][,];
+        arra[2][0] = new int[3, 3] { { 0, 1, 0 }, { 0, 1, 0 }, { 0, 0, 0 } };
+
+        arra[3] = new int[3][,];
+        arra[3][0] = new int[3, 3] { { 0, 1, 0 }, { 0, 1, 1 }, { 0, 0, 0 } };
+        arra[3][1] = new int[3, 3] { { 0, 1, 0 }, { 1, 1, 0 }, { 0, 0, 0 } };
+        arra[3][2] = new int[3, 3] { { 0, 1, 0 }, { 0, 1, 0 }, { 0, 1, 0 } };
+
+        arra[4] = new int[6][,];
+        arra[4][0] = new int[3, 3] { { 0, 1, 1 }, { 1, 1, 0 }, { 0, 0, 0 } };
+        arra[4][1] = new int[3, 3] { { 0, 1, 0 }, { 1, 1, 1 }, { 0, 0, 0 } };
+        arra[4][2] = new int[3, 3] { { 1, 1, 0 }, { 0, 1, 1 }, { 0, 0, 0 } };
+        arra[4][3] = new int[3, 3] { { 1, 1, 0 }, { 0, 1, 0 }, { 0, 1, 0 } };
+        arra[4][4] = new int[3, 3] { { 0, 1, 1 }, { 0, 1, 0 }, { 0, 1, 0 } };
+        arra[4][5] = new int[3, 3] { { 1, 1, 0 }, { 1, 1, 0 }, { 0, 0, 0 } };
+
+        arra[5] = new int[9][,];
+        arra[5][0] = new int[3, 3] { { 1, 1, 0 }, { 1, 1, 1 }, { 0, 0, 0 } };
+        arra[5][1] = new int[3, 3] { { 1, 1, 1 }, { 1, 1, 0 }, { 0, 0, 0 } };
+        arra[5][2] = new int[3, 3] { { 1, 0, 1 }, { 1, 1, 1 }, { 0, 0, 0 } };
+        arra[5][3] = new int[3, 3] { { 1, 0, 0 }, { 1, 1, 1 }, { 0, 0, 1 } };
+        arra[5][4] = new int[3, 3] { { 0, 0, 1 }, { 1, 1, 1 }, { 1, 0, 0 } };
+        arra[5][5] = new int[3, 3] { { 0, 1, 0 }, { 1, 1, 1 }, { 0, 1, 0 } };
+        arra[5][6] = new int[3, 3] { { 0, 1, 0 }, { 1, 1, 1 }, { 1, 0, 0 } };
+        arra[5][7] = new int[3, 3] { { 0, 1, 0 }, { 1, 1, 1 }, { 0, 0, 1 } };
+        arra[5][8] = new int[3, 3] { { 1, 1, 1 }, { 0, 1, 0 }, { 0, 1, 0 } };
+
+        arra[6] = new int[10][,];
+        arra[6][0] = new int[3, 3] { { 1, 1, 1 }, { 1, 1, 0 }, { 1, 0, 0 } };
+        arra[6][1] = new int[3, 3] { { 1, 1, 0 }, { 1, 1, 1 }, { 1, 0, 0 } };
+        arra[6][2] = new int[3, 3] { { 1, 1, 0 }, { 1, 1, 1 }, { 0, 1, 0 } };
+        arra[6][3] = new int[3, 3] { { 1, 1, 1 }, { 1, 1, 0 }, { 0, 1, 0 } };
+        arra[6][4] = new int[3, 3] { { 1, 1, 0 }, { 1, 1, 0 }, { 0, 1, 1 } };
+        arra[6][5] = new int[3, 3] { { 1, 1, 0 }, { 1, 1, 1 }, { 0, 0, 1 } };
+        arra[6][6] = new int[3, 3] { { 1, 1, 1 }, { 1, 1, 1 }, { 0, 0, 0 } };
+        arra[6][7] = new int[3, 3] { { 1, 0, 1 }, { 1, 1, 1 }, { 0, 1, 0 } };
+        arra[6][8] = new int[3, 3] { { 1, 0, 1 }, { 1, 1, 1 }, { 1, 0, 0 } };
+        arra[6][9] = new int[3, 3] { { 1, 0, 1 }, { 1, 1, 1 }, { 0, 0, 1 } };
+
+        arra[7] = new int[7][,];
+        arra[7][0] = new int[3, 3] { { 0, 0, 1 }, { 1, 1, 1 }, { 1, 1, 1 } };
+        arra[7][1] = new int[3, 3] { { 0, 1, 0 }, { 1, 1, 1 }, { 1, 1, 1 } };
+        arra[7][2] = new int[3, 3] { { 1, 0, 0 }, { 1, 1, 1 }, { 1, 1, 1 } };
+        arra[7][3] = new int[3, 3] { { 1, 1, 0 }, { 1, 1, 1 }, { 0, 1, 1 } };
+        arra[7][4] = new int[3, 3] { { 1, 1, 1 }, { 1, 1, 0 }, { 0, 1, 1 } };
+        arra[7][5] = new int[3, 3] { { 1, 1, 1 }, { 0, 1, 0 }, { 1, 1, 1 } };
+        arra[7][6] = new int[3, 3] { { 1, 1, 0 }, { 1, 1, 1 }, { 1, 0, 1 } };
+
+        arra[8] = new int[2][,];
+        arra[8][0] = new int[3, 3] { { 0, 1, 1 }, { 1, 1, 1 }, { 1, 1, 1 } };
+        arra[8][1] = new int[3, 3] { { 1, 0, 1 }, { 1, 1, 1 }, { 1, 1, 1 } };
+
+
+        arra[9] = new int[1][,];
+        arra[9][0] = new int[3, 3] { { 1, 1, 1 }, { 1, 1, 1 }, { 1, 1, 1 } };
     }
     
 }

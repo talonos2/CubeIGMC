@@ -1530,10 +1530,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemy: {fileID: 2136655416}
-  energyBar: {fileID: 1550492036}
-  healthBar: {fileID: 1533844065}
-  shieldBar: {fileID: 707078242}
-  attackChargeBar: {fileID: 707078242}
+  energyBar: {fileID: 490559615}
+  healthBar: {fileID: 237988950}
+  shieldBar: {fileID: 2035276240}
+  attackChargeBar: {fileID: 1733273099}
 --- !u!4 &529986815
 Transform:
   m_ObjectHideFlags: 0
@@ -2323,6 +2323,55 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   piecePrefab: {fileID: 114006444645062500, guid: efed92ad54b997e46a8e3647c31424e2,
     type: 2}
+  piecePrefab1:
+  - {fileID: 114095056277041898, guid: a32d385ee0877c748b3b535634c386ac, type: 2}
+  piecePrefab2:
+  - {fileID: 114311647691687732, guid: 42b42d6110820d742a2fccc2799c56e0, type: 2}
+  piecePrefab3:
+  - {fileID: 114740635184842158, guid: cdeb70567589c604c88172611a025efb, type: 2}
+  - {fileID: 114925501800254712, guid: f2ac436bb67be42469124a3450269498, type: 2}
+  - {fileID: 114930095513249774, guid: 37646fd99603f8a448cada54c0868617, type: 2}
+  piecePrefab4:
+  - {fileID: 114352014671050160, guid: 0f5ce06c3d5c7034b8aeb71ab507fe8b, type: 2}
+  - {fileID: 114144488834323918, guid: c51c97875c796d54da62ad1e3898b002, type: 2}
+  - {fileID: 114270695892907620, guid: 77a68d6feebdac143bbe9f96e209c541, type: 2}
+  - {fileID: 114549839874127306, guid: ed6db87e920a69d4a9ead4950d45f4c8, type: 2}
+  - {fileID: 114035695679008440, guid: 036f9153b93f051469bf54364889de93, type: 2}
+  - {fileID: 114201572196866460, guid: c3e98d41c8d8887498c9bea3540d2e69, type: 2}
+  piecePrefab5:
+  - {fileID: 114131784856403788, guid: d2507068b5a08844abbc93763651e71f, type: 2}
+  - {fileID: 114067787776702740, guid: 17568fd7f7e0b6642a9d407636d1e4b8, type: 2}
+  - {fileID: 114161122718667858, guid: a8b8c239492e09a4db886366d1842c5f, type: 2}
+  - {fileID: 114850559049286274, guid: 5381d69dead602f45bca076d51db7b62, type: 2}
+  - {fileID: 114867172530014590, guid: e0a9549cfeeec23408ad3ab1a04ae50b, type: 2}
+  - {fileID: 114183644811408544, guid: b3352e0e1dca268429bbb3ab2ff81512, type: 2}
+  - {fileID: 114256576124994924, guid: 55bed54a4d19c864491ba38759bed951, type: 2}
+  - {fileID: 114814003379698940, guid: 6bbb1b6e9839e174ca741891b6de3e73, type: 2}
+  - {fileID: 114643091176393902, guid: af8aad9989ed34a4b9a2ba17aa61f923, type: 2}
+  piecePrefab6:
+  - {fileID: 114881086862523150, guid: 28381b60ebb229d4bb885545e73031a4, type: 2}
+  - {fileID: 114536922149038464, guid: 829c038635770c241971e223c2b92b9e, type: 2}
+  - {fileID: 114511721387224970, guid: e0855befde8aff14d82a32c6754b3806, type: 2}
+  - {fileID: 114404904792294094, guid: 151ad026caa4df7498dbdedf65ffe9a6, type: 2}
+  - {fileID: 114463087941618190, guid: 9272a3bcad42ae146b6c21a9055d8347, type: 2}
+  - {fileID: 114417032163217638, guid: f3963c1883ba09941961ffa8f4b10fa2, type: 2}
+  - {fileID: 114856833275629732, guid: f28c9aa7b00910b4499ad5639b1067bf, type: 2}
+  - {fileID: 114970261066036688, guid: 2893e8a84a3bc2e45981b57f6094af8a, type: 2}
+  - {fileID: 114405697436180572, guid: 2568ac59bbe6b104fb0783e15038c843, type: 2}
+  - {fileID: 114092881736356174, guid: d446acdf91bb27140af099c2043116f9, type: 2}
+  piecePrefab7:
+  - {fileID: 114010877067350850, guid: 02f7a562fcbef3d48b1935527a9bd7dc, type: 2}
+  - {fileID: 114258623208551420, guid: cfb995f8413290043b87e3928057079c, type: 2}
+  - {fileID: 114549557972111044, guid: cf6ecff412d0f8948969c12ad8638953, type: 2}
+  - {fileID: 114416305429536894, guid: 7f259e99c6864184bb6e47544307df76, type: 2}
+  - {fileID: 114691981864640028, guid: cfee950f844ba4b4a8172edbba1afddb, type: 2}
+  - {fileID: 114817351521833830, guid: a9ed67e5de0d10c499c1a39a039615f0, type: 2}
+  - {fileID: 114245358178328288, guid: 0cf56ab6e92bb374294d3cce62a5ee3b, type: 2}
+  piecePrefab8:
+  - {fileID: 114839804466269496, guid: e62a698694faca447bf575d3634cc59b, type: 2}
+  - {fileID: 114175182939718396, guid: 4a785732136975a47b271f120b575f68, type: 2}
+  piecePrefab9:
+  - {fileID: 114797764318609652, guid: b01e8c4d05d67d049af9adfde50a1129, type: 2}
   player: {fileID: 529986814}
   isPlayerOne: 1
 --- !u!4 &1526531518
@@ -3328,8 +3377,57 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   piecePrefab: {fileID: 114006444645062500, guid: efed92ad54b997e46a8e3647c31424e2,
     type: 2}
+  piecePrefab1:
+  - {fileID: 114095056277041898, guid: a32d385ee0877c748b3b535634c386ac, type: 2}
+  piecePrefab2:
+  - {fileID: 114311647691687732, guid: 42b42d6110820d742a2fccc2799c56e0, type: 2}
+  piecePrefab3:
+  - {fileID: 114740635184842158, guid: cdeb70567589c604c88172611a025efb, type: 2}
+  - {fileID: 114925501800254712, guid: f2ac436bb67be42469124a3450269498, type: 2}
+  - {fileID: 114930095513249774, guid: 37646fd99603f8a448cada54c0868617, type: 2}
+  piecePrefab4:
+  - {fileID: 114352014671050160, guid: 0f5ce06c3d5c7034b8aeb71ab507fe8b, type: 2}
+  - {fileID: 114144488834323918, guid: c51c97875c796d54da62ad1e3898b002, type: 2}
+  - {fileID: 114270695892907620, guid: 77a68d6feebdac143bbe9f96e209c541, type: 2}
+  - {fileID: 114549839874127306, guid: ed6db87e920a69d4a9ead4950d45f4c8, type: 2}
+  - {fileID: 114035695679008440, guid: 036f9153b93f051469bf54364889de93, type: 2}
+  - {fileID: 114201572196866460, guid: c3e98d41c8d8887498c9bea3540d2e69, type: 2}
+  piecePrefab5:
+  - {fileID: 114131784856403788, guid: d2507068b5a08844abbc93763651e71f, type: 2}
+  - {fileID: 114067787776702740, guid: 17568fd7f7e0b6642a9d407636d1e4b8, type: 2}
+  - {fileID: 114161122718667858, guid: a8b8c239492e09a4db886366d1842c5f, type: 2}
+  - {fileID: 114850559049286274, guid: 5381d69dead602f45bca076d51db7b62, type: 2}
+  - {fileID: 114867172530014590, guid: e0a9549cfeeec23408ad3ab1a04ae50b, type: 2}
+  - {fileID: 114183644811408544, guid: b3352e0e1dca268429bbb3ab2ff81512, type: 2}
+  - {fileID: 114256576124994924, guid: 55bed54a4d19c864491ba38759bed951, type: 2}
+  - {fileID: 114814003379698940, guid: 6bbb1b6e9839e174ca741891b6de3e73, type: 2}
+  - {fileID: 114643091176393902, guid: af8aad9989ed34a4b9a2ba17aa61f923, type: 2}
+  piecePrefab6:
+  - {fileID: 114881086862523150, guid: 28381b60ebb229d4bb885545e73031a4, type: 2}
+  - {fileID: 114536922149038464, guid: 829c038635770c241971e223c2b92b9e, type: 2}
+  - {fileID: 114511721387224970, guid: e0855befde8aff14d82a32c6754b3806, type: 2}
+  - {fileID: 114404904792294094, guid: 151ad026caa4df7498dbdedf65ffe9a6, type: 2}
+  - {fileID: 114463087941618190, guid: 9272a3bcad42ae146b6c21a9055d8347, type: 2}
+  - {fileID: 114417032163217638, guid: f3963c1883ba09941961ffa8f4b10fa2, type: 2}
+  - {fileID: 114856833275629732, guid: f28c9aa7b00910b4499ad5639b1067bf, type: 2}
+  - {fileID: 114970261066036688, guid: 2893e8a84a3bc2e45981b57f6094af8a, type: 2}
+  - {fileID: 114405697436180572, guid: 2568ac59bbe6b104fb0783e15038c843, type: 2}
+  - {fileID: 114092881736356174, guid: d446acdf91bb27140af099c2043116f9, type: 2}
+  piecePrefab7:
+  - {fileID: 114010877067350850, guid: 02f7a562fcbef3d48b1935527a9bd7dc, type: 2}
+  - {fileID: 114258623208551420, guid: cfb995f8413290043b87e3928057079c, type: 2}
+  - {fileID: 114549557972111044, guid: cf6ecff412d0f8948969c12ad8638953, type: 2}
+  - {fileID: 114416305429536894, guid: 7f259e99c6864184bb6e47544307df76, type: 2}
+  - {fileID: 114691981864640028, guid: cfee950f844ba4b4a8172edbba1afddb, type: 2}
+  - {fileID: 114817351521833830, guid: a9ed67e5de0d10c499c1a39a039615f0, type: 2}
+  - {fileID: 114245358178328288, guid: 0cf56ab6e92bb374294d3cce62a5ee3b, type: 2}
+  piecePrefab8:
+  - {fileID: 114839804466269496, guid: e62a698694faca447bf575d3634cc59b, type: 2}
+  - {fileID: 114175182939718396, guid: 4a785732136975a47b271f120b575f68, type: 2}
+  piecePrefab9:
+  - {fileID: 114797764318609652, guid: b01e8c4d05d67d049af9adfde50a1129, type: 2}
   player: {fileID: 2136655416}
-  isPlayerOne: 0
+  isPlayerOne: 1
 --- !u!1 &2035276239
 GameObject:
   m_ObjectHideFlags: 0
@@ -3624,10 +3722,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemy: {fileID: 529986814}
-  energyBar: {fileID: 1654091081}
-  healthBar: {fileID: 2133335243}
-  shieldBar: {fileID: 101185298}
-  attackChargeBar: {fileID: 1087815353}
+  energyBar: {fileID: 1272279420}
+  healthBar: {fileID: 1177474146}
+  shieldBar: {fileID: 1495248980}
+  attackChargeBar: {fileID: 361307078}
 --- !u!4 &2136655417
 Transform:
   m_ObjectHideFlags: 0
