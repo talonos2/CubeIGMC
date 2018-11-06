@@ -16,10 +16,24 @@ public class PlayingPiece : MonoBehaviour
     {
 	}
 
-    public void Initialize(Combatant c)
+    public void Initialize(Combatant c, int[,] arra)
     {
         owner = c;
-        CreateRandomPiece();
+
+        for (int x = 0; x < 3; x++)
+        {
+            for (int y = 0; y < 3; y++)
+            {
+                if (arra[x, y] == 1)
+                {
+                    piecemap[x, y] = MakeCube();
+                    piecemap[x, y].transform.parent = this.transform;
+                    piecemap[x, y].transform.localPosition = new Vector3(x - 1, 0, y - 1);
+                }
+            }
+        }
+
+        //CreateRandomPiece();
     }
 
 
