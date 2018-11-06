@@ -9,38 +9,18 @@ public class PlayingPiece : MonoBehaviour
     private GameCube[,] piecemap = new GameCube[3, 3];
 
     public GameCube cube;
-    public AudioSource[] slideSounds;
 
 	// Use this for initialization
-	public void Start ()
+	void Start ()
     {
+        this.owner = new Combatant();
+        CreateRandomPiece();
 	}
-
-    public void Initialize(Combatant c, int[,] arra)
-    {
-        owner = c;
-
-        for (int x = 0; x < 3; x++)
-        {
-            for (int y = 0; y < 3; y++)
-            {
-                if (arra[x, y] == 1)
-                {
-                    piecemap[x, y] = MakeCube();
-                    piecemap[x, y].transform.parent = this.transform;
-                    piecemap[x, y].transform.localPosition = new Vector3(x - 1, 0, y - 1);
-                }
-            }
-        }
-
-        //CreateRandomPiece();
-    }
 
 
     /*REPLACE*/
     public void CreateRandomPiece ()
     {
-        Debug.Log("Making a Piece");
         piecemap[1, 1] = MakeCube();
         if (UnityEngine.Random.Range(0,2) == 0) { piecemap[0, 1] = MakeCube(); }
         if (UnityEngine.Random.Range(0, 2) == 0) { piecemap[2, 1] = MakeCube(); }
@@ -145,16 +125,8 @@ public class PlayingPiece : MonoBehaviour
 		
 	}
 
-    internal GameCube GetCubeAt(int x, int y)
+    internal GameCube getCubeAt(int x, int y)
     {
         return piecemap[x, y];
-    }
-
-    private int lastPlayed = 0;
-
-    internal void PlaySlideSound()
-    {
-        slideSounds[lastPlayed++].Play();
-        lastPlayed %= slideSounds.Length;
     }
 }
