@@ -6,7 +6,11 @@ public class SpaceshipPawn : MonoBehaviour {
 
     public LaserBullet bulletPrefab;
     public float distanceBetweenShips;
-    public float distanceToMyNose; 
+    public float distanceToMyNose;
+
+    public AudioSource chargeSound;
+    public AudioSource getHitHeavySound;
+    public AudioSource getHitLightSound;
 
 	// Use this for initialization
 	void Start () {
@@ -27,4 +31,6 @@ public class SpaceshipPawn : MonoBehaviour {
         bullet.Initialize(enemy, flightTime, damage);
         
     }
+
+
 }

@@ -112,6 +112,34 @@ public class Combatant : MonoBehaviour
             shields = 0;
             health -= damage;
         }
+
+        if (damage < 0)
+        {
+            //No damage left; shield absorbed it all.
+            //pawn.shieldSound.Stop();
+            //pawn.shieldSound.Play();
+        }
+        else
+        {
+            //Make sound based on modified damage
+            if (damage > DamageNeededForLargeSFX())
+            {
+                pawn.getHitHeavySound.Stop();
+                pawn.getHitHeavySound.pitch = (damage / MaxHealth()) * 2;
+                pawn.getHitHeavySound.Play();
+            }
+            else
+            {
+                pawn.getHitLightSound.Play();
+                pawn.getHitLightSound.pitch = (damage / MaxHealth()) * 3 + .5f;
+                pawn.getHitLightSound.Play();
+            }
+        }
+    }
+
+    private float DamageNeededForLargeSFX()
+    {
+        return MaxHealth() / .3f;
     }
 
     private float DamageAmount()
@@ -156,6 +184,7 @@ public class Combatant : MonoBehaviour
     public void ChargeEnergy(int energyCubes)
     {
         energy += GetEnergyChargeAmount(energyCubes);
+        energy = Math.Min(energy, MaxEnergy());
     }
 
     private float GetShieldChargeAmount(float shieldCubes)
