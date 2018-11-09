@@ -95,8 +95,19 @@ public class Combatant : MonoBehaviour
     }
 
     private void Fire()
-    {
-        pawn.FireBullet(DamageAmount(), enemy, 2);
+    { 
+
+        float damage = DamageAmount();
+
+        pawn.FireBullet(damage, enemy, 2);
+
+        Debug.Log("Damage Sent: " + damage + " and needed " + DamageNeededForLargeSFX());
+        pawn.fireSound.Stop();
+        pawn.getHitLightSound.pitch = Math.Max(2.0f - (damage / DamageNeededForLargeSFX()),1);
+        pawn.getHitLightSound.volume = Math.Min(damage / DamageNeededForLargeSFX(),1);
+        Debug.Log("Fire: " + pawn.getHitLightSound.pitch + ", " + pawn.getHitLightSound.volume);
+        pawn.fireSound.Play();
+
         this.queuedDamage = 0;
     }
 
@@ -116,22 +127,24 @@ public class Combatant : MonoBehaviour
         if (damage < 0)
         {
             //No damage left; shield absorbed it all.
-            //pawn.shieldSound.Stop();
-            //pawn.shieldSound.Play();
+            pawn.shieldSound.Stop();
+            pawn.shieldSound.Play();
         }
         else
         {
+            Debug.Log("Damage Recieved: " + damage +" and needed "+DamageNeededForLargeSFX());
             //Make sound based on modified damage
             if (damage > DamageNeededForLargeSFX())
             {
                 pawn.getHitHeavySound.Stop();
-                pawn.getHitHeavySound.pitch = (damage / MaxHealth()) * 2;
                 pawn.getHitHeavySound.Play();
             }
             else
             {
-                pawn.getHitLightSound.Play();
-                pawn.getHitLightSound.pitch = (damage / MaxHealth()) * 3 + .5f;
+                pawn.getHitLightSound.Stop();
+                pawn.getHitLightSound.pitch = 2.0f-(damage / DamageNeededForLargeSFX());
+                pawn.getHitLightSound.volume = damage / DamageNeededForLargeSFX();
+                Debug.Log("Hit Light: "+pawn.getHitLightSound.pitch + ", "+pawn.getHitLightSound.volume);
                 pawn.getHitLightSound.Play();
             }
         }
@@ -139,7 +152,7 @@ public class Combatant : MonoBehaviour
 
     private float DamageNeededForLargeSFX()
     {
-        return MaxHealth() / .3f;
+        return MaxHealth() * .3f;
     }
 
     private float DamageAmount()

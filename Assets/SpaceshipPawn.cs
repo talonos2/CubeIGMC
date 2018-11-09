@@ -11,9 +11,11 @@ public class SpaceshipPawn : MonoBehaviour {
     public AudioSource chargeSound;
     public AudioSource getHitHeavySound;
     public AudioSource getHitLightSound;
+    public AudioSource shieldSound;
+    public AudioSource fireSound;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
 		
 	}
 	
