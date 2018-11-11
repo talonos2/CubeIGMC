@@ -61,6 +61,8 @@ public class GameGrid : MonoBehaviour
 
     private readonly Quaternion[] orientations = { Quaternion.Euler(0, 0, 0), Quaternion.Euler(0, 90, 0), Quaternion.Euler(0, 180, 0), Quaternion.Euler(0, 270, 0) };
 
+    private readonly int[] pieceSizeBag = { 1, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 7, 7, 8 };
+
 	// Use this for initialization
 	void Start ()
     {
@@ -71,7 +73,7 @@ public class GameGrid : MonoBehaviour
     {
         PlayingPiece toReturn = GameObject.Instantiate(piecePrefab);
 
-        int pieceSize = dice.NextInt(1, 10);
+        int pieceSize = pieceSizeBag[dice.NextInt(0, pieceSizeBag.Length)];
         toReturn.Initialize(this.player, dice, pieceArray[pieceSize][dice.NextInt(0, pieceArray[pieceSize].Length)]);
 
         return toReturn;
