@@ -27,7 +27,7 @@ public class Combatant : MonoBehaviour
         shields = 0;
     }
 
-    internal CubeType GetRandomCubeType()
+    internal CubeType GetRandomCubeType(SeededRandom dice)
     {
         List<CubeType> randomBag = new List<CubeType>();
         for (int x = 0; x < 100; x++)
@@ -46,7 +46,7 @@ public class Combatant : MonoBehaviour
         {
             randomBag.Add(CubeType.PSI);
         }
-        return randomBag[UnityEngine.Random.Range(0, randomBag.Count - 1)];
+        return randomBag[dice.NextInt(0, randomBag.Count)];
     }
 
     private int PsiCubes()
@@ -101,6 +101,7 @@ public class Combatant : MonoBehaviour
 
         pawn.FireBullet(damage, enemy, 2);
 
+        pawn.chargeSound.Stop();
         Debug.Log("Damage Sent: " + damage + " and needed " + DamageNeededForLargeSFX());
         pawn.fireSound.Stop();
         pawn.getHitLightSound.pitch = Math.Max(2.0f - (damage / DamageNeededForLargeSFX()),1);
@@ -186,6 +187,7 @@ public class Combatant : MonoBehaviour
         if (attackCharge == 0)
         {
             attackCharge = AttackChargeTime();
+            pawn.chargeSound.Play();
         }
     }
 

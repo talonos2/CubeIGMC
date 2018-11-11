@@ -16,7 +16,7 @@ public class PlayingPiece : MonoBehaviour
     {
 	}
 
-    public void Initialize(Combatant c, int[,] arra)
+    public void Initialize(Combatant c, SeededRandom dice, int[,] arra)
     {
         owner = c;
 
@@ -26,7 +26,7 @@ public class PlayingPiece : MonoBehaviour
             {
                 if (arra[x, y] == 1)
                 {
-                    piecemap[x, y] = MakeCube();
+                    piecemap[x, y] = MakeCube(dice);
                     piecemap[x, y].transform.parent = this.transform;
                     piecemap[x, y].transform.localPosition = new Vector3(x - 1, 0, y - 1);
                 }
@@ -34,10 +34,10 @@ public class PlayingPiece : MonoBehaviour
         }
     }
 
-    private GameCube MakeCube()
+    private GameCube MakeCube(SeededRandom dice)
     {
         GameCube toReturn = GameObject.Instantiate(cube);
-        toReturn.Initialize(owner);
+        toReturn.Initialize(owner, dice);
         return toReturn;
     }
 

@@ -15,14 +15,26 @@ public class GameGrid : MonoBehaviour
     public AudioSource dropSound;
     public AudioSource matchSound;
 
-    private UnityEngine.Random gameplayDice;
     private PlayingPiece currentPiece;
     private PlayingPiece nextPiece;
 
+    private SeededRandom dice;
+
     internal void SetSeedAndStart(int randomSeed)
     {
-        this.gameplayDice = new UnityEngine.Random();
-        //...uh... can I actually *do* anything with that? Doesn't seem like it...
+
+        dice = new SeededRandom(randomSeed);
+
+        SetupPieceArray();
+
+        currentPiece = MakeAPiece();
+        currentPiece.transform.parent = this.transform;
+        UpdateCurrentPieceTransform();
+
+        nextPieceHolder = transform.Find("PieceHolder");
+        nextPiece = MakeAPiece();
+        nextPiece.transform.parent = nextPieceHolder;
+        nextPiece.transform.localPosition = Vector3.zero;
 
     }
 
@@ -45,37 +57,28 @@ public class GameGrid : MonoBehaviour
 
     private float timeSinceLastMove = 0;
     private float timeSinceLastRot = 0;
-    private float msNeededToLerp = 62;
+    private readonly float msNeededToLerp = 62;
 
-    private Quaternion[] orientations = { Quaternion.Euler(0, 0, 0), Quaternion.Euler(0, 90, 0), Quaternion.Euler(0, 180, 0), Quaternion.Euler(0, 270, 0) };
+    private readonly Quaternion[] orientations = { Quaternion.Euler(0, 0, 0), Quaternion.Euler(0, 90, 0), Quaternion.Euler(0, 180, 0), Quaternion.Euler(0, 270, 0) };
 
 	// Use this for initialization
 	void Start ()
     {
-        SetupPieceArray();
 
-        currentPiece = MakeAPiece();
-        currentPiece.transform.parent = this.transform;
-        updateCurrentPieceTransform();
-
-        nextPieceHolder = transform.Find("PieceHolder");
-        nextPiece = MakeAPiece();
-        nextPiece.transform.parent = nextPieceHolder;
-        nextPiece.transform.localPosition = Vector3.zero;
     }
 
     private PlayingPiece MakeAPiece()
     {
         PlayingPiece toReturn = GameObject.Instantiate(piecePrefab);
 
-        int pieceSize = UnityEngine.Random.Range(1, 10);
-        toReturn.Initialize(this.player, pieceArray[pieceSize][UnityEngine.Random.Range(0, pieceArray[pieceSize].Length)]);
+        int pieceSize = dice.NextInt(1, 10);
+        toReturn.Initialize(this.player, dice, pieceArray[pieceSize][dice.NextInt(0, pieceArray[pieceSize].Length)]);
 
         return toReturn;
     }
 
     /*REPLACE: This moves the graphical representation of the piece.*/
-    private void updateCurrentPieceTransform()
+    private void UpdateCurrentPieceTransform()
     {
         timeSinceLastMove += Time.deltaTime * 1000;
         timeSinceLastRot += Time.deltaTime * 1000;
@@ -184,7 +187,7 @@ public class GameGrid : MonoBehaviour
             }
         }
 
-        updateCurrentPieceTransform();
+        UpdateCurrentPieceTransform();
 
         for (int x = 0; x < numCells.x; x++)
         {
@@ -454,7 +457,7 @@ public class GameGrid : MonoBehaviour
         currentPiece = nextPiece;
         currentPiece.transform.parent = this.transform;
         currentPiecePosition = new Vector2Int(1, 1);
-        updateCurrentPieceTransform();
+        UpdateCurrentPieceTransform();
 
         nextPiece = MakeAPiece();
         nextPiece.transform.parent = nextPieceHolder;

@@ -48,10 +48,10 @@ public class GameCube : MonoBehaviour
 		
 	}
 
-    internal void Initialize(Combatant owner)
+    internal void Initialize(Combatant owner, SeededRandom dice)
     {
         this.owner = owner;
-        this.type = owner.GetRandomCubeType();
+        this.type = owner.GetRandomCubeType(dice);
         switch(type)
         {
             case CubeType.ATTACK:
