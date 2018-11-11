@@ -754,6 +754,41 @@ Prefab:
       propertyPath: m_LightProbeUsage
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 114233455349525356, guid: 0dfe140aceaeddc46a89eedbbb378123,
+        type: 2}
+      propertyPath: transpositionalWaggle
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 114233455349525356, guid: 0dfe140aceaeddc46a89eedbbb378123,
+        type: 2}
+      propertyPath: waggleSpeed
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114233455349525356, guid: 0dfe140aceaeddc46a89eedbbb378123,
+        type: 2}
+      propertyPath: rotationalWaggle
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114233455349525356, guid: 0dfe140aceaeddc46a89eedbbb378123,
+        type: 2}
+      propertyPath: rollWaggle
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 114233455349525356, guid: 0dfe140aceaeddc46a89eedbbb378123,
+        type: 2}
+      propertyPath: pitchWaggle
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114233455349525356, guid: 0dfe140aceaeddc46a89eedbbb378123,
+        type: 2}
+      propertyPath: altitudinalWaggle
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114233455349525356, guid: 0dfe140aceaeddc46a89eedbbb378123,
+        type: 2}
+      propertyPath: phaseOffset
+      value: 100
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0dfe140aceaeddc46a89eedbbb378123, type: 2}
   m_IsPrefabAsset: 0
@@ -2372,6 +2407,36 @@ Prefab:
         type: 2}
       propertyPath: m_LightProbeUsage
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114233455349525356, guid: 0dfe140aceaeddc46a89eedbbb378123,
+        type: 2}
+      propertyPath: transpositionalWaggle
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 114233455349525356, guid: 0dfe140aceaeddc46a89eedbbb378123,
+        type: 2}
+      propertyPath: waggleSpeed
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114233455349525356, guid: 0dfe140aceaeddc46a89eedbbb378123,
+        type: 2}
+      propertyPath: rotationalWaggle
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114233455349525356, guid: 0dfe140aceaeddc46a89eedbbb378123,
+        type: 2}
+      propertyPath: rollWaggle
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 114233455349525356, guid: 0dfe140aceaeddc46a89eedbbb378123,
+        type: 2}
+      propertyPath: pitchWaggle
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114233455349525356, guid: 0dfe140aceaeddc46a89eedbbb378123,
+        type: 2}
+      propertyPath: altitudinalWaggle
+      value: 0.1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0dfe140aceaeddc46a89eedbbb378123, type: 2}
