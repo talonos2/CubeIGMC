@@ -19,6 +19,11 @@ public class CombatInitializer : MonoBehaviour {
         grid2.SetEnemy();
 
         int randomSeed = UnityEngine.Random.Range(1, 65535);
+        if (grid2.isPlayedByAI)
+        {
+            grid2.LoadAI();
+            randomSeed = grid2.GetAISeed();
+        }
 
         grid1.SetSeedAndStart(randomSeed);
         grid2.SetSeedAndStart(randomSeed);

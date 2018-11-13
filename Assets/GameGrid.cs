@@ -11,11 +11,29 @@ public class GameGrid : MonoBehaviour
     public GameCube[,] grid = new GameCube[numCells.x, numCells.y];
     public PlayingPiece piecePrefab;
     public PowerupEffect powerUpEffect;
+    public TextAsset aIText;
+    private AIPlayer aIPlayer = new AIPlayer();
 
     int[][][,] pieceArray = new int[10][][,];
 
     public AudioSource dropSound;
     public AudioSource matchSound;
+
+    internal void LoadAI()
+    {
+        string inputJson = aIText.text;
+        aIPlayer = JsonUtility.FromJson<AIPlayer>(inputJson);
+
+    }
+
+    internal int GetAISeed()
+    {
+        if (!isPlayedByAI)
+        {
+            Debug.LogError("Warning: Request for the seed of an AI that shouldn't exist!");
+        }
+        return aIPlayer.seed;
+    }
 
     private PlayingPiece currentPiece;
     private PlayingPiece nextPiece;
@@ -127,13 +145,11 @@ public class GameGrid : MonoBehaviour
 
     private bool hasSaved;
 
+    public bool isPlayedByAI;
+
     // Update is called once per frame
     void Update ()
     {
-        HandleUpMovement();
-        HandleDownMovement();
-        HandleLeftMovement();
-        HandleRightMovement();
 
         if (Time.timeSinceLevelLoad > 60 & isRecording & !hasSaved)
         {
@@ -141,7 +157,27 @@ public class GameGrid : MonoBehaviour
             hasSaved = true;
         }
 
-        if (isPlayerOne ? Input.GetButtonDown("Place_P1") : Input.GetButtonDown("Place_P2"))
+        if (isPlayedByAI)
+        {
+            aIPlayer.TickAI();
+        }
+
+        if (isPlayedByAI)
+        {
+            if (aIPlayer.GetButtonDown("UP")) { TryGoUp(); }
+            if (aIPlayer.GetButtonDown("DOWN")) { TryGoDown(); }
+            if (aIPlayer.GetButtonDown("LEFT")) { TryGoLeft(); }
+            if (aIPlayer.GetButtonDown("RIGHT")) { TryGoRight(); }
+        }
+        else
+        {
+            HandleUpMovement();
+            HandleDownMovement();
+            HandleLeftMovement();
+            HandleRightMovement();
+        }
+
+        if (isPlayerOne ? Input.GetButtonDown("Place_P1") : (Input.GetButtonDown("Place_P2")|| aIPlayer.GetButtonDown("Place")))
         {
             //Fallback: If there's somebohw someting directly underneath you, do not place. Should never happen in practice.
             for (int x = 0; x < 3; x++)
@@ -150,15 +186,15 @@ public class GameGrid : MonoBehaviour
                 {
                     if (currentPiece.HasBlockAt(x, y) && IsInInvalidArea(currentPiecePosition.x + x - 1, currentPiecePosition.y + y - 1))
                     {
-                        if (isRecording) { recorder.RegisterEvent(GameRecorder.DROP); }
                         return;
                     }
                 }
             }
+            if (isRecording) { recorder.RegisterEvent(GameRecorder.DROP); }
             DropPiece();
         }
 
-        if (isPlayerOne ? Input.GetButtonDown("Rotate1_P1") : Input.GetButtonDown("Rotate1_P2"))
+        if (isPlayerOne ? Input.GetButtonDown("Rotate1_P1") : (Input.GetButtonDown("Rotate1_P2") || aIPlayer.GetButtonDown("Rotate1")))
         {
             bool[,] surroundings = new bool[3, 3];
             for (int x = 0; x < 3; x++)
@@ -182,7 +218,7 @@ public class GameGrid : MonoBehaviour
             }
         }
 
-        if (isPlayerOne ? Input.GetButtonDown("Rotate2_P1") : Input.GetButtonDown("Rotate2_P2"))
+        if (isPlayerOne ? Input.GetButtonDown("Rotate2_P1") : (Input.GetButtonDown("Rotate2_P2") || aIPlayer.GetButtonDown("Rotate2")))
         {
             bool[,] surroundings = new bool[3, 3];
             for (int x = 0; x < 3; x++)
@@ -222,177 +258,193 @@ public class GameGrid : MonoBehaviour
 
     private void HandleUpMovement()
     {
-        if ((isPlayerOne ? Input.GetAxis("Vertical_P1") > 0 : Input.GetAxis("Vertical_P2") > 0) && !isUpBeingHeld)
+        if ((isPlayerOne ? Input.GetAxis("Vertical_P1") > 0 : Input.GetAxis("Vertical_P2") > 0 || aIPlayer.getButtonPressed("Up")) && !isUpBeingHeld)
         {
             isUpBeingHeld = true;
             timeSinceLastMoveUpEvent = fastButtonMashSpeed * -buttonMashDebounceInput;
             justPressedUp = true;
-            if (isRecording) { recorder.RegisterEvent(GameRecorder.UP_PRESS); }
         }
         if (isUpBeingHeld)
         {
             if (timeSinceLastMoveUpEvent > fastButtonMashSpeed || justPressedUp)
             {
                 justPressedUp = false;
-                bool isBlocked = false;
-                for (int x = 0; x < 3; x++)
-                {
-                    for (int y = 0; y < 3; y++)
-                    {
-                        if (currentPiece.HasBlockAt(x, y) && IsObstructedAt(currentPiecePosition.x + x - 1, currentPiecePosition.y + y - 1 + 1))
-                        {
-                            isBlocked = true;
-                        }
-                    }
-                }
-                if (!isBlocked)
-                {
-                    prevPiecePosition = currentPiecePosition;
-                    currentPiecePosition = currentPiecePosition + new Vector2Int(0, 1);
-                    currentPiece.PlaySlideSound();
-                    timeSinceLastMove = 0f;
-                }
+                TryGoUp();
 
                 timeSinceLastMoveUpEvent %= fastButtonMashSpeed;
             }
             timeSinceLastMoveUpEvent += Time.deltaTime;
         }
-        if (!(isPlayerOne ? Input.GetAxis("Vertical_P1") > 0 : Input.GetAxis("Vertical_P2") > 0))
+        if (!(isPlayerOne ? Input.GetAxis("Vertical_P1") > 0 : Input.GetAxis("Vertical_P2") > 0 || aIPlayer.getButtonPressed("Up")))
         {
-            if (isRecording && isUpBeingHeld) { recorder.RegisterEvent(GameRecorder.UP_RELEASE); }
             isUpBeingHeld = false;
+        }
+    }
+
+    private void TryGoUp()
+    {
+        bool isBlocked = false;
+        for (int x = 0; x < 3; x++)
+        {
+            for (int y = 0; y < 3; y++)
+            {
+                if (currentPiece.HasBlockAt(x, y) && IsObstructedAt(currentPiecePosition.x + x - 1, currentPiecePosition.y + y - 1 + 1))
+                {
+                    isBlocked = true;
+                }
+            }
+        }
+        if (!isBlocked)
+        {
+            prevPiecePosition = currentPiecePosition;
+            currentPiecePosition = currentPiecePosition + new Vector2Int(0, 1);
+            currentPiece.PlaySlideSound();
+            if (isRecording) { recorder.RegisterEvent(GameRecorder.UP); }
+            timeSinceLastMove = 0f;
         }
     }
 
     private void HandleDownMovement()
     {
-        if ((isPlayerOne ? Input.GetAxis("Vertical_P1") < 0 : Input.GetAxis("Vertical_P2") < 0) && !isDownBeingHeld)
+        if ((isPlayerOne ? Input.GetAxis("Vertical_P1") < 0 : Input.GetAxis("Vertical_P2") < 0 || aIPlayer.getButtonPressed("Down")) && !isDownBeingHeld)
         {
             isDownBeingHeld = true;
             timeSinceLastMoveDownEvent = fastButtonMashSpeed * -buttonMashDebounceInput;
             justPressedDown = true;
-            if (isRecording) { recorder.RegisterEvent(GameRecorder.DOWN_PRESS); }
         }
         if (isDownBeingHeld)
         {
             if (timeSinceLastMoveDownEvent > fastButtonMashSpeed || justPressedDown)
             {
                 justPressedDown = false;
-                bool isBlocked = false;
-                for (int x = 0; x < 3; x++)
-                {
-                    for (int y = 0; y < 3; y++)
-                    {
-                        if (currentPiece.HasBlockAt(x, y) && IsObstructedAt(currentPiecePosition.x + x - 1, currentPiecePosition.y + y - 1 - 1))
-                        {
-                            isBlocked = true;
-                        }
-                    }
-                }
-                if (!isBlocked)
-                {
-                    prevPiecePosition = currentPiecePosition;
-                    currentPiecePosition = currentPiecePosition + new Vector2Int(0, -1);
-                    currentPiece.PlaySlideSound();
-                    timeSinceLastMove = 0f;
-                }
+                TryGoDown();
 
                 timeSinceLastMoveDownEvent %= fastButtonMashSpeed;
             }
             timeSinceLastMoveDownEvent += Time.deltaTime;
         }
-        if (!(isPlayerOne ? Input.GetAxis("Vertical_P1") < 0 : Input.GetAxis("Vertical_P2") < 0))
+        if (!(isPlayerOne ? Input.GetAxis("Vertical_P1") < 0 : Input.GetAxis("Vertical_P2") < 0 || aIPlayer.getButtonPressed("Down")))
         {
-            if (isRecording && isDownBeingHeld) { recorder.RegisterEvent(GameRecorder.DOWN_RELEASE); }
             isDownBeingHeld = false;
+        }
+    }
+
+    private void TryGoDown()
+    {
+        bool isBlocked = false;
+        for (int x = 0; x < 3; x++)
+        {
+            for (int y = 0; y < 3; y++)
+            {
+                if (currentPiece.HasBlockAt(x, y) && IsObstructedAt(currentPiecePosition.x + x - 1, currentPiecePosition.y + y - 1 - 1))
+                {
+                    isBlocked = true;
+                }
+            }
+        }
+        if (!isBlocked)
+        {
+            prevPiecePosition = currentPiecePosition;
+            currentPiecePosition = currentPiecePosition + new Vector2Int(0, -1);
+            currentPiece.PlaySlideSound();
+            if (isRecording) { recorder.RegisterEvent(GameRecorder.DOWN); }
+            timeSinceLastMove = 0f;
         }
     }
 
     private void HandleLeftMovement()
     {
-        if ((isPlayerOne ? Input.GetAxis("Horizontal_P1") < 0 : Input.GetAxis("Horizontal_P2") < 0) && !isLeftBeingHeld)
+        if ((isPlayerOne ? Input.GetAxis("Horizontal_P1") < 0 : Input.GetAxis("Horizontal_P2") < 0 || aIPlayer.getButtonPressed("Left")) && !isLeftBeingHeld)
         {
             isLeftBeingHeld = true;
             timeSinceLastMoveLeftEvent = fastButtonMashSpeed * -buttonMashDebounceInput;
             justPressedLeft = true;
-            if (isRecording) { recorder.RegisterEvent(GameRecorder.LEFT_PRESS); }
         }
         if (isLeftBeingHeld)
         {
             if (timeSinceLastMoveLeftEvent > fastButtonMashSpeed || justPressedLeft)
             {
                 justPressedLeft = false;
-                bool isBlocked = false;
-                for (int x = 0; x < 3; x++)
-                {
-                    for (int y = 0; y < 3; y++)
-                    {
-                        if (currentPiece.HasBlockAt(x, y) && IsObstructedAt(currentPiecePosition.x + x - 1 - 1, currentPiecePosition.y + y - 1))
-                        {
-                            isBlocked = true;
-                        }
-                    }
-                }
-                if (!isBlocked)
-                {
-                    prevPiecePosition = currentPiecePosition;
-                    currentPiecePosition = currentPiecePosition + new Vector2Int(-1, 0);
-                    currentPiece.PlaySlideSound();
-                    timeSinceLastMove = 0f;
-                }
+                TryGoLeft();
 
                 timeSinceLastMoveLeftEvent %= fastButtonMashSpeed;
             }
             timeSinceLastMoveLeftEvent += Time.deltaTime;
         }
-        if (!(isPlayerOne ? Input.GetAxis("Horizontal_P1") < 0 : Input.GetAxis("Horizontal_P2") < 0))
+        if (!(isPlayerOne ? Input.GetAxis("Horizontal_P1") < 0 : Input.GetAxis("Horizontal_P2") < 0 || aIPlayer.getButtonPressed("Left")))
         {
-            if (isRecording && isLeftBeingHeld) { recorder.RegisterEvent(GameRecorder.LEFT_RELEASE); }
             isLeftBeingHeld = false;
+        }
+    }
+
+    private void TryGoLeft()
+    {
+        bool isBlocked = false;
+        for (int x = 0; x < 3; x++)
+        {
+            for (int y = 0; y < 3; y++)
+            {
+                if (currentPiece.HasBlockAt(x, y) && IsObstructedAt(currentPiecePosition.x + x - 1 - 1, currentPiecePosition.y + y - 1))
+                {
+                    isBlocked = true;
+                }
+            }
+        }
+        if (!isBlocked)
+        {
+            prevPiecePosition = currentPiecePosition;
+            currentPiecePosition = currentPiecePosition + new Vector2Int(-1, 0);
+            if (isRecording) { recorder.RegisterEvent(GameRecorder.LEFT); }
+            currentPiece.PlaySlideSound();
+            timeSinceLastMove = 0f;
         }
     }
 
     private void HandleRightMovement()
     {
-        if ((isPlayerOne ? Input.GetAxis("Horizontal_P1") > 0 : Input.GetAxis("Horizontal_P2") > 0) && !isRightBeingHeld)
+        if ((isPlayerOne ? Input.GetAxis("Horizontal_P1") > 0 : Input.GetAxis("Horizontal_P2") > 0 || aIPlayer.getButtonPressed("Right")) && !isRightBeingHeld)
         {
             isRightBeingHeld = true;
             timeSinceLastMoveRightEvent = fastButtonMashSpeed * -buttonMashDebounceInput;
             justPressedRight = true;
-            if (isRecording) { recorder.RegisterEvent(GameRecorder.RIGHT_PRESS); }
         }
         if (isRightBeingHeld)
         {
             if (timeSinceLastMoveRightEvent > fastButtonMashSpeed || justPressedRight)
             {
                 justPressedRight = false;
-                bool isBlocked = false;
-                for (int x = 0; x < 3; x++)
-                {
-                    for (int y = 0; y < 3; y++)
-                    {
-                        if (currentPiece.HasBlockAt(x, y) && IsObstructedAt(currentPiecePosition.x + x - 1 + 1, currentPiecePosition.y + y - 1))
-                        {
-                            isBlocked = true;
-                        }
-                    }
-                }
-                if (!isBlocked)
-                {
-                    prevPiecePosition = currentPiecePosition;
-                    currentPiecePosition = currentPiecePosition + new Vector2Int(+1, 0);
-                    currentPiece.PlaySlideSound();
-                    timeSinceLastMove = 0f;
-                }
+                TryGoRight();
 
                 timeSinceLastMoveRightEvent %= fastButtonMashSpeed;
             }
             timeSinceLastMoveRightEvent += Time.deltaTime;
         }
-        if (!(isPlayerOne ? Input.GetAxis("Horizontal_P1") > 0 : Input.GetAxis("Horizontal_P2") > 0))
+        if (!(isPlayerOne ? Input.GetAxis("Horizontal_P1") > 0 : Input.GetAxis("Horizontal_P2") > 0 || aIPlayer.getButtonPressed("Right")))
         {
-            if (isRecording && isRightBeingHeld) { recorder.RegisterEvent(GameRecorder.RIGHT_RELEASE); }
             isRightBeingHeld = false;
+        }
+    }
+
+    private void TryGoRight()
+    {
+        bool isBlocked = false;
+        for (int x = 0; x < 3; x++)
+        {
+            for (int y = 0; y < 3; y++)
+            {
+                if (currentPiece.HasBlockAt(x, y) && IsObstructedAt(currentPiecePosition.x + x - 1 + 1, currentPiecePosition.y + y - 1))
+                {
+                    isBlocked = true;
+                }
+            }
+        }
+        if (!isBlocked)
+        {
+            prevPiecePosition = currentPiecePosition;
+            currentPiecePosition = currentPiecePosition + new Vector2Int(+1, 0);
+            if (isRecording) { recorder.RegisterEvent(GameRecorder.RIGHT); }
+            currentPiece.PlaySlideSound();
+            timeSinceLastMove = 0f;
         }
     }
 
