@@ -24,7 +24,6 @@ public class SpaceshipPawn : MonoBehaviour {
 
     private float phase;
     private Vector3 rootPosition;
-    private Quaternion rootRotation;
 
     private float partialDerivativeSampleDistance = .001f;
 
@@ -32,7 +31,6 @@ public class SpaceshipPawn : MonoBehaviour {
     void Start ()
     {
         rootPosition = this.transform.position;
-        rootRotation = this.transform.rotation;
         this.phase = phaseOffset;
 	}
 	

@@ -15,8 +15,8 @@ public class CombatInitializer : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
-        grid1.SetEnemy(grid2);
-        grid2.SetEnemy(grid1);
+        grid1.SetEnemy();
+        grid2.SetEnemy();
 
         int randomSeed = UnityEngine.Random.Range(1, 65535);
 

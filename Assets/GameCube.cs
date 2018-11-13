@@ -14,7 +14,6 @@ public class GameCube : MonoBehaviour
     public MeshRenderer coloredSection;
     public MeshRenderer lightOnTop;
 
-    Combatant owner;
     public CubeType type;
 
     public float fallSpeed = 3;
@@ -50,7 +49,6 @@ public class GameCube : MonoBehaviour
 
     internal void Initialize(Combatant owner, SeededRandom dice)
     {
-        this.owner = owner;
         this.type = owner.GetRandomCubeType(dice);
         switch(type)
         {

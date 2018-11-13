@@ -10789,6 +10789,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e43b25a844cfe449926cff45467c655, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isRecording: 1
   piecePrefab: {fileID: 114006444645062500, guid: efed92ad54b997e46a8e3647c31424e2,
     type: 2}
   powerUpEffect: {fileID: 114389015036086872, guid: dda44019845f7c44fa179be01804bce1,
@@ -12517,6 +12518,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e43b25a844cfe449926cff45467c655, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isRecording: 0
   piecePrefab: {fileID: 114006444645062500, guid: efed92ad54b997e46a8e3647c31424e2,
     type: 2}
   powerUpEffect: {fileID: 114389015036086872, guid: dda44019845f7c44fa179be01804bce1,

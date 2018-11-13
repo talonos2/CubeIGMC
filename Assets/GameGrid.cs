@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class GameGrid : MonoBehaviour
 {
+    public bool isRecording = false;
+    
     public static Vector2Int numCells = new Vector2Int(15, 18);
     public GameCube[,] grid = new GameCube[numCells.x, numCells.y];
     public PlayingPiece piecePrefab;
@@ -19,9 +21,14 @@ public class GameGrid : MonoBehaviour
     private PlayingPiece nextPiece;
 
     private SeededRandom dice;
+    private GameRecorder recorder;
 
     internal void SetSeedAndStart(int randomSeed)
     {
+        if (isRecording)
+        {
+            recorder = new GameRecorder(randomSeed);
+        }
 
         dice = new SeededRandom(randomSeed);
 
@@ -40,11 +47,10 @@ public class GameGrid : MonoBehaviour
 
     public Combatant player;
     public bool isPlayerOne = true;
-    private Combatant enemy;
 
-    internal void SetEnemy(GameGrid other)
+    internal void SetEnemy()
     {
-        this.enemy = other.player;
+
     }
 
     private Vector2Int prevPiecePosition = new Vector2Int(1, 1);//(7, 16);
@@ -119,6 +125,8 @@ public class GameGrid : MonoBehaviour
     bool justPressedLeft;
     bool justPressedRight;
 
+    private bool hasSaved;
+
     // Update is called once per frame
     void Update ()
     {
@@ -126,6 +134,12 @@ public class GameGrid : MonoBehaviour
         HandleDownMovement();
         HandleLeftMovement();
         HandleRightMovement();
+
+        if (Time.timeSinceLevelLoad > 60 & isRecording & !hasSaved)
+        {
+            recorder.PrintOut();
+            hasSaved = true;
+        }
 
         if (isPlayerOne ? Input.GetButtonDown("Place_P1") : Input.GetButtonDown("Place_P2"))
         {
@@ -136,6 +150,7 @@ public class GameGrid : MonoBehaviour
                 {
                     if (currentPiece.HasBlockAt(x, y) && IsInInvalidArea(currentPiecePosition.x + x - 1, currentPiecePosition.y + y - 1))
                     {
+                        if (isRecording) { recorder.RegisterEvent(GameRecorder.DROP); }
                         return;
                     }
                 }
@@ -159,6 +174,7 @@ public class GameGrid : MonoBehaviour
                 currentPieceRotation = (currentPieceRotation + 5) % 4;
                 timeSinceLastRot = 0f;
                 currentPiece.PlaySlideSound();
+                if (isRecording) { recorder.RegisterEvent(GameRecorder.CCW_ROTATE); }
             }
             else
             {
@@ -182,6 +198,7 @@ public class GameGrid : MonoBehaviour
                 currentPieceRotation = (currentPieceRotation + 3) % 4;
                 timeSinceLastRot = 0f;
                 currentPiece.PlaySlideSound();
+                if (isRecording) { recorder.RegisterEvent(GameRecorder.CW_ROTATE); }
             }
             else
             {
@@ -210,6 +227,7 @@ public class GameGrid : MonoBehaviour
             isUpBeingHeld = true;
             timeSinceLastMoveUpEvent = fastButtonMashSpeed * -buttonMashDebounceInput;
             justPressedUp = true;
+            if (isRecording) { recorder.RegisterEvent(GameRecorder.UP_PRESS); }
         }
         if (isUpBeingHeld)
         {
@@ -241,6 +259,7 @@ public class GameGrid : MonoBehaviour
         }
         if (!(isPlayerOne ? Input.GetAxis("Vertical_P1") > 0 : Input.GetAxis("Vertical_P2") > 0))
         {
+            if (isRecording && isUpBeingHeld) { recorder.RegisterEvent(GameRecorder.UP_RELEASE); }
             isUpBeingHeld = false;
         }
     }
@@ -252,6 +271,7 @@ public class GameGrid : MonoBehaviour
             isDownBeingHeld = true;
             timeSinceLastMoveDownEvent = fastButtonMashSpeed * -buttonMashDebounceInput;
             justPressedDown = true;
+            if (isRecording) { recorder.RegisterEvent(GameRecorder.DOWN_PRESS); }
         }
         if (isDownBeingHeld)
         {
@@ -283,6 +303,7 @@ public class GameGrid : MonoBehaviour
         }
         if (!(isPlayerOne ? Input.GetAxis("Vertical_P1") < 0 : Input.GetAxis("Vertical_P2") < 0))
         {
+            if (isRecording && isDownBeingHeld) { recorder.RegisterEvent(GameRecorder.DOWN_RELEASE); }
             isDownBeingHeld = false;
         }
     }
@@ -294,6 +315,7 @@ public class GameGrid : MonoBehaviour
             isLeftBeingHeld = true;
             timeSinceLastMoveLeftEvent = fastButtonMashSpeed * -buttonMashDebounceInput;
             justPressedLeft = true;
+            if (isRecording) { recorder.RegisterEvent(GameRecorder.LEFT_PRESS); }
         }
         if (isLeftBeingHeld)
         {
@@ -325,6 +347,7 @@ public class GameGrid : MonoBehaviour
         }
         if (!(isPlayerOne ? Input.GetAxis("Horizontal_P1") < 0 : Input.GetAxis("Horizontal_P2") < 0))
         {
+            if (isRecording && isLeftBeingHeld) { recorder.RegisterEvent(GameRecorder.LEFT_RELEASE); }
             isLeftBeingHeld = false;
         }
     }
@@ -336,6 +359,7 @@ public class GameGrid : MonoBehaviour
             isRightBeingHeld = true;
             timeSinceLastMoveRightEvent = fastButtonMashSpeed * -buttonMashDebounceInput;
             justPressedRight = true;
+            if (isRecording) { recorder.RegisterEvent(GameRecorder.RIGHT_PRESS); }
         }
         if (isRightBeingHeld)
         {
@@ -367,6 +391,7 @@ public class GameGrid : MonoBehaviour
         }
         if (!(isPlayerOne ? Input.GetAxis("Horizontal_P1") > 0 : Input.GetAxis("Horizontal_P2") > 0))
         {
+            if (isRecording && isRightBeingHeld) { recorder.RegisterEvent(GameRecorder.RIGHT_RELEASE); }
             isRightBeingHeld = false;
         }
     }

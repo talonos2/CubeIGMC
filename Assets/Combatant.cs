@@ -102,13 +102,10 @@ public class Combatant : MonoBehaviour
         pawn.FireBullet(damage, enemy, 2);
 
         pawn.chargeSound.Stop();
-        Debug.Log("Damage Sent: " + damage + " and needed " + DamageNeededForLargeSFX());
         pawn.fireSound.Stop();
         pawn.getHitLightSound.pitch = Math.Max(2.0f - (damage / DamageNeededForLargeSFX()),1);
         pawn.getHitLightSound.volume = Math.Min(damage / DamageNeededForLargeSFX(),1);
-        Debug.Log("Fire: " + pawn.getHitLightSound.pitch + ", " + pawn.getHitLightSound.volume);
         pawn.fireSound.Play();
-
         this.queuedDamage = 0;
     }
 
@@ -133,7 +130,6 @@ public class Combatant : MonoBehaviour
         }
         else
         {
-            Debug.Log("Damage Recieved: " + damage +" and needed "+DamageNeededForLargeSFX());
             //Make sound based on modified damage
             if (damage > DamageNeededForLargeSFX())
             {
