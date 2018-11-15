@@ -22,6 +22,11 @@ public class SpaceshipPawn : MonoBehaviour {
     public float phaseOffset;
     public float waggleSpeed = 1;
 
+    public float damageDampeningAmount = .99f;
+    public float damageEffectOnWaggle = .1f;
+
+    private float damage;
+
     private float phase;
     private Vector3 rootPosition;
 
@@ -37,15 +42,17 @@ public class SpaceshipPawn : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
+        float damMult = (damage*damageEffectOnWaggle) + 1;
         phase += Time.deltaTime * waggleSpeed;
-        this.transform.position = rootPosition + new Vector3((Mathf.PerlinNoise(0, phase + 100) - .5f) * positionalWaggle, (Mathf.PerlinNoise(0, phase)-.5f)*transpositionalWaggle, (Mathf.PerlinNoise(phase, 0) - .5f) * altitudinalWaggle);
+        this.transform.position = rootPosition + new Vector3((Mathf.PerlinNoise(0, phase + 100) - .5f) * positionalWaggle*damMult, (Mathf.PerlinNoise(0, phase)-.5f)*transpositionalWaggle * damMult, (Mathf.PerlinNoise(phase, 0) - .5f) * altitudinalWaggle * damMult);
 
-        //Calculus? Calculus. Get partial derivative of the noice field to get velocity for roll.
+        //Calculus? Calculus. Get partial derivative of the noise field to get velocity for roll.
 
         float dx = Mathf.PerlinNoise(0, phase + partialDerivativeSampleDistance) - Mathf.PerlinNoise(0, phase - partialDerivativeSampleDistance);
         float dy = Mathf.PerlinNoise(phase + partialDerivativeSampleDistance, 0) - Mathf.PerlinNoise(phase - partialDerivativeSampleDistance, 0);
-        this.transform.rotation = Quaternion.Euler(new Vector3(0, (dy/partialDerivativeSampleDistance*pitchWaggle + 90)*(distanceToMyNose > 1 ? 1 : -1), (dx/partialDerivativeSampleDistance*rollWaggle-90) * (distanceToMyNose > 1 ? 1 : -1)));
+        this.transform.rotation = Quaternion.Euler(new Vector3(0, (dy/partialDerivativeSampleDistance*pitchWaggle * damMult + 90)*(distanceToMyNose > 1 ? 1 : -1), (dx/partialDerivativeSampleDistance*rollWaggle*damMult-90) * (distanceToMyNose > 1 ? 1 : -1)));
 
+        damage *= damageDampeningAmount;
     }
 
     public void FireBullet(float damage, Combatant enemy, float flightTime)
@@ -56,6 +63,13 @@ public class SpaceshipPawn : MonoBehaviour {
         bullet.GetComponent<Rigidbody>().velocity = new Vector3(distanceBetweenShips / flightTime, 0, 0);
         bullet.Initialize(enemy, flightTime, damage);
         
+    }
+
+    public void Damage(float damage)
+    {
+        this.damage += damage;
+        //can also explode stuff, damage the ship, etc. Later.
+        Debug.Log("Damage has occurred: " + damage + ", " + this.damage);
     }
 
 

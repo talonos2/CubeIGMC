@@ -9,10 +9,16 @@ public class GameGrid : MonoBehaviour
     
     public static Vector2Int numCells = new Vector2Int(15, 18);
     public GameCube[,] grid = new GameCube[numCells.x, numCells.y];
+    public CellType[,] cellTypes = new CellType[numCells.x, numCells.y];
+    public GameObject[,] cellTypeFX = new GameObject[numCells.x, numCells.y];
     public PlayingPiece piecePrefab;
     public PowerupEffect powerUpEffect;
     public TextAsset aIText;
     private AIPlayer aIPlayer = new AIPlayer();
+
+    public GameObject attackCellPrefab;
+    public GameObject shieldCellPrefab;
+    public GameObject psiCellPrefab;
 
     int[][][,] pieceArray = new int[10][][,];
 
@@ -23,7 +29,6 @@ public class GameGrid : MonoBehaviour
     {
         string inputJson = aIText.text;
         aIPlayer = JsonUtility.FromJson<AIPlayer>(inputJson);
-
     }
 
     internal int GetAISeed()
@@ -61,6 +66,34 @@ public class GameGrid : MonoBehaviour
         nextPiece.transform.parent = nextPieceHolder;
         nextPiece.transform.localPosition = Vector3.zero;
 
+        player.SetGridcellsStartingState(cellTypes);
+
+        for (int x = 0; x < numCells.x; x++)
+        {
+            for (int y = 0; y < numCells.y; y++)
+            {
+                switch (cellTypes[x,y])
+                {
+                    case CellType.ATTACK:
+                        cellTypeFX[x, y] = GameObject.Instantiate(attackCellPrefab);
+                        cellTypeFX[x, y].transform.parent = this.transform;
+                        cellTypeFX[x, y].transform.localPosition = GetLocalTranslationFromGridLocation(x, y);
+                        break;
+                    case CellType.SHIELD:
+                        cellTypeFX[x, y] = GameObject.Instantiate(shieldCellPrefab);
+                        cellTypeFX[x, y].transform.parent = this.transform;
+                        cellTypeFX[x, y].transform.localPosition = GetLocalTranslationFromGridLocation(x, y);
+                        break;
+                    case CellType.PSI:
+                        cellTypeFX[x, y] = GameObject.Instantiate(psiCellPrefab);
+                        cellTypeFX[x, y].transform.parent = this.transform;
+                        cellTypeFX[x, y].transform.localPosition = GetLocalTranslationFromGridLocation(x, y);
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
     }
 
     public Combatant player;
@@ -109,12 +142,11 @@ public class GameGrid : MonoBehaviour
         timeSinceLastMove += Time.deltaTime * 1000;
         timeSinceLastRot += Time.deltaTime * 1000;
         float prop = timeSinceLastMove / msNeededToLerp;
-
-        Vector3 targetPosition = new Vector3(currentPiecePosition.x - numCells.x / 2.0f + .5f, 0, currentPiecePosition.y - numCells.y / 2.0f + .5f);
-        Vector3 oldPosition = new Vector3(prevPiecePosition.x - numCells.x / 2.0f + .5f, 0, prevPiecePosition.y - numCells.y / 2.0f + .5f);
+        Vector3 targetPosition = GetLocalTranslationFromGridLocation(currentPiecePosition.x, currentPiecePosition.y);
+        Vector3 oldPosition = GetLocalTranslationFromGridLocation(prevPiecePosition.x, prevPiecePosition.y);
         Vector3 animatedPosition = Vector3.Lerp(oldPosition, targetPosition, prop);
 
-        currentPiece.transform.localPosition = animatedPosition; 
+        currentPiece.transform.localPosition = animatedPosition;
 
         prop = timeSinceLastRot / msNeededToLerp;
 
@@ -123,6 +155,11 @@ public class GameGrid : MonoBehaviour
         Quaternion animatedRotation = Quaternion.Slerp(oldRotation, targetRotation, prop);
 
         currentPiece.transform.localRotation = animatedRotation;
+    }
+
+    private Vector3 GetLocalTranslationFromGridLocation(int x, int y)
+    {
+        return new Vector3(x - numCells.x / 2.0f + .5f, 0, y - numCells.y / 2.0f + .5f);
     }
 
     bool isUpBeingHeld;
@@ -151,7 +188,7 @@ public class GameGrid : MonoBehaviour
     void Update ()
     {
 
-        if (Time.timeSinceLevelLoad > 60 & isRecording & !hasSaved)
+        if (Time.timeSinceLevelLoad > 180 & isRecording & !hasSaved)
         {
             recorder.PrintOut();
             hasSaved = true;
@@ -467,10 +504,6 @@ public class GameGrid : MonoBehaviour
 
         //Check for squares
         List<GameCube> cubesToExplode = new List<GameCube>();
-        int attackCubes = 0;
-        int energyCubes = 0;
-        int shieldCube = 0;
-        int psiCubes = 0;
 
         int numberOfExplosions = 0;
 
@@ -481,11 +514,6 @@ public class GameGrid : MonoBehaviour
                 if (IsCornerOfSquare(x, y))
                 {
                     AddCubesFromSquareToList(x, y, cubesToExplode);
-
-                    attackCubes += GetCubesInSquare(x, y, CubeType.ATTACK);
-                    energyCubes += GetCubesInSquare(x, y, CubeType.ENERGY);
-                    shieldCube += GetCubesInSquare(x, y, CubeType.SHIELDS);
-                    psiCubes += GetCubesInSquare(x, y, CubeType.PSI);
                     numberOfExplosions++;
                 }
             }
@@ -756,4 +784,15 @@ public class GameGrid : MonoBehaviour
 
 
 
+}
+
+[Serializable]
+public enum CellType
+{
+    NORMAL,
+    ATTACK,
+    SHIELD,
+    PSI,
+    BROKEN,
+    EXTRA_ENERGY
 }

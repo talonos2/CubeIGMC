@@ -5,28 +5,28 @@ using UnityEngine;
 public class Combatant : MonoBehaviour
 {
     private float health;
-    private float energy;
+    private int energy;
     private float shields;
     private float psi;
     private float attackCharge;
     public Combatant enemy;
     private float queuedDamage;
 
-
-    public Transform energyBar;
     public Transform healthBar;
     public Transform shieldBar;
     public Transform attackChargeBar;
 
     public SpaceshipPawn pawn;
+    public PowerLights lights;
 
     public void Start()
     {
         health = MaxHealth();
-        energy = MaxEnergy() / 2;
+        //energy = MaxEnergy() / 2; New system, energy starts at 0, but no decay.
         shields = 0;
     }
 
+    //In our current formula, there are no reasons to have cubes other than the "standard" cube.
     internal CubeType GetRandomCubeType(SeededRandom dice)
     {
         List<CubeType> randomBag = new List<CubeType>();
@@ -56,17 +56,16 @@ public class Combatant : MonoBehaviour
 
     private int ShieldCubes()
     {
-        return 10;
+        return 0;
     }
 
     private int AttackCubes()
     {
-        return 10;
+        return 0;
     }
 
     public void Update()
     {
-        energy *= EnergyDecayFactor();
         shields *= ShieldDecayFactor();
         if (AttackIsQueued())
         {
@@ -78,10 +77,23 @@ public class Combatant : MonoBehaviour
             }
          }
 
-        energyBar.localScale = new Vector3(.2f, (energy / MaxEnergy()), .2f);
+        //energyBar.localScale = new Vector3(.2f, ((float)energy / (float)MaxEnergy()), .2f);
         shieldBar.localScale = new Vector3(.2f, Math.Min(shields / MaxHealth(), 1), .2f);
         healthBar.localScale = new Vector3(.2f, (health / MaxHealth()), .2f);
         attackChargeBar.localScale = new Vector3(.2f, (attackCharge / AttackChargeTime()), .2f);
+    }
+
+    //Modify this to change what a player's grid looks like when they start playing.
+    internal void SetGridcellsStartingState(CellType[,] cellTypes)
+    {
+        for (int x = 0; x < 4; x++)
+        {
+            for (int y = 0; y < 4; y++)
+            {
+                cellTypes[x + 2, y + 10] = CellType.ATTACK;
+                cellTypes[x + 9, y + 10] = CellType.SHIELD;
+            }
+        }
     }
 
     private float MaxHealth()
@@ -89,7 +101,7 @@ public class Combatant : MonoBehaviour
         return 100;
     }
 
-    private float MaxEnergy()
+    private int MaxEnergy()
     {
         return 100;
     }
@@ -145,6 +157,7 @@ public class Combatant : MonoBehaviour
                 pawn.getHitLightSound.Play();
             }
         }
+        pawn.Damage(damage);
     }
 
     private float DamageNeededForLargeSFX()
@@ -196,6 +209,7 @@ public class Combatant : MonoBehaviour
     {
         energy += GetEnergyChargeAmount(energyCubes);
         energy = Math.Min(energy, MaxEnergy());
+        lights.SetAllLights((float)energy / (float)MaxEnergy());
     }
 
     private float GetShieldChargeAmount(float shieldCubes)
@@ -208,9 +222,9 @@ public class Combatant : MonoBehaviour
         return 2 * energy / MaxEnergy();
     }
 
-    private float GetEnergyChargeAmount(float energyCubes)
+    private int GetEnergyChargeAmount(int energyCubes)
     {
-        return energyCubes * 2;
+        return energyCubes;
     }
 
     private float AttackChargeTime()
@@ -234,7 +248,7 @@ public class Combatant : MonoBehaviour
                 pretendShields += GetShieldChargeAmount(1);
                 return toReturn;
             case CubeType.ENERGY:
-                Vector3 toReturn2 = energyBar.transform.position + new Vector3(-lengthOfBar * pretendEnergy / MaxEnergy(), 0, 0);
+                Vector3 toReturn2 = lights.GetTargetAtPercent((float)pretendEnergy / (float)MaxEnergy());
                 pretendEnergy+= GetEnergyChargeAmount(1);
                 return toReturn2;
             default:
