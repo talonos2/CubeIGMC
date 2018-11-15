@@ -11,18 +11,14 @@ public class GameRecorder
 
     private readonly float firstTimeStamp;
 
-    public static readonly int UP_PRESS = 0;
-    public static readonly int UP_RELEASE = 1;
-    public static readonly int DOWN_PRESS = 2;
-    public static readonly int DOWN_RELEASE = 3;
-    public static readonly int LEFT_PRESS = 4;
-    public static readonly int LEFT_RELEASE = 5;
-    public static readonly int RIGHT_PRESS = 6;
-    public static readonly int RIGHT_RELEASE = 7;
+    public const int UP = 0;
+    public const int DOWN = 2;
+    public const int LEFT = 4;
+    public const int RIGHT = 6;
 
-    public static readonly int CCW_ROTATE = 8;
-    public static readonly int CW_ROTATE = 9;
-    public static readonly int DROP = 10;
+    public const int CCW_ROTATE = 8;
+    public const int CW_ROTATE = 9;
+    public const int DROP = 10;
 
     public GameRecorder(int seed)
     {
@@ -53,27 +49,10 @@ public class GameRecorder
     {
         string json = JsonUtility.ToJson(this);
         string dateString = DateTime.Now.Year + "-" + DateTime.Now.Month + "-" + DateTime.Now.Day + "-" + DateTime.Now.Hour + "-" + DateTime.Now.Minute;
-        string path = "Assets/AIs/"+dateString+".AI";
+        string path = "Assets/AIs/"+dateString+".AI.json";
         StreamWriter writer = new StreamWriter(path, true);
         writer.WriteLine(json);
         writer.Close();
     }
 
-    /*
-    static void WriteString()
-    {
- 
-
-        //Write some text to the test.txt file
-        StreamWriter writer = new StreamWriter(path, true);
-        writer.WriteLine("Test");
-        writer.Close();
-
-        //Re-import the file to update the reference in the editor
-        AssetDatabase.ImportAsset(path);
-        TextAsset asset = Resources.Load("test");
-
-        //Print the text from the file
-        Debug.Log(asset.text);
-    } */
 }

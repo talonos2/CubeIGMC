@@ -10789,15 +10789,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e43b25a844cfe449926cff45467c655, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isRecording: 1
+  isRecording: 0
   piecePrefab: {fileID: 114006444645062500, guid: efed92ad54b997e46a8e3647c31424e2,
     type: 2}
   powerUpEffect: {fileID: 114389015036086872, guid: dda44019845f7c44fa179be01804bce1,
     type: 2}
+  aIText: {fileID: 0}
   dropSound: {fileID: 1150032141}
   matchSound: {fileID: 1964594705}
   player: {fileID: 529986814}
   isPlayerOne: 1
+  isPlayedByAI: 0
 --- !u!4 &1526531518
 Transform:
   m_ObjectHideFlags: 0
@@ -12523,10 +12525,12 @@ MonoBehaviour:
     type: 2}
   powerUpEffect: {fileID: 114389015036086872, guid: dda44019845f7c44fa179be01804bce1,
     type: 2}
+  aIText: {fileID: 4900000, guid: f8413195405293f48a5b98c2de4a4d40, type: 3}
   dropSound: {fileID: 1361517855}
   matchSound: {fileID: 1734325443}
   player: {fileID: 2136655416}
   isPlayerOne: 0
+  isPlayedByAI: 1
 --- !u!1 &2035276239
 GameObject:
   m_ObjectHideFlags: 0

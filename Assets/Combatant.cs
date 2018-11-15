@@ -70,7 +70,7 @@ public class Combatant : MonoBehaviour
         shields *= ShieldDecayFactor();
         if (AttackIsQueued())
         {
-            attackCharge -= (1f / 60f);
+            attackCharge -= (Time.deltaTime);
             if (attackCharge < 0)
             {
                 attackCharge = 0;
