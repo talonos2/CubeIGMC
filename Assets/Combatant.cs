@@ -23,7 +23,7 @@ public class Combatant : MonoBehaviour
     {
         health = MaxHealth();
         //energy = MaxEnergy() / 2; New system, energy starts at 0, but no decay.
-        shields = 0;
+        shields = 50;
     }
 
     //In our current formula, there are no reasons to have cubes other than the "standard" cube.
@@ -66,7 +66,7 @@ public class Combatant : MonoBehaviour
 
     public void Update()
     {
-        shields *= ShieldDecayFactor();
+        shields = shields * Mathf.Exp(Mathf.Log(ShieldDecayFactor()) * Time.deltaTime);
         if (AttackIsQueued())
         {
             attackCharge -= (Time.deltaTime);
@@ -178,7 +178,7 @@ public class Combatant : MonoBehaviour
 
     private float ShieldDecayFactor()
     {
-        return .998f;
+        return .8f;
     }
 
     private float EnergyDecayFactor()
