@@ -19,6 +19,9 @@ public class GameGrid : MonoBehaviour
     public AudioSource dropSound;
     public AudioSource matchSound;
 
+    public GameObject pauseMenu;
+    bool pause = false;
+
     internal void LoadAI()
     {
         string inputJson = aIText.text;
@@ -150,6 +153,28 @@ public class GameGrid : MonoBehaviour
     // Update is called once per frame
     void Update ()
     {
+
+
+        if (Input.GetButtonDown("Escape"))
+        {
+            pause = !pause;
+
+
+            if(pause)
+            {
+                pauseMenu.SetActive(true);
+                Time.timeScale = 0;
+            }
+            else if(!pause)
+            {
+                pauseMenu.SetActive(false);
+                Time.timeScale = 1;
+            }
+
+
+
+        }
+
 
         if (Time.timeSinceLevelLoad > 60 & isRecording & !hasSaved)
         {
