@@ -11,6 +11,7 @@ public class Combatant : MonoBehaviour
     private float attackCharge;
     public Combatant enemy;
     private float queuedDamage;
+    public CameraShake cameraToShake;
 
     public Transform healthBar;
     public Transform shieldBar;
@@ -18,6 +19,8 @@ public class Combatant : MonoBehaviour
 
     public SpaceshipPawn pawn;
     public PowerLights lights;
+
+    public DamageManager damageManager;
 
     public void Start()
     {
@@ -153,11 +156,12 @@ public class Combatant : MonoBehaviour
                 pawn.getHitLightSound.Stop();
                 pawn.getHitLightSound.pitch = 2.0f-(damage / DamageNeededForLargeSFX());
                 pawn.getHitLightSound.volume = damage / DamageNeededForLargeSFX();
-                Debug.Log("Hit Light: "+pawn.getHitLightSound.pitch + ", "+pawn.getHitLightSound.volume);
                 pawn.getHitLightSound.Play();
             }
         }
         pawn.Damage(damage);
+        damageManager.SetNewDamageProportion(this.health / this.MaxHealth());
+        //cameraToShake.ShakeCamera(damage / MaxHealth(), 1.5f);
     }
 
     private float DamageNeededForLargeSFX()

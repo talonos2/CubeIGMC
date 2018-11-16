@@ -211,7 +211,7 @@ public class GameGrid : MonoBehaviour
 
         }
 
-        if (Time.timeSinceLevelLoad > 180 & isRecording & !hasSaved)
+        if (Time.timeSinceLevelLoad > 300 & isRecording & !hasSaved)
         {
             recorder.PrintOut();
             hasSaved = true;

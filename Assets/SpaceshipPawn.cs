@@ -69,7 +69,6 @@ public class SpaceshipPawn : MonoBehaviour {
     {
         this.damage += damage;
         //can also explode stuff, damage the ship, etc. Later.
-        Debug.Log("Damage has occurred: " + damage + ", " + this.damage);
     }
 
 
