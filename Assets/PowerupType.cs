@@ -1,4 +1,4 @@
-﻿public enum CubeType
+﻿public enum PowerupType
 {
     ENERGY,
     ATTACK,

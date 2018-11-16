@@ -23,28 +23,28 @@ public class Combatant : MonoBehaviour
     {
         health = MaxHealth();
         //energy = MaxEnergy() / 2; New system, energy starts at 0, but no decay.
-        shields = 0;
+        shields = 50;
     }
 
     //In our current formula, there are no reasons to have cubes other than the "standard" cube.
-    internal CubeType GetRandomCubeType(SeededRandom dice)
+    internal PowerupType GetRandomCubeType(SeededRandom dice)
     {
-        List<CubeType> randomBag = new List<CubeType>();
+        List<PowerupType> randomBag = new List<PowerupType>();
         for (int x = 0; x < 100; x++)
         {
-            randomBag.Add(CubeType.ENERGY);
+            randomBag.Add(PowerupType.ENERGY);
         }
         for (int x = 0; x < AttackCubes(); x++)
         {
-            randomBag.Add(CubeType.ATTACK);
+            randomBag.Add(PowerupType.ATTACK);
         }
         for (int x = 0; x < ShieldCubes(); x++)
         {
-            randomBag.Add(CubeType.SHIELDS);
+            randomBag.Add(PowerupType.SHIELDS);
         }
         for (int x = 0; x < PsiCubes(); x++)
         {
-            randomBag.Add(CubeType.PSI);
+            randomBag.Add(PowerupType.PSI);
         }
         return randomBag[dice.NextInt(0, randomBag.Count)];
     }
@@ -66,7 +66,7 @@ public class Combatant : MonoBehaviour
 
     public void Update()
     {
-        shields *= ShieldDecayFactor();
+        shields = shields * Mathf.Exp(Mathf.Log(ShieldDecayFactor()) * Time.deltaTime);
         if (AttackIsQueued())
         {
             attackCharge -= (Time.deltaTime);
@@ -168,7 +168,7 @@ public class Combatant : MonoBehaviour
     private float DamageAmount()
     {
         //queuedDamage is the number of AttackCubes that have been submitted since attack charging began.
-        return queuedDamage*5*EnergyMultiplier();
+        return queuedDamage*5f*EnergyMultiplier();
     }
 
     private bool AttackIsQueued()
@@ -178,7 +178,7 @@ public class Combatant : MonoBehaviour
 
     private float ShieldDecayFactor()
     {
-        return .998f;
+        return .8f;
     }
 
     private float EnergyDecayFactor()
@@ -219,7 +219,7 @@ public class Combatant : MonoBehaviour
 
     private float EnergyMultiplier()
     {
-        return 2 * energy / MaxEnergy();
+        return 2f * (float)energy / (float)MaxEnergy();
     }
 
     private int GetEnergyChargeAmount(int energyCubes)
@@ -236,18 +236,18 @@ public class Combatant : MonoBehaviour
     private float pretendEnergy;
     private float pretendShields;
 
-    internal Vector3 GetTargetOfParticle(CubeType type)
+    internal Vector3 GetTargetOfParticle(PowerupType type)
     {
 
         switch (type)
         {
-            case CubeType.ATTACK:
+            case PowerupType.ATTACK:
                 return attackChargeBar.transform.position;
-            case CubeType.SHIELDS:
+            case PowerupType.SHIELDS:
                 Vector3 toReturn = shieldBar.transform.position + new Vector3(-lengthOfBar * pretendShields / MaxHealth(), 0, 0);
                 pretendShields += GetShieldChargeAmount(1);
                 return toReturn;
-            case CubeType.ENERGY:
+            case PowerupType.ENERGY:
                 Vector3 toReturn2 = lights.GetTargetAtPercent((float)pretendEnergy / (float)MaxEnergy());
                 pretendEnergy+= GetEnergyChargeAmount(1);
                 return toReturn2;

@@ -544,6 +544,7 @@ public class GameGrid : MonoBehaviour
 
         float maxDelay = (float)Math.Sqrt(numberOfExplosions / 9f);
 
+        //This is where we handle the explosions based on 3x3 squares. The stuff in here is subject to cube color and combo multiplier.
         List<ExplosionWrapper> allExplosions = new List<ExplosionWrapper>();
         for (int x = 0; x < numCells.x - 2; x++)
         {
@@ -556,7 +557,28 @@ public class GameGrid : MonoBehaviour
             }
         }
 
-        //All explosions are in a list. Explode them I guess.
+        //This is where we handle explosions based on tile color.
+        for (int x = 0; x < numCells.x; x++)
+        {
+            for (int y = 0; y < numCells.y; y++)
+            {
+                if (grid[x, y] != null && cubesToExplode.Contains(grid[x,y]))
+                {
+                    //A cube that has exploded is on a tile. What kind?
+                    switch (cellTypes[x,y])
+                    {
+                        case CellType.ATTACK:
+                            allExplosions.Add(new ExplosionWrapper(grid[x,y], UnityEngine.Random.Range(0, maxDelay), PowerupType.ATTACK));
+                            break;
+                        case CellType.SHIELD:
+                            allExplosions.Add(new ExplosionWrapper(grid[x, y], UnityEngine.Random.Range(0, maxDelay), PowerupType.SHIELDS));
+                            break;
+                    }
+                }
+            }
+        }
+
+        //All explosions are in a list. Sort and run them.
         {
             allExplosions.Sort(new ExplosionSorter());
         }
@@ -608,13 +630,13 @@ public class GameGrid : MonoBehaviour
                 {
                     throw new InvalidOperationException("Somehow we're trying to check the type of a null cube in GameGrid.ExplodeCubesInSquare");
                 }
-                toReturn.Add(new ExplosionWrapper(cube, UnityEngine.Random.Range(0, maxDelay)));
+                toReturn.Add(new ExplosionWrapper(cube, UnityEngine.Random.Range(0, maxDelay), PowerupType.ENERGY)); //Overwrite this if we bring back cube colors.
             }
         }
         return toReturn;
     }
 
-    private int GetCubesInSquare(int xCorner, int yCorner, CubeType type)
+    private int GetCubesInSquare(int xCorner, int yCorner, PowerupType type)
     {
         int toReturn = 0;
         for (int x = 0; x < 3; x++)
@@ -708,9 +730,11 @@ public class GameGrid : MonoBehaviour
     {
         private GameCube cube;
         internal float delay;
+        private PowerupType type;
 
-        internal ExplosionWrapper(GameCube cube, float delay)
+        internal ExplosionWrapper(GameCube cube, float delay, PowerupType type)
         {
+            this.type = type;
             this.cube = cube;
             this.delay = delay;
         }
@@ -721,7 +745,7 @@ public class GameGrid : MonoBehaviour
             p.transform.position = cube.transform.position;
             Color toInitialize = Color.white;
 
-            p.Initialize(p.transform.position, player.GetTargetOfParticle(cube.type), delay, cube.type, player);
+            p.Initialize(p.transform.position, player.GetTargetOfParticle(type), delay, type, player);
         }
     }
 

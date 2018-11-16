@@ -15,7 +15,7 @@ public class PowerupEffect : MonoBehaviour
     private bool hasStarted = false;
     private bool hasImpacted = false;
     private Combatant owner;
-    private CubeType type;
+    private PowerupType type;
 
     public AudioSource collectionSound;
 
@@ -59,7 +59,7 @@ public class PowerupEffect : MonoBehaviour
         }
 	}
 
-    public void Initialize(Vector3 startPosition, Vector3 endPosition, float delay, CubeType type, Combatant owner)
+    public void Initialize(Vector3 startPosition, Vector3 endPosition, float delay, PowerupType type, Combatant owner)
     {
         this.startPosition = startPosition;
         this.endPosition = endPosition;
@@ -73,16 +73,16 @@ public class PowerupEffect : MonoBehaviour
 
         switch (type)
         {
-            case CubeType.ATTACK:
-                color = new Color(1,.5f,.5f);
+            case PowerupType.ATTACK:
+                color = new Color(1,.3f,.3f);
                 break;
-            case CubeType.SHIELDS:
+            case PowerupType.SHIELDS:
                 color = Color.cyan;
                 break;
-            case CubeType.ENERGY:
+            case PowerupType.ENERGY:
                 color = Color.yellow;
                 break;
-            case CubeType.PSI:
+            case PowerupType.PSI:
                 color = Color.magenta;
                 break;
         }
@@ -95,16 +95,16 @@ public class PowerupEffect : MonoBehaviour
 
         switch (type)
         {
-            case CubeType.ATTACK:
+            case PowerupType.ATTACK:
                 owner.ChargeAttack(1);
                 break;
-            case CubeType.SHIELDS:
+            case PowerupType.SHIELDS:
                 owner.ChargeShields(1);
                 break;
-            case CubeType.ENERGY:
+            case PowerupType.ENERGY:
                 owner.ChargeEnergy(1);
                 break;
-            case CubeType.PSI:
+            case PowerupType.PSI:
                 Debug.Log("We actually haven't done this one yet.");
                 break;
         }

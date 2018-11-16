@@ -37,9 +37,9 @@ internal class AIPlayer
     {
         if (firstTimeStamp==0)
         {
-            this.firstTimeStamp = Time.realtimeSinceStartup;
+            this.firstTimeStamp = Time.timeSinceLevelLoad;
         }
-        float timeElapsed = Time.realtimeSinceStartup - this.firstTimeStamp;
+        float timeElapsed = Time.timeSinceLevelLoad - this.firstTimeStamp;
 
         isPressingUp = false;
         isPressingDown = false;

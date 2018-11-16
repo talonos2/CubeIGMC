@@ -14,7 +14,7 @@ public class GameCube : MonoBehaviour
     public MeshRenderer coloredSection;
     public MeshRenderer lightOnTop;
 
-    public CubeType type;
+    public PowerupType type;
 
     public float fallSpeed = 3;
 
@@ -52,16 +52,16 @@ public class GameCube : MonoBehaviour
         this.type = owner.GetRandomCubeType(dice);
         switch(type)
         {
-            case CubeType.ATTACK:
+            case PowerupType.ATTACK:
                 this.coloredSection.material = attackMaterial;
                 break;
-            case CubeType.SHIELDS:
+            case PowerupType.SHIELDS:
                 this.coloredSection.material = shieldMaterial;
                 break;
-            case CubeType.ENERGY:
+            case PowerupType.ENERGY:
                 this.coloredSection.material = energyMaterial;
                 break;
-            case CubeType.PSI:
+            case PowerupType.PSI:
                 this.coloredSection.material = psiMaterial;
                 break;
         }
