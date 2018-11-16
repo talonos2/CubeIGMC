@@ -28,6 +28,8 @@ public class GameGrid : MonoBehaviour
     public GameObject pauseMenu;
     bool pause = false;
 
+    public bool justExitedMenu;
+
     internal void LoadAI()
     {
         string inputJson = aIText.text;
@@ -190,25 +192,10 @@ public class GameGrid : MonoBehaviour
     // Update is called once per frame
     void Update ()
     {
-
-        if (Input.GetButtonDown("Escape"))
+        if (Time.timeScale == 0)
         {
-            pause = !pause;
-
-
-            if(pause)
-            {
-                pauseMenu.SetActive(true);
-                Time.timeScale = 0;
-            }
-            else if(!pause)
-            {
-                pauseMenu.SetActive(false);
-                Time.timeScale = 1;
-            }
-
-
-
+            justExitedMenu = true;
+            return;
         }
 
         if (Time.timeSinceLevelLoad > 300 & isRecording & !hasSaved)
@@ -237,7 +224,7 @@ public class GameGrid : MonoBehaviour
             HandleRightMovement();
         }
 
-        if (isPlayerOne ? Input.GetButtonDown("Place_P1") : (Input.GetButtonDown("Place_P2")|| aIPlayer.GetButtonDown("Place")))
+        if (isPlayerOne ? Input.GetButtonDown("Place_P1") && justExitedMenu == false  : (Input.GetButtonDown("Place_P2")|| aIPlayer.GetButtonDown("Place")) && justExitedMenu == false)
         {
             //Fallback: If there's somebohw someting directly underneath you, do not place. Should never happen in practice.
             for (int x = 0; x < 3; x++)
@@ -314,7 +301,13 @@ public class GameGrid : MonoBehaviour
                 }
             }
         }
+
+        justExitedMenu = false;
     }
+
+
+    
+
 
     private void HandleUpMovement()
     {
