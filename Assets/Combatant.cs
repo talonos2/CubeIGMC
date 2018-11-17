@@ -113,6 +113,7 @@ public class Combatant : MonoBehaviour
     { 
 
         float damage = DamageAmount();
+        PayEnergyCostsForFiringAttack();
 
         pawn.FireBullet(damage, enemy, 2);
 
@@ -122,6 +123,13 @@ public class Combatant : MonoBehaviour
         pawn.getHitLightSound.volume = Math.Min(damage / DamageNeededForLargeSFX(),1);
         pawn.fireSound.Play();
         this.queuedDamage = 0;
+    }
+
+    private void PayEnergyCostsForFiringAttack()
+    {
+        energy -= (int)(queuedDamage * EnergyMultiplier());
+        energy = Math.Max(0, energy);
+        RefreshEnergyBars();
     }
 
     internal void TakeDamage(float damage)
@@ -171,8 +179,8 @@ public class Combatant : MonoBehaviour
 
     private float DamageAmount()
     {
-        //queuedDamage is the number of AttackCubes that have been submitted since attack charging began.
-        return queuedDamage*EnergyMultiplier();
+        //queuedDamage is the number of squares worth of attack tiles that have been submitted since attack charging began.
+        return queuedDamage*.8f*EnergyMultiplier(); //Min Damage is .8, max damage is 51.2, average is about 20.
     }
 
     private bool AttackIsQueued()
@@ -213,6 +221,11 @@ public class Combatant : MonoBehaviour
     {
         energy += GetEnergyChargeAmount(energyCubes);
         energy = Math.Min(energy, MaxEnergy());
+        RefreshEnergyBars();
+    }
+
+    private void RefreshEnergyBars()
+    {
         lights.SetAllLights((float)energy / (float)MaxEnergy());
     }
 
@@ -223,7 +236,12 @@ public class Combatant : MonoBehaviour
 
     private float EnergyMultiplier()
     {
-        return 2f * (float)energy / (float)MaxEnergy();
+        float energyRatio = (float)energy / (float)MaxEnergy();
+        if (energyRatio > .8f) return 4;
+        if (energyRatio > .6f) return 3;
+        if (energyRatio > .4f) return 2;
+        if (energyRatio > .2f) return 1;
+        return 0;
     }
 
     private int GetEnergyChargeAmount(int energyCubes)
