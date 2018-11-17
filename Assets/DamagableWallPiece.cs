@@ -4,9 +4,27 @@ using UnityEngine;
 
 public class DamagableWallPiece : DamagableDisplay
 {
+    float timeSinceDamaged = 0;
+    private Material originalMat;
+    private Material personalMatToMakeTranslucent;
+    private Renderer renderer;
+    private bool animate;
+    private bool hasSwitchedMaterial;
+
     public override void Damage()
     {
-
+        this.GetComponent<Rigidbody>().isKinematic = false;
+        this.GetComponent<BoxCollider>().enabled = true;
+        this.GetComponent<Rigidbody>().velocity = new Vector3(
+            UnityEngine.Random.Range(-2f, 2f),
+            UnityEngine.Random.Range(3, 10),
+            UnityEngine.Random.Range(-2f, 2f));
+        this.GetComponent<Rigidbody>().AddTorque(
+            UnityEngine.Random.Range(-20f, 20f),
+            UnityEngine.Random.Range(-20f, 20f),
+            UnityEngine.Random.Range(-20f, 20f));
+        this.isDamaged = true;
+        this.animate = true;
     }
 
     public override void Fix()
@@ -15,12 +33,36 @@ public class DamagableWallPiece : DamagableDisplay
     }
 
     // Use this for initialization
-    void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    void Start()
+    {
+        this.renderer = this.GetComponent<Renderer>();
+        this.originalMat = renderer.material;
+
+    }
+
+    void FixedUpdate()
+    {
+        if (isDamaged && animate)
+        {
+            timeSinceDamaged += Time.deltaTime;
+            if (timeSinceDamaged > 3.5)
+            {
+                this.renderer.enabled = false;
+                this.GetComponent<Rigidbody>().isKinematic = true;
+                this.animate = false;
+                this.renderer.material = this.originalMat;
+            }
+            if (timeSinceDamaged > 2.5 && !hasSwitchedMaterial)
+            {
+                this.personalMatToMakeTranslucent = new Material(this.originalMat);
+                StandardShaderUtils.ChangeRenderMode(personalMatToMakeTranslucent, StandardShaderUtils.BlendMode.Transparent);
+                this.renderer.material = personalMatToMakeTranslucent;
+                hasSwitchedMaterial = true;
+            }
+            if (timeSinceDamaged > 2.5)
+            {
+                this.personalMatToMakeTranslucent.color = new Color(1, 1, 1, (3.5f - timeSinceDamaged) / 1f);
+            }
+        }
+    }
 }

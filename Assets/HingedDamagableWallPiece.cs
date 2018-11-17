@@ -12,10 +12,8 @@ public class HingedDamagableWallPiece : DamagableDisplay
         this.GetComponent<Rigidbody>().isKinematic = false;
         JointLimits l = this.GetComponent<HingeJoint>().limits;
         float newMax = UnityEngine.Random.Range(0, 120) + 30;
-        Debug.Log("I have been damaged: " + this.gameObject.name+", "+newMax);
         l.max = newMax;
         this.GetComponent<HingeJoint>().limits = l;
-        Debug.Log("I have been damaged: " + this.gameObject.name + ", " + newMax+", "+l.max+", "+this.GetComponent<HingeJoint>().limits.max);
         this.transform.localEulerAngles = new Vector3(-85, 90, 0);
         this.isDamaged = true;
     }

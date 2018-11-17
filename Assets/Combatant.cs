@@ -161,7 +161,7 @@ public class Combatant : MonoBehaviour
         }
         pawn.Damage(damage);
         damageManager.SetNewDamageProportion(this.health / this.MaxHealth());
-        //cameraToShake.ShakeCamera(damage / MaxHealth(), 1.5f);
+        cameraToShake.ShakeCamera(damage / MaxHealth(), .5f);
     }
 
     private float DamageNeededForLargeSFX()

@@ -28,7 +28,6 @@ public class DamageManager : MonoBehaviour
     {
         percentHealthRemaining = Mathf.Max(Mathf.Min(1, percentHealthRemaining), 0);
         int numberOfComponentsThatShouldBeDamaged = Mathf.RoundToInt((1-percentHealthRemaining) * numberOfDamagableComponents);
-        Debug.Log("Here: " + percentHealthRemaining+", "+numberOfComponentsThatShouldBeDamaged);
         if (numberOfComponentsThatShouldBeDamaged > damagedComponents.Count)
         {
             DamageSomeComponents(numberOfComponentsThatShouldBeDamaged - damagedComponents.Count);
@@ -51,23 +50,33 @@ public class DamageManager : MonoBehaviour
             {
                 if (!component.isDamaged)
                 {
-                    bool canBeDamaged = true;
-                    foreach (DamagableDisplay prereq in component.thingsThatMustBeDamagedFirst)
+                    componentsThatCanBeDamagedRightNow.Add(component);
+                }
+            }
+
+            bool canItBeDamaged = false;
+            DamagableDisplay toDamage = null;
+            while (!canItBeDamaged)
+            {
+                canItBeDamaged = true;
+                toDamage = componentsThatCanBeDamagedRightNow[UnityEngine.Random.Range(0, componentsThatCanBeDamagedRightNow.Count)];
+                foreach (DamagableDisplay prereq in toDamage.thingsThatMustBeDamagedFirst)
+                {
+                    if (!damagedComponents.Contains(prereq))
                     {
-                        if (!damagedComponents.Contains(prereq))
+                        canItBeDamaged = false;
+                        componentsThatCanBeDamagedRightNow.Remove(toDamage);
+                        if (componentsThatCanBeDamagedRightNow.Count == 0)
                         {
-                            canBeDamaged = false;
+                            Debug.LogError("Ran out of damagable components somehow!");
                         }
-                    }
-                    if (canBeDamaged)
-                    {
-                        componentsThatCanBeDamagedRightNow.Add(component);
+                        break;
                     }
                 }
             }
 
+
             //From this list, pick a random component
-            DamagableDisplay toDamage = componentsThatCanBeDamagedRightNow[UnityEngine.Random.Range(0, componentsThatCanBeDamagedRightNow.Count)];
             toDamage.Damage();
             damagedComponents.Add(toDamage);
             

@@ -64,7 +64,7 @@ public class CameraShake : MonoBehaviour
             shakePercentage = shakeDuration / startDuration;//Used to set the amount of shake (% * startAmount).
 
             shakeAmount = startAmount * shakePercentage;//Set the amount of shake (% * startAmount).
-            shakeDuration = Mathf.Lerp(shakeDuration, 0, Time.deltaTime);//Lerp the time, so it is less and tapers off towards the end.
+            shakeDuration -= Time.deltaTime;
 
 
             if (smooth)
