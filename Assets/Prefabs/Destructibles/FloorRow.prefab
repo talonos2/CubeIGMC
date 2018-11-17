@@ -2080,6 +2080,9 @@ MonoBehaviour:
   thingsThatMustBeDamagedFirst: []
   isDamaged: 0
   crackedMaterial: {fileID: 2100000, guid: 8c4ef6d5e68ea4941b48992069f794f0, type: 2}
+  firesPrefab: {fileID: 1972207730512856, guid: 96775815bf79b4546b3ce41f71452db9,
+    type: 2}
+  fireChance: 0.02
 --- !u!114 &114131125113129616
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2094,6 +2097,9 @@ MonoBehaviour:
   thingsThatMustBeDamagedFirst: []
   isDamaged: 0
   crackedMaterial: {fileID: 2100000, guid: 8c4ef6d5e68ea4941b48992069f794f0, type: 2}
+  firesPrefab: {fileID: 1972207730512856, guid: 96775815bf79b4546b3ce41f71452db9,
+    type: 2}
+  fireChance: 0.02
 --- !u!114 &114158095759246560
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2124,6 +2130,9 @@ MonoBehaviour:
   thingsThatMustBeDamagedFirst: []
   isDamaged: 0
   crackedMaterial: {fileID: 2100000, guid: 8c4ef6d5e68ea4941b48992069f794f0, type: 2}
+  firesPrefab: {fileID: 1972207730512856, guid: 96775815bf79b4546b3ce41f71452db9,
+    type: 2}
+  fireChance: 0.02
 --- !u!114 &114232447196142878
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2138,6 +2147,9 @@ MonoBehaviour:
   thingsThatMustBeDamagedFirst: []
   isDamaged: 0
   crackedMaterial: {fileID: 2100000, guid: 8c4ef6d5e68ea4941b48992069f794f0, type: 2}
+  firesPrefab: {fileID: 1972207730512856, guid: 96775815bf79b4546b3ce41f71452db9,
+    type: 2}
+  fireChance: 0.02
 --- !u!114 &114241557383342548
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2152,6 +2164,9 @@ MonoBehaviour:
   thingsThatMustBeDamagedFirst: []
   isDamaged: 0
   crackedMaterial: {fileID: 2100000, guid: 8c4ef6d5e68ea4941b48992069f794f0, type: 2}
+  firesPrefab: {fileID: 1972207730512856, guid: 96775815bf79b4546b3ce41f71452db9,
+    type: 2}
+  fireChance: 0.02
 --- !u!114 &114272392112647000
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2166,6 +2181,9 @@ MonoBehaviour:
   thingsThatMustBeDamagedFirst: []
   isDamaged: 0
   crackedMaterial: {fileID: 2100000, guid: 8c4ef6d5e68ea4941b48992069f794f0, type: 2}
+  firesPrefab: {fileID: 1972207730512856, guid: 96775815bf79b4546b3ce41f71452db9,
+    type: 2}
+  fireChance: 0.02
 --- !u!114 &114279531924689602
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2212,6 +2230,9 @@ MonoBehaviour:
   thingsThatMustBeDamagedFirst: []
   isDamaged: 0
   crackedMaterial: {fileID: 2100000, guid: 8c4ef6d5e68ea4941b48992069f794f0, type: 2}
+  firesPrefab: {fileID: 1972207730512856, guid: 96775815bf79b4546b3ce41f71452db9,
+    type: 2}
+  fireChance: 0.02
 --- !u!114 &114403825376724798
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2258,6 +2279,9 @@ MonoBehaviour:
   thingsThatMustBeDamagedFirst: []
   isDamaged: 0
   crackedMaterial: {fileID: 2100000, guid: 8c4ef6d5e68ea4941b48992069f794f0, type: 2}
+  firesPrefab: {fileID: 1972207730512856, guid: 96775815bf79b4546b3ce41f71452db9,
+    type: 2}
+  fireChance: 0.02
 --- !u!114 &114469132552411188
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2288,6 +2312,9 @@ MonoBehaviour:
   thingsThatMustBeDamagedFirst: []
   isDamaged: 0
   crackedMaterial: {fileID: 2100000, guid: 8c4ef6d5e68ea4941b48992069f794f0, type: 2}
+  firesPrefab: {fileID: 1972207730512856, guid: 96775815bf79b4546b3ce41f71452db9,
+    type: 2}
+  fireChance: 0.02
 --- !u!114 &114567899627001654
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2318,6 +2345,9 @@ MonoBehaviour:
   thingsThatMustBeDamagedFirst: []
   isDamaged: 0
   crackedMaterial: {fileID: 2100000, guid: 8c4ef6d5e68ea4941b48992069f794f0, type: 2}
+  firesPrefab: {fileID: 1972207730512856, guid: 96775815bf79b4546b3ce41f71452db9,
+    type: 2}
+  fireChance: 0.02
 --- !u!114 &114639758836037276
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2332,6 +2362,9 @@ MonoBehaviour:
   thingsThatMustBeDamagedFirst: []
   isDamaged: 0
   crackedMaterial: {fileID: 2100000, guid: 8c4ef6d5e68ea4941b48992069f794f0, type: 2}
+  firesPrefab: {fileID: 1972207730512856, guid: 96775815bf79b4546b3ce41f71452db9,
+    type: 2}
+  fireChance: 0.02
 --- !u!114 &114642992405663714
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2378,6 +2411,9 @@ MonoBehaviour:
   thingsThatMustBeDamagedFirst: []
   isDamaged: 0
   crackedMaterial: {fileID: 2100000, guid: 8c4ef6d5e68ea4941b48992069f794f0, type: 2}
+  firesPrefab: {fileID: 1972207730512856, guid: 96775815bf79b4546b3ce41f71452db9,
+    type: 2}
+  fireChance: 0.02
 --- !u!114 &114737453225162294
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2392,6 +2428,9 @@ MonoBehaviour:
   thingsThatMustBeDamagedFirst: []
   isDamaged: 0
   crackedMaterial: {fileID: 2100000, guid: 8c4ef6d5e68ea4941b48992069f794f0, type: 2}
+  firesPrefab: {fileID: 1972207730512856, guid: 96775815bf79b4546b3ce41f71452db9,
+    type: 2}
+  fireChance: 0.02
 --- !u!114 &114737873581669108
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2406,6 +2445,9 @@ MonoBehaviour:
   thingsThatMustBeDamagedFirst: []
   isDamaged: 0
   crackedMaterial: {fileID: 2100000, guid: 8c4ef6d5e68ea4941b48992069f794f0, type: 2}
+  firesPrefab: {fileID: 1972207730512856, guid: 96775815bf79b4546b3ce41f71452db9,
+    type: 2}
+  fireChance: 0.02
 --- !u!114 &114816268260301198
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2436,6 +2478,9 @@ MonoBehaviour:
   thingsThatMustBeDamagedFirst: []
   isDamaged: 0
   crackedMaterial: {fileID: 2100000, guid: 8c4ef6d5e68ea4941b48992069f794f0, type: 2}
+  firesPrefab: {fileID: 1972207730512856, guid: 96775815bf79b4546b3ce41f71452db9,
+    type: 2}
+  fireChance: 0.02
 --- !u!114 &114928310527275160
 MonoBehaviour:
   m_ObjectHideFlags: 1

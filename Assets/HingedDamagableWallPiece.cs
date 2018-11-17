@@ -7,6 +7,9 @@ public class HingedDamagableWallPiece : DamagableDisplay
     private Quaternion initialRotation;
     private Vector3 initialPosition;
 
+    private GameObject explosion;
+    public GameObject explosionPrefab;
+
     public override void Damage()
     {
         this.GetComponent<Rigidbody>().isKinematic = false;
@@ -16,6 +19,7 @@ public class HingedDamagableWallPiece : DamagableDisplay
         this.GetComponent<HingeJoint>().limits = l;
         this.transform.localEulerAngles = new Vector3(-85, 90, 0);
         this.isDamaged = true;
+        this.explosion.SetActive(true);
     }
 
     public override void Fix()
@@ -31,7 +35,11 @@ public class HingedDamagableWallPiece : DamagableDisplay
     {
         this.initialRotation = this.transform.rotation;
         this.initialPosition = this.transform.position;
-	}
+
+        this.explosion = GameObject.Instantiate(explosionPrefab);
+        this.explosion.transform.position = this.transform.position;
+        this.explosion.active = false;
+    }
 	
 	// Update is called once per frame
 	void Update ()

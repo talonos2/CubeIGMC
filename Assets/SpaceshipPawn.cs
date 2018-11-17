@@ -24,6 +24,7 @@ public class SpaceshipPawn : MonoBehaviour {
 
     public float damageDampeningAmount = .99f;
     public float damageEffectOnWaggle = .1f;
+    public float damageEffectOnWaggleSpeed = .1f;
 
     private float damage;
 
@@ -43,7 +44,7 @@ public class SpaceshipPawn : MonoBehaviour {
 	void Update ()
     {
         float damMult = (damage*damageEffectOnWaggle) + 1;
-        phase += Time.deltaTime * waggleSpeed;
+        phase += Time.deltaTime * waggleSpeed * ((damage+1)*damageEffectOnWaggleSpeed);
         this.transform.position = rootPosition + new Vector3((Mathf.PerlinNoise(0, phase + 100) - .5f) * positionalWaggle*damMult, (Mathf.PerlinNoise(0, phase)-.5f)*transpositionalWaggle * damMult, (Mathf.PerlinNoise(phase, 0) - .5f) * altitudinalWaggle * damMult);
 
         //Calculus? Calculus. Get partial derivative of the noise field to get velocity for roll.
