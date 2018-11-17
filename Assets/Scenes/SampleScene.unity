@@ -179,6 +179,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thingsThatMustBeDamagedFirst: []
   isDamaged: 0
+  explosionPrefab: {fileID: 1337198075554910, guid: 064ed3479ba0e82489869ea8d2112d97,
+    type: 2}
 --- !u!23 &9257964
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -733,6 +735,8 @@ MonoBehaviour:
   thingsThatMustBeDamagedFirst:
   - {fileID: 1590451527}
   isDamaged: 0
+  explosionPrefab: {fileID: 1337198075554910, guid: 064ed3479ba0e82489869ea8d2112d97,
+    type: 2}
 --- !u!114 &58725688 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 114969321951213770, guid: 5a231da0a0ab8494fa45b6146fe5af11,
@@ -787,6 +791,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thingsThatMustBeDamagedFirst: []
   isDamaged: 0
+  explosionPrefab: {fileID: 1337198075554910, guid: 064ed3479ba0e82489869ea8d2112d97,
+    type: 2}
 --- !u!23 &64738785
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -977,6 +983,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thingsThatMustBeDamagedFirst: []
   isDamaged: 0
+  explosionPrefab: {fileID: 1337198075554910, guid: 064ed3479ba0e82489869ea8d2112d97,
+    type: 2}
 --- !u!114 &66334416 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 114623727207898752, guid: 5a231da0a0ab8494fa45b6146fe5af11,
@@ -1054,6 +1062,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thingsThatMustBeDamagedFirst: []
   isDamaged: 0
+  explosionPrefab: {fileID: 1337198075554910, guid: 064ed3479ba0e82489869ea8d2112d97,
+    type: 2}
 --- !u!23 &73783297
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -1754,6 +1764,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thingsThatMustBeDamagedFirst: []
   isDamaged: 0
+  explosionPrefab: {fileID: 1337198075554910, guid: 064ed3479ba0e82489869ea8d2112d97,
+    type: 2}
 --- !u!65 &83053268
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1941,6 +1953,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thingsThatMustBeDamagedFirst: []
   isDamaged: 0
+  explosionPrefab: {fileID: 1337198075554910, guid: 064ed3479ba0e82489869ea8d2112d97,
+    type: 2}
 --- !u!23 &100538038
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -2202,6 +2216,8 @@ MonoBehaviour:
   thingsThatMustBeDamagedFirst:
   - {fileID: 1357791491}
   isDamaged: 0
+  explosionPrefab: {fileID: 1337198075554910, guid: 064ed3479ba0e82489869ea8d2112d97,
+    type: 2}
 --- !u!114 &111533012 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 114737453225162294, guid: 5a231da0a0ab8494fa45b6146fe5af11,
@@ -2289,6 +2305,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thingsThatMustBeDamagedFirst: []
   isDamaged: 0
+  explosionPrefab: {fileID: 1337198075554910, guid: 064ed3479ba0e82489869ea8d2112d97,
+    type: 2}
 --- !u!65 &126425757
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2468,6 +2486,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thingsThatMustBeDamagedFirst: []
   isDamaged: 0
+  explosionPrefab: {fileID: 1337198075554910, guid: 064ed3479ba0e82489869ea8d2112d97,
+    type: 2}
 --- !u!65 &141055264
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2784,6 +2804,11 @@ Prefab:
         type: 2}
       propertyPath: phaseOffset
       value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 114233455349525356, guid: 0dfe140aceaeddc46a89eedbbb378123,
+        type: 2}
+      propertyPath: damageEffectOnWaggle
+      value: 0.1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0dfe140aceaeddc46a89eedbbb378123, type: 2}
@@ -3126,7 +3151,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &169459259 stripped
 MonoBehaviour:
@@ -3500,6 +3525,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thingsThatMustBeDamagedFirst: []
   isDamaged: 0
+  explosionPrefab: {fileID: 1337198075554910, guid: 064ed3479ba0e82489869ea8d2112d97,
+    type: 2}
 --- !u!65 &195570182
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3722,6 +3749,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thingsThatMustBeDamagedFirst: []
   isDamaged: 0
+  explosionPrefab: {fileID: 1337198075554910, guid: 064ed3479ba0e82489869ea8d2112d97,
+    type: 2}
 --- !u!114 &204009890 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 114816268260301198, guid: 5a231da0a0ab8494fa45b6146fe5af11,
@@ -3768,6 +3797,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thingsThatMustBeDamagedFirst: []
   isDamaged: 0
+  explosionPrefab: {fileID: 1337198075554910, guid: 064ed3479ba0e82489869ea8d2112d97,
+    type: 2}
 --- !u!65 &207820499
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4199,6 +4230,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thingsThatMustBeDamagedFirst: []
   isDamaged: 0
+  explosionPrefab: {fileID: 1337198075554910, guid: 064ed3479ba0e82489869ea8d2112d97,
+    type: 2}
 --- !u!65 &218538118
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4791,7 +4824,7 @@ Transform:
   - {fileID: 1526531518}
   - {fileID: 838787044}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &248663085 stripped
 MonoBehaviour:
@@ -5143,6 +5176,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thingsThatMustBeDamagedFirst: []
   isDamaged: 0
+  explosionPrefab: {fileID: 1337198075554910, guid: 064ed3479ba0e82489869ea8d2112d97,
+    type: 2}
 --- !u!65 &261752678
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5288,6 +5323,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thingsThatMustBeDamagedFirst: []
   isDamaged: 0
+  explosionPrefab: {fileID: 1337198075554910, guid: 064ed3479ba0e82489869ea8d2112d97,
+    type: 2}
 --- !u!23 &264556424
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -5552,6 +5589,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thingsThatMustBeDamagedFirst: []
   isDamaged: 0
+  explosionPrefab: {fileID: 1337198075554910, guid: 064ed3479ba0e82489869ea8d2112d97,
+    type: 2}
 --- !u!114 &277328910 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 114830144947340466, guid: 5a231da0a0ab8494fa45b6146fe5af11,
@@ -5922,6 +5961,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thingsThatMustBeDamagedFirst: []
   isDamaged: 0
+  explosionPrefab: {fileID: 1337198075554910, guid: 064ed3479ba0e82489869ea8d2112d97,
+    type: 2}
 --- !u!65 &295795105
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -6126,6 +6167,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thingsThatMustBeDamagedFirst: []
   isDamaged: 0
+  explosionPrefab: {fileID: 1337198075554910, guid: 064ed3479ba0e82489869ea8d2112d97,
+    type: 2}
 --- !u!114 &300111352 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 114567899627001654, guid: 5a231da0a0ab8494fa45b6146fe5af11,
@@ -6195,52 +6238,6 @@ MonoBehaviour:
     type: 2}
   m_PrefabInternal: {fileID: 215144444}
   m_Script: {fileID: 11500000, guid: e7e83229ebab73248952b63ef190f09c, type: 3}
---- !u!1001 &311447940
-Prefab:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 4532609631608790, guid: 810c93c84a3537744a5f528dcd2928ff, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: -6
-      objectReference: {fileID: 0}
-    - target: {fileID: 4532609631608790, guid: 810c93c84a3537744a5f528dcd2928ff, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 6.25
-      objectReference: {fileID: 0}
-    - target: {fileID: 4532609631608790, guid: 810c93c84a3537744a5f528dcd2928ff, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: 15
-      objectReference: {fileID: 0}
-    - target: {fileID: 4532609631608790, guid: 810c93c84a3537744a5f528dcd2928ff, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4532609631608790, guid: 810c93c84a3537744a5f528dcd2928ff, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: 0.7071068
-      objectReference: {fileID: 0}
-    - target: {fileID: 4532609631608790, guid: 810c93c84a3537744a5f528dcd2928ff, type: 2}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4532609631608790, guid: 810c93c84a3537744a5f528dcd2928ff, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 0.7071068
-      objectReference: {fileID: 0}
-    - target: {fileID: 4532609631608790, guid: 810c93c84a3537744a5f528dcd2928ff, type: 2}
-      propertyPath: m_RootOrder
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 1726440220928248, guid: 810c93c84a3537744a5f528dcd2928ff, type: 2}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 810c93c84a3537744a5f528dcd2928ff, type: 2}
-  m_IsPrefabAsset: 0
 --- !u!114 &312192079 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 114158095759246560, guid: 5a231da0a0ab8494fa45b6146fe5af11,
@@ -6554,6 +6551,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thingsThatMustBeDamagedFirst: []
   isDamaged: 0
+  explosionPrefab: {fileID: 1337198075554910, guid: 064ed3479ba0e82489869ea8d2112d97,
+    type: 2}
 --- !u!65 &340959587
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -7107,6 +7106,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thingsThatMustBeDamagedFirst: []
   isDamaged: 0
+  explosionPrefab: {fileID: 1337198075554910, guid: 064ed3479ba0e82489869ea8d2112d97,
+    type: 2}
 --- !u!65 &367813367
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -7316,6 +7317,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thingsThatMustBeDamagedFirst: []
   isDamaged: 0
+  explosionPrefab: {fileID: 1337198075554910, guid: 064ed3479ba0e82489869ea8d2112d97,
+    type: 2}
 --- !u!114 &369449513 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 114403825376724798, guid: 5a231da0a0ab8494fa45b6146fe5af11,
@@ -7362,6 +7365,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thingsThatMustBeDamagedFirst: []
   isDamaged: 0
+  explosionPrefab: {fileID: 1337198075554910, guid: 064ed3479ba0e82489869ea8d2112d97,
+    type: 2}
 --- !u!65 &373388357
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -7590,6 +7595,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thingsThatMustBeDamagedFirst: []
   isDamaged: 0
+  explosionPrefab: {fileID: 1337198075554910, guid: 064ed3479ba0e82489869ea8d2112d97,
+    type: 2}
 --- !u!114 &380794160 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 114421351600671396, guid: 5a231da0a0ab8494fa45b6146fe5af11,
@@ -7811,7 +7818,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &410029320 stripped
 MonoBehaviour:
@@ -8166,6 +8173,16 @@ Prefab:
         type: 2}
       propertyPath: altitudinalWaggle
       value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114233455349525356, guid: 0dfe140aceaeddc46a89eedbbb378123,
+        type: 2}
+      propertyPath: damageEffectOnWaggle
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114233455349525356, guid: 0dfe140aceaeddc46a89eedbbb378123,
+        type: 2}
+      propertyPath: damageEffectOnWaggleSpeed
+      value: 0.25
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0dfe140aceaeddc46a89eedbbb378123, type: 2}
@@ -8565,6 +8582,8 @@ MonoBehaviour:
   thingsThatMustBeDamagedFirst:
   - {fileID: 1020443241}
   isDamaged: 0
+  explosionPrefab: {fileID: 1337198075554910, guid: 064ed3479ba0e82489869ea8d2112d97,
+    type: 2}
 --- !u!23 &440481173
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -8678,6 +8697,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thingsThatMustBeDamagedFirst: []
   isDamaged: 0
+  explosionPrefab: {fileID: 1337198075554910, guid: 064ed3479ba0e82489869ea8d2112d97,
+    type: 2}
 --- !u!65 &453225371
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -9129,6 +9150,8 @@ MonoBehaviour:
   thingsThatMustBeDamagedFirst:
   - {fileID: 252880567}
   isDamaged: 0
+  explosionPrefab: {fileID: 1337198075554910, guid: 064ed3479ba0e82489869ea8d2112d97,
+    type: 2}
 --- !u!23 &489596680
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -9207,6 +9230,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thingsThatMustBeDamagedFirst: []
   isDamaged: 0
+  explosionPrefab: {fileID: 1337198075554910, guid: 064ed3479ba0e82489869ea8d2112d97,
+    type: 2}
 --- !u!65 &491411025
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -10023,6 +10048,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thingsThatMustBeDamagedFirst: []
   isDamaged: 0
+  explosionPrefab: {fileID: 1337198075554910, guid: 064ed3479ba0e82489869ea8d2112d97,
+    type: 2}
 --- !u!65 &548229824
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -10154,6 +10181,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thingsThatMustBeDamagedFirst: []
   isDamaged: 0
+  explosionPrefab: {fileID: 1337198075554910, guid: 064ed3479ba0e82489869ea8d2112d97,
+    type: 2}
 --- !u!65 &559975001
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -10339,7 +10368,7 @@ RectTransform:
   m_Children:
   - {fileID: 1563451133}
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -10507,6 +10536,8 @@ MonoBehaviour:
   thingsThatMustBeDamagedFirst:
   - {fileID: 2073411300}
   isDamaged: 0
+  explosionPrefab: {fileID: 1337198075554910, guid: 064ed3479ba0e82489869ea8d2112d97,
+    type: 2}
 --- !u!114 &569788407 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 114131125113129616, guid: 5a231da0a0ab8494fa45b6146fe5af11,
@@ -10644,6 +10675,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thingsThatMustBeDamagedFirst: []
   isDamaged: 0
+  explosionPrefab: {fileID: 1337198075554910, guid: 064ed3479ba0e82489869ea8d2112d97,
+    type: 2}
 --- !u!114 &577175040 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 114232447196142878, guid: 5a231da0a0ab8494fa45b6146fe5af11,
@@ -11144,6 +11177,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thingsThatMustBeDamagedFirst: []
   isDamaged: 0
+  explosionPrefab: {fileID: 1337198075554910, guid: 064ed3479ba0e82489869ea8d2112d97,
+    type: 2}
 --- !u!1 &603825090
 GameObject:
   m_ObjectHideFlags: 0
@@ -11263,6 +11298,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thingsThatMustBeDamagedFirst: []
   isDamaged: 0
+  explosionPrefab: {fileID: 1337198075554910, guid: 064ed3479ba0e82489869ea8d2112d97,
+    type: 2}
 --- !u!114 &604619685 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 114301005212059136, guid: 5a231da0a0ab8494fa45b6146fe5af11,
@@ -11406,6 +11443,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thingsThatMustBeDamagedFirst: []
   isDamaged: 0
+  explosionPrefab: {fileID: 1337198075554910, guid: 064ed3479ba0e82489869ea8d2112d97,
+    type: 2}
 --- !u!114 &613297794 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 114830144947340466, guid: 5a231da0a0ab8494fa45b6146fe5af11,
@@ -11470,6 +11509,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thingsThatMustBeDamagedFirst: []
   isDamaged: 0
+  explosionPrefab: {fileID: 1337198075554910, guid: 064ed3479ba0e82489869ea8d2112d97,
+    type: 2}
 --- !u!65 &621388499
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -11654,6 +11695,8 @@ MonoBehaviour:
   thingsThatMustBeDamagedFirst:
   - {fileID: 389081410}
   isDamaged: 0
+  explosionPrefab: {fileID: 1337198075554910, guid: 064ed3479ba0e82489869ea8d2112d97,
+    type: 2}
 --- !u!23 &622505708
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -11821,6 +11864,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thingsThatMustBeDamagedFirst: []
   isDamaged: 0
+  explosionPrefab: {fileID: 1337198075554910, guid: 064ed3479ba0e82489869ea8d2112d97,
+    type: 2}
 --- !u!65 &647585370
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -11988,6 +12033,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thingsThatMustBeDamagedFirst: []
   isDamaged: 0
+  explosionPrefab: {fileID: 1337198075554910, guid: 064ed3479ba0e82489869ea8d2112d97,
+    type: 2}
 --- !u!65 &669295713
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -12121,6 +12168,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thingsThatMustBeDamagedFirst: []
   isDamaged: 0
+  explosionPrefab: {fileID: 1337198075554910, guid: 064ed3479ba0e82489869ea8d2112d97,
+    type: 2}
 --- !u!23 &669692676
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -12311,6 +12360,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thingsThatMustBeDamagedFirst: []
   isDamaged: 0
+  explosionPrefab: {fileID: 1337198075554910, guid: 064ed3479ba0e82489869ea8d2112d97,
+    type: 2}
 --- !u!1 &671555842
 GameObject:
   m_ObjectHideFlags: 0
@@ -12430,6 +12481,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thingsThatMustBeDamagedFirst: []
   isDamaged: 0
+  explosionPrefab: {fileID: 1337198075554910, guid: 064ed3479ba0e82489869ea8d2112d97,
+    type: 2}
 --- !u!1 &672244033
 GameObject:
   m_ObjectHideFlags: 0
@@ -12464,6 +12517,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thingsThatMustBeDamagedFirst: []
   isDamaged: 0
+  explosionPrefab: {fileID: 1337198075554910, guid: 064ed3479ba0e82489869ea8d2112d97,
+    type: 2}
 --- !u!65 &672244035
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -12601,7 +12656,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &680998730 stripped
 MonoBehaviour:
@@ -12752,12 +12807,61 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thingsThatMustBeDamagedFirst: []
   isDamaged: 0
+  explosionPrefab: {fileID: 1337198075554910, guid: 064ed3479ba0e82489869ea8d2112d97,
+    type: 2}
 --- !u!114 &692342088 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 114301005212059136, guid: 5a231da0a0ab8494fa45b6146fe5af11,
     type: 2}
   m_PrefabInternal: {fileID: 215144444}
   m_Script: {fileID: 11500000, guid: e7e83229ebab73248952b63ef190f09c, type: 3}
+--- !u!1001 &694906803
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4000012832170722, guid: eed20203b998a5d46b406aec9856860c, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 42.10234
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000012832170722, guid: eed20203b998a5d46b406aec9856860c, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0.099999696
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000012832170722, guid: eed20203b998a5d46b406aec9856860c, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: -7.675
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000012832170722, guid: eed20203b998a5d46b406aec9856860c, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000012832170722, guid: eed20203b998a5d46b406aec9856860c, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000012832170722, guid: eed20203b998a5d46b406aec9856860c, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000012832170722, guid: eed20203b998a5d46b406aec9856860c, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000012832170722, guid: eed20203b998a5d46b406aec9856860c, type: 2}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 198000012283690144, guid: eed20203b998a5d46b406aec9856860c,
+        type: 2}
+      propertyPath: CollisionModule.plane0
+      value: 
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: eed20203b998a5d46b406aec9856860c, type: 2}
+  m_IsPrefabAsset: 0
 --- !u!1001 &698649266
 Prefab:
   m_ObjectHideFlags: 0
@@ -13240,6 +13344,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thingsThatMustBeDamagedFirst: []
   isDamaged: 0
+  explosionPrefab: {fileID: 1337198075554910, guid: 064ed3479ba0e82489869ea8d2112d97,
+    type: 2}
 --- !u!65 &740243302
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -13444,6 +13550,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thingsThatMustBeDamagedFirst: []
   isDamaged: 0
+  explosionPrefab: {fileID: 1337198075554910, guid: 064ed3479ba0e82489869ea8d2112d97,
+    type: 2}
 --- !u!1 &742151264
 GameObject:
   m_ObjectHideFlags: 0
@@ -13563,6 +13671,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thingsThatMustBeDamagedFirst: []
   isDamaged: 0
+  explosionPrefab: {fileID: 1337198075554910, guid: 064ed3479ba0e82489869ea8d2112d97,
+    type: 2}
 --- !u!114 &742676409 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 114070348485909202, guid: 5a231da0a0ab8494fa45b6146fe5af11,
@@ -13748,6 +13858,8 @@ MonoBehaviour:
   thingsThatMustBeDamagedFirst:
   - {fileID: 2139753093}
   isDamaged: 0
+  explosionPrefab: {fileID: 1337198075554910, guid: 064ed3479ba0e82489869ea8d2112d97,
+    type: 2}
 --- !u!114 &756203263 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 114830144947340466, guid: 5a231da0a0ab8494fa45b6146fe5af11,
@@ -14147,6 +14259,8 @@ MonoBehaviour:
   thingsThatMustBeDamagedFirst:
   - {fileID: 1798193512}
   isDamaged: 0
+  explosionPrefab: {fileID: 1337198075554910, guid: 064ed3479ba0e82489869ea8d2112d97,
+    type: 2}
 --- !u!4 &772055338 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4267029329659610, guid: 5a231da0a0ab8494fa45b6146fe5af11,
@@ -14329,7 +14443,7 @@ Transform:
   - {fileID: 2026540384}
   - {fileID: 82971693}
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &802912578 stripped
 MonoBehaviour:
@@ -14480,6 +14594,8 @@ MonoBehaviour:
   thingsThatMustBeDamagedFirst:
   - {fileID: 971831570}
   isDamaged: 0
+  explosionPrefab: {fileID: 1337198075554910, guid: 064ed3479ba0e82489869ea8d2112d97,
+    type: 2}
 --- !u!114 &803883752 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 114279531924689602, guid: 5a231da0a0ab8494fa45b6146fe5af11,
@@ -14722,6 +14838,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thingsThatMustBeDamagedFirst: []
   isDamaged: 0
+  explosionPrefab: {fileID: 1337198075554910, guid: 064ed3479ba0e82489869ea8d2112d97,
+    type: 2}
 --- !u!65 &810731033
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -14853,6 +14971,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thingsThatMustBeDamagedFirst: []
   isDamaged: 0
+  explosionPrefab: {fileID: 1337198075554910, guid: 064ed3479ba0e82489869ea8d2112d97,
+    type: 2}
 --- !u!65 &813396874
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -15055,6 +15175,8 @@ MonoBehaviour:
   thingsThatMustBeDamagedFirst:
   - {fileID: 1698288690}
   isDamaged: 0
+  explosionPrefab: {fileID: 1337198075554910, guid: 064ed3479ba0e82489869ea8d2112d97,
+    type: 2}
 --- !u!23 &815077664
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -15229,6 +15351,8 @@ MonoBehaviour:
   thingsThatMustBeDamagedFirst:
   - {fileID: 157599640}
   isDamaged: 0
+  explosionPrefab: {fileID: 1337198075554910, guid: 064ed3479ba0e82489869ea8d2112d97,
+    type: 2}
 --- !u!23 &816798303
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -16354,6 +16478,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thingsThatMustBeDamagedFirst: []
   isDamaged: 0
+  explosionPrefab: {fileID: 1337198075554910, guid: 064ed3479ba0e82489869ea8d2112d97,
+    type: 2}
 --- !u!65 &840494267
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -16493,6 +16619,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thingsThatMustBeDamagedFirst: []
   isDamaged: 0
+  explosionPrefab: {fileID: 1337198075554910, guid: 064ed3479ba0e82489869ea8d2112d97,
+    type: 2}
 --- !u!23 &846103619
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -16689,6 +16817,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thingsThatMustBeDamagedFirst: []
   isDamaged: 0
+  explosionPrefab: {fileID: 1337198075554910, guid: 064ed3479ba0e82489869ea8d2112d97,
+    type: 2}
 --- !u!114 &848875140 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 114241557383342548, guid: 5a231da0a0ab8494fa45b6146fe5af11,
@@ -16868,6 +16998,8 @@ MonoBehaviour:
   thingsThatMustBeDamagedFirst:
   - {fileID: 2135578916}
   isDamaged: 0
+  explosionPrefab: {fileID: 1337198075554910, guid: 064ed3479ba0e82489869ea8d2112d97,
+    type: 2}
 --- !u!23 &856813512
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -17367,6 +17499,8 @@ MonoBehaviour:
   thingsThatMustBeDamagedFirst:
   - {fileID: 580524483}
   isDamaged: 0
+  explosionPrefab: {fileID: 1337198075554910, guid: 064ed3479ba0e82489869ea8d2112d97,
+    type: 2}
 --- !u!4 &919099321 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4267029329659610, guid: 5a231da0a0ab8494fa45b6146fe5af11,
@@ -17650,6 +17784,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thingsThatMustBeDamagedFirst: []
   isDamaged: 0
+  explosionPrefab: {fileID: 1337198075554910, guid: 064ed3479ba0e82489869ea8d2112d97,
+    type: 2}
 --- !u!114 &947571611 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 114737873581669108, guid: 5a231da0a0ab8494fa45b6146fe5af11,
@@ -17775,6 +17911,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thingsThatMustBeDamagedFirst: []
   isDamaged: 0
+  explosionPrefab: {fileID: 1337198075554910, guid: 064ed3479ba0e82489869ea8d2112d97,
+    type: 2}
 --- !u!114 &952180842 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 114969321951213770, guid: 5a231da0a0ab8494fa45b6146fe5af11,
@@ -18041,6 +18179,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thingsThatMustBeDamagedFirst: []
   isDamaged: 0
+  explosionPrefab: {fileID: 1337198075554910, guid: 064ed3479ba0e82489869ea8d2112d97,
+    type: 2}
 --- !u!65 &971329997
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -18239,6 +18379,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thingsThatMustBeDamagedFirst: []
   isDamaged: 0
+  explosionPrefab: {fileID: 1337198075554910, guid: 064ed3479ba0e82489869ea8d2112d97,
+    type: 2}
 --- !u!65 &971962988
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -19132,6 +19274,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thingsThatMustBeDamagedFirst: []
   isDamaged: 0
+  explosionPrefab: {fileID: 1337198075554910, guid: 064ed3479ba0e82489869ea8d2112d97,
+    type: 2}
 --- !u!114 &1017642868 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 114469132552411188, guid: 5a231da0a0ab8494fa45b6146fe5af11,
@@ -19329,6 +19473,8 @@ MonoBehaviour:
   thingsThatMustBeDamagedFirst:
   - {fileID: 2010680379}
   isDamaged: 0
+  explosionPrefab: {fileID: 1337198075554910, guid: 064ed3479ba0e82489869ea8d2112d97,
+    type: 2}
 --- !u!1 &1026436629
 GameObject:
   m_ObjectHideFlags: 0
@@ -19472,6 +19618,8 @@ MonoBehaviour:
   thingsThatMustBeDamagedFirst:
   - {fileID: 258439538}
   isDamaged: 0
+  explosionPrefab: {fileID: 1337198075554910, guid: 064ed3479ba0e82489869ea8d2112d97,
+    type: 2}
 --- !u!114 &1027776383 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 114737453225162294, guid: 5a231da0a0ab8494fa45b6146fe5af11,
@@ -19656,6 +19804,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thingsThatMustBeDamagedFirst: []
   isDamaged: 0
+  explosionPrefab: {fileID: 1337198075554910, guid: 064ed3479ba0e82489869ea8d2112d97,
+    type: 2}
 --- !u!114 &1055374290 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 114737873581669108, guid: 5a231da0a0ab8494fa45b6146fe5af11,
@@ -19927,6 +20077,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thingsThatMustBeDamagedFirst: []
   isDamaged: 0
+  explosionPrefab: {fileID: 1337198075554910, guid: 064ed3479ba0e82489869ea8d2112d97,
+    type: 2}
 --- !u!65 &1073629490
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -20129,6 +20281,8 @@ MonoBehaviour:
   thingsThatMustBeDamagedFirst:
   - {fileID: 1854387909}
   isDamaged: 0
+  explosionPrefab: {fileID: 1337198075554910, guid: 064ed3479ba0e82489869ea8d2112d97,
+    type: 2}
 --- !u!23 &1085013120
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -20650,6 +20804,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thingsThatMustBeDamagedFirst: []
   isDamaged: 0
+  explosionPrefab: {fileID: 1337198075554910, guid: 064ed3479ba0e82489869ea8d2112d97,
+    type: 2}
 --- !u!114 &1117710655 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 114928310527275160, guid: 5a231da0a0ab8494fa45b6146fe5af11,
@@ -20907,6 +21063,8 @@ MonoBehaviour:
   thingsThatMustBeDamagedFirst:
   - {fileID: 976586270}
   isDamaged: 0
+  explosionPrefab: {fileID: 1337198075554910, guid: 064ed3479ba0e82489869ea8d2112d97,
+    type: 2}
 --- !u!23 &1145502645
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -21359,6 +21517,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thingsThatMustBeDamagedFirst: []
   isDamaged: 0
+  explosionPrefab: {fileID: 1337198075554910, guid: 064ed3479ba0e82489869ea8d2112d97,
+    type: 2}
 --- !u!65 &1168838893
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -21497,6 +21657,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thingsThatMustBeDamagedFirst: []
   isDamaged: 0
+  explosionPrefab: {fileID: 1337198075554910, guid: 064ed3479ba0e82489869ea8d2112d97,
+    type: 2}
 --- !u!23 &1175966980
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -26498,7 +26660,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!114 &1189438190 stripped
 MonoBehaviour:
@@ -26657,6 +26819,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thingsThatMustBeDamagedFirst: []
   isDamaged: 0
+  explosionPrefab: {fileID: 1337198075554910, guid: 064ed3479ba0e82489869ea8d2112d97,
+    type: 2}
 --- !u!65 &1206878743
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -27041,6 +27205,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thingsThatMustBeDamagedFirst: []
   isDamaged: 0
+  explosionPrefab: {fileID: 1337198075554910, guid: 064ed3479ba0e82489869ea8d2112d97,
+    type: 2}
 --- !u!114 &1248444202 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 114969321951213770, guid: 5a231da0a0ab8494fa45b6146fe5af11,
@@ -27405,6 +27571,8 @@ MonoBehaviour:
   thingsThatMustBeDamagedFirst:
   - {fileID: 1814357168}
   isDamaged: 0
+  explosionPrefab: {fileID: 1337198075554910, guid: 064ed3479ba0e82489869ea8d2112d97,
+    type: 2}
 --- !u!23 &1276264344
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -27844,6 +28012,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thingsThatMustBeDamagedFirst: []
   isDamaged: 0
+  explosionPrefab: {fileID: 1337198075554910, guid: 064ed3479ba0e82489869ea8d2112d97,
+    type: 2}
 --- !u!65 &1300463571
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -28056,6 +28226,8 @@ MonoBehaviour:
   thingsThatMustBeDamagedFirst:
   - {fileID: 1664473488}
   isDamaged: 0
+  explosionPrefab: {fileID: 1337198075554910, guid: 064ed3479ba0e82489869ea8d2112d97,
+    type: 2}
 --- !u!23 &1313409162
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -28182,6 +28354,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thingsThatMustBeDamagedFirst: []
   isDamaged: 0
+  explosionPrefab: {fileID: 1337198075554910, guid: 064ed3479ba0e82489869ea8d2112d97,
+    type: 2}
 --- !u!65 &1326679386
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -28659,6 +28833,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thingsThatMustBeDamagedFirst: []
   isDamaged: 0
+  explosionPrefab: {fileID: 1337198075554910, guid: 064ed3479ba0e82489869ea8d2112d97,
+    type: 2}
 --- !u!114 &1356904735 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 114166753942165874, guid: 5a231da0a0ab8494fa45b6146fe5af11,
@@ -29012,6 +29188,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thingsThatMustBeDamagedFirst: []
   isDamaged: 0
+  explosionPrefab: {fileID: 1337198075554910, guid: 064ed3479ba0e82489869ea8d2112d97,
+    type: 2}
 --- !u!65 &1381554881
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -29228,6 +29406,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thingsThatMustBeDamagedFirst: []
   isDamaged: 0
+  explosionPrefab: {fileID: 1337198075554910, guid: 064ed3479ba0e82489869ea8d2112d97,
+    type: 2}
 --- !u!114 &1385261131 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 114830144947340466, guid: 5a231da0a0ab8494fa45b6146fe5af11,
@@ -29268,6 +29448,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thingsThatMustBeDamagedFirst: []
   isDamaged: 0
+  explosionPrefab: {fileID: 1337198075554910, guid: 064ed3479ba0e82489869ea8d2112d97,
+    type: 2}
 --- !u!65 &1385359338
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -29766,6 +29948,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thingsThatMustBeDamagedFirst: []
   isDamaged: 0
+  explosionPrefab: {fileID: 1337198075554910, guid: 064ed3479ba0e82489869ea8d2112d97,
+    type: 2}
 --- !u!114 &1408978071 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 114737873581669108, guid: 5a231da0a0ab8494fa45b6146fe5af11,
@@ -29812,6 +29996,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thingsThatMustBeDamagedFirst: []
   isDamaged: 0
+  explosionPrefab: {fileID: 1337198075554910, guid: 064ed3479ba0e82489869ea8d2112d97,
+    type: 2}
 --- !u!65 &1412720512
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -30076,6 +30262,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thingsThatMustBeDamagedFirst: []
   isDamaged: 0
+  explosionPrefab: {fileID: 1337198075554910, guid: 064ed3479ba0e82489869ea8d2112d97,
+    type: 2}
 --- !u!4 &1428133035 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4267029329659610, guid: 5a231da0a0ab8494fa45b6146fe5af11,
@@ -30221,6 +30409,8 @@ MonoBehaviour:
   thingsThatMustBeDamagedFirst:
   - {fileID: 234951724}
   isDamaged: 0
+  explosionPrefab: {fileID: 1337198075554910, guid: 064ed3479ba0e82489869ea8d2112d97,
+    type: 2}
 --- !u!23 &1443425468
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -30384,7 +30574,7 @@ Transform:
   - {fileID: 208444247}
   - {fileID: 1149077254}
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1454535555 stripped
 MonoBehaviour:
@@ -30563,6 +30753,8 @@ MonoBehaviour:
   thingsThatMustBeDamagedFirst:
   - {fileID: 147330633}
   isDamaged: 0
+  explosionPrefab: {fileID: 1337198075554910, guid: 064ed3479ba0e82489869ea8d2112d97,
+    type: 2}
 --- !u!23 &1482828759
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -30738,6 +30930,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thingsThatMustBeDamagedFirst: []
   isDamaged: 0
+  explosionPrefab: {fileID: 1337198075554910, guid: 064ed3479ba0e82489869ea8d2112d97,
+    type: 2}
 --- !u!1 &1492271764
 GameObject:
   m_ObjectHideFlags: 0
@@ -31204,6 +31398,8 @@ MonoBehaviour:
   thingsThatMustBeDamagedFirst:
   - {fileID: 1498484442}
   isDamaged: 0
+  explosionPrefab: {fileID: 1337198075554910, guid: 064ed3479ba0e82489869ea8d2112d97,
+    type: 2}
 --- !u!114 &1504630150 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 114131125113129616, guid: 5a231da0a0ab8494fa45b6146fe5af11,
@@ -31365,6 +31561,8 @@ MonoBehaviour:
   thingsThatMustBeDamagedFirst:
   - {fileID: 502666440}
   isDamaged: 0
+  explosionPrefab: {fileID: 1337198075554910, guid: 064ed3479ba0e82489869ea8d2112d97,
+    type: 2}
 --- !u!114 &1513319134 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 114499356460974066, guid: 5a231da0a0ab8494fa45b6146fe5af11,
@@ -31505,6 +31703,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thingsThatMustBeDamagedFirst: []
   isDamaged: 0
+  explosionPrefab: {fileID: 1337198075554910, guid: 064ed3479ba0e82489869ea8d2112d97,
+    type: 2}
 --- !u!65 &1532151799
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -31624,6 +31824,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thingsThatMustBeDamagedFirst: []
   isDamaged: 0
+  explosionPrefab: {fileID: 1337198075554910, guid: 064ed3479ba0e82489869ea8d2112d97,
+    type: 2}
 --- !u!65 &1533113363
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -31886,7 +32088,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1547714995 stripped
 MonoBehaviour:
@@ -32098,6 +32300,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thingsThatMustBeDamagedFirst: []
   isDamaged: 0
+  explosionPrefab: {fileID: 1337198075554910, guid: 064ed3479ba0e82489869ea8d2112d97,
+    type: 2}
 --- !u!65 &1570373088
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -32483,52 +32687,8 @@ MonoBehaviour:
   thingsThatMustBeDamagedFirst:
   - {fileID: 244586103}
   isDamaged: 0
---- !u!1001 &1601748989
-Prefab:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 4318358761888948, guid: dda44019845f7c44fa179be01804bce1, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: -6
-      objectReference: {fileID: 0}
-    - target: {fileID: 4318358761888948, guid: dda44019845f7c44fa179be01804bce1, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 6.25
-      objectReference: {fileID: 0}
-    - target: {fileID: 4318358761888948, guid: dda44019845f7c44fa179be01804bce1, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: 15
-      objectReference: {fileID: 0}
-    - target: {fileID: 4318358761888948, guid: dda44019845f7c44fa179be01804bce1, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4318358761888948, guid: dda44019845f7c44fa179be01804bce1, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: 0.7071068
-      objectReference: {fileID: 0}
-    - target: {fileID: 4318358761888948, guid: dda44019845f7c44fa179be01804bce1, type: 2}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4318358761888948, guid: dda44019845f7c44fa179be01804bce1, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 0.7071068
-      objectReference: {fileID: 0}
-    - target: {fileID: 4318358761888948, guid: dda44019845f7c44fa179be01804bce1, type: 2}
-      propertyPath: m_RootOrder
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 1241247196152422, guid: dda44019845f7c44fa179be01804bce1, type: 2}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: dda44019845f7c44fa179be01804bce1, type: 2}
-  m_IsPrefabAsset: 0
+  explosionPrefab: {fileID: 1337198075554910, guid: 064ed3479ba0e82489869ea8d2112d97,
+    type: 2}
 --- !u!4 &1602417470 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4267029329659610, guid: 5a231da0a0ab8494fa45b6146fe5af11,
@@ -32588,6 +32748,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thingsThatMustBeDamagedFirst: []
   isDamaged: 0
+  explosionPrefab: {fileID: 1337198075554910, guid: 064ed3479ba0e82489869ea8d2112d97,
+    type: 2}
 --- !u!23 &1605223715
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -32802,6 +32964,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thingsThatMustBeDamagedFirst: []
   isDamaged: 0
+  explosionPrefab: {fileID: 1337198075554910, guid: 064ed3479ba0e82489869ea8d2112d97,
+    type: 2}
 --- !u!65 &1619055461
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -32933,6 +33097,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thingsThatMustBeDamagedFirst: []
   isDamaged: 0
+  explosionPrefab: {fileID: 1337198075554910, guid: 064ed3479ba0e82489869ea8d2112d97,
+    type: 2}
 --- !u!65 &1621469764
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -33070,6 +33236,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thingsThatMustBeDamagedFirst: []
   isDamaged: 0
+  explosionPrefab: {fileID: 1337198075554910, guid: 064ed3479ba0e82489869ea8d2112d97,
+    type: 2}
 --- !u!65 &1625969274
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -33251,6 +33419,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thingsThatMustBeDamagedFirst: []
   isDamaged: 0
+  explosionPrefab: {fileID: 1337198075554910, guid: 064ed3479ba0e82489869ea8d2112d97,
+    type: 2}
 --- !u!23 &1639597727
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -33368,6 +33538,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thingsThatMustBeDamagedFirst: []
   isDamaged: 0
+  explosionPrefab: {fileID: 1337198075554910, guid: 064ed3479ba0e82489869ea8d2112d97,
+    type: 2}
 --- !u!65 &1648334044
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -33761,6 +33933,8 @@ MonoBehaviour:
   thingsThatMustBeDamagedFirst:
   - {fileID: 1147110782}
   isDamaged: 0
+  explosionPrefab: {fileID: 1337198075554910, guid: 064ed3479ba0e82489869ea8d2112d97,
+    type: 2}
 --- !u!1 &1677725602
 GameObject:
   m_ObjectHideFlags: 0
@@ -34160,6 +34334,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thingsThatMustBeDamagedFirst: []
   isDamaged: 0
+  explosionPrefab: {fileID: 1337198075554910, guid: 064ed3479ba0e82489869ea8d2112d97,
+    type: 2}
 --- !u!114 &1687976151 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 114639758836037276, guid: 5a231da0a0ab8494fa45b6146fe5af11,
@@ -34277,6 +34453,8 @@ MonoBehaviour:
   thingsThatMustBeDamagedFirst:
   - {fileID: 216966292}
   isDamaged: 0
+  explosionPrefab: {fileID: 1337198075554910, guid: 064ed3479ba0e82489869ea8d2112d97,
+    type: 2}
 --- !u!23 &1691202027
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -34440,6 +34618,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thingsThatMustBeDamagedFirst: []
   isDamaged: 0
+  explosionPrefab: {fileID: 1337198075554910, guid: 064ed3479ba0e82489869ea8d2112d97,
+    type: 2}
 --- !u!1 &1693228649
 GameObject:
   m_ObjectHideFlags: 0
@@ -34705,6 +34885,8 @@ MonoBehaviour:
   thingsThatMustBeDamagedFirst:
   - {fileID: 1343787824}
   isDamaged: 0
+  explosionPrefab: {fileID: 1337198075554910, guid: 064ed3479ba0e82489869ea8d2112d97,
+    type: 2}
 --- !u!23 &1705519627
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -34819,6 +35001,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thingsThatMustBeDamagedFirst: []
   isDamaged: 0
+  explosionPrefab: {fileID: 1337198075554910, guid: 064ed3479ba0e82489869ea8d2112d97,
+    type: 2}
 --- !u!65 &1716714673
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -35140,6 +35324,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thingsThatMustBeDamagedFirst: []
   isDamaged: 0
+  explosionPrefab: {fileID: 1337198075554910, guid: 064ed3479ba0e82489869ea8d2112d97,
+    type: 2}
 --- !u!65 &1719083660
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -35283,6 +35469,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thingsThatMustBeDamagedFirst: []
   isDamaged: 0
+  explosionPrefab: {fileID: 1337198075554910, guid: 064ed3479ba0e82489869ea8d2112d97,
+    type: 2}
 --- !u!65 &1725559620
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -35487,6 +35675,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thingsThatMustBeDamagedFirst: []
   isDamaged: 0
+  explosionPrefab: {fileID: 1337198075554910, guid: 064ed3479ba0e82489869ea8d2112d97,
+    type: 2}
 --- !u!114 &1730397180 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 114419087143239392, guid: 5a231da0a0ab8494fa45b6146fe5af11,
@@ -35624,6 +35814,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thingsThatMustBeDamagedFirst: []
   isDamaged: 0
+  explosionPrefab: {fileID: 1337198075554910, guid: 064ed3479ba0e82489869ea8d2112d97,
+    type: 2}
 --- !u!23 &1732399623
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -35961,6 +36153,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thingsThatMustBeDamagedFirst: []
   isDamaged: 0
+  explosionPrefab: {fileID: 1337198075554910, guid: 064ed3479ba0e82489869ea8d2112d97,
+    type: 2}
 --- !u!65 &1739574969
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -36106,7 +36300,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 12
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1739886973 stripped
 MonoBehaviour:
@@ -36564,6 +36758,8 @@ MonoBehaviour:
   thingsThatMustBeDamagedFirst:
   - {fileID: 1740935185}
   isDamaged: 0
+  explosionPrefab: {fileID: 1337198075554910, guid: 064ed3479ba0e82489869ea8d2112d97,
+    type: 2}
 --- !u!23 &1778554857
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -36769,6 +36965,8 @@ MonoBehaviour:
   thingsThatMustBeDamagedFirst:
   - {fileID: 1283522160}
   isDamaged: 0
+  explosionPrefab: {fileID: 1337198075554910, guid: 064ed3479ba0e82489869ea8d2112d97,
+    type: 2}
 --- !u!1 &1788794869
 GameObject:
   m_ObjectHideFlags: 0
@@ -36803,6 +37001,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thingsThatMustBeDamagedFirst: []
   isDamaged: 0
+  explosionPrefab: {fileID: 1337198075554910, guid: 064ed3479ba0e82489869ea8d2112d97,
+    type: 2}
 --- !u!65 &1788794871
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -36922,6 +37122,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thingsThatMustBeDamagedFirst: []
   isDamaged: 0
+  explosionPrefab: {fileID: 1337198075554910, guid: 064ed3479ba0e82489869ea8d2112d97,
+    type: 2}
 --- !u!65 &1788853733
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -37156,6 +37358,8 @@ MonoBehaviour:
   thingsThatMustBeDamagedFirst:
   - {fileID: 1608467564}
   isDamaged: 0
+  explosionPrefab: {fileID: 1337198075554910, guid: 064ed3479ba0e82489869ea8d2112d97,
+    type: 2}
 --- !u!1 &1790362713
 GameObject:
   m_ObjectHideFlags: 0
@@ -37299,6 +37503,8 @@ MonoBehaviour:
   thingsThatMustBeDamagedFirst:
   - {fileID: 974996130}
   isDamaged: 0
+  explosionPrefab: {fileID: 1337198075554910, guid: 064ed3479ba0e82489869ea8d2112d97,
+    type: 2}
 --- !u!114 &1791032475 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 114232447196142878, guid: 5a231da0a0ab8494fa45b6146fe5af11,
@@ -37474,6 +37680,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thingsThatMustBeDamagedFirst: []
   isDamaged: 0
+  explosionPrefab: {fileID: 1337198075554910, guid: 064ed3479ba0e82489869ea8d2112d97,
+    type: 2}
 --- !u!65 &1808235018
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -37670,6 +37878,8 @@ MonoBehaviour:
   thingsThatMustBeDamagedFirst:
   - {fileID: 1240498496}
   isDamaged: 0
+  explosionPrefab: {fileID: 1337198075554910, guid: 064ed3479ba0e82489869ea8d2112d97,
+    type: 2}
 --- !u!23 &1811448166
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -38100,6 +38310,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thingsThatMustBeDamagedFirst: []
   isDamaged: 0
+  explosionPrefab: {fileID: 1337198075554910, guid: 064ed3479ba0e82489869ea8d2112d97,
+    type: 2}
 --- !u!1001 &1839739179
 Prefab:
   m_ObjectHideFlags: 0
@@ -38492,6 +38704,8 @@ MonoBehaviour:
   thingsThatMustBeDamagedFirst:
   - {fileID: 1271058932}
   isDamaged: 0
+  explosionPrefab: {fileID: 1337198075554910, guid: 064ed3479ba0e82489869ea8d2112d97,
+    type: 2}
 --- !u!114 &1857466096 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 114158095759246560, guid: 5a231da0a0ab8494fa45b6146fe5af11,
@@ -38778,6 +38992,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thingsThatMustBeDamagedFirst: []
   isDamaged: 0
+  explosionPrefab: {fileID: 1337198075554910, guid: 064ed3479ba0e82489869ea8d2112d97,
+    type: 2}
 --- !u!23 &1871086244
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -39236,6 +39452,8 @@ MonoBehaviour:
   thingsThatMustBeDamagedFirst:
   - {fileID: 419961301}
   isDamaged: 0
+  explosionPrefab: {fileID: 1337198075554910, guid: 064ed3479ba0e82489869ea8d2112d97,
+    type: 2}
 --- !u!114 &1886383540 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 114737453225162294, guid: 5a231da0a0ab8494fa45b6146fe5af11,
@@ -39572,6 +39790,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thingsThatMustBeDamagedFirst: []
   isDamaged: 0
+  explosionPrefab: {fileID: 1337198075554910, guid: 064ed3479ba0e82489869ea8d2112d97,
+    type: 2}
 --- !u!23 &1901793874
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -40074,6 +40294,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thingsThatMustBeDamagedFirst: []
   isDamaged: 0
+  explosionPrefab: {fileID: 1337198075554910, guid: 064ed3479ba0e82489869ea8d2112d97,
+    type: 2}
 --- !u!23 &1974137745
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -40246,6 +40468,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thingsThatMustBeDamagedFirst: []
   isDamaged: 0
+  explosionPrefab: {fileID: 1337198075554910, guid: 064ed3479ba0e82489869ea8d2112d97,
+    type: 2}
 --- !u!65 &1982526043
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -40555,6 +40779,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thingsThatMustBeDamagedFirst: []
   isDamaged: 0
+  explosionPrefab: {fileID: 1337198075554910, guid: 064ed3479ba0e82489869ea8d2112d97,
+    type: 2}
 --- !u!114 &1993879003 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 114421351600671396, guid: 5a231da0a0ab8494fa45b6146fe5af11,
@@ -40698,6 +40924,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thingsThatMustBeDamagedFirst: []
   isDamaged: 0
+  explosionPrefab: {fileID: 1337198075554910, guid: 064ed3479ba0e82489869ea8d2112d97,
+    type: 2}
 --- !u!114 &1997290462 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 114737873581669108, guid: 5a231da0a0ab8494fa45b6146fe5af11,
@@ -41177,6 +41405,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thingsThatMustBeDamagedFirst: []
   isDamaged: 0
+  explosionPrefab: {fileID: 1337198075554910, guid: 064ed3479ba0e82489869ea8d2112d97,
+    type: 2}
 --- !u!114 &2049041445 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 114279531924689602, guid: 5a231da0a0ab8494fa45b6146fe5af11,
@@ -41681,6 +41911,8 @@ MonoBehaviour:
   thingsThatMustBeDamagedFirst:
   - {fileID: 1257082293}
   isDamaged: 0
+  explosionPrefab: {fileID: 1337198075554910, guid: 064ed3479ba0e82489869ea8d2112d97,
+    type: 2}
 --- !u!23 &2098235114
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -41759,6 +41991,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thingsThatMustBeDamagedFirst: []
   isDamaged: 0
+  explosionPrefab: {fileID: 1337198075554910, guid: 064ed3479ba0e82489869ea8d2112d97,
+    type: 2}
 --- !u!65 &2098512631
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -41896,6 +42130,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thingsThatMustBeDamagedFirst: []
   isDamaged: 0
+  explosionPrefab: {fileID: 1337198075554910, guid: 064ed3479ba0e82489869ea8d2112d97,
+    type: 2}
 --- !u!65 &2109810817
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -42172,6 +42408,8 @@ MonoBehaviour:
   thingsThatMustBeDamagedFirst:
   - {fileID: 1217842668}
   isDamaged: 0
+  explosionPrefab: {fileID: 1337198075554910, guid: 064ed3479ba0e82489869ea8d2112d97,
+    type: 2}
 --- !u!23 &2126944525
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -42341,6 +42579,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thingsThatMustBeDamagedFirst: []
   isDamaged: 0
+  explosionPrefab: {fileID: 1337198075554910, guid: 064ed3479ba0e82489869ea8d2112d97,
+    type: 2}
 --- !u!114 &2128319364 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 114469132552411188, guid: 5a231da0a0ab8494fa45b6146fe5af11,
@@ -42894,6 +43134,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thingsThatMustBeDamagedFirst: []
   isDamaged: 0
+  explosionPrefab: {fileID: 1337198075554910, guid: 064ed3479ba0e82489869ea8d2112d97,
+    type: 2}
 --- !u!65 &2145285970
 BoxCollider:
   m_ObjectHideFlags: 0

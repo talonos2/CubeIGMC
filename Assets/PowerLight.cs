@@ -12,12 +12,27 @@ public class PowerLight : DamagableDisplay {
     public Texture damagedMaterial;
     public Texture actuallyDontEmit;
 
+    private GameObject explosion;
+    public GameObject explosionPrefab;
+
+    private GameObject destructionSparks;
+    public GameObject destructionSparksPrefab;
+
 
     // Use this for initialization
     void Start () {
         mat = new Material(this.GetComponent<Renderer>().material);
         this.GetComponent<Renderer>().material = mat;
 
+        this.explosion = GameObject.Instantiate(explosionPrefab);
+        this.explosion.transform.position = this.transform.position;
+        this.explosion.SetActive(false);
+
+        this.destructionSparks = GameObject.Instantiate(destructionSparksPrefab);
+        this.destructionSparks.transform.position = this.transform.position;
+        this.destructionSparks.SetActive(false);
+        this.destructionSparks.transform.parent = this.transform;
+        this.destructionSparks.transform.localPosition = this.destructionSparks.transform.localPosition + new Vector3(0, 0, 2);
     }
 
     public void SetHowMuchOn(float on)
@@ -67,6 +82,9 @@ public class PowerLight : DamagableDisplay {
         oldOn = -1;
 
         SetHowMuchOn(realOldOn);
+
+        this.explosion.SetActive(true);
+        this.destructionSparks.SetActive(true);
     }
 
     public override void Fix()

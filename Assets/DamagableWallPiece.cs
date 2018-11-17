@@ -11,6 +11,9 @@ public class DamagableWallPiece : DamagableDisplay
     private bool animate;
     private bool hasSwitchedMaterial;
 
+    private GameObject explosion;
+    public GameObject explosionPrefab;
+
     public override void Damage()
     {
         this.GetComponent<Rigidbody>().isKinematic = false;
@@ -25,6 +28,7 @@ public class DamagableWallPiece : DamagableDisplay
             UnityEngine.Random.Range(-20f, 20f));
         this.isDamaged = true;
         this.animate = true;
+        this.explosion.SetActive(true);
     }
 
     public override void Fix()
@@ -37,6 +41,9 @@ public class DamagableWallPiece : DamagableDisplay
     {
         this.renderer = this.GetComponent<Renderer>();
         this.originalMat = renderer.material;
+        this.explosion = GameObject.Instantiate(explosionPrefab);
+        this.explosion.transform.position = this.transform.position;
+        this.explosion.active = false;
 
     }
 

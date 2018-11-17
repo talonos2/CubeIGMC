@@ -172,7 +172,7 @@ public class Combatant : MonoBehaviour
     private float DamageAmount()
     {
         //queuedDamage is the number of AttackCubes that have been submitted since attack charging began.
-        return queuedDamage*5f*EnergyMultiplier();
+        return queuedDamage*EnergyMultiplier();
     }
 
     private bool AttackIsQueued()
