@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 public class Menus : MonoBehaviour {
 
 
-    public GameObject pauseMenu;
+    public GameObject theMenu;
     bool pause = false;
 
 
@@ -35,20 +35,31 @@ public class Menus : MonoBehaviour {
 
         if (pause)
         {
-            pauseMenu.SetActive(true);
+            theMenu.SetActive(true);
             Time.timeScale = 0;
         }
         else if (!pause)
         {
-            pauseMenu.SetActive(false);
+            theMenu.SetActive(false);
             Time.timeScale = 1;
         }
+    }
+
+    public void SinglePlayer()
+    {
+        Time.timeScale = 1;
+        SceneManager.LoadScene("SampleScene");
     }
 
     public void Restart()
     {
         Time.timeScale = 1;
         SceneManager.LoadScene("SampleScene");
+    }
+
+    public void QuitToMenu()
+    {
+        SceneManager.LoadScene("MainMenu");
     }
 
     public void QuitGame()

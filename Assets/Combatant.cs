@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class Combatant : MonoBehaviour
 {
@@ -25,7 +26,8 @@ public class Combatant : MonoBehaviour
 
     public GameObject myMenu;
     public GameObject theirMenu;
-
+    public GameObject endMenu;
+    public GameObject eventSystem;
 
     public void Start()
     {
@@ -185,8 +187,11 @@ public class Combatant : MonoBehaviour
             theirMenu.transform.GetChild(0).GetComponent<Text>().text = "You Won";
             Time.timeScale = 0;
 
+   
+
             myMenu.SetActive(true);
             theirMenu.SetActive(true);
+            endMenu.SetActive(true);
         }
         else
         {
