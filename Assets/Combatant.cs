@@ -30,6 +30,7 @@ public class Combatant : MonoBehaviour
         energy = MaxEnergy() / 4; 
         shields = 0;
         this.initializer = GameObject.Find("Initializer").GetComponent<CombatInitializer>();
+        this.RefreshEnergyBars();
     }
 
     //In our current formula, there are no reasons to have cubes other than the "standard" cube.
