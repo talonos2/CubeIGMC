@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Combatant : MonoBehaviour
 {
@@ -22,6 +23,10 @@ public class Combatant : MonoBehaviour
 
     public DamageManager damageManager;
     public PowerMultiplierTextChanger multiplierText;
+
+    public GameObject myMenu;
+    public GameObject theirMenu;
+
 
     public void Start()
     {
@@ -144,6 +149,8 @@ public class Combatant : MonoBehaviour
             damage -= shields;
             shields = 0;
             health -= damage;
+
+
         }
 
         if (damage < 0)
@@ -168,9 +175,26 @@ public class Combatant : MonoBehaviour
                 pawn.getHitLightSound.Play();
             }
         }
-        pawn.Damage(damage);
-        damageManager.SetNewDamageProportion(this.health / this.MaxHealth());
-        cameraToShake.ShakeCamera(damage / MaxHealth(), .5f);
+
+
+
+        //if dead...
+        if (health <= 0)
+        {
+
+            myMenu.transform.GetChild(0).GetComponent<Text>().text = "You Lost";
+            theirMenu.transform.GetChild(0).GetComponent<Text>().text = "You Won";
+            Time.timeScale = 0;
+
+            myMenu.SetActive(true);
+            theirMenu.SetActive(true);
+        }
+        else
+        {
+            pawn.Damage(damage);
+            damageManager.SetNewDamageProportion(this.health / this.MaxHealth());
+            cameraToShake.ShakeCamera(damage / MaxHealth(), .5f);
+        }
     }
 
     private float DamageNeededForLargeSFX()
