@@ -27,8 +27,8 @@ public class Combatant : MonoBehaviour
     public void Start()
     {
         health = MaxHealth();
-        //energy = MaxEnergy() / 2; New system, energy starts at 0, but no decay.
-        shields = 50;
+        energy = MaxEnergy() / 4; 
+        shields = 0;
         this.initializer = GameObject.Find("Initializer").GetComponent<CombatInitializer>();
     }
 
@@ -154,19 +154,19 @@ public class Combatant : MonoBehaviour
         if (shields > damage)
         {
             shields -= damage;
+            damage = 0;
         }
         else
         {
             damage -= shields;
             shields = 0;
             health -= damage;
-
-
         }
 
-        if (damage < 0)
+        if (damage <= 0)
         {
             //No damage left; shield absorbed it all.
+            Debug.Log("Shield Sound");
             pawn.shieldSound.Stop();
             pawn.shieldSound.Play();
         }

@@ -7,7 +7,7 @@ public class DamagableWallPiece : DamagableDisplay
     float timeSinceDamaged = 0;
     private Material originalMat;
     private Material personalMatToMakeTranslucent;
-    private Renderer renderer;
+    private new Renderer renderer;
     private bool animate;
     private bool hasSwitchedMaterial;
 
