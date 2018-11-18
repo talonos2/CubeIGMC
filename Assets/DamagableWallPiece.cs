@@ -43,7 +43,7 @@ public class DamagableWallPiece : DamagableDisplay
         this.originalMat = renderer.material;
         this.explosion = GameObject.Instantiate(explosionPrefab);
         this.explosion.transform.position = this.transform.position;
-        this.explosion.active = false;
+        this.explosion.SetActive(false);
 
     }
 

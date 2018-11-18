@@ -734,6 +734,11 @@ public class GameGrid : MonoBehaviour
 
         internal void Explode(PowerupEffect powerupEffect, Combatant player)
         {
+            if (type == PowerupType.ENERGY && !player.HasRoomForMoreEnergy())
+            {
+                //No particle for energy if there's no room for it.
+                return;
+            }
             PowerupEffect p = GameObject.Instantiate(powerupEffect);
             p.transform.position = cube.transform.position;
             Color toInitialize = Color.white;

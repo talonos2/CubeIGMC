@@ -15,7 +15,7 @@ public class Combatant : MonoBehaviour
     public CameraShake cameraToShake;
 
     public Transform healthBar;
-    public Transform shieldBar;
+    public Transform shieldParticleTarget;
     public Transform attackChargeBar;
 
     public SpaceshipPawn pawn;
@@ -24,15 +24,12 @@ public class Combatant : MonoBehaviour
     public DamageManager damageManager;
     public PowerMultiplierTextChanger multiplierText;
 
-    public GameObject myMenu;
-    public GameObject theirMenu;
-
-
     public void Start()
     {
         health = MaxHealth();
         //energy = MaxEnergy() / 2; New system, energy starts at 0, but no decay.
         shields = 50;
+        this.initializer = GameObject.Find("Initializer").GetComponent<CombatInitializer>();
     }
 
     //In our current formula, there are no reasons to have cubes other than the "standard" cube.
@@ -56,6 +53,21 @@ public class Combatant : MonoBehaviour
             randomBag.Add(PowerupType.PSI);
         }
         return randomBag[dice.NextInt(0, randomBag.Count)];
+    }
+
+    internal float getShieldPercent()
+    {
+        return shields / MaxShields();
+    }
+
+    private float MaxShields()
+    {
+        return MaxHealth() * 2;
+    }
+
+    internal bool isAlive()
+    {
+        return health > 0;
     }
 
     private int PsiCubes()
@@ -86,9 +98,8 @@ public class Combatant : MonoBehaviour
             }
          }
 
-        //energyBar.localScale = new Vector3(.2f, ((float)energy / (float)MaxEnergy()), .2f);
-        shieldBar.localScale = new Vector3(.2f, Math.Min(shields / MaxHealth(), 1), .2f);
-        healthBar.localScale = new Vector3(.2f, (health / MaxHealth()), .2f);
+        shieldParticleTarget.localScale = new Vector3(.2f, Math.Min(shields / MaxHealth(), 1), .2f);
+        healthBar.localScale = new Vector3(.2f, Math.Max((health / MaxHealth()),0), .2f);
         attackChargeBar.localScale = new Vector3(.2f, (attackCharge / AttackChargeTime()), .2f);
     }
 
@@ -179,15 +190,9 @@ public class Combatant : MonoBehaviour
 
 
         //if dead...
-        if (health <= 0)
+        if (!isAlive())
         {
-
-            myMenu.transform.GetChild(0).GetComponent<Text>().text = "You Lost";
-            theirMenu.transform.GetChild(0).GetComponent<Text>().text = "You Won";
-            Time.timeScale = 0;
-
-            myMenu.SetActive(true);
-            theirMenu.SetActive(true);
+            initializer.StartDeathSequence();
         }
         else
         {
@@ -225,7 +230,7 @@ public class Combatant : MonoBehaviour
 
     public void ChargeAttack(int attackCubes)
     {
-        if (attackCubes == 0)
+        if (attackCubes == 0||EnergyMultiplier()==0)
         {
             return;
         }
@@ -240,6 +245,7 @@ public class Combatant : MonoBehaviour
     public void ChargeShields(float shieldCubes)
     {
         shields += GetShieldChargeAmount(shieldCubes);
+        shields = Math.Min(shields, MaxShields());
     }
 
     public void ChargeEnergy(int energyCubes)
@@ -283,7 +289,7 @@ public class Combatant : MonoBehaviour
 
     public float lengthOfBar = 15;
     private float pretendEnergy;
-    private float pretendShields;
+    private CombatInitializer initializer;
 
     internal Vector3 GetTargetOfParticle(PowerupType type)
     {
@@ -293,8 +299,7 @@ public class Combatant : MonoBehaviour
             case PowerupType.ATTACK:
                 return attackChargeBar.transform.position;
             case PowerupType.SHIELDS:
-                Vector3 toReturn = shieldBar.transform.position + new Vector3(-lengthOfBar * pretendShields / MaxHealth(), 0, 0);
-                pretendShields += GetShieldChargeAmount(1);
+                Vector3 toReturn = shieldParticleTarget.transform.position;
                 return toReturn;
             case PowerupType.ENERGY:
                 Vector3 toReturn2 = lights.GetTargetAtPercent((float)pretendEnergy / (float)MaxEnergy());
@@ -308,6 +313,10 @@ public class Combatant : MonoBehaviour
     internal void StartNewParticleBarrage()
     {
         pretendEnergy = energy;
-        pretendShields = shields;
+    }
+
+    public bool HasRoomForMoreEnergy()
+    {
+        return pretendEnergy < MaxEnergy();
     }
 }
