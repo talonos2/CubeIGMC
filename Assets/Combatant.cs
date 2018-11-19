@@ -23,6 +23,7 @@ public class Combatant : MonoBehaviour
 
     public DamageManager damageManager;
     public PowerMultiplierTextChanger multiplierText;
+    public bool isImmortal = false; //Used for recording so you don't blow up the enemy before you finish.
 
     public void Start()
     {
@@ -124,7 +125,7 @@ public class Combatant : MonoBehaviour
 
     private float MaxHealth()
     {
-        return 100;
+        return 100 * (isImmortal ? 100:1);
     }
 
     private int MaxEnergy()

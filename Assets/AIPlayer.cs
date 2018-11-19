@@ -27,7 +27,7 @@ internal class AIPlayer
     public const int DROP = 10;
     public const int REBOOT = 11;
 
-
+    private Queue<int> commands = new Queue<int>();
 
     public AIPlayer()
     {
@@ -36,19 +36,17 @@ internal class AIPlayer
 
     public void TickAI()
     {
-        if (firstTimeStamp==0)
+        PlayNextCommand();
+        BufferFurtherCommands();
+    }
+
+    private void BufferFurtherCommands()
+    {
+        if (firstTimeStamp == 0)
         {
             this.firstTimeStamp = Time.timeSinceLevelLoad;
         }
         float timeElapsed = Time.timeSinceLevelLoad - this.firstTimeStamp;
-
-        isPressingUp = false;
-        isPressingDown = false;
-        isPressingLeft = false;
-        isPressingRight = false;
-        justDropped = false;
-        justCWed = false;
-        justCCWed = false;
         if (events.Count == 0)
         {
             return;
@@ -57,8 +55,28 @@ internal class AIPlayer
         {
             InputEvent ie = events[0];
             Debug.Log("At " + ie.time + ", got" + ie.eventType);
+            commands.Enqueue(ie.eventType);
             events.RemoveAt(0);
-            switch (ie.eventType)
+            if (events.Count == 0)
+            {
+                return;
+            }
+        }
+    }
+
+    private void PlayNextCommand()
+    {
+        isPressingUp = false;
+        isPressingDown = false;
+        isPressingLeft = false;
+        isPressingRight = false;
+        justDropped = false;
+        justCWed = false;
+        justCCWed = false;
+        if (commands.Count > 0)
+        {
+            int command = commands.Dequeue();
+            switch (command)
             {
                 case UP:
                     isPressingUp = true;
@@ -87,10 +105,6 @@ internal class AIPlayer
                 default:
                     Debug.LogError("Bad integer passed to AIPlayer.TickAI!");
                     break;
-            }
-            if (events.Count==0)
-            {
-                return;
             }
         }
     }

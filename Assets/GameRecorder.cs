@@ -19,6 +19,7 @@ public class GameRecorder
     public const int CCW_ROTATE = 8;
     public const int CW_ROTATE = 9;
     public const int DROP = 10;
+    public const int REBOOT = 11;
 
     public GameRecorder(int seed)
     {
