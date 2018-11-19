@@ -237,10 +237,6 @@ public class GameGrid : MonoBehaviour
             timeHeldBothRotatesAtOnce = 0;
         }
 
-        if (aIPlayer.GetButtonDown("REBOOT"))
-        {
-            Reboot();
-        }
 
         if (isPlayedByAI)
         {
@@ -248,6 +244,7 @@ public class GameGrid : MonoBehaviour
             if (aIPlayer.GetButtonDown("DOWN")) { TryGoDown(); }
             if (aIPlayer.GetButtonDown("LEFT")) { TryGoLeft(); }
             if (aIPlayer.GetButtonDown("RIGHT")) { TryGoRight(); }
+            if (aIPlayer.GetButtonDown("REBOOT")) {Reboot(); }
         }
         else
         {

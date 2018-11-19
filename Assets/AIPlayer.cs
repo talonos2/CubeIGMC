@@ -83,6 +83,7 @@ internal class AIPlayer
                     break;
                 case REBOOT:
                     justRebooted = true;
+                    break;
                 default:
                     Debug.LogError("Bad integer passed to AIPlayer.TickAI!");
                     break;
