@@ -8,9 +8,11 @@ public class GameGrid : MonoBehaviour
     public bool isRecording = false;
     
     public static Vector2Int numCells = new Vector2Int(15, 18);
+    public GameObject strangeFrontPlateThing;
+
     public GameCube[,] grid = new GameCube[numCells.x, numCells.y];
     public CellType[,] cellTypes = new CellType[numCells.x, numCells.y];
-    public GameObject[,] cellTypeFX = new GameObject[numCells.x, numCells.y];
+    public TileFX[,] cellTypeFX = new TileFX[numCells.x, numCells.y];
     public PlayingPiece piecePrefab;
     public PowerupEffect powerUpEffect;
     public TextAsset aIText;
@@ -80,19 +82,22 @@ public class GameGrid : MonoBehaviour
                 switch (cellTypes[x,y])
                 {
                     case CellType.ATTACK:
-                        cellTypeFX[x, y] = GameObject.Instantiate(attackCellPrefab);
+                        cellTypeFX[x, y] = GameObject.Instantiate(attackCellPrefab).GetComponent<TileFX>();
                         cellTypeFX[x, y].transform.parent = this.transform;
                         cellTypeFX[x, y].transform.localPosition = GetLocalTranslationFromGridLocation(x, y);
+                        player.AddDeathEffectToDamageManager(cellTypeFX[x, y]);
                         break;
                     case CellType.SHIELD:
-                        cellTypeFX[x, y] = GameObject.Instantiate(shieldCellPrefab);
+                        cellTypeFX[x, y] = GameObject.Instantiate(shieldCellPrefab).GetComponent<TileFX>();
                         cellTypeFX[x, y].transform.parent = this.transform;
                         cellTypeFX[x, y].transform.localPosition = GetLocalTranslationFromGridLocation(x, y);
+                        player.AddDeathEffectToDamageManager(cellTypeFX[x, y]);
                         break;
                     case CellType.PSI:
-                        cellTypeFX[x, y] = GameObject.Instantiate(psiCellPrefab);
+                        cellTypeFX[x, y] = GameObject.Instantiate(psiCellPrefab).GetComponent<TileFX>();
                         cellTypeFX[x, y].transform.parent = this.transform;
                         cellTypeFX[x, y].transform.localPosition = GetLocalTranslationFromGridLocation(x, y);
+                        player.AddDeathEffectToDamageManager(cellTypeFX[x, y]);
                         break;
                     default:
                         break;
@@ -717,6 +722,23 @@ public class GameGrid : MonoBehaviour
             return true;
         }
         return false;
+    }
+
+    internal void DeathClear()
+    {
+        for (int x = 0; x < numCells.x; x++)
+        {
+            for (int y = 0; y < numCells.y; y++)
+            {
+                if (grid[x,y]!=null)
+                {
+                    grid[x, y].Sink(UnityEngine.Random.Range(0, 1.5f));
+                }
+            }
+        }
+        currentPiece.SinkBlocksAndTurnInvisible(1.5f);
+        nextPiece.SinkBlocksAndTurnInvisible(1.5f);
+        strangeFrontPlateThing.SetActive(false);
     }
 
     private class ExplosionWrapper

@@ -66,7 +66,7 @@ public class Combatant : MonoBehaviour
         return MaxHealth() * 2;
     }
 
-    internal bool isAlive()
+    internal bool IsAlive()
     {
         return health > 0;
     }
@@ -102,6 +102,11 @@ public class Combatant : MonoBehaviour
         shieldParticleTarget.localScale = new Vector3(.2f, Math.Min(shields / MaxHealth(), 1), .2f);
         healthBar.localScale = new Vector3(.2f, Math.Max((health / MaxHealth()),0), .2f);
         attackChargeBar.localScale = new Vector3(.2f, (attackCharge / AttackChargeTime()), .2f);
+    }
+
+    internal void AddDeathEffectToDamageManager(DeathEffect deathEffect)
+    {
+        damageManager.stuffThatHappensInTheFinalExplosion.Add(deathEffect);
     }
 
     //Modify this to change what a player's grid looks like when they start playing.
@@ -189,17 +194,15 @@ public class Combatant : MonoBehaviour
         }
 
 
+        pawn.Damage(damage);
+        damageManager.DamageComponentsBasedOnHealthLeft(this.health / this.MaxHealth());
+        cameraToShake.ShakeCamera(damage / MaxHealth(), .5f);
 
         //if dead...
-        if (!isAlive())
+        if (!IsAlive())
         {
             initializer.StartDeathSequence();
-        }
-        else
-        {
-            pawn.Damage(damage);
-            damageManager.SetNewDamageProportion(this.health / this.MaxHealth());
-            cameraToShake.ShakeCamera(damage / MaxHealth(), .5f);
+            damageManager.ExplodeRemainingShip();
         }
     }
 

@@ -51,27 +51,27 @@ public class CombatInitializer : MonoBehaviour {
             {
                 p1Menu.SetActive(true);
                 p2Menu.SetActive(true);
-                if (grid1.player.isAlive()&&!grid2.player.isAlive())
+                if (grid1.player.IsAlive()&&!grid2.player.IsAlive())
                 {
                     p1Text.text = "You Won";
                     p2Text.text = "You Lost";
                 }
-                if (grid2.player.isAlive() && !grid1.player.isAlive())
+                if (grid2.player.IsAlive() && !grid1.player.IsAlive())
                 {
                     p2Text.text = "You Won";
                     p1Text.text = "You Lost";
                 }
-                if (!grid1.player.isAlive() && !grid2.player.isAlive())
+                if (!grid1.player.IsAlive() && !grid2.player.IsAlive())
                 {
                     p1Text.text = "Pyrrhic Draw!";
                     p2Text.text = "Pyrrhic Draw!";
                 }
-                if (grid1.player.isAlive() && grid2.player.isAlive())
+                if (grid1.player.IsAlive() && grid2.player.IsAlive())
                 {
                     p1Text.text = "...peace and love?";
                     p2Text.text = "...more likely a bug...";
                 }
-                Time.timeScale = 0;
+                //Time.timeScale = 0;
                 isDying = false;
             }
         }

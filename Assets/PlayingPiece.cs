@@ -11,6 +11,8 @@ public class PlayingPiece : MonoBehaviour
     public GameCube cube;
     public AudioSource[] slideSounds;
 
+    public GameObject littlePlateThing;
+
 	// Use this for initialization
 	public void Start ()
     {
@@ -121,5 +123,20 @@ public class PlayingPiece : MonoBehaviour
     {
         slideSounds[lastPlayed++].Play();
         lastPlayed %= slideSounds.Length;
+    }
+
+    internal void SinkBlocksAndTurnInvisible(float v)
+    {
+        for (int x = 0; x < 3; x++)
+        {
+            for(int y = 0; y < 3; y++)
+            {
+                if (piecemap[x,y]!=null)
+                {
+                    piecemap[x, y].Sink(v);
+                }
+            }
+        }
+        littlePlateThing.SetActive(false);
     }
 }
