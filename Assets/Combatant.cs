@@ -130,7 +130,7 @@ public class Combatant : MonoBehaviour
 
     private int MaxEnergy()
     {
-        return 100;
+        return 200;
     }
 
     private void Fire()
@@ -152,6 +152,13 @@ public class Combatant : MonoBehaviour
     private void PayEnergyCostsForFiringAttack()
     {
         energy -= (int)(queuedDamage * EnergyMultiplier());
+        energy = Math.Max(0, energy);
+        RefreshEnergyBars();
+    }
+
+    private void PayEnergyCostsForChargingShields(float shieldCubes)
+    {
+        energy -= (int)(shieldCubes * EnergyMultiplier()/2f);
         energy = Math.Max(0, energy);
         RefreshEnergyBars();
     }
@@ -215,7 +222,7 @@ public class Combatant : MonoBehaviour
     private float DamageAmount()
     {
         //queuedDamage is the number of squares worth of attack tiles that have been submitted since attack charging began.
-        return queuedDamage*.8f*EnergyMultiplier(); //Min Damage is .8, max damage is 51.2, average is about 20.
+        return queuedDamage*.6f*EnergyMultiplier(); //Min Damage is .6, max damage is 38.4, average is about 20.
     }
 
     private bool AttackIsQueued()
@@ -249,9 +256,16 @@ public class Combatant : MonoBehaviour
 
     public void ChargeShields(float shieldCubes)
     {
+        if (shieldCubes == 0 || EnergyMultiplier() == 0)
+        {
+            return;
+        }
         shields += GetShieldChargeAmount(shieldCubes);
+        PayEnergyCostsForChargingShields(shieldCubes);
         shields = Math.Min(shields, MaxShields());
     }
+
+
 
     public void ChargeEnergy(int energyCubes)
     {

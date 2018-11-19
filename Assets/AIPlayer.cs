@@ -7,7 +7,9 @@ using UnityEngine;
 internal class AIPlayer
 {
     public int seed;
+
     public List<InputEvent> events = new List<InputEvent>();
+
     private bool justDropped;
     private bool justCWed;
     private bool justCCWed;
@@ -17,6 +19,7 @@ internal class AIPlayer
     private bool isPressingRight;
     private float firstTimeStamp;
     private bool justRebooted;
+
     public const int UP = 0;
     public const int DOWN = 2;
     public const int LEFT = 4;
