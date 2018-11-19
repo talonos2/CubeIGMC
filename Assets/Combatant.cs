@@ -295,6 +295,12 @@ public class Combatant : MonoBehaviour
     private float pretendEnergy;
     private CombatInitializer initializer;
 
+    internal void DeleteEnergy()
+    {
+        energy = 0;
+        RefreshEnergyBars();
+    }
+
     internal Vector3 GetTargetOfParticle(PowerupType type)
     {
 

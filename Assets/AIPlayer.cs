@@ -16,7 +16,7 @@ internal class AIPlayer
     private bool isPressingLeft;
     private bool isPressingRight;
     private float firstTimeStamp;
-
+    private bool justRebooted;
     public const int UP = 0;
     public const int DOWN = 2;
     public const int LEFT = 4;
@@ -25,6 +25,7 @@ internal class AIPlayer
     public const int CCW_ROTATE = 8;
     public const int CW_ROTATE = 9;
     public const int DROP = 10;
+    public const int REBOOT = 11;
 
 
 
@@ -80,6 +81,8 @@ internal class AIPlayer
                 case CW_ROTATE:
                     justCWed = true;
                     break;
+                case REBOOT:
+                    justRebooted = true;
                 default:
                     Debug.LogError("Bad integer passed to AIPlayer.TickAI!");
                     break;
@@ -109,6 +112,8 @@ internal class AIPlayer
                 return isPressingUp;
             case "DOWN":
                 return isPressingDown;
+            case "REBOOT":
+                return justRebooted;
 
             default:
                 Debug.LogError("Bad string passed to AIPlayer.GetButtonDown: " + v);

@@ -9,7 +9,8 @@ public class GameGrid : MonoBehaviour
     
     public static Vector2Int numCells = new Vector2Int(15, 18);
     public GameObject strangeFrontPlateThing;
-
+    public AudioSource ominousTick;
+    public AudioSource powerDown;
     public GameCube[,] grid = new GameCube[numCells.x, numCells.y];
     public CellType[,] cellTypes = new CellType[numCells.x, numCells.y];
     public TileFX[,] cellTypeFX = new TileFX[numCells.x, numCells.y];
@@ -190,6 +191,8 @@ public class GameGrid : MonoBehaviour
     bool justPressedLeft;
     bool justPressedRight;
 
+    private float timeHeldBothRotatesAtOnce;
+
     private bool hasSaved;
 
     public bool isPlayedByAI;
@@ -212,6 +215,31 @@ public class GameGrid : MonoBehaviour
         if (isPlayedByAI)
         {
             aIPlayer.TickAI();
+        }
+
+        if (isPlayerOne?(Input.GetButton("Rotate1_P1")&& Input.GetButton("Rotate2_P1")): (Input.GetButton("Rotate1_P2") && Input.GetButton("Rotate2_P2")))
+        {
+            float oldTimeHeld = timeHeldBothRotatesAtOnce;
+            timeHeldBothRotatesAtOnce += Time.deltaTime;
+            if ((int)timeHeldBothRotatesAtOnce != (int)oldTimeHeld)
+            {
+                ominousTick.Play();
+            }
+            if (timeHeldBothRotatesAtOnce > 5)
+            {
+                Reboot();
+                timeHeldBothRotatesAtOnce = 0;
+                if (isRecording) { recorder.RegisterEvent(GameRecorder.REBOOT); }
+            }
+        }
+        else
+        {
+            timeHeldBothRotatesAtOnce = 0;
+        }
+
+        if (aIPlayer.GetButtonDown("REBOOT"))
+        {
+            Reboot();
         }
 
         if (isPlayedByAI)
@@ -310,9 +338,12 @@ public class GameGrid : MonoBehaviour
         justExitedMenu = false;
     }
 
-
-    
-
+    private void Reboot()
+    {
+        powerDown.Play();
+        MeltBoard();
+        player.DeleteEnergy();
+    }
 
     private void HandleUpMovement()
     {
@@ -726,19 +757,24 @@ public class GameGrid : MonoBehaviour
 
     internal void DeathClear()
     {
+        currentPiece.SinkBlocksAndTurnInvisible(1.5f);
+        nextPiece.SinkBlocksAndTurnInvisible(1.5f);
+        strangeFrontPlateThing.SetActive(false);
+    }
+
+    private void MeltBoard()
+    {
         for (int x = 0; x < numCells.x; x++)
         {
             for (int y = 0; y < numCells.y; y++)
             {
-                if (grid[x,y]!=null)
+                if (grid[x, y] != null)
                 {
                     grid[x, y].Sink(UnityEngine.Random.Range(0, 1.5f));
+                    grid[x, y] = null;
                 }
             }
         }
-        currentPiece.SinkBlocksAndTurnInvisible(1.5f);
-        nextPiece.SinkBlocksAndTurnInvisible(1.5f);
-        strangeFrontPlateThing.SetActive(false);
     }
 
     private class ExplosionWrapper
