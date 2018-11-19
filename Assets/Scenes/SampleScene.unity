@@ -3010,136 +3010,24 @@ Prefab:
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1246306855541748, guid: 0dfe140aceaeddc46a89eedbbb378123, type: 2}
-      propertyPath: m_Name
-      value: P2 Base Ship
-      objectReference: {fileID: 0}
-    - target: {fileID: 4599745634285610, guid: 0dfe140aceaeddc46a89eedbbb378123, type: 2}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 90
-      objectReference: {fileID: 0}
-    - target: {fileID: 4599745634285610, guid: 0dfe140aceaeddc46a89eedbbb378123, type: 2}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: -90
-      objectReference: {fileID: 0}
-    - target: {fileID: 114233455349525356, guid: 0dfe140aceaeddc46a89eedbbb378123,
-        type: 2}
-      propertyPath: distanceBetweenShips
-      value: -14
-      objectReference: {fileID: 0}
-    - target: {fileID: 114233455349525356, guid: 0dfe140aceaeddc46a89eedbbb378123,
-        type: 2}
-      propertyPath: distanceToMyNose
-      value: -2
-      objectReference: {fileID: 0}
-    - target: {fileID: 23181179059456258, guid: 0dfe140aceaeddc46a89eedbbb378123,
-        type: 2}
-      propertyPath: m_LightProbeUsage
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 23361551160651974, guid: 0dfe140aceaeddc46a89eedbbb378123,
-        type: 2}
-      propertyPath: m_LightProbeUsage
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 23651375544450174, guid: 0dfe140aceaeddc46a89eedbbb378123,
-        type: 2}
-      propertyPath: m_LightProbeUsage
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 23461231008896362, guid: 0dfe140aceaeddc46a89eedbbb378123,
-        type: 2}
-      propertyPath: m_LightProbeUsage
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 23505930633772810, guid: 0dfe140aceaeddc46a89eedbbb378123,
-        type: 2}
-      propertyPath: m_LightProbeUsage
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 23984280114921818, guid: 0dfe140aceaeddc46a89eedbbb378123,
-        type: 2}
-      propertyPath: m_LightProbeUsage
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 23822726146574414, guid: 0dfe140aceaeddc46a89eedbbb378123,
-        type: 2}
-      propertyPath: m_LightProbeUsage
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 23544995457887860, guid: 0dfe140aceaeddc46a89eedbbb378123,
-        type: 2}
-      propertyPath: m_LightProbeUsage
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 23008500588018678, guid: 0dfe140aceaeddc46a89eedbbb378123,
-        type: 2}
-      propertyPath: m_LightProbeUsage
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 23973745358673556, guid: 0dfe140aceaeddc46a89eedbbb378123,
-        type: 2}
-      propertyPath: m_LightProbeUsage
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 23366781989000092, guid: 0dfe140aceaeddc46a89eedbbb378123,
-        type: 2}
-      propertyPath: m_LightProbeUsage
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 23402855626882994, guid: 0dfe140aceaeddc46a89eedbbb378123,
-        type: 2}
-      propertyPath: m_LightProbeUsage
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114233455349525356, guid: 0dfe140aceaeddc46a89eedbbb378123,
-        type: 2}
-      propertyPath: transpositionalWaggle
-      value: 0.4
-      objectReference: {fileID: 0}
-    - target: {fileID: 114233455349525356, guid: 0dfe140aceaeddc46a89eedbbb378123,
-        type: 2}
-      propertyPath: waggleSpeed
-      value: 0.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 114233455349525356, guid: 0dfe140aceaeddc46a89eedbbb378123,
-        type: 2}
-      propertyPath: rotationalWaggle
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 114233455349525356, guid: 0dfe140aceaeddc46a89eedbbb378123,
-        type: 2}
-      propertyPath: rollWaggle
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 114233455349525356, guid: 0dfe140aceaeddc46a89eedbbb378123,
-        type: 2}
-      propertyPath: pitchWaggle
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114233455349525356, guid: 0dfe140aceaeddc46a89eedbbb378123,
-        type: 2}
-      propertyPath: altitudinalWaggle
-      value: 0.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114233455349525356, guid: 0dfe140aceaeddc46a89eedbbb378123,
-        type: 2}
-      propertyPath: phaseOffset
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 114233455349525356, guid: 0dfe140aceaeddc46a89eedbbb378123,
-        type: 2}
-      propertyPath: damageEffectOnWaggle
-      value: 0.1
-      objectReference: {fileID: 0}
     - target: {fileID: 114674749853239702, guid: 0dfe140aceaeddc46a89eedbbb378123,
         type: 2}
       propertyPath: shipToMonitor
       value: 
       objectReference: {fileID: 1506045038}
+    - target: {fileID: 1246306855541748, guid: 0dfe140aceaeddc46a89eedbbb378123, type: 2}
+      propertyPath: m_Name
+      value: P2 Base Ship
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0dfe140aceaeddc46a89eedbbb378123, type: 2}
   m_IsPrefabAsset: 0
+--- !u!114 &161023850 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 114712321617746032, guid: 0dfe140aceaeddc46a89eedbbb378123,
+    type: 2}
+  m_PrefabInternal: {fileID: 161023849}
+  m_Script: {fileID: 11500000, guid: c366e0b3f3ebaa74487bf2a538c76c95, type: 3}
 --- !u!114 &161023851 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 114233455349525356, guid: 0dfe140aceaeddc46a89eedbbb378123,
@@ -9202,9 +9090,25 @@ Prefab:
       propertyPath: shipToMonitor
       value: 
       objectReference: {fileID: 1335226465}
+    - target: {fileID: 114233455349525356, guid: 0dfe140aceaeddc46a89eedbbb378123,
+        type: 2}
+      propertyPath: distanceBetweenShips
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 114233455349525356, guid: 0dfe140aceaeddc46a89eedbbb378123,
+        type: 2}
+      propertyPath: distanceToMyNose
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0dfe140aceaeddc46a89eedbbb378123, type: 2}
   m_IsPrefabAsset: 0
+--- !u!114 &421193486 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 114712321617746032, guid: 0dfe140aceaeddc46a89eedbbb378123,
+    type: 2}
+  m_PrefabInternal: {fileID: 421193485}
+  m_Script: {fileID: 11500000, guid: c366e0b3f3ebaa74487bf2a538c76c95, type: 3}
 --- !u!114 &422372520 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 114928310527275160, guid: 5a231da0a0ab8494fa45b6146fe5af11,
@@ -17671,6 +17575,7 @@ MonoBehaviour:
   - {fileID: 1790362720}
   - {fileID: 803134452}
   - {fileID: 1526531519}
+  - {fileID: 421193486}
 --- !u!4 &838787044
 Transform:
   m_ObjectHideFlags: 0
@@ -23190,6 +23095,7 @@ MonoBehaviour:
   - {fileID: 317584116}
   - {fileID: 1726595264}
   - {fileID: 2026540386}
+  - {fileID: 161023850}
 --- !u!114 &1059188367 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 114337757228138218, guid: 5a231da0a0ab8494fa45b6146fe5af11,
