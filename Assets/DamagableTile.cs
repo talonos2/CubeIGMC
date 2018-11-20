@@ -17,7 +17,6 @@ public class DamagableTile : DamagableDisplay
         this.renderer.material = crackedMaterial;
         if (willSetFire)
         {
-            Debug.Log("Trying to Light Fire");
             fires.gameObject.SetActive(true);
         }
         this.isDamaged = true;

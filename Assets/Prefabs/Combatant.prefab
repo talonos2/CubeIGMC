@@ -13,7 +13,7 @@ Prefab:
   m_IsPrefabAsset: 1
 --- !u!1 &1022966815061856
 GameObject:
-  m_ObjectHideFlags: 1
+  m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 6
@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 23784017461970436}
   - component: {fileID: 136960596968445922}
   m_Layer: 0
-  m_Name: ShieldBar
+  m_Name: ShieldParticleTarget
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -109,21 +109,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!1 &1607157031914054
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 4317867776270200}
-  m_Layer: 0
-  m_Name: Shield
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
 --- !u!1 &1855898169130362
 GameObject:
   m_ObjectHideFlags: 0
@@ -159,32 +144,18 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4317867776270200
-Transform:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1607157031914054}
-  m_LocalRotation: {x: 0.000000059604638, y: 0.0000000042301775, z: 0.7071068, w: 0.70710677}
-  m_LocalPosition: {x: 7.5000014, y: 6.7400017, z: 34.700005}
-  m_LocalScale: {x: 0.20000021, y: 1, z: 0.20000006}
-  m_Children:
-  - {fileID: 4424613540084912}
-  m_Father: {fileID: 4596137841453722}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90.00001}
 --- !u!4 &4424613540084912
 Transform:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1022966815061856}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 7.5, z: 0}
-  m_LocalScale: {x: 1, y: 7.5, z: 1}
+  m_LocalRotation: {x: 0.00000008940696, y: 0.0000000042301775, z: 0.7071068, w: 0.70710677}
+  m_LocalPosition: {x: -1.22, y: 9.46, z: 34.700005}
+  m_LocalScale: {x: 0.4, y: 0.4, z: 0.4}
   m_Children: []
-  m_Father: {fileID: 4317867776270200}
-  m_RootOrder: 0
+  m_Father: {fileID: 4596137841453722}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
 --- !u!4 &4457891762874030
 Transform:
@@ -224,7 +195,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4733906083506528}
-  - {fileID: 4317867776270200}
+  - {fileID: 4424613540084912}
   - {fileID: 4457891762874030}
   - {fileID: 4678185169559576}
   m_Father: {fileID: 0}
@@ -250,7 +221,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1855898169130362}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.1, y: -9, z: 30}
+  m_LocalPosition: {x: -1.1, y: -10, z: 30}
   m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
   m_Children:
   - {fileID: 4497693938910680}
@@ -360,7 +331,7 @@ MeshRenderer:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1022966815061856}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -424,7 +395,7 @@ MonoBehaviour:
   enemy: {fileID: 0}
   cameraToShake: {fileID: 0}
   healthBar: {fileID: 4733906083506528}
-  shieldBar: {fileID: 4317867776270200}
+  shieldParticleTarget: {fileID: 4424613540084912}
   attackChargeBar: {fileID: 4457891762874030}
   pawn: {fileID: 0}
   lights: {fileID: 0}
@@ -481,7 +452,7 @@ CapsuleCollider:
   m_GameObject: {fileID: 1022966815061856}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   m_Radius: 0.5000001
   m_Height: 2
   m_Direction: 1

@@ -15,7 +15,7 @@ public class Combatant : MonoBehaviour
     public CameraShake cameraToShake;
 
     public Transform healthBar;
-    public Transform shieldBar;
+    public Transform shieldParticleTarget;
     public Transform attackChargeBar;
 
     public SpaceshipPawn pawn;
@@ -23,16 +23,15 @@ public class Combatant : MonoBehaviour
 
     public DamageManager damageManager;
     public PowerMultiplierTextChanger multiplierText;
-
-    public GameObject myMenu;
-    public GameObject theirMenu;
-
+    public bool isImmortal = false; //Used for recording so you don't blow up the enemy before you finish.
 
     public void Start()
     {
         health = MaxHealth();
-        //energy = MaxEnergy() / 2; New system, energy starts at 0, but no decay.
-        shields = 50;
+        energy = MaxEnergy() / 4; 
+        shields = 0;
+        this.initializer = GameObject.Find("Initializer").GetComponent<CombatInitializer>();
+        this.RefreshEnergyBars();
     }
 
     //In our current formula, there are no reasons to have cubes other than the "standard" cube.
@@ -56,6 +55,21 @@ public class Combatant : MonoBehaviour
             randomBag.Add(PowerupType.PSI);
         }
         return randomBag[dice.NextInt(0, randomBag.Count)];
+    }
+
+    internal float getShieldPercent()
+    {
+        return shields / MaxShields();
+    }
+
+    private float MaxShields()
+    {
+        return MaxHealth() * 2;
+    }
+
+    internal bool IsAlive()
+    {
+        return health > 0;
     }
 
     private int PsiCubes()
@@ -86,10 +100,14 @@ public class Combatant : MonoBehaviour
             }
          }
 
-        //energyBar.localScale = new Vector3(.2f, ((float)energy / (float)MaxEnergy()), .2f);
-        shieldBar.localScale = new Vector3(.2f, Math.Min(shields / MaxHealth(), 1), .2f);
-        healthBar.localScale = new Vector3(.2f, (health / MaxHealth()), .2f);
+        shieldParticleTarget.localScale = new Vector3(.2f, Math.Min(shields / MaxHealth(), 1), .2f);
+        healthBar.localScale = new Vector3(.2f, Math.Max((health / MaxHealth()),0), .2f);
         attackChargeBar.localScale = new Vector3(.2f, (attackCharge / AttackChargeTime()), .2f);
+    }
+
+    internal void AddDeathEffectToDamageManager(DeathEffect deathEffect)
+    {
+        damageManager.stuffThatHappensInTheFinalExplosion.Add(deathEffect);
     }
 
     //Modify this to change what a player's grid looks like when they start playing.
@@ -107,12 +125,12 @@ public class Combatant : MonoBehaviour
 
     private float MaxHealth()
     {
-        return 100;
+        return 100 * (isImmortal ? 100:1);
     }
 
     private int MaxEnergy()
     {
-        return 100;
+        return 200;
     }
 
     private void Fire()
@@ -138,24 +156,31 @@ public class Combatant : MonoBehaviour
         RefreshEnergyBars();
     }
 
+    private void PayEnergyCostsForChargingShields(float shieldCubes)
+    {
+        energy -= (int)(shieldCubes * EnergyMultiplier()/2f);
+        energy = Math.Max(0, energy);
+        RefreshEnergyBars();
+    }
+
     internal void TakeDamage(float damage)
     {
         if (shields > damage)
         {
             shields -= damage;
+            damage = 0;
         }
         else
         {
             damage -= shields;
             shields = 0;
             health -= damage;
-
-
         }
 
-        if (damage < 0)
+        if (damage <= 0)
         {
             //No damage left; shield absorbed it all.
+            Debug.Log("Shield Sound");
             pawn.shieldSound.Stop();
             pawn.shieldSound.Play();
         }
@@ -177,23 +202,15 @@ public class Combatant : MonoBehaviour
         }
 
 
+        pawn.Damage(damage);
+        damageManager.DamageComponentsBasedOnHealthLeft(this.health / this.MaxHealth());
+        cameraToShake.ShakeCamera(damage / MaxHealth(), .5f);
 
         //if dead...
-        if (health <= 0)
+        if (!IsAlive())
         {
-
-            myMenu.transform.GetChild(0).GetComponent<Text>().text = "You Lost";
-            theirMenu.transform.GetChild(0).GetComponent<Text>().text = "You Won";
-            Time.timeScale = 0;
-
-            myMenu.SetActive(true);
-            theirMenu.SetActive(true);
-        }
-        else
-        {
-            pawn.Damage(damage);
-            damageManager.SetNewDamageProportion(this.health / this.MaxHealth());
-            cameraToShake.ShakeCamera(damage / MaxHealth(), .5f);
+            initializer.StartDeathSequence();
+            damageManager.ExplodeRemainingShip();
         }
     }
 
@@ -205,7 +222,7 @@ public class Combatant : MonoBehaviour
     private float DamageAmount()
     {
         //queuedDamage is the number of squares worth of attack tiles that have been submitted since attack charging began.
-        return queuedDamage*.8f*EnergyMultiplier(); //Min Damage is .8, max damage is 51.2, average is about 20.
+        return queuedDamage*.6f*EnergyMultiplier(); //Min Damage is .6, max damage is 38.4, average is about 20.
     }
 
     private bool AttackIsQueued()
@@ -225,7 +242,7 @@ public class Combatant : MonoBehaviour
 
     public void ChargeAttack(int attackCubes)
     {
-        if (attackCubes == 0)
+        if (attackCubes == 0||EnergyMultiplier()==0)
         {
             return;
         }
@@ -239,8 +256,16 @@ public class Combatant : MonoBehaviour
 
     public void ChargeShields(float shieldCubes)
     {
+        if (shieldCubes == 0 || EnergyMultiplier() == 0)
+        {
+            return;
+        }
         shields += GetShieldChargeAmount(shieldCubes);
+        PayEnergyCostsForChargingShields(shieldCubes);
+        shields = Math.Min(shields, MaxShields());
     }
+
+
 
     public void ChargeEnergy(int energyCubes)
     {
@@ -283,7 +308,13 @@ public class Combatant : MonoBehaviour
 
     public float lengthOfBar = 15;
     private float pretendEnergy;
-    private float pretendShields;
+    private CombatInitializer initializer;
+
+    internal void DeleteEnergy()
+    {
+        energy = 0;
+        RefreshEnergyBars();
+    }
 
     internal Vector3 GetTargetOfParticle(PowerupType type)
     {
@@ -293,8 +324,7 @@ public class Combatant : MonoBehaviour
             case PowerupType.ATTACK:
                 return attackChargeBar.transform.position;
             case PowerupType.SHIELDS:
-                Vector3 toReturn = shieldBar.transform.position + new Vector3(-lengthOfBar * pretendShields / MaxHealth(), 0, 0);
-                pretendShields += GetShieldChargeAmount(1);
+                Vector3 toReturn = shieldParticleTarget.transform.position;
                 return toReturn;
             case PowerupType.ENERGY:
                 Vector3 toReturn2 = lights.GetTargetAtPercent((float)pretendEnergy / (float)MaxEnergy());
@@ -308,6 +338,10 @@ public class Combatant : MonoBehaviour
     internal void StartNewParticleBarrage()
     {
         pretendEnergy = energy;
-        pretendShields = shields;
+    }
+
+    public bool HasRoomForMoreEnergy()
+    {
+        return pretendEnergy < MaxEnergy();
     }
 }
