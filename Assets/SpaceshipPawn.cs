@@ -51,7 +51,7 @@ public class SpaceshipPawn : MonoBehaviour {
 
         float dx = Mathf.PerlinNoise(0, phase + partialDerivativeSampleDistance) - Mathf.PerlinNoise(0, phase - partialDerivativeSampleDistance);
         float dy = Mathf.PerlinNoise(phase + partialDerivativeSampleDistance, 0) - Mathf.PerlinNoise(phase - partialDerivativeSampleDistance, 0);
-        this.transform.rotation = Quaternion.Euler(new Vector3(0, (dy/partialDerivativeSampleDistance*pitchWaggle * damMult + 90)*(distanceToMyNose > 1 ? 1 : -1), (dx/partialDerivativeSampleDistance*rollWaggle*damMult-90) * (distanceToMyNose > 1 ? 1 : -1)));
+        this.transform.rotation = Quaternion.Euler(new Vector3(0, (dy/partialDerivativeSampleDistance*pitchWaggle * damMult + 90)*(distanceToMyNose > 1 ? 1 : -1), (dx/partialDerivativeSampleDistance*rollWaggle*damMult-70) * (distanceToMyNose > 1 ? 1 : -1)));
 
         damage *= damageDampeningAmount;
     }
