@@ -23,6 +23,7 @@ public class Combatant : MonoBehaviour
     public PowerLights lights;
 
     public DamageManager damageManager;
+    public PowerMultiplierTextChanger multiplierText;
 
     public GameObject myMenu;
     public GameObject theirMenu;
@@ -256,6 +257,8 @@ public class Combatant : MonoBehaviour
     private void RefreshEnergyBars()
     {
         lights.SetAllLights((float)energy / (float)MaxEnergy());
+        int energyMulter = Mathf.RoundToInt(EnergyMultiplier());
+        multiplierText.ChangeText(energyMulter);
     }
 
     private float GetShieldChargeAmount(float shieldCubes)
