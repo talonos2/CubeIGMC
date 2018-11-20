@@ -21680,48 +21680,6 @@ MonoBehaviour:
     type: 2}
   m_PrefabInternal: {fileID: 1762220129}
   m_Script: {fileID: 11500000, guid: e7e83229ebab73248952b63ef190f09c, type: 3}
---- !u!1001 &1019915892
-Prefab:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 4978338453951054, guid: 71db1b17c9045464999b21904984cde9, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: 50
-      objectReference: {fileID: 0}
-    - target: {fileID: 4978338453951054, guid: 71db1b17c9045464999b21904984cde9, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 1.2100002
-      objectReference: {fileID: 0}
-    - target: {fileID: 4978338453951054, guid: 71db1b17c9045464999b21904984cde9, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: -3.17
-      objectReference: {fileID: 0}
-    - target: {fileID: 4978338453951054, guid: 71db1b17c9045464999b21904984cde9, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4978338453951054, guid: 71db1b17c9045464999b21904984cde9, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4978338453951054, guid: 71db1b17c9045464999b21904984cde9, type: 2}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4978338453951054, guid: 71db1b17c9045464999b21904984cde9, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4978338453951054, guid: 71db1b17c9045464999b21904984cde9, type: 2}
-      propertyPath: m_RootOrder
-      value: 12
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 71db1b17c9045464999b21904984cde9, type: 2}
-  m_IsPrefabAsset: 0
 --- !u!1 &1020403006
 GameObject:
   m_ObjectHideFlags: 0
@@ -46610,8 +46568,9 @@ MonoBehaviour:
   justExitedMenu: 0
   player: {fileID: 1506045038}
   isPlayerOne: 0
-  isPlayedByAI: 0
-  chargeGiverPrefab: {fileID: 0}
+  isPlayedByAI: 1
+  chargeGiverPrefab: {fileID: 114403860689813174, guid: 71db1b17c9045464999b21904984cde9,
+    type: 2}
 --- !u!114 &2026540386
 MonoBehaviour:
   m_ObjectHideFlags: 0
