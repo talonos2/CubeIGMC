@@ -30,6 +30,7 @@ public class PowerLights : MonoBehaviour
 
     internal Vector3 GetTargetAtPercent(float v)
     {
+        v = Mathf.Clamp01(v);
         int lightNum = Mathf.FloorToInt(v * lights.Length);
         if (lightNum >= lights.Length) { lightNum = lights.Length - 1; }
         return lights[lightNum].theLight.transform.position;

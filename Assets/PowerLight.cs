@@ -20,8 +20,12 @@ public class PowerLight : DamagableDisplay {
 
 
     // Use this for initialization
-    void Start () {
-        mat = new Material(this.GetComponent<Renderer>().material);
+    void Start ()
+    {
+        if (mat==null)
+        {
+            mat = new Material(this.GetComponent<Renderer>().material);
+        }
         this.GetComponent<Renderer>().material = mat;
 
         this.explosion = GameObject.Instantiate(explosionPrefab);
@@ -42,7 +46,10 @@ public class PowerLight : DamagableDisplay {
         {
             return;
         }
-
+        if (mat == null)
+        {
+            mat = new Material(this.GetComponent<Renderer>().material);
+        }
         this.mat.SetColor("_EmissionColor", new Color(.24f * on, .24f * on, .12f * on));
         if (on > .01f)
         {

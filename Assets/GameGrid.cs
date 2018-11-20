@@ -17,6 +17,7 @@ public class GameGrid : MonoBehaviour
     public PlayingPiece piecePrefab;
     public PowerupEffect powerUpEffect;
     public TextAsset aIText;
+    public CubeConversionManager cubeConversionManager;
     private AIPlayer aIPlayer = new AIPlayer();
 
     public GameObject attackCellPrefab;
@@ -196,6 +197,7 @@ public class GameGrid : MonoBehaviour
     private bool hasSaved;
 
     public bool isPlayedByAI;
+    public InvisibleDelayedChargeGiver chargeGiverPrefab;
 
     // Update is called once per frame
     void Update ()
@@ -339,7 +341,7 @@ public class GameGrid : MonoBehaviour
     {
         powerDown.Play();
         MeltBoard();
-        player.DeleteEnergy();
+        player.DeleteAllEnergy();
     }
 
     private void HandleUpMovement()
@@ -554,7 +556,7 @@ public class GameGrid : MonoBehaviour
         //Check for squares
         List<GameCube> cubesToExplode = new List<GameCube>();
 
-        int numberOfExplosions = 0;
+        int numberOfSquaresMade = 0;
 
         for (int x = 0; x < numCells.x-2; x++)
         {
@@ -563,24 +565,35 @@ public class GameGrid : MonoBehaviour
                 if (IsCornerOfSquare(x, y))
                 {
                     AddCubesFromSquareToList(x, y, cubesToExplode);
-                    numberOfExplosions++;
+                    numberOfSquaresMade++;
                 }
             }
         }
 
-        float maxDelay = (float)Math.Sqrt(numberOfExplosions / 9f);
+        int numberOfParticles = numberOfSquaresMade * 3;
 
-        //This is where we handle the explosions based on 3x3 squares. The stuff in here is subject to cube color and combo multiplier.
-        List<ExplosionWrapper> allExplosions = new List<ExplosionWrapper>();
-        for (int x = 0; x < numCells.x - 2; x++)
+        List<float> delays = new List<float>();
+        for (int x = 0; x < numberOfParticles; x++)
         {
-            for (int y = 0; y < numCells.y - 2; y++)
-            {
-                if (IsCornerOfSquare(x, y))
-                {
-                    allExplosions.AddRange(ExplodeCubesInSquare(x, y, maxDelay));
-                }
-            }
+            delays.Add(UnityEngine.Random.Range(0, Mathf.Sqrt(numberOfSquaresMade)));
+        }
+
+        delays.Sort();
+
+        player.StartNewParticleBarrage();
+
+        foreach (float delay in delays)
+        {
+            PowerupEffect pe = GameObject.Instantiate<PowerupEffect>(powerUpEffect);
+            GameCube sourceCube = cubesToExplode[UnityEngine.Random.Range(0,cubesToExplode.Count)];
+            pe.Initialize(sourceCube.transform.position, player.GetTargetOfParticle(PowerupType.ENERGY, 3), delay, PowerupType.ENERGY);
+            GameObject go = new GameObject();
+            InvisibleDelayedChargeGiver chargeGiver = GameObject.Instantiate<InvisibleDelayedChargeGiver>(chargeGiverPrefab);
+            chargeGiver.target = player;
+            chargeGiver.delay = delay + 1;
+            chargeGiver.type = PowerupType.ENERGY;
+            chargeGiver.SetAmountForOneCube(PowerupType.ENERGY);
+            chargeGiver.amount /= 3; //(3 particles per square made);
         }
 
         //This is where we handle explosions based on tile color.
@@ -594,34 +607,26 @@ public class GameGrid : MonoBehaviour
                     switch (cellTypes[x,y])
                     {
                         case CellType.ATTACK:
-                            allExplosions.Add(new ExplosionWrapper(grid[x,y], UnityEngine.Random.Range(0, maxDelay), PowerupType.ATTACK));
+                            cubeConversionManager.QueueCube(grid[x, y], PowerupType.ATTACK);
+                            cubesToExplode.Remove(grid[x, y]);
+                            grid[x, y] = null;
                             break;
                         case CellType.SHIELD:
-                            allExplosions.Add(new ExplosionWrapper(grid[x, y], UnityEngine.Random.Range(0, maxDelay), PowerupType.SHIELDS));
+                            cubeConversionManager.QueueCube(grid[x, y], PowerupType.SHIELDS);
+                            cubesToExplode.Remove(grid[x, y]);
+                            grid[x, y] = null;
                             break;
                     }
                 }
             }
         }
 
-        //All explosions are in a list. Sort and run them.
-        {
-            allExplosions.Sort(new ExplosionSorter());
-        }
-
-        player.StartNewParticleBarrage();
-
-        foreach (ExplosionWrapper ew in allExplosions)
-        {
-            ew.Explode(powerUpEffect, player);
-        }
-
         foreach (GameCube cube in cubesToExplode)
         {
             RemoveCubeFromGrid(cube);
-            cube.Sink(UnityEngine.Random.Range(0, maxDelay));
+            cube.Sink(UnityEngine.Random.Range(0, Mathf.Sqrt(numberOfSquaresMade)));
         }
-        if (allExplosions.Count!=0)
+        if (numberOfSquaresMade!=0)
         {
             matchSound.Play();
         }
@@ -642,24 +647,6 @@ public class GameGrid : MonoBehaviour
         nextPiece.transform.localPosition = Vector3.zero;
 
         prevPieceRotation = currentPieceRotation = 0;
-    }
-
-    private List<ExplosionWrapper> ExplodeCubesInSquare(int xCorner, int yCorner, float maxDelay)
-    {
-        List<ExplosionWrapper> toReturn = new List<ExplosionWrapper>();
-        for (int x = 0; x < 3; x++)
-        {
-            for (int y = 0; y < 3; y++)
-            {
-                GameCube cube = grid[x + xCorner, y + yCorner];
-                if (cube == null)
-                {
-                    throw new InvalidOperationException("Somehow we're trying to check the type of a null cube in GameGrid.ExplodeCubesInSquare");
-                }
-                toReturn.Add(new ExplosionWrapper(cube, UnityEngine.Random.Range(0, maxDelay), PowerupType.ENERGY)); //Overwrite this if we bring back cube colors.
-            }
-        }
-        return toReturn;
     }
 
     private int GetCubesInSquare(int xCorner, int yCorner, PowerupType type)
@@ -757,6 +744,7 @@ public class GameGrid : MonoBehaviour
         currentPiece.SinkBlocksAndTurnInvisible(1.5f);
         nextPiece.SinkBlocksAndTurnInvisible(1.5f);
         strangeFrontPlateThing.SetActive(false);
+        MeltBoard();
     }
 
     private void MeltBoard()
@@ -771,50 +759,6 @@ public class GameGrid : MonoBehaviour
                     grid[x, y] = null;
                 }
             }
-        }
-    }
-
-    private class ExplosionWrapper
-    {
-        private GameCube cube;
-        internal float delay;
-        private PowerupType type;
-
-        internal ExplosionWrapper(GameCube cube, float delay, PowerupType type)
-        {
-            this.type = type;
-            this.cube = cube;
-            this.delay = delay;
-        }
-
-        internal void Explode(PowerupEffect powerupEffect, Combatant player)
-        {
-            if (type == PowerupType.ENERGY && !player.HasRoomForMoreEnergy())
-            {
-                //No particle for energy if there's no room for it.
-                return;
-            }
-            PowerupEffect p = GameObject.Instantiate(powerupEffect);
-            p.transform.position = cube.transform.position;
-            Color toInitialize = Color.white;
-
-            p.Initialize(p.transform.position, player.GetTargetOfParticle(type), delay, type, player);
-        }
-    }
-
-    private class ExplosionSorter : IComparer<ExplosionWrapper>
-    {
-        int IComparer<ExplosionWrapper>.Compare(ExplosionWrapper a, ExplosionWrapper b)
-        {
-
-            if (a.delay > b.delay)
-                return 1;
-
-            if (a.delay < b.delay)
-                return -1;
-
-            else
-                return 0;
         }
     }
 
@@ -894,5 +838,5 @@ public enum CellType
     SHIELD,
     PSI,
     BROKEN,
-    EXTRA_ENERGY
+    ENERGY
 }

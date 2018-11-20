@@ -14,7 +14,6 @@ public class PowerupEffect : MonoBehaviour
     private float timeAlive;
     private bool hasStarted = false;
     private bool hasImpacted = false;
-    private Combatant owner;
     private PowerupType type;
 
     public AudioSource collectionSound;
@@ -59,12 +58,11 @@ public class PowerupEffect : MonoBehaviour
         }
 	}
 
-    public void Initialize(Vector3 startPosition, Vector3 endPosition, float delay, PowerupType type, Combatant owner)
+    public void Initialize(Vector3 startPosition, Vector3 endPosition, float delay, PowerupType type)
     {
         this.startPosition = startPosition;
         this.endPosition = endPosition;
         this.delay = delay;
-        this.owner = owner;
         this.type = type;
 
         Color color = Color.white;
@@ -92,23 +90,6 @@ public class PowerupEffect : MonoBehaviour
 
     public void OnImpact()
     {
-
-        switch (type)
-        {
-            case PowerupType.ATTACK:
-                owner.ChargeAttack(1);
-                break;
-            case PowerupType.SHIELDS:
-                owner.ChargeShields(1);
-                break;
-            case PowerupType.ENERGY:
-                owner.ChargeEnergy(1);
-                break;
-            case PowerupType.PSI:
-                Debug.Log("We actually haven't done this one yet.");
-                break;
-        }
         collectionSound.Play();
     }
-
 }

@@ -25,16 +25,38 @@ public class Combatant : MonoBehaviour
     public PowerMultiplierTextChanger multiplierText;
     public bool isImmortal = false; //Used for recording so you don't blow up the enemy before you finish.
 
+    public CubeHolder cubeHolder;
+
+    private CombatInitializer initializer;
+
     public void Start()
     {
         health = MaxHealth();
-        energy = MaxEnergy() / 4; 
+        energy = MaxEnergy() / 4;
         shields = 0;
         this.initializer = GameObject.Find("Initializer").GetComponent<CombatInitializer>();
         this.RefreshEnergyBars();
     }
 
-    //In our current formula, there are no reasons to have cubes other than the "standard" cube.
+    public void Update()
+    {
+        shields = shields * Mathf.Exp(Mathf.Log(ShieldDecayFactor()) * Time.deltaTime);
+        if (AttackIsQueued())
+        {
+            attackCharge -= (Time.deltaTime);
+            if (attackCharge < 0)
+            {
+                attackCharge = 0;
+                Fire();
+            }
+        }
+
+        healthBar.localScale = new Vector3(.2f, Math.Max((health / MaxHealth()), 0), .2f);
+        attackChargeBar.localScale = new Vector3(.2f, (attackCharge / AttackChargeTime()), .2f);
+    }
+
+    //In our current formula, there are no reasons to have cubes other than the "standard" cube,
+    //But this is here just in case we do something weird later.
     internal PowerupType GetRandomCubeType(SeededRandom dice)
     {
         List<PowerupType> randomBag = new List<PowerupType>();
@@ -57,57 +79,86 @@ public class Combatant : MonoBehaviour
         return randomBag[dice.NextInt(0, randomBag.Count)];
     }
 
-    internal float getShieldPercent()
-    {
-        return shields / MaxShields();
-    }
+    //Methods that return combat statistics:
 
     private float MaxShields()
     {
         return MaxHealth() * 2;
     }
 
-    internal bool IsAlive()
+    private float ShieldDecayFactor()
     {
-        return health > 0;
+        return .8f;
     }
 
-    private int PsiCubes()
+    private float MaxHealth()
     {
-        return 0;
+        return 100 * (isImmortal ? 100 : 1);
     }
 
-    private int ShieldCubes()
+    private int MaxEnergy()
     {
-        return 0;
+        return 200;
     }
 
-    private int AttackCubes()
+    private float DamageAmount()
     {
-        return 0;
+        //queuedDamage is the amount of attack charge passed into this function from "AddFlatAmountToAttackCharge" since last shot was fired.
+        return queuedDamage * .6f;
     }
 
-    public void Update()
+    /// <summary>
+    /// How much attack charge does a single cube give?
+    /// </summary>
+    /// <returns></returns>
+    public int getCubeAttackCharge()
     {
-        shields = shields * Mathf.Exp(Mathf.Log(ShieldDecayFactor()) * Time.deltaTime);
-        if (AttackIsQueued())
-        {
-            attackCharge -= (Time.deltaTime);
-            if (attackCharge < 0)
-            {
-                attackCharge = 0;
-                Fire();
-            }
-         }
-
-        shieldParticleTarget.localScale = new Vector3(.2f, Math.Min(shields / MaxHealth(), 1), .2f);
-        healthBar.localScale = new Vector3(.2f, Math.Max((health / MaxHealth()),0), .2f);
-        attackChargeBar.localScale = new Vector3(.2f, (attackCharge / AttackChargeTime()), .2f);
+        return EnergyMultiplier();
     }
 
-    internal void AddDeathEffectToDamageManager(DeathEffect deathEffect)
+    /// <summary>
+    /// How much shield charge does a single cube give?
+    /// </summary>
+    /// <returns></returns>
+    public int getCubeShieldCharge()
     {
-        damageManager.stuffThatHappensInTheFinalExplosion.Add(deathEffect);
+        return EnergyMultiplier();
+    }
+
+    internal int getCubeAttackEnergyCost()
+    {
+        return EnergyMultiplier();
+    }
+
+    internal int getCubeShieldEnergyCost()
+    {
+        return EnergyMultiplier();
+    }
+
+    private int EnergyMultiplier()
+    {
+        float energyRatio = (float)energy / (float)MaxEnergy();
+        if (energyRatio > .75f) return 4;
+        if (energyRatio > .5f) return 3;
+        if (energyRatio > .25f) return 2;
+        return 1;
+    }
+
+    /// <summary>
+    /// Returns how much energy you get from a given number of 3x3 squares. This is multiplied by the number
+    /// of squares made before being passed into this function: a 3x5 rectangle would pass "3" into this
+    /// function, for instance.
+    /// </summary>
+    /// <param name="energySquares">The number of 3x3 squares made.</param>
+    /// <returns>The amount of energy given. </returns>
+    public int GetEnergyChargeAmount(int energySquares)
+    {
+        return energySquares * 9;
+    }
+
+    private float AttackChargeTime()
+    {
+        return 5;
     }
 
     //Modify this to change what a player's grid looks like when they start playing.
@@ -121,48 +172,146 @@ public class Combatant : MonoBehaviour
                 cellTypes[x + 9, y + 10] = CellType.SHIELD;
             }
         }
+
+        cellTypes[14, 3] = CellType.ATTACK;
     }
 
-    private float MaxHealth()
+    //Information methods:
+
+    public float getShieldPercent()
     {
-        return 100 * (isImmortal ? 100:1);
+        return shields / MaxShields();
     }
 
-    private int MaxEnergy()
+    internal bool IsAlive()
     {
-        return 200;
+        return health > 0;
+    }
+
+    private bool AttackIsQueued()
+    {
+        return attackCharge > 0;
+    }
+
+    internal void AddDeathEffectToDamageManager(DeathEffect deathEffect)
+    {
+        damageManager.stuffThatHappensInTheFinalExplosion.Add(deathEffect);
     }
 
     private void Fire()
-    { 
+    {
 
         float damage = DamageAmount();
-        PayEnergyCostsForFiringAttack();
+        //Energy costs for firing are now payed as the cubes are floated/converted into attack power.
 
         pawn.FireBullet(damage, enemy, 2);
 
         pawn.chargeSound.Stop();
         pawn.fireSound.Stop();
-        pawn.getHitLightSound.pitch = Math.Max(2.0f - (damage / DamageNeededForLargeSFX()),1);
-        pawn.getHitLightSound.volume = Math.Min(damage / DamageNeededForLargeSFX(),1);
         pawn.fireSound.Play();
         this.queuedDamage = 0;
     }
 
-    private void PayEnergyCostsForFiringAttack()
+    public void AddFlatAmountToAttackCharge(int amount)
     {
-        energy -= (int)(queuedDamage * EnergyMultiplier());
-        energy = Math.Max(0, energy);
+        //WARNING: You now must pay energy costs from the calling fuction!
+        queuedDamage += amount;
+        if (attackCharge == 0)
+        {
+            attackCharge = AttackChargeTime();
+            pawn.chargeSound.Play();
+        }
+    }
+
+    public void AddFlatAmountToShield(float amount)
+    {
+        //Warning: You now must pay energy costs from the calling function!
+        shields += amount;
+        shields = Math.Min(Mathf.Max(0, shields), MaxShields());
+    }
+
+    public void AddFlatAmountToEnergy(int amount)
+    {
+        energy += amount;
+        energy = Mathf.Max(Math.Min(energy, MaxEnergy()),0);
         RefreshEnergyBars();
     }
 
-    private void PayEnergyCostsForChargingShields(float shieldCubes)
+    //Sets the lights to the correct energy amount.
+    private void RefreshEnergyBars()
     {
-        energy -= (int)(shieldCubes * EnergyMultiplier()/2f);
-        energy = Math.Max(0, energy);
+        Debug.Log("Energy is at " + energy);
+        lights.SetAllLights((float)energy / (float)MaxEnergy());
+        int energyMulter = Mathf.RoundToInt(EnergyMultiplier());
+        multiplierText.ChangeText(energyMulter);
+    }
+
+    /// <summary>
+    /// Gets the amount of "Shield Charge" generated by a given number of shield cubes exploded by the screen.
+    /// </summary>
+    /// <param name="shieldCubes">The number of cubes exploded as shield cubes.</param>
+    /// <returns>HP worth of shield given.</returns>
+    /// #Deprecated
+    public int GetShieldChargeAmount(int shieldCubes)
+    {
+        return (int)(shieldCubes * 10 * EnergyMultiplier());
+    }
+
+    internal void DeleteAllEnergy()
+    {
+        energy = 0;
         RefreshEnergyBars();
     }
 
+    //Functions dealing with particle movement.
+
+    private float pretendEnergy;
+    private int heldAttackCubes;
+
+    /// <summary>
+    /// Returns the location a particle should go to. This also changes the location a particle
+    /// will get sent to NEXT time you call this function based on how much this particle
+    /// changed the values.
+    /// </summary>
+    /// <param name="type">The type of charge this particle contributes</param>
+    /// <param name="changeInTarget">How much charge this particle contributes.</param>
+    /// <returns></returns>
+    internal Vector3 GetTargetOfParticle(PowerupType type, int changeInTarget)
+    {
+        switch (type)
+        {
+            case PowerupType.ENERGY:
+                Vector3 toReturn2 = lights.GetTargetAtPercent((float)pretendEnergy / (float)MaxEnergy());
+                pretendEnergy += GetEnergyChargeAmount(changeInTarget)/9f;
+                return toReturn2;
+            default:
+                Debug.Log("I'm trying to get the target of a particle type that I shouldn't be sending!");
+                return Vector3.zero; //We're not even handling Psi right now.
+        }
+    }
+
+    internal Transform getNextAttackCubeHolderPosition()
+    {
+        heldAttackCubes = (heldAttackCubes + 1) % 30;
+        return cubeHolder.cubesToHold[heldAttackCubes];
+    }
+
+    internal void StartNewParticleBarrage()
+    {
+        pretendEnergy = energy;
+    }
+
+    public bool HasRoomForMoreEnergy()
+    {
+        return pretendEnergy < MaxEnergy();
+    }
+
+    //Unused and vestigial.
+    private int PsiCubes() { return 0; }
+    private int ShieldCubes() { return 0; }
+    private int AttackCubes() { return 0; }
+
+    //Taking Damage and attendant SFX:
     internal void TakeDamage(float damage)
     {
         if (shields > damage)
@@ -195,7 +344,7 @@ public class Combatant : MonoBehaviour
             else
             {
                 pawn.getHitLightSound.Stop();
-                pawn.getHitLightSound.pitch = 2.0f-(damage / DamageNeededForLargeSFX());
+                pawn.getHitLightSound.pitch = 2.0f - (damage / DamageNeededForLargeSFX());
                 pawn.getHitLightSound.volume = damage / DamageNeededForLargeSFX();
                 pawn.getHitLightSound.Play();
             }
@@ -217,131 +366,5 @@ public class Combatant : MonoBehaviour
     private float DamageNeededForLargeSFX()
     {
         return MaxHealth() * .3f;
-    }
-
-    private float DamageAmount()
-    {
-        //queuedDamage is the number of squares worth of attack tiles that have been submitted since attack charging began.
-        return queuedDamage*.6f*EnergyMultiplier(); //Min Damage is .6, max damage is 38.4, average is about 20.
-    }
-
-    private bool AttackIsQueued()
-    {
-        return attackCharge > 0;
-    }
-
-    private float ShieldDecayFactor()
-    {
-        return .8f;
-    }
-
-    private float EnergyDecayFactor()
-    {
-        return .999f;
-    }
-
-    public void ChargeAttack(int attackCubes)
-    {
-        if (attackCubes == 0||EnergyMultiplier()==0)
-        {
-            return;
-        }
-        queuedDamage += attackCubes;
-        if (attackCharge == 0)
-        {
-            attackCharge = AttackChargeTime();
-            pawn.chargeSound.Play();
-        }
-    }
-
-    public void ChargeShields(float shieldCubes)
-    {
-        if (shieldCubes == 0 || EnergyMultiplier() == 0)
-        {
-            return;
-        }
-        shields += GetShieldChargeAmount(shieldCubes);
-        PayEnergyCostsForChargingShields(shieldCubes);
-        shields = Math.Min(shields, MaxShields());
-    }
-
-
-
-    public void ChargeEnergy(int energyCubes)
-    {
-        energy += GetEnergyChargeAmount(energyCubes);
-        energy = Math.Min(energy, MaxEnergy());
-        RefreshEnergyBars();
-    }
-
-    private void RefreshEnergyBars()
-    {
-        lights.SetAllLights((float)energy / (float)MaxEnergy());
-        int energyMulter = Mathf.RoundToInt(EnergyMultiplier());
-        multiplierText.ChangeText(energyMulter);
-    }
-
-    private float GetShieldChargeAmount(float shieldCubes)
-    {
-        return shieldCubes * 10 * EnergyMultiplier();
-    }
-
-    private float EnergyMultiplier()
-    {
-        float energyRatio = (float)energy / (float)MaxEnergy();
-        if (energyRatio > .8f) return 4;
-        if (energyRatio > .6f) return 3;
-        if (energyRatio > .4f) return 2;
-        if (energyRatio > .2f) return 1;
-        return 0;
-    }
-
-    private int GetEnergyChargeAmount(int energyCubes)
-    {
-        return energyCubes;
-    }
-
-    private float AttackChargeTime()
-    {
-        return 5;
-    }
-
-    public float lengthOfBar = 15;
-    private float pretendEnergy;
-    private CombatInitializer initializer;
-
-    internal void DeleteEnergy()
-    {
-        energy = 0;
-        RefreshEnergyBars();
-    }
-
-    internal Vector3 GetTargetOfParticle(PowerupType type)
-    {
-
-        switch (type)
-        {
-            case PowerupType.ATTACK:
-                return attackChargeBar.transform.position;
-            case PowerupType.SHIELDS:
-                Vector3 toReturn = shieldParticleTarget.transform.position;
-                return toReturn;
-            case PowerupType.ENERGY:
-                Vector3 toReturn2 = lights.GetTargetAtPercent((float)pretendEnergy / (float)MaxEnergy());
-                pretendEnergy+= GetEnergyChargeAmount(1);
-                return toReturn2;
-            default:
-                return Vector3.zero; //We're not even handling Psi right now.
-        }
-    }
-
-    internal void StartNewParticleBarrage()
-    {
-        pretendEnergy = energy;
-    }
-
-    public bool HasRoomForMoreEnergy()
-    {
-        return pretendEnergy < MaxEnergy();
     }
 }

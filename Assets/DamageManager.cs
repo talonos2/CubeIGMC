@@ -25,13 +25,9 @@ public class DamageManager : MonoBehaviour
     internal void DamageComponentsBasedOnHealthLeft(float percentHealthRemaining)
     {
         percentHealthRemaining = Mathf.Max(Mathf.Min(1, percentHealthRemaining), 0);
-        Debug.Log("Damage Proportion is " + percentHealthRemaining + ".");
         int numberOfComponentsThatShouldBeDamaged = Mathf.RoundToInt((1-percentHealthRemaining) * damagableComponents.Count);
-        Debug.Log("Currently of " + damagableComponents.Count + " components, " + numberOfComponentsThatShouldBeDamaged + " should be damaged.");
-        Debug.Log(damagedComponents.Count+" are.");
         if (numberOfComponentsThatShouldBeDamaged > damagedComponents.Count)
         {
-            Debug.Log("So let's damage "+ (numberOfComponentsThatShouldBeDamaged - damagedComponents.Count) + " more.");
             DamageSomeComponents(numberOfComponentsThatShouldBeDamaged - damagedComponents.Count);
         }
         else if (numberOfComponentsThatShouldBeDamaged < damagedComponents.Count)
