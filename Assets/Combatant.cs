@@ -21,6 +21,7 @@ public class Combatant : MonoBehaviour
     public SpaceshipPawn pawn;
     public PowerLights lights;
 
+
     public DamageManager damageManager;
     public PowerMultiplierTextChanger multiplierText;
     public bool isImmortal = false; //Used for recording so you don't blow up the enemy before you finish.
