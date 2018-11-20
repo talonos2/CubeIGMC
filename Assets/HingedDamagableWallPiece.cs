@@ -38,7 +38,7 @@ public class HingedDamagableWallPiece : DamagableDisplay
 
         this.explosion = GameObject.Instantiate(explosionPrefab);
         this.explosion.transform.position = this.transform.position;
-        this.explosion.active = false;
+        this.explosion.SetActive(false);
     }
 	
 	// Update is called once per frame

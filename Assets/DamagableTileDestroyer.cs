@@ -8,7 +8,7 @@ public class DamagableTileDestroyer : DamagableDisplay
 
     public GameObject toDestroy;
 
-    private bool willGetDestroyed;
+    internal bool willGetDestroyed;
     private bool animate;
     private float timeSinceDamaged;
     private Rigidbody rb;

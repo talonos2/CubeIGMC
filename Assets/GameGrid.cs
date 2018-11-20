@@ -8,9 +8,12 @@ public class GameGrid : MonoBehaviour
     public bool isRecording = false;
     
     public static Vector2Int numCells = new Vector2Int(15, 18);
+    public GameObject strangeFrontPlateThing;
+    public AudioSource ominousTick;
+    public AudioSource powerDown;
     public GameCube[,] grid = new GameCube[numCells.x, numCells.y];
     public CellType[,] cellTypes = new CellType[numCells.x, numCells.y];
-    public GameObject[,] cellTypeFX = new GameObject[numCells.x, numCells.y];
+    public TileFX[,] cellTypeFX = new TileFX[numCells.x, numCells.y];
     public PlayingPiece piecePrefab;
     public PowerupEffect powerUpEffect;
     public TextAsset aIText;
@@ -80,19 +83,22 @@ public class GameGrid : MonoBehaviour
                 switch (cellTypes[x,y])
                 {
                     case CellType.ATTACK:
-                        cellTypeFX[x, y] = GameObject.Instantiate(attackCellPrefab);
+                        cellTypeFX[x, y] = GameObject.Instantiate(attackCellPrefab).GetComponent<TileFX>();
                         cellTypeFX[x, y].transform.parent = this.transform;
                         cellTypeFX[x, y].transform.localPosition = GetLocalTranslationFromGridLocation(x, y);
+                        player.AddDeathEffectToDamageManager(cellTypeFX[x, y]);
                         break;
                     case CellType.SHIELD:
-                        cellTypeFX[x, y] = GameObject.Instantiate(shieldCellPrefab);
+                        cellTypeFX[x, y] = GameObject.Instantiate(shieldCellPrefab).GetComponent<TileFX>();
                         cellTypeFX[x, y].transform.parent = this.transform;
                         cellTypeFX[x, y].transform.localPosition = GetLocalTranslationFromGridLocation(x, y);
+                        player.AddDeathEffectToDamageManager(cellTypeFX[x, y]);
                         break;
                     case CellType.PSI:
-                        cellTypeFX[x, y] = GameObject.Instantiate(psiCellPrefab);
+                        cellTypeFX[x, y] = GameObject.Instantiate(psiCellPrefab).GetComponent<TileFX>();
                         cellTypeFX[x, y].transform.parent = this.transform;
                         cellTypeFX[x, y].transform.localPosition = GetLocalTranslationFromGridLocation(x, y);
+                        player.AddDeathEffectToDamageManager(cellTypeFX[x, y]);
                         break;
                     default:
                         break;
@@ -185,6 +191,8 @@ public class GameGrid : MonoBehaviour
     bool justPressedLeft;
     bool justPressedRight;
 
+    private float timeHeldBothRotatesAtOnce;
+
     private bool hasSaved;
 
     public bool isPlayedByAI;
@@ -209,12 +217,34 @@ public class GameGrid : MonoBehaviour
             aIPlayer.TickAI();
         }
 
+        if (isPlayerOne?(Input.GetButton("Rotate1_P1")&& Input.GetButton("Rotate2_P1")): (Input.GetButton("Rotate1_P2") && Input.GetButton("Rotate2_P2")))
+        {
+            float oldTimeHeld = timeHeldBothRotatesAtOnce;
+            timeHeldBothRotatesAtOnce += Time.deltaTime;
+            if ((int)timeHeldBothRotatesAtOnce != (int)oldTimeHeld)
+            {
+                ominousTick.Play();
+            }
+            if (timeHeldBothRotatesAtOnce > 5)
+            {
+                Reboot();
+                timeHeldBothRotatesAtOnce = 0;
+                if (isRecording) { recorder.RegisterEvent(GameRecorder.REBOOT); }
+            }
+        }
+        else
+        {
+            timeHeldBothRotatesAtOnce = 0;
+        }
+
+
         if (isPlayedByAI)
         {
             if (aIPlayer.GetButtonDown("UP")) { TryGoUp(); }
             if (aIPlayer.GetButtonDown("DOWN")) { TryGoDown(); }
             if (aIPlayer.GetButtonDown("LEFT")) { TryGoLeft(); }
             if (aIPlayer.GetButtonDown("RIGHT")) { TryGoRight(); }
+            if (aIPlayer.GetButtonDown("REBOOT")) {Reboot(); }
         }
         else
         {
@@ -305,9 +335,12 @@ public class GameGrid : MonoBehaviour
         justExitedMenu = false;
     }
 
-
-    
-
+    private void Reboot()
+    {
+        powerDown.Play();
+        MeltBoard();
+        player.DeleteEnergy();
+    }
 
     private void HandleUpMovement()
     {
@@ -719,6 +752,28 @@ public class GameGrid : MonoBehaviour
         return false;
     }
 
+    internal void DeathClear()
+    {
+        currentPiece.SinkBlocksAndTurnInvisible(1.5f);
+        nextPiece.SinkBlocksAndTurnInvisible(1.5f);
+        strangeFrontPlateThing.SetActive(false);
+    }
+
+    private void MeltBoard()
+    {
+        for (int x = 0; x < numCells.x; x++)
+        {
+            for (int y = 0; y < numCells.y; y++)
+            {
+                if (grid[x, y] != null)
+                {
+                    grid[x, y].Sink(UnityEngine.Random.Range(0, 1.5f));
+                    grid[x, y] = null;
+                }
+            }
+        }
+    }
+
     private class ExplosionWrapper
     {
         private GameCube cube;
@@ -734,6 +789,11 @@ public class GameGrid : MonoBehaviour
 
         internal void Explode(PowerupEffect powerupEffect, Combatant player)
         {
+            if (type == PowerupType.ENERGY && !player.HasRoomForMoreEnergy())
+            {
+                //No particle for energy if there's no room for it.
+                return;
+            }
             PowerupEffect p = GameObject.Instantiate(powerupEffect);
             p.transform.position = cube.transform.position;
             Color toInitialize = Color.white;

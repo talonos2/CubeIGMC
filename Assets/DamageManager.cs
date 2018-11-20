@@ -6,16 +6,14 @@ using UnityEngine;
 public class DamageManager : MonoBehaviour
 {
     public List<DamagableDisplay> damagableComponents;
+    public List<DeathEffect> stuffThatHappensInTheFinalExplosion;
 
     private List<DamagableDisplay> damagedComponents = new List<DamagableDisplay>();
-
-    private int numberOfDamagableComponents;
 
 
     // Use this for initialization
     void Start ()
     {
-        numberOfDamagableComponents = damagableComponents.Count;
 	}
 	
 	// Update is called once per frame
@@ -24,18 +22,30 @@ public class DamageManager : MonoBehaviour
 		
 	}
 
-    internal void SetNewDamageProportion(float percentHealthRemaining)
+    internal void DamageComponentsBasedOnHealthLeft(float percentHealthRemaining)
     {
         percentHealthRemaining = Mathf.Max(Mathf.Min(1, percentHealthRemaining), 0);
-        int numberOfComponentsThatShouldBeDamaged = Mathf.RoundToInt((1-percentHealthRemaining) * numberOfDamagableComponents);
+        Debug.Log("Damage Proportion is " + percentHealthRemaining + ".");
+        int numberOfComponentsThatShouldBeDamaged = Mathf.RoundToInt((1-percentHealthRemaining) * damagableComponents.Count);
+        Debug.Log("Currently of " + damagableComponents.Count + " components, " + numberOfComponentsThatShouldBeDamaged + " should be damaged.");
+        Debug.Log(damagedComponents.Count+" are.");
         if (numberOfComponentsThatShouldBeDamaged > damagedComponents.Count)
         {
+            Debug.Log("So let's damage "+ (numberOfComponentsThatShouldBeDamaged - damagedComponents.Count) + " more.");
             DamageSomeComponents(numberOfComponentsThatShouldBeDamaged - damagedComponents.Count);
         }
         else if (numberOfComponentsThatShouldBeDamaged < damagedComponents.Count)
         {
             //TODO: Ship repair or whatever.
             //DamageSomeComponents(damagedComponents.Count-numberOfComponentsThatShouldBeDamaged);
+        }
+    }
+
+    public void ExplodeRemainingShip()
+    {
+        foreach (DeathEffect piece in stuffThatHappensInTheFinalExplosion)
+        {
+            piece.FinalityExplosion();
         }
     }
 
@@ -69,8 +79,8 @@ public class DamageManager : MonoBehaviour
                         if (componentsThatCanBeDamagedRightNow.Count == 0)
                         {
                             Debug.LogError("Ran out of damagable components somehow!");
+                            break;
                         }
-                        break;
                     }
                 }
             }
@@ -79,6 +89,7 @@ public class DamageManager : MonoBehaviour
             //From this list, pick a random component
             toDamage.Damage();
             damagedComponents.Add(toDamage);
+            Debug.Log("Remianing Components: " + (damagableComponents.Count - damagedComponents.Count));
             
             //Do that the specified number of times.
         }

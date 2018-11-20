@@ -18,7 +18,6 @@ public class PowerMultiplierTextChanger : MonoBehaviour
 
     public void ChangeText(int newMulter)
     {
-        Debug.Log("Here" + newMulter);
         toChange.sprite = sprites[newMulter];
     }
 }

@@ -7,7 +7,7 @@ public class DamagableWallPiece : DamagableDisplay
     float timeSinceDamaged = 0;
     private Material originalMat;
     private Material personalMatToMakeTranslucent;
-    private Renderer renderer;
+    private new Renderer renderer;
     private bool animate;
     private bool hasSwitchedMaterial;
 
@@ -43,7 +43,7 @@ public class DamagableWallPiece : DamagableDisplay
         this.originalMat = renderer.material;
         this.explosion = GameObject.Instantiate(explosionPrefab);
         this.explosion.transform.position = this.transform.position;
-        this.explosion.active = false;
+        this.explosion.SetActive(false);
 
     }
 
