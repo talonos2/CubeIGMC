@@ -16,6 +16,10 @@ public class CombatInitializer : MonoBehaviour {
 
     public GameObject p1Menu;
     public GameObject p2Menu;
+    public GameObject endMenu;
+
+
+
 
     // Use this for initialization
     void Start ()
@@ -51,6 +55,9 @@ public class CombatInitializer : MonoBehaviour {
             {
                 p1Menu.SetActive(true);
                 p2Menu.SetActive(true);
+                endMenu.SetActive(true);
+
+
                 if (grid1.player.IsAlive()&&!grid2.player.IsAlive())
                 {
                     p1Text.text = "You Won";
