@@ -23,6 +23,7 @@ public class GameGrid : MonoBehaviour
     public GameObject attackCellPrefab;
     public GameObject shieldCellPrefab;
     public GameObject psiCellPrefab;
+    public ComboParticleHolder comboParticleHolder;
 
     int[][][,] pieceArray = new int[10][][,];
 
@@ -596,6 +597,22 @@ public class GameGrid : MonoBehaviour
             chargeGiver.amount /= 3; //(3 particles per square made);
         }
 
+        if (numberOfSquaresMade != 0)
+        {
+            matchSound.Play();
+            if (numberOfSquaresMade >= 2)
+            {
+                Vector3 centroid = FindCentroid(cubesToExplode);
+                GameObject comboParticles = comboParticleHolder.comboParticles[numberOfSquaresMade].gameObject;
+                GameObject go = GameObject.Instantiate(comboParticles);
+                go.transform.position = centroid;
+            }
+        }
+        else
+        {
+            dropSound.Play();
+        }
+
         //This is where we handle explosions based on tile color.
         for (int x = 0; x < numCells.x; x++)
         {
@@ -626,14 +643,6 @@ public class GameGrid : MonoBehaviour
             RemoveCubeFromGrid(cube);
             cube.Sink(UnityEngine.Random.Range(0, Mathf.Sqrt(numberOfSquaresMade)));
         }
-        if (numberOfSquaresMade!=0)
-        {
-            matchSound.Play();
-        }
-        else
-        {
-            dropSound.Play();
-        }
 
         Destroy(currentPiece.gameObject);
 
@@ -647,6 +656,25 @@ public class GameGrid : MonoBehaviour
         nextPiece.transform.localPosition = Vector3.zero;
 
         prevPieceRotation = currentPieceRotation = 0;
+    }
+
+    private Vector3 FindCentroid(List<GameCube> cubesToExplode)
+    {
+        float x = 0;
+        float y = 0;
+        float z = 0;
+        foreach (GameCube cube in cubesToExplode)
+        {
+            x += cube.transform.position.x;
+            y += cube.transform.position.y;
+            z += cube.transform.position.z;
+        }
+        x /= cubesToExplode.Count;
+        y /= cubesToExplode.Count;
+        z /= cubesToExplode.Count;
+        Vector3 centroid = new Vector3(x, y+1.5f, z-.5f);
+        Debug.Log("Centroid is at " + centroid);
+        return centroid;
     }
 
     private int GetCubesInSquare(int xCorner, int yCorner, PowerupType type)

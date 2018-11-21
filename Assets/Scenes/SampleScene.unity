@@ -35308,6 +35308,8 @@ MonoBehaviour:
     type: 2}
   psiCellPrefab: {fileID: 1139390753616414, guid: bae25a628e6c19142a0fbcd0ce85f339,
     type: 2}
+  comboParticleHolder: {fileID: 114908406823108728, guid: 30f70428dc4a81e47936deda7428e9a9,
+    type: 2}
   dropSound: {fileID: 700514344}
   matchSound: {fileID: 243356955}
   pauseMenu: {fileID: 0}
@@ -40526,13 +40528,15 @@ MonoBehaviour:
     type: 2}
   psiCellPrefab: {fileID: 1139390753616414, guid: bae25a628e6c19142a0fbcd0ce85f339,
     type: 2}
+  comboParticleHolder: {fileID: 114908406823108728, guid: 30f70428dc4a81e47936deda7428e9a9,
+    type: 2}
   dropSound: {fileID: 402193082}
   matchSound: {fileID: 182668321}
   pauseMenu: {fileID: 0}
   justExitedMenu: 0
   player: {fileID: 2080038990}
   isPlayerOne: 0
-  isPlayedByAI: 1
+  isPlayedByAI: 0
   chargeGiverPrefab: {fileID: 114403860689813174, guid: 71db1b17c9045464999b21904984cde9,
     type: 2}
 --- !u!4 &1800077638

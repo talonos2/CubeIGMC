@@ -34,3 +34,7 @@ sysinfo.txt
 # Builds
 *.apk
 *.unitypackage
+Assets/Narrate/Demos/
+Assets/Narrate/Demos.meta
+Assets/Scenes/Temp.unity
+Assets/Scenes/Temp.unity.meta
