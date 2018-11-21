@@ -237,7 +237,18 @@ namespace Narrate {
                     src.Play();
                 }
                 if (subManager != null)
+                {
                     subManager.DisplaySubtitle(curPhrase.text, subDuration, !pressToContinue);
+                    if (curPhrase.portrait != null)
+                    {
+                        subManager.portrait.gameObject.SetActive(true);
+                        subManager.portrait.sprite = curPhrase.portrait;
+                    }
+                    else
+                    {
+                        subManager.portrait.gameObject.SetActive(false);
+                    }
+                }
                 if (subDuration <= 0) {
                     subDuration = defaultPhraseDuration;
                     if (subManager != null)

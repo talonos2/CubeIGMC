@@ -15,6 +15,7 @@ namespace Narrate {
         public static string PrefsKey = "Subtitles";//key for the integer in PlayerPrefs to see if subs are on. 0 = off, 1 = 0n
         public bool OnByDefault = true;// If no the PrefsKey hasn't been set (such as when a new game is started) should subtitles will be enabled by default
         public GameObject displayArea;// The object to which all visible subtitle-UI elements should be childed
+        public Image portrait;//The image to change into the given portrait
         public Text textUI;// The Text in which the subtitle is written
         public ScrollRect scrollRect;// The scroll rect in which content is displayed
 
@@ -53,12 +54,13 @@ namespace Narrate {
 
         void Start() {
             scrollRect.verticalNormalizedPosition = 1.0f;
-            RescaleText();
+            //RescaleText();
         }
         /// <summary>
         /// Handles the displaying, scrolling, and hiding when subtitles are not typing-animated
         /// </summary>
-        IEnumerator DisplayPlain(string sub, float displayFor, bool hideOnFinish) {
+        IEnumerator DisplayPlain(string sub, float displayFor, bool hideOnFinish)
+        {
             hurry = false;
             scrollRect.verticalNormalizedPosition = 1.0f;//scroll back to the top
             textUI.text = sub;
@@ -72,8 +74,8 @@ namespace Narrate {
             //scroll
             while (timeLeft > 0 && !hurry) {
                 //if screen has been resized, rescale the text
-                if (oldScreenSize != Screen.height)
-                    RescaleText();
+                //if (oldScreenSize != Screen.height)
+                    //RescaleText();
                 timeLeft -= Time.deltaTime;
                 scrollRect.verticalNormalizedPosition = timeLeft / displayFor;
                 yield return null;
@@ -117,7 +119,7 @@ namespace Narrate {
                     if (sub.Length <= 0)
                         break;
                 }
-                scrollRect.verticalNormalizedPosition = 0.0f;//scroll back to the top
+                //scrollRect.verticalNormalizedPosition = 0.0f;//scroll back to the top
                 yield return null;
             }
 
@@ -166,6 +168,7 @@ namespace Narrate {
                 else
                     return;
             }
+
             //if no sub, display display a simple message
             if (sub.Equals(""))
                 sub = "<audio>";

@@ -11,6 +11,7 @@ namespace Narrate {
         public AudioClip audio;
         public string text;
         public float duration = 0;
+        public Sprite portrait;
 
         //used by Phrase Property Drawer
 #if UNITY_EDITOR

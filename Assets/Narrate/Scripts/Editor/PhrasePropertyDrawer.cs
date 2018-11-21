@@ -35,6 +35,10 @@ namespace Narrate {
             EditorGUI.PropertyField(pos, prop, new GUIContent("Text"));
             pos.y += rowHeight;
 
+            prop = property.FindPropertyRelative("portrait");
+            EditorGUI.PropertyField(pos, prop, new GUIContent("Portrait"));
+            pos.y += rowHeight;
+
             if (!label.text.Contains("smartSubs")) {
                 prop = property.FindPropertyRelative("duration");
                 EditorGUI.PropertyField(pos, prop, new GUIContent("Duration"));

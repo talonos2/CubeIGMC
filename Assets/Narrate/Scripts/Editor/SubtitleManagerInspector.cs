@@ -35,6 +35,7 @@ public class SubtitleManagerInspector: Editor {
                 sm.displayArea = (GameObject)EditorGUILayout.ObjectField("Subtitle Display: ", sm.displayArea, typeof(GameObject), true);
                 sm.textUI = (Text)EditorGUILayout.ObjectField("TextUI: ", sm.textUI, typeof(Text), true);
                 sm.scrollRect = (ScrollRect)EditorGUILayout.ObjectField("ScrollRect: ", sm.scrollRect, typeof(ScrollRect), true);
+                sm.portrait = (Image)EditorGUILayout.ObjectField("Portrait: ", sm.portrait, typeof(Image), true);
             }
 
             foldoutFont = EditorGUILayout.Foldout(foldoutFont, "Font Settings");
