@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -54,6 +55,11 @@ public class SpaceshipPawn : MonoBehaviour {
         this.transform.rotation = Quaternion.Euler(new Vector3(0, (dy/partialDerivativeSampleDistance*pitchWaggle * damMult + 90)*(distanceToMyNose > 1 ? 1 : -1), (dx/partialDerivativeSampleDistance*rollWaggle*damMult-70) * (distanceToMyNose > 1 ? 1 : -1)));
 
         damage *= damageDampeningAmount;
+    }
+
+    internal void takeoff(int v, Vector3 position, Quaternion rotation)
+    {
+        
     }
 
     public void FireBullet(float damage, Combatant enemy, float flightTime)

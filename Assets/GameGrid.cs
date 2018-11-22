@@ -209,6 +209,12 @@ public class GameGrid : MonoBehaviour
             return;
         }
 
+        if (MissionManager.instance.IsInCutscene())
+        {
+            return;
+        }
+        justExitedMenu = false;
+
         if (Time.timeSinceLevelLoad > 300 & isRecording & !hasSaved)
         {
             recorder.PrintOut();
@@ -335,7 +341,7 @@ public class GameGrid : MonoBehaviour
             }
         }
 
-        justExitedMenu = false;
+
     }
 
     private void Reboot()
@@ -588,7 +594,6 @@ public class GameGrid : MonoBehaviour
             PowerupEffect pe = GameObject.Instantiate<PowerupEffect>(powerUpEffect);
             GameCube sourceCube = cubesToExplode[UnityEngine.Random.Range(0,cubesToExplode.Count)];
             pe.Initialize(sourceCube.transform.position, player.GetTargetOfParticle(PowerupType.ENERGY, 3), delay, PowerupType.ENERGY);
-            GameObject go = new GameObject();
             InvisibleDelayedChargeGiver chargeGiver = GameObject.Instantiate<InvisibleDelayedChargeGiver>(chargeGiverPrefab);
             chargeGiver.target = player;
             chargeGiver.delay = delay + 1;

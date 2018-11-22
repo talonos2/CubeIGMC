@@ -176,10 +176,14 @@ namespace Narrate {
                     SerializedProperty phrase = array.GetArrayElementAtIndex(i);
                     SerializedProperty aud = phrase.FindPropertyRelative("audio");
                     SerializedProperty duration = phrase.FindPropertyRelative("duration");
-                    if (!looping.boolValue && aud.objectReferenceValue != null) {
+                    if (!looping.boolValue && aud.objectReferenceValue != null)
+                    {
                         duration.floatValue = ((AudioClip)aud.objectReferenceValue).length;
-                    } else
+                    }
+                    else
+                    {
                         duration.floatValue = NarrationManager.instance.defaultPhraseDuration;
+                    }
                 }
             }
         }
