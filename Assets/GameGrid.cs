@@ -133,6 +133,8 @@ public class GameGrid : MonoBehaviour
 
     private readonly int[] pieceSizeBag = { 1, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 7, 7, 8 };
 
+    private List<int[,]> forcedPieces = new List<int[,]>();
+
 	// Use this for initialization
 	void Start ()
     {
@@ -144,9 +146,39 @@ public class GameGrid : MonoBehaviour
         PlayingPiece toReturn = GameObject.Instantiate(piecePrefab);
 
         int pieceSize = pieceSizeBag[dice.NextInt(0, pieceSizeBag.Length)];
-        toReturn.Initialize(this.player, dice, pieceArray[pieceSize][dice.NextInt(0, pieceArray[pieceSize].Length)]);
+
+        if (forcedPieces.Count > 0)
+        {
+            int[,] forcedPiece = forcedPieces[0];
+            forcedPieces.RemoveAt(0);
+            toReturn.Initialize(this.player, dice, forcedPiece);
+        }
+        else
+        {
+            toReturn.Initialize(this.player, dice, pieceArray[pieceSize][dice.NextInt(0, pieceArray[pieceSize].Length)]);
+        }
 
         return toReturn;
+    }
+
+    public void ForcePieces(List <int[,]> forcedPieces)
+    {
+        this.forcedPieces = forcedPieces;
+        PlayingPiece oldPiece1 = currentPiece;
+        PlayingPiece oldPiece2 = nextPiece;
+        currentPiece = MakeAPiece();
+        nextPiece = MakeAPiece();
+        GameObject.Destroy(oldPiece1.gameObject);
+        GameObject.Destroy(oldPiece2.gameObject);
+
+        currentPiece.transform.parent = this.transform;
+        currentPiecePosition = new Vector2Int(1, 1);
+        UpdateCurrentPieceTransform();
+
+        nextPiece.transform.parent = nextPieceHolder;
+        nextPiece.transform.localPosition = Vector3.zero;
+
+        prevPieceRotation = currentPieceRotation = 0;
     }
 
     /*REPLACE: This moves the graphical representation of the piece.*/
@@ -793,6 +825,15 @@ public class GameGrid : MonoBehaviour
                 }
             }
         }
+    }
+
+    internal void DropNewCubeAt(int x, int y)
+    {
+        GameCube cube = GameObject.Instantiate<GameCube>(currentPiece.cube); // Probbably unsafe.
+        cube.Initialize(player, dice);
+        grid[currentPiecePosition.x + x - 1, currentPiecePosition.y + y - 1] = cube;
+        cube.transform.parent = this.transform;
+        cube.transform.localPosition = new Vector3(currentPiecePosition.x - numCells.x / 2f + x - 1 + .5f, 0, currentPiecePosition.y - numCells.y / 2f + y - 1 + .5f);
     }
 
     private void SetupPieceArray()

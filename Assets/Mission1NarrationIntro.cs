@@ -36,6 +36,11 @@ public class Mission1NarrationIntro : Mission
     public ParticleSystem tutorialPlacement2;
     public ParticleSystem tutorialPlacement3;
 
+    public GameGrid gridToSetup;
+
+    public AudioSource sneakyShipMusic;
+    public AudioSource blastingTHroughWallsMusic;
+
 
     internal override void Unblock()
     {
@@ -62,10 +67,33 @@ public class Mission1NarrationIntro : Mission
                 narrations[3].gameObject.SetActive(true);
                 break;
             case 5:
+                //Setup board.
+                List<int[,]> piecesToForce = new List<int[,]>();
+                piecesToForce.Add(new int[3,3] { { 1,0,0},{ 1,1,0},{ 0,0,0} });
+                piecesToForce.Add(new int[3, 3] { { 1, 0, 0 }, { 1, 1, 0 }, { 0, 0, 0 } });
+                piecesToForce.Add(new int[3, 3] { { 1, 1, 0 }, { 1, 1, 0 }, { 1, 1, 0 } });
+
+                gridToSetup.ForcePieces(piecesToForce);
+
+                gridToSetup.DropNewCubeAt(5, 5);
+                gridToSetup.DropNewCubeAt(5, 6);
+                gridToSetup.DropNewCubeAt(5, 7);
+                gridToSetup.DropNewCubeAt(4, 6);
+                gridToSetup.DropNewCubeAt(4, 7);
+                gridToSetup.DropNewCubeAt(3, 7);
+
+                gridToSetup.DropNewCubeAt(9, 5);
+                gridToSetup.DropNewCubeAt(9, 6);
+                gridToSetup.DropNewCubeAt(9, 7);
+                gridToSetup.DropNewCubeAt(10, 6);
+                gridToSetup.DropNewCubeAt(10, 7);
+                gridToSetup.DropNewCubeAt(11, 7);
+
                 timeSinceStepStarted = 0f;
                 narrations[4].gameObject.SetActive(true);
                 break;
             case 6:
+                sneakyShipMusic.Play();
                 //narrations[3].gameObject.SetActive(true);
                 break;
         //Game starts.
@@ -85,6 +113,7 @@ public class Mission1NarrationIntro : Mission
         ship = shipToMakeNotWiggle.gameObject;
         spaceLightToDisable.enabled = false;
         shipToMakeNotWiggle.enabled = false;
+
     }
 
     private bool playedRunningSound;
