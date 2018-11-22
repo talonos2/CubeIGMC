@@ -24,6 +24,9 @@ public class Mission1NarrationIntro : Mission
     public AudioSource openShipSound;
     public AudioSource startShipSound;
 
+    public AudioSource wallImpactExplosionSound;
+    public CameraShake cameraToShake;
+
     public Vector3 person1Start;
     public Vector3 person1End;
     public Vector3 person2Start;
@@ -172,6 +175,8 @@ public class Mission1NarrationIntro : Mission
                 break;
             case 11:
                 MissionManager.isInCutscene = true;
+                wallImpactExplosionSound.Play();
+                cameraToShake.ShakeCamera(3, 1);
                 sneakyShipMusic.Stop();
                 blastingTHroughWallsMusic.Play();
                 narrations[6].gameObject.SetActive(true);
@@ -184,18 +189,29 @@ public class Mission1NarrationIntro : Mission
                 tutorialTexts[4].gameObject.SetActive(true);
                 break;
             case 13:
+                wallImpactExplosionSound.Play();
+                cameraToShake.ShakeCamera(3, 1);
                 tutorialTexts[5].gameObject.SetActive(true);
                 tutorialTexts[4].gameObject.SetActive(false);
+                thingsToHide[2].SetActive(true);
                 break;
             case 14:
+                wallImpactExplosionSound.Play();
+                cameraToShake.ShakeCamera(3, 1);
                 tutorialTexts[5].gameObject.SetActive(false);
-                MissionManager.triggerCallbacksOnAttackHit = false;
-                thingsToHide[2].SetActive(true);
-                MissionManager.TriggerCallbackOnEnemyDestroyed = true;
                 break;
             case 15:
-                MissionManager.isInCutscene = true;
-                narrations[7].gameObject.SetActive(true);
+                wallImpactExplosionSound.Play();
+                cameraToShake.ShakeCamera(3, 1);
+                if (gridToSetup.player.enemy.IsAlive())
+                {
+                    stepNum--;
+                }
+                else
+                {
+                    MissionManager.isInCutscene = true;
+                    narrations[7].gameObject.SetActive(true);
+                }
                 break;
         }
 }
@@ -215,14 +231,17 @@ public class Mission1NarrationIntro : Mission
         shipToMakeNotWiggle.enabled = false;
 
         gridToSetup.player.enemy.howManyItemsIHave = -1;
+        gridToSetup.player.enemy.health = 50;
+        gridToSetup.player.enemy.damageManager = damageManagerForDoor;
 
         MissionManager.isInCutscene = true;
     }
 
     private bool playedRunningSound;
+    public DamageManager damageManagerForDoor;
 
-	// Update is called once per frame
-	void Update ()
+    // Update is called once per frame
+    void Update ()
     {
 
         //Run in.
@@ -230,13 +249,11 @@ public class Mission1NarrationIntro : Mission
         {
             timeSinceStepStarted += Time.deltaTime;
             float brightness = Mathf.Clamp01(timeSinceStepStarted/2);
-            Debug.Log(brightness);
             darkness.color = new Color(0, 0, 0, 1-brightness);
             float personPosit1time = Mathf.Clamp01((timeSinceStepStarted-2f) / 2f);
             float personPosit2time = Mathf.Clamp01((timeSinceStepStarted - 2.2f) / 2f);
             Vector3 personPosit1 = Vector3.Lerp(person1Start, person1End, personPosit1time);
             Vector3 personPosit2 = Vector3.Lerp(person2Start, person2End, personPosit2time);
-            Debug.Log(personPosit1);
             person1.transform.localPosition = personPosit1;
             person2.transform.localPosition = personPosit2;
             if (timeSinceStepStarted > 2 && !playedRunningSound)

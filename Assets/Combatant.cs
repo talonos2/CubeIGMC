@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class Combatant : MonoBehaviour
 {
-    private float health;
+    public float health;
     private int energy;
     private float shields;
     private float psi;
@@ -94,6 +94,10 @@ public class Combatant : MonoBehaviour
 
     private float MaxHealth()
     {
+        if (howManyItemsIHave < 0) //XILLITH REPLACE THIS WHEN WE GET ITEMS! (The door should have an "Item" that cuts its maxHP in half.)
+        {
+            return 50;
+        }
         return 100 * (isImmortal ? 100 : 1);
     }
 
