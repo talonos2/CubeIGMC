@@ -7,7 +7,11 @@ internal class MissionManager : MonoBehaviour
     public HackyCallback grossCallbackHack;
     public Mission mission;
 
-    private static bool isInCutscene;
+    public static bool isInCutscene;
+    internal static bool triggerCallbacksOnBlockDrop;
+    internal static bool triggerCallbacksOnAttackHit;
+
+    public static bool TriggerCallbackOnEnemyDestroyed { get; internal set; }
 
     /// <summary>
     /// Sets up the NarrationManager's singleton design pattern - only one instance of
@@ -24,11 +28,6 @@ internal class MissionManager : MonoBehaviour
             Destroy(gameObject);
         }
         DontDestroyOnLoad(this);
-    }
-
-    public bool IsInCutscene()
-    {
-        return isInCutscene;
     }
 
     public void Update()

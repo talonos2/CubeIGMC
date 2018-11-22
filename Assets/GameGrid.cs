@@ -76,13 +76,30 @@ public class GameGrid : MonoBehaviour
         nextPiece.transform.parent = nextPieceHolder;
         nextPiece.transform.localPosition = Vector3.zero;
 
-        player.SetGridcellsStartingState(cellTypes);
+        SetGridCellTypeStateAndAttendentVFX();
+    }
+
+    public void SetGridCellTypeStateAndAttendentVFX()
+    {
+        for (int x = 0; x < numCells.x; x++)
+        {
+            for (int y = 0; y < numCells.y; y++)
+            {
+                cellTypes[x, y] = CellType.NORMAL;
+             }
+        }
+                player.SetGridcellsStartingState(cellTypes);
 
         for (int x = 0; x < numCells.x; x++)
         {
             for (int y = 0; y < numCells.y; y++)
             {
-                switch (cellTypes[x,y])
+                if (cellTypeFX[x,y] != null)
+                {
+                    GameObject.Destroy(cellTypeFX[x, y].gameObject);
+                    cellTypeFX[x, y] = null;
+        }
+                switch (cellTypes[x, y])
                 {
                     case CellType.ATTACK:
                         cellTypeFX[x, y] = GameObject.Instantiate(attackCellPrefab).GetComponent<TileFX>();
@@ -241,7 +258,7 @@ public class GameGrid : MonoBehaviour
             return;
         }
 
-        if (MissionManager.instance.IsInCutscene())
+        if (MissionManager.isInCutscene)
         {
             return;
         }
@@ -308,6 +325,28 @@ public class GameGrid : MonoBehaviour
                     }
                 }
             }
+
+            if (forcedPlacements.Count > 0)
+            {
+                bool inGoodPosition = false;
+                ForcedPlacementOptions forced = forcedPlacements[0];
+                for (int i = 0; i < forced.placements.Count; i++)
+                {
+                    Vector3 posit = forced.placements[i];
+                    if (currentPieceRotation == forced.rotations[i] &&
+                        currentPiecePosition.x == posit.x &&
+                        currentPiecePosition.y == posit.y)
+                    {
+                        inGoodPosition = true;
+                    }
+                }
+                if (!inGoodPosition)
+                {
+                    return;
+                }
+                forcedPlacements.RemoveAt(0);
+            }
+
             if (isRecording) { recorder.RegisterEvent(GameRecorder.DROP); }
             DropPiece();
         }
@@ -614,7 +653,9 @@ public class GameGrid : MonoBehaviour
         List<float> delays = new List<float>();
         for (int x = 0; x < numberOfParticles; x++)
         {
-            delays.Add(UnityEngine.Random.Range(0, Mathf.Sqrt(numberOfSquaresMade)));
+            float delay = UnityEngine.Random.Range(0, Mathf.Sqrt(numberOfSquaresMade/2));
+            Debug.Log(numberOfSquaresMade + ", " + delay);
+            delays.Add(delay);
         }
 
         delays.Sort();
@@ -693,6 +734,12 @@ public class GameGrid : MonoBehaviour
         nextPiece.transform.localPosition = Vector3.zero;
 
         prevPieceRotation = currentPieceRotation = 0;
+
+        //For tutorials; hack in a callback;
+        if (MissionManager.triggerCallbacksOnBlockDrop)
+        {
+            MissionManager.instance.grossCallbackHack.enabled = true;
+        }
     }
 
     private Vector3 FindCentroid(List<GameCube> cubesToExplode)
@@ -784,10 +831,27 @@ public class GameGrid : MonoBehaviour
         }
     }
 
-    /*REPLACE: Checks to see if this block is in an invalid position. Right now, this means "In the Red Area.*/
+    private List<ForcedPlacementOptions> forcedPlacements = new List<ForcedPlacementOptions>();
+
     private bool IsInInvalidArea(float x, float y)
     {
-        return y < 3;
+        if (forcedPlacements.Count <= 0)
+        {
+            return y < 3;
+        }
+
+        return false;
+    }
+
+    /// <summary>
+    /// Adds a "Forced Placement" to the queue, preventing the player from placing the next piece
+    /// anywhere but that spot.
+    /// </summary>
+    /// <param name="rotations">Possible orientations of the piece.</param>
+    /// <param name="placements">Possible positions of tne piece.</param>
+    public void AddForcedPosition(List<int> rotations, List<Vector2> placements)
+    {
+        forcedPlacements.Add(new ForcedPlacementOptions(rotations, placements));
     }
 
     /*REPLACE: Is there a block in the square? (Also, is it off the edge of the board?)*/
@@ -913,4 +977,16 @@ public enum CellType
     PSI,
     BROKEN,
     ENERGY
+}
+
+internal class ForcedPlacementOptions
+{
+    public List<int> rotations = new List<int>();
+    public List<Vector2> placements = new List<Vector2>();
+
+    public ForcedPlacementOptions(List<int> rotations, List<Vector2> placements)
+    {
+        this.rotations = rotations;
+        this.placements = placements;
+    }
 }

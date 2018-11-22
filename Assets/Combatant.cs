@@ -162,19 +162,47 @@ public class Combatant : MonoBehaviour
         return 5;
     }
 
+    public int howManyItemsIHave = 3;
+
     //Modify this to change what a player's grid looks like when they start playing.
     internal void SetGridcellsStartingState(CellType[,] cellTypes)
     {
-        for (int x = 0; x < 4; x++)
+        //XILLITH: This is a set of bad hacks for now. When you do an inventory system, replace these hacks with inventory items!
+        switch (howManyItemsIHave)
         {
-            for (int y = 0; y < 4; y++)
-            {
-                cellTypes[x + 2, y + 10] = CellType.ATTACK;
-                cellTypes[x + 9, y + 10] = CellType.SHIELD;
-            }
+            case 0:
+                return;
+            case 1:
+                for (int x = 0; x < 3; x++)
+                {
+                    for (int y = 0; y < 3; y++)
+                    {
+                        cellTypes[x + 2, y + 10] = CellType.ATTACK;
+                    }
+                }
+                break;
+            case 2:
+                for (int x = 0; x < 3; x++)
+                {
+                    for (int y = 0; y < 3; y++)
+                    {
+                        cellTypes[x + 2, y + 10] = CellType.ATTACK;
+                        cellTypes[x + 10, y + 10] = CellType.SHIELD;
+                    }
+                }
+                break;
+            case 3:
+                for (int x = 0; x < 4; x++)
+                {
+                    for (int y = 0; y < 4; y++)
+                    {
+                        cellTypes[x + 2, y + 10] = CellType.ATTACK;
+                        cellTypes[x + 9, y + 10] = CellType.SHIELD;
+                    }
+                }
+                break;
         }
 
-        cellTypes[14, 3] = CellType.ATTACK;
     }
 
     //Information methods:
@@ -199,13 +227,15 @@ public class Combatant : MonoBehaviour
         damageManager.stuffThatHappensInTheFinalExplosion.Add(deathEffect);
     }
 
+    public float bulletFlightTime = 2;
+
     private void Fire()
     {
 
         float damage = DamageAmount();
         //Energy costs for firing are now payed as the cubes are floated/converted into attack power.
 
-        pawn.FireBullet(damage, enemy, 2);
+        pawn.FireBullet(damage, enemy, bulletFlightTime);
 
         pawn.chargeSound.Stop();
         pawn.fireSound.Stop();

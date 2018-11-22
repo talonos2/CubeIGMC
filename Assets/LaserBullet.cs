@@ -20,6 +20,10 @@ public class LaserBullet : MonoBehaviour {
         {
             personImAttacking.TakeDamage(damage);
             GameObject.Destroy(this.gameObject);
+            if (MissionManager.triggerCallbacksOnAttackHit)
+            {
+                MissionManager.instance.grossCallbackHack.enabled = true;
+            }
         }
 		
 	}

@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class Mission1NarrationIntro : Mission
 {
     public TimerNarrationTrigger[] narrations;
+    public GameObject[] tutorialTexts;
     private int stepNum;
     private float timeSinceStepStarted;
     public Image darkness;
@@ -69,8 +70,8 @@ public class Mission1NarrationIntro : Mission
             case 5:
                 //Setup board.
                 List<int[,]> piecesToForce = new List<int[,]>();
-                piecesToForce.Add(new int[3,3] { { 1,0,0},{ 1,1,0},{ 0,0,0} });
-                piecesToForce.Add(new int[3, 3] { { 1, 0, 0 }, { 1, 1, 0 }, { 0, 0, 0 } });
+                piecesToForce.Add(new int[3,3] { { 0,1,0},{ 0,1,1},{ 0,0,0} });
+                piecesToForce.Add(new int[3, 3] { { 0, 1, 0 }, { 1, 1, 0 }, { 0, 0, 0 } });
                 piecesToForce.Add(new int[3, 3] { { 1, 1, 0 }, { 1, 1, 0 }, { 1, 1, 0 } });
 
                 gridToSetup.ForcePieces(piecesToForce);
@@ -89,15 +90,114 @@ public class Mission1NarrationIntro : Mission
                 gridToSetup.DropNewCubeAt(10, 7);
                 gridToSetup.DropNewCubeAt(11, 7);
 
+                gridToSetup.DropNewCubeAt(4, 8);
+                gridToSetup.DropNewCubeAt(4, 9);
+                gridToSetup.DropNewCubeAt(4, 10);
+                gridToSetup.DropNewCubeAt(10, 8);
+                gridToSetup.DropNewCubeAt(10, 9);
+                gridToSetup.DropNewCubeAt(10, 10);
+
+                gridToSetup.DropNewCubeAt(4, 11);
+                gridToSetup.DropNewCubeAt(4, 12);
+                gridToSetup.DropNewCubeAt(4, 13);
+                gridToSetup.DropNewCubeAt(4, 14);
+                gridToSetup.DropNewCubeAt(5, 11);
+                gridToSetup.DropNewCubeAt(5, 12);
+                gridToSetup.DropNewCubeAt(5, 13);
+                gridToSetup.DropNewCubeAt(5, 14);
+                gridToSetup.DropNewCubeAt(6, 13);
+                gridToSetup.DropNewCubeAt(6, 14);
+                gridToSetup.DropNewCubeAt(7, 13);
+                gridToSetup.DropNewCubeAt(7, 14);
+                gridToSetup.DropNewCubeAt(8, 13);
+                gridToSetup.DropNewCubeAt(8, 14);
+                gridToSetup.DropNewCubeAt(9, 11);
+                gridToSetup.DropNewCubeAt(9, 12);
+                gridToSetup.DropNewCubeAt(9, 13);
+                gridToSetup.DropNewCubeAt(9, 14);
+                gridToSetup.DropNewCubeAt(10, 11);
+                gridToSetup.DropNewCubeAt(10, 12);
+                gridToSetup.DropNewCubeAt(10, 13);
+                gridToSetup.DropNewCubeAt(10, 14);
+
+                gridToSetup.player.howManyItemsIHave = 0;
+                gridToSetup.SetGridCellTypeStateAndAttendentVFX();
+
                 timeSinceStepStarted = 0f;
                 narrations[4].gameObject.SetActive(true);
                 break;
             case 6:
+                MissionManager.isInCutscene = false;
                 sneakyShipMusic.Play();
-                //narrations[3].gameObject.SetActive(true);
+                MissionManager.triggerCallbacksOnBlockDrop = true;
+                tutorialPlacement1.gameObject.SetActive(true);
+                List<Vector2> placements6 = new List<Vector2>(new Vector2[1] { new Vector2(11, 5) });
+                List<int> rotations6 = new List<int>(new int[1] { 0 });
+                gridToSetup.AddForcedPosition(rotations6, placements6);
+                gridToSetup.player.bulletFlightTime = 1;
+                shipToMakeNotWiggle.distanceBetweenShips = 9;
+                tutorialTexts[0].gameObject.SetActive(true);
                 break;
-        //Game starts.
-    }
+            case 7:
+                tutorialPlacement1.gameObject.SetActive(false);
+                tutorialPlacement2.gameObject.SetActive(true);
+                List<Vector2> placements7 = new List<Vector2>(new Vector2[1] { new Vector2(3, 5) });
+                List<int> rotations7 = new List<int>(new int[1] { 2 });
+                gridToSetup.AddForcedPosition(rotations7, placements7);
+                tutorialTexts[0].gameObject.SetActive(false);
+                tutorialTexts[1].gameObject.SetActive(true);
+                break;
+            case 8:
+                tutorialPlacement2.gameObject.SetActive(false);
+                tutorialPlacement3.gameObject.SetActive(true);
+                List<Vector2> placements8 = new List<Vector2>(new Vector2[2] { new Vector2(7, 12), new Vector2(7,11 )});
+                List<int> rotations8 = new List<int>(new int[2] { 0,2 });
+                gridToSetup.AddForcedPosition(rotations8, placements8);
+                tutorialTexts[1].gameObject.SetActive(false);
+                tutorialTexts[2].gameObject.SetActive(true);
+                break;
+            case 9:
+                MissionManager.isInCutscene = true;
+                tutorialPlacement3.gameObject.SetActive(false);
+                narrations[5].gameObject.SetActive(true);
+                tutorialTexts[2].gameObject.SetActive(false);
+                break;
+            case 10:
+                MissionManager.isInCutscene = false;
+                gridToSetup.player.howManyItemsIHave = 1;
+                gridToSetup.SetGridCellTypeStateAndAttendentVFX();
+                MissionManager.triggerCallbacksOnBlockDrop = false;
+                MissionManager.triggerCallbacksOnAttackHit = true;
+                tutorialTexts[3].gameObject.SetActive(true);
+                break;
+            case 11:
+                MissionManager.isInCutscene = true;
+                sneakyShipMusic.Stop();
+                blastingTHroughWallsMusic.Play();
+                narrations[6].gameObject.SetActive(true);
+                MissionManager.triggerCallbacksOnAttackHit = false;
+                tutorialTexts[3].gameObject.SetActive(false);
+                break;
+            case 12:
+                MissionManager.isInCutscene = false;
+                MissionManager.triggerCallbacksOnAttackHit = true;
+                tutorialTexts[4].gameObject.SetActive(true);
+                break;
+            case 13:
+                tutorialTexts[5].gameObject.SetActive(true);
+                tutorialTexts[4].gameObject.SetActive(false);
+                break;
+            case 14:
+                tutorialTexts[5].gameObject.SetActive(false);
+                MissionManager.triggerCallbacksOnAttackHit = false;
+                thingsToHide[2].SetActive(true);
+                MissionManager.TriggerCallbackOnEnemyDestroyed = true;
+                break;
+            case 15:
+                MissionManager.isInCutscene = true;
+                narrations[7].gameObject.SetActive(true);
+                break;
+        }
 }
 
     // Use this for initialization
@@ -114,6 +214,9 @@ public class Mission1NarrationIntro : Mission
         spaceLightToDisable.enabled = false;
         shipToMakeNotWiggle.enabled = false;
 
+        gridToSetup.player.enemy.howManyItemsIHave = -1;
+
+        MissionManager.isInCutscene = true;
     }
 
     private bool playedRunningSound;
