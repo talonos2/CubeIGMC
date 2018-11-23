@@ -51,6 +51,13 @@ public class Menus : MonoBehaviour {
         SceneManager.LoadScene("SampleScene");
     }
 
+    public void ToMultiplayer()
+    {
+        Time.timeScale = 1;
+        SceneManager.LoadScene("multiplayer");
+
+    }
+
     public void Restart()
     {
         Time.timeScale = 1;

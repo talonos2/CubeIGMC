@@ -145,6 +145,8 @@ public class GameGrid : MonoBehaviour
     private float timeSinceLastMove = 0;
     private float timeSinceLastRot = 0;
     private readonly float msNeededToLerp = 62;
+    private float tickMove = 0;
+    private float tickRot = 0;
 
     private readonly Quaternion[] orientations = { Quaternion.Euler(0, 0, 0), Quaternion.Euler(0, 90, 0), Quaternion.Euler(0, 180, 0), Quaternion.Euler(0, 270, 0) };
 
@@ -198,9 +200,34 @@ public class GameGrid : MonoBehaviour
         prevPieceRotation = currentPieceRotation = 0;
     }
 
-    /*REPLACE: This moves the graphical representation of the piece.*/
+    /* This moves the graphical representation of the piece.*/
     private void UpdateCurrentPieceTransform()
     {
+
+        timeSinceLastMove += Time.deltaTime * 1000;
+        timeSinceLastRot += Time.deltaTime * 1000;
+
+
+        tickMove = timeSinceLastMove / msNeededToLerp;
+        tickRot = timeSinceLastRot / msNeededToLerp;
+
+
+        Vector3 futurePos = GetLocalTranslationFromGridLocation(currentPiecePosition.x, currentPiecePosition.y);
+        Vector3 oldPos = GetLocalTranslationFromGridLocation(prevPiecePosition.x, prevPiecePosition.y);
+        Vector3 betweenPosition = Vector3.Lerp(oldPos, futurePos, tickMove);
+
+        currentPiece.transform.localPosition = betweenPosition;
+
+        Quaternion futureRot = orientations[currentPieceRotation];
+        Quaternion oldRot = orientations[prevPieceRotation];
+        Quaternion betweenRot = Quaternion.Slerp(oldRot, futureRot, tickRot);
+
+        currentPiece.transform.localRotation = betweenRot;
+
+
+
+
+/*
         timeSinceLastMove += Time.deltaTime * 1000;
         timeSinceLastRot += Time.deltaTime * 1000;
         float prop = timeSinceLastMove / msNeededToLerp;
@@ -217,6 +244,7 @@ public class GameGrid : MonoBehaviour
         Quaternion animatedRotation = Quaternion.Slerp(oldRotation, targetRotation, prop);
 
         currentPiece.transform.localRotation = animatedRotation;
+*/
     }
 
     private Vector3 GetLocalTranslationFromGridLocation(int x, int y)
@@ -854,9 +882,21 @@ public class GameGrid : MonoBehaviour
         forcedPlacements.Add(new ForcedPlacementOptions(rotations, placements));
     }
 
-    /*REPLACE: Is there a block in the square? (Also, is it off the edge of the board?)*/
+    //Is there a block in the square? (Also, is it off the edge of the board?)*/
     private bool IsObstructedAt(int x, int y)
     {
+
+        if (x < 0 || x >= numCells.x)
+            return true;
+        else if (y < 0 || y >= numCells.y)
+            return true;
+        else if (grid[x, y] != null)
+            return true;
+        else
+            return false;
+
+
+/*
         if (x < 0||x>=numCells.x||y<0||y>=numCells.y)
         {
             return true;
@@ -866,6 +906,8 @@ public class GameGrid : MonoBehaviour
             return true;
         }
         return false;
+        */
+
     }
 
     internal void DeathClear()
