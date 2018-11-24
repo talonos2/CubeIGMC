@@ -11,6 +11,7 @@ public class GameGrid : MonoBehaviour
     public GameObject strangeFrontPlateThing;
     public AudioSource ominousTick;
     public AudioSource powerDown;
+    public AudioSource errorSound;
     public GameCube[,] grid = new GameCube[numCells.x, numCells.y];
     public CellType[,] cellTypes = new CellType[numCells.x, numCells.y];
     public TileFX[,] cellTypeFX = new TileFX[numCells.x, numCells.y];
@@ -346,6 +347,7 @@ public class GameGrid : MonoBehaviour
                 }
                 if (!inGoodPosition)
                 {
+                    errorSound.Play();
                     return;
                 }
                 forcedPlacements.RemoveAt(0);
@@ -845,6 +847,7 @@ public class GameGrid : MonoBehaviour
     {
         if (forcedPlacements.Count <= 0)
         {
+            errorSound.Play();
             return y < 3;
         }
 
