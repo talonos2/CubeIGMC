@@ -40,7 +40,6 @@ public class Combatant : MonoBehaviour
      //       ThisPlayer.BaseHealth = 30;
      //   }
 
-        transform.parent.parent.parent.GetComponentInChildren<GameGrid>().SetMovementSpeed(ThisPlayer.GetMovementSpeed());
         health = ThisPlayer.GetMaxHealth();
         energy = ThisPlayer.GetMaxEnergy() / 4;
         shields = ThisPlayer.GetStartingShields();
@@ -99,6 +98,11 @@ public class Combatant : MonoBehaviour
     private float ShieldDecayFactor()
     {
         return ThisPlayer.GetShieldDecayFactor();
+    }
+
+    public float GetMovementSpeed()
+    {
+        return 1f/ThisPlayer.GetMovementSpeed();
     }
 
     private float MaxHealth()

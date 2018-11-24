@@ -41,6 +41,7 @@ public class Mission1NarrationIntro : Mission
     public ParticleSystem tutorialPlacement1;
     public ParticleSystem tutorialPlacement2;
     public ParticleSystem tutorialPlacement3;
+    public ParticleSystem tutorialPlacement4;
 
     public GameGrid gridToSetup;
 
@@ -50,34 +51,34 @@ public class Mission1NarrationIntro : Mission
 
     internal override void Unblock()
     {
-        stepNum++;
+        Debug.Log(stepNum++);
         switch (stepNum)
         {
-            case 1:
+            case 1:  // Finish first narration, characters walk in.
                 timeSinceStepStarted = 0f;
                 turnOnLightsSound.Play();
                 //Turn on lights
                 //Tiny figures walk up to ship.
                 break;
-            case 2:
+            case 2:  // Characters have sinished walking in.
                 narrations[1].gameObject.SetActive(true);
                 break;
-            case 3:
+            case 3:  // Narration fnishes, characters open up ship, next narration plays.
                 openShipSound.Play();
                 narrations[2].gameObject.SetActive(true);
                 break;
-            case 4:
+            case 4:  //Narration finishes, ships takes off, next narration plays.
                 startShipSound.Play();
                 shipToMakeNotWiggle.enabled = true;
                 shipToMakeNotWiggle.takeoff(5, ship.transform.position, ship.transform.rotation);
                 narrations[3].gameObject.SetActive(true);
                 break;
-            case 5:
-                //Setup board.
+            case 5: // Narration finishes, board is setup and moves into view, next narration plays.
                 List<int[,]> piecesToForce = new List<int[,]>();
                 piecesToForce.Add(new int[3,3] { { 0,1,0},{ 0,1,1},{ 0,0,0} });
                 piecesToForce.Add(new int[3, 3] { { 0, 1, 0 }, { 1, 1, 0 }, { 0, 0, 0 } });
                 piecesToForce.Add(new int[3, 3] { { 1, 1, 0 }, { 1, 1, 0 }, { 1, 1, 0 } });
+                piecesToForce.Add(new int[3, 3] { { 0, 1, 0 }, { 0, 1, 0 }, { 0, 1, 0 } });
 
                 gridToSetup.ForcePieces(piecesToForce);
 
@@ -125,13 +126,23 @@ public class Mission1NarrationIntro : Mission
                 gridToSetup.DropNewCubeAt(10, 13);
                 gridToSetup.DropNewCubeAt(10, 14);
 
+                gridToSetup.DropNewCubeAt(6, 15);
+                gridToSetup.DropNewCubeAt(6, 16);
+                gridToSetup.DropNewCubeAt(6, 17);
+                gridToSetup.DropNewCubeAt(8, 15);
+                gridToSetup.DropNewCubeAt(8, 16);
+                gridToSetup.DropNewCubeAt(8, 17);
+                gridToSetup.DropNewCubeAt(9, 17);
+                gridToSetup.DropNewCubeAt(5, 17);
+
+                gridToSetup.player.energy = 35;
                 gridToSetup.player.howManyItemsIHave = 0;
                 gridToSetup.SetGridCellTypeStateAndAttendentVFX();
 
                 timeSinceStepStarted = 0f;
                 narrations[4].gameObject.SetActive(true);
                 break;
-            case 6:
+            case 6: //narration finishes, game starts, "How to move and drop" tutorial.
                 MissionManager.isInCutscene = false;
                 sneakyShipMusic.Play();
                 MissionManager.triggerCallbacksOnBlockDrop = true;
@@ -143,7 +154,7 @@ public class Mission1NarrationIntro : Mission
                 shipToMakeNotWiggle.distanceBetweenShips = 9;
                 tutorialTexts[0].gameObject.SetActive(true);
                 break;
-            case 7:
+            case 7: //first block placed, "How to rotate" tutorial plays.
                 tutorialPlacement1.gameObject.SetActive(false);
                 tutorialPlacement2.gameObject.SetActive(true);
                 List<Vector2> placements7 = new List<Vector2>(new Vector2[1] { new Vector2(3, 5) });
@@ -152,7 +163,7 @@ public class Mission1NarrationIntro : Mission
                 tutorialTexts[0].gameObject.SetActive(false);
                 tutorialTexts[1].gameObject.SetActive(true);
                 break;
-            case 8:
+            case 8: //Second block dropped, "Make big squares" tutorial plays.
                 tutorialPlacement2.gameObject.SetActive(false);
                 tutorialPlacement3.gameObject.SetActive(true);
                 List<Vector2> placements8 = new List<Vector2>(new Vector2[2] { new Vector2(7, 12), new Vector2(7,11 )});
@@ -161,24 +172,33 @@ public class Mission1NarrationIntro : Mission
                 tutorialTexts[1].gameObject.SetActive(false);
                 tutorialTexts[2].gameObject.SetActive(true);
                 break;
-            case 9:
-                MissionManager.isInCutscene = true;
+            case 9: //Third block dropped, "Combo Multiplier" tutorial plays.
+                thingsToHide[2].SetActive(true);
                 tutorialPlacement3.gameObject.SetActive(false);
-                narrations[5].gameObject.SetActive(true);
+                tutorialPlacement4.gameObject.SetActive(true);
+                List<Vector2> placements9 = new List<Vector2>(new Vector2[2] { new Vector2(7, 16), new Vector2(7, 16) });
+                List<int> rotations9 = new List<int>(new int[2] { 1, 3 });
+                gridToSetup.AddForcedPosition(rotations9, placements9);
                 tutorialTexts[2].gameObject.SetActive(false);
+                tutorialTexts[3].gameObject.SetActive(true);
                 break;
-            case 10:
+            case 10: // Fourth block dropped, cutscene starts.
+                MissionManager.isInCutscene = true;
+                tutorialPlacement4.gameObject.SetActive(false);
+                narrations[5].gameObject.SetActive(true);
+                tutorialTexts[3].gameObject.SetActive(false);
+                break;
+            case 11: //Dialogue finished, attack spots appear.
                 MissionManager.isInCutscene = false;
                 gridToSetup.player.howManyItemsIHave = 1;
                 gridToSetup.SetGridCellTypeStateAndAttendentVFX();
                 MissionManager.triggerCallbacksOnBlockDrop = false;
                 MissionManager.triggerCallbacksOnAttackHit = true;
-                tutorialTexts[3].gameObject.SetActive(true);
+                tutorialTexts[4].gameObject.SetActive(true);
                 break;
-            case 11:
+            case 12: //Wall impacted. Stuff becomes intense. Cutscene starts.
                 MissionManager.isInCutscene = true;
                 klaxonToTurnOn.TurnOn();
-                alarmSound.Play();
                 wallImpactExplosionSound.Play();
                 cameraToShake.ShakeCamera(3, 1);
                 sneakyShipMusic.Stop();
@@ -187,24 +207,11 @@ public class Mission1NarrationIntro : Mission
                 MissionManager.triggerCallbacksOnAttackHit = false;
                 tutorialTexts[3].gameObject.SetActive(false);
                 break;
-            case 12:
+            case 13: //Cutscene ends.
                 MissionManager.isInCutscene = false;
                 MissionManager.triggerCallbacksOnAttackHit = true;
-                tutorialTexts[4].gameObject.SetActive(true);
-                break;
-            case 13:
-                wallImpactExplosionSound.Play();
-                cameraToShake.ShakeCamera(3, 1);
-                tutorialTexts[5].gameObject.SetActive(true);
-                tutorialTexts[4].gameObject.SetActive(false);
-                thingsToHide[2].SetActive(true);
                 break;
             case 14:
-                wallImpactExplosionSound.Play();
-                cameraToShake.ShakeCamera(3, 1);
-                tutorialTexts[5].gameObject.SetActive(false);
-                break;
-            case 15:
                 wallImpactExplosionSound.Play();
                 cameraToShake.ShakeCamera(3, 1);
                 if (gridToSetup.player.enemy.IsAlive())
@@ -236,7 +243,6 @@ public class Mission1NarrationIntro : Mission
 
         gridToSetup.player.enemy.howManyItemsIHave = -1;
         gridToSetup.player.enemy.health = 50;
-        gridToSetup.player.energy = 39;
         gridToSetup.player.enemy.damageManager = damageManagerForDoor;
 
         MissionManager.isInCutscene = true;

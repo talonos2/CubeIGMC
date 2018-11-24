@@ -234,7 +234,6 @@ public class GameGrid : MonoBehaviour
     bool isDownBeingHeld;
     bool isLeftBeingHeld;
     bool isRightBeingHeld;
-    readonly float fastButtonMashSpeed = (1f / 8f);
     readonly float buttonMashDebounceInput = .2f;
 
     float timeSinceLastMoveUpEvent;
@@ -429,20 +428,21 @@ public class GameGrid : MonoBehaviour
 
     private void HandleUpMovement()
     {
+        float speed = player.GetMovementSpeed();
         if ((isPlayerOne ? Input.GetAxis("Vertical_P1") > 0 : Input.GetAxis("Vertical_P2") > 0 || aIPlayer.getButtonPressed("Up")) && !isUpBeingHeld)
         {
             isUpBeingHeld = true;
-            timeSinceLastMoveUpEvent = fastButtonMashSpeed * -buttonMashDebounceInput;
+            timeSinceLastMoveUpEvent = speed * -buttonMashDebounceInput;
             justPressedUp = true;
         }
         if (isUpBeingHeld)
         {
-            if (timeSinceLastMoveUpEvent > fastButtonMashSpeed || justPressedUp)
+            if (timeSinceLastMoveUpEvent > speed || justPressedUp)
             {
                 justPressedUp = false;
                 TryGoUp();
 
-                timeSinceLastMoveUpEvent %= fastButtonMashSpeed;
+                timeSinceLastMoveUpEvent %= speed;
             }
             timeSinceLastMoveUpEvent += Time.deltaTime;
         }
@@ -477,20 +477,21 @@ public class GameGrid : MonoBehaviour
 
     private void HandleDownMovement()
     {
+        float speed = player.GetMovementSpeed();
         if ((isPlayerOne ? Input.GetAxis("Vertical_P1") < 0 : Input.GetAxis("Vertical_P2") < 0 || aIPlayer.getButtonPressed("Down")) && !isDownBeingHeld)
         {
             isDownBeingHeld = true;
-            timeSinceLastMoveDownEvent = fastButtonMashSpeed * -buttonMashDebounceInput;
+            timeSinceLastMoveDownEvent = speed * -buttonMashDebounceInput;
             justPressedDown = true;
         }
         if (isDownBeingHeld)
         {
-            if (timeSinceLastMoveDownEvent > fastButtonMashSpeed || justPressedDown)
+            if (timeSinceLastMoveDownEvent > speed || justPressedDown)
             {
                 justPressedDown = false;
                 TryGoDown();
 
-                timeSinceLastMoveDownEvent %= fastButtonMashSpeed;
+                timeSinceLastMoveDownEvent %= speed;
             }
             timeSinceLastMoveDownEvent += Time.deltaTime;
         }
@@ -525,20 +526,21 @@ public class GameGrid : MonoBehaviour
 
     private void HandleLeftMovement()
     {
+        float speed = player.GetMovementSpeed();
         if ((isPlayerOne ? Input.GetAxis("Horizontal_P1") < 0 : Input.GetAxis("Horizontal_P2") < 0 || aIPlayer.getButtonPressed("Left")) && !isLeftBeingHeld)
         {
             isLeftBeingHeld = true;
-            timeSinceLastMoveLeftEvent = fastButtonMashSpeed * -buttonMashDebounceInput;
+            timeSinceLastMoveLeftEvent = speed * -buttonMashDebounceInput;
             justPressedLeft = true;
         }
         if (isLeftBeingHeld)
         {
-            if (timeSinceLastMoveLeftEvent > fastButtonMashSpeed || justPressedLeft)
+            if (timeSinceLastMoveLeftEvent > speed || justPressedLeft)
             {
                 justPressedLeft = false;
                 TryGoLeft();
 
-                timeSinceLastMoveLeftEvent %= fastButtonMashSpeed;
+                timeSinceLastMoveLeftEvent %= speed;
             }
             timeSinceLastMoveLeftEvent += Time.deltaTime;
         }
@@ -573,20 +575,21 @@ public class GameGrid : MonoBehaviour
 
     private void HandleRightMovement()
     {
+        float speed = player.GetMovementSpeed();
         if ((isPlayerOne ? Input.GetAxis("Horizontal_P1") > 0 : Input.GetAxis("Horizontal_P2") > 0 || aIPlayer.getButtonPressed("Right")) && !isRightBeingHeld)
         {
             isRightBeingHeld = true;
-            timeSinceLastMoveRightEvent = fastButtonMashSpeed * -buttonMashDebounceInput;
+            timeSinceLastMoveRightEvent = speed * -buttonMashDebounceInput;
             justPressedRight = true;
         }
         if (isRightBeingHeld)
         {
-            if (timeSinceLastMoveRightEvent > fastButtonMashSpeed || justPressedRight)
+            if (timeSinceLastMoveRightEvent > speed || justPressedRight)
             {
                 justPressedRight = false;
                 TryGoRight();
 
-                timeSinceLastMoveRightEvent %= fastButtonMashSpeed;
+                timeSinceLastMoveRightEvent %= speed;
             }
             timeSinceLastMoveRightEvent += Time.deltaTime;
         }
@@ -967,10 +970,6 @@ public class GameGrid : MonoBehaviour
 
         pieceArray[9] = new int[1][,];
         pieceArray[9][0] = new int[3, 3] { { 1, 1, 1 }, { 1, 1, 1 }, { 1, 1, 1 } };
-    }
-
-    public void SetMovementSpeed (float mySpeed) {
-        fastButtonMashSpeed = 1/mySpeed;
     }
 
 }
