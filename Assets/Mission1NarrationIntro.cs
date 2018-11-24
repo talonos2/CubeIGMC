@@ -23,8 +23,10 @@ public class Mission1NarrationIntro : Mission
     public AudioSource runningSound;
     public AudioSource openShipSound;
     public AudioSource startShipSound;
-
+    public AudioSource alarmSound;
     public AudioSource wallImpactExplosionSound;
+
+    public KlaxonSpin klaxonToTurnOn;
     public CameraShake cameraToShake;
 
     public Vector3 person1Start;
@@ -175,6 +177,8 @@ public class Mission1NarrationIntro : Mission
                 break;
             case 11:
                 MissionManager.isInCutscene = true;
+                klaxonToTurnOn.TurnOn();
+                alarmSound.Play();
                 wallImpactExplosionSound.Play();
                 cameraToShake.ShakeCamera(3, 1);
                 sneakyShipMusic.Stop();
@@ -232,6 +236,7 @@ public class Mission1NarrationIntro : Mission
 
         gridToSetup.player.enemy.howManyItemsIHave = -1;
         gridToSetup.player.enemy.health = 50;
+        gridToSetup.player.energy = 39;
         gridToSetup.player.enemy.damageManager = damageManagerForDoor;
 
         MissionManager.isInCutscene = true;

@@ -5,8 +5,8 @@ using UnityEngine.UI;
 
 public class Combatant : MonoBehaviour
 {
-    public float health;
-    private int energy;
+    internal float health;
+    internal int energy;
     private float shields;
     private float psi;
     private float attackCharge;

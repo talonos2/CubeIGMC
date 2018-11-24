@@ -223,28 +223,6 @@ public class GameGrid : MonoBehaviour
         Quaternion betweenRot = Quaternion.Slerp(oldRot, futureRot, tickRot);
 
         currentPiece.transform.localRotation = betweenRot;
-
-
-
-
-/*
-        timeSinceLastMove += Time.deltaTime * 1000;
-        timeSinceLastRot += Time.deltaTime * 1000;
-        float prop = timeSinceLastMove / msNeededToLerp;
-        Vector3 targetPosition = GetLocalTranslationFromGridLocation(currentPiecePosition.x, currentPiecePosition.y);
-        Vector3 oldPosition = GetLocalTranslationFromGridLocation(prevPiecePosition.x, prevPiecePosition.y);
-        Vector3 animatedPosition = Vector3.Lerp(oldPosition, targetPosition, prop);
-
-        currentPiece.transform.localPosition = animatedPosition;
-
-        prop = timeSinceLastRot / msNeededToLerp;
-
-        Quaternion targetRotation = orientations[currentPieceRotation];
-        Quaternion oldRotation = orientations[prevPieceRotation];
-        Quaternion animatedRotation = Quaternion.Slerp(oldRotation, targetRotation, prop);
-
-        currentPiece.transform.localRotation = animatedRotation;
-*/
     }
 
     private Vector3 GetLocalTranslationFromGridLocation(int x, int y)
@@ -256,9 +234,8 @@ public class GameGrid : MonoBehaviour
     bool isDownBeingHeld;
     bool isLeftBeingHeld;
     bool isRightBeingHeld;
-
-    float fastButtonMashSpeed = (1f / 8f);
-    float buttonMashDebounceInput = .2f;
+    readonly float fastButtonMashSpeed = (1f / 8f);
+    readonly float buttonMashDebounceInput = .2f;
 
     float timeSinceLastMoveUpEvent;
     float timeSinceLastMoveDownEvent;
@@ -894,20 +871,6 @@ public class GameGrid : MonoBehaviour
             return true;
         else
             return false;
-
-
-/*
-        if (x < 0||x>=numCells.x||y<0||y>=numCells.y)
-        {
-            return true;
-        }
-        if (grid[x,y] != null)
-        {
-            return true;
-        }
-        return false;
-        */
-
     }
 
     internal void DeathClear()
