@@ -847,8 +847,12 @@ public class GameGrid : MonoBehaviour
     {
         if (forcedPlacements.Count <= 0)
         {
-            errorSound.Play();
-            return y < 3;
+            bool error = y < 3;
+            if (error)
+            {
+                errorSound.Play();
+            }
+            return error;
         }
 
         return false;
