@@ -29,12 +29,21 @@ public class Combatant : MonoBehaviour
     public CubeHolder cubeHolder;
 
     private CombatInitializer initializer;
+    private PlayerCharacterSheet ThisPlayer= new PlayerCharacterSheet();
 
     public void Start()
     {
-        health = MaxHealth();
-        energy = MaxEnergy() / 4;
-        shields = 0;
+        ThisPlayer = new PlayerCharacterSheet();
+
+        //Example of making player 2 customly weaker or stronger. 
+     //   if (transform.parent.parent.parent.name.Equals("Player2")) {
+     //       ThisPlayer.BaseHealth = 30;
+     //   }
+
+        transform.parent.parent.parent.GetComponentInChildren<GameGrid>().SetMovementSpeed(ThisPlayer.GetMovementSpeed());
+        health = ThisPlayer.GetMaxHealth();
+        energy = ThisPlayer.GetMaxEnergy() / 4;
+        shields = ThisPlayer.GetStartingShields();
         this.initializer = GameObject.Find("Initializer").GetComponent<CombatInitializer>();
         this.RefreshEnergyBars();
     }
@@ -84,26 +93,29 @@ public class Combatant : MonoBehaviour
 
     private float MaxShields()
     {
-        return MaxHealth() * 2;
+        return ThisPlayer.GetMaxShields();
     }
 
     private float ShieldDecayFactor()
     {
-        return .8f;
+        return ThisPlayer.GetShieldDecayFactor();
     }
 
     private float MaxHealth()
     {
+
+        
         if (howManyItemsIHave < 0) //XILLITH REPLACE THIS WHEN WE GET ITEMS! (The door should have an "Item" that cuts its maxHP in half.)
         {
             return 50;
         }
-        return 100 * (isImmortal ? 100 : 1);
+        return ThisPlayer.GetMaxHealth() * (isImmortal ? 100 : 1);
+
     }
 
     private int MaxEnergy()
     {
-        return 200;
+        return ThisPlayer.GetMaxEnergy();
     }
 
     private float DamageAmount()

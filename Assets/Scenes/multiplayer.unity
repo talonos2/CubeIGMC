@@ -3386,7 +3386,9 @@ MonoBehaviour:
   m_PlayerSpawnMethod: 0
   m_OfflineScene: 
   m_OnlineScene: 
-  m_SpawnPrefabs: []
+  m_SpawnPrefabs:
+  - {fileID: 1795504469315864, guid: ae313f24a41350f4fbb38c0af4a2e11e, type: 2}
+  - {fileID: 1676760889422050, guid: dbfee68cbec62954db33c40fe3bea957, type: 2}
   m_CustomConfig: 0
   m_MaxConnections: 4
   m_ConnectionConfig:
@@ -16886,6 +16888,7 @@ GameObject:
   - component: {fileID: 829001796}
   - component: {fileID: 829001795}
   - component: {fileID: 829001794}
+  - component: {fileID: 829001797}
   m_Layer: 0
   m_Name: Cube (1)
   m_TagString: Untagged
@@ -16960,6 +16963,38 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 829001792}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &829001797
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 829001792}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SceneId:
+    m_Value: 0
+  m_AssetId:
+    i0: 0
+    i1: 0
+    i2: 0
+    i3: 0
+    i4: 0
+    i5: 0
+    i6: 0
+    i7: 0
+    i8: 0
+    i9: 0
+    i10: 0
+    i11: 0
+    i12: 0
+    i13: 0
+    i14: 0
+    i15: 0
+  m_ServerOnly: 0
+  m_LocalPlayerAuthority: 0
 --- !u!1 &832198137
 GameObject:
   m_ObjectHideFlags: 0
@@ -35422,7 +35457,7 @@ MonoBehaviour:
   strangeFrontPlateThing: {fileID: 829001792}
   ominousTick: {fileID: 1919655991}
   powerDown: {fileID: 996193729}
-  piecePrefab: {fileID: 114006444645062500, guid: efed92ad54b997e46a8e3647c31424e2,
+  piecePrefab: {fileID: 114846177624962848, guid: ae313f24a41350f4fbb38c0af4a2e11e,
     type: 2}
   powerUpEffect: {fileID: 114389015036086872, guid: dda44019845f7c44fa179be01804bce1,
     type: 2}

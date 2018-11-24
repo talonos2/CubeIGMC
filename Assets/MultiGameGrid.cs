@@ -2,8 +2,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
-public class GameGrid : MonoBehaviour
+
+public class MultiGameGrid : NetworkBehaviour
 {
     public bool isRecording = false;
     
@@ -67,12 +69,12 @@ public class GameGrid : MonoBehaviour
 
         SetupPieceArray();
 
-        currentPiece = MakeAPiece();
+        currentPiece = CmdMakeAPiece();
         currentPiece.transform.parent = this.transform;
         UpdateCurrentPieceTransform();
 
         nextPieceHolder = transform.Find("PieceHolder");
-        nextPiece = MakeAPiece();
+        nextPiece = CmdMakeAPiece();
         nextPiece.transform.parent = nextPieceHolder;
         nextPiece.transform.localPosition = Vector3.zero;
 
@@ -160,7 +162,8 @@ public class GameGrid : MonoBehaviour
 
     }
 
-    private PlayingPiece MakeAPiece()
+//    [Command]
+    private PlayingPiece CmdMakeAPiece()
     {
         PlayingPiece toReturn = GameObject.Instantiate(piecePrefab);
 
@@ -185,8 +188,8 @@ public class GameGrid : MonoBehaviour
         this.forcedPieces = forcedPieces;
         PlayingPiece oldPiece1 = currentPiece;
         PlayingPiece oldPiece2 = nextPiece;
-        currentPiece = MakeAPiece();
-        nextPiece = MakeAPiece();
+        currentPiece = CmdMakeAPiece();
+        nextPiece = CmdMakeAPiece();
         GameObject.Destroy(oldPiece1.gameObject);
         GameObject.Destroy(oldPiece2.gameObject);
 
@@ -223,6 +226,28 @@ public class GameGrid : MonoBehaviour
         Quaternion betweenRot = Quaternion.Slerp(oldRot, futureRot, tickRot);
 
         currentPiece.transform.localRotation = betweenRot;
+
+
+
+
+/*
+        timeSinceLastMove += Time.deltaTime * 1000;
+        timeSinceLastRot += Time.deltaTime * 1000;
+        float prop = timeSinceLastMove / msNeededToLerp;
+        Vector3 targetPosition = GetLocalTranslationFromGridLocation(currentPiecePosition.x, currentPiecePosition.y);
+        Vector3 oldPosition = GetLocalTranslationFromGridLocation(prevPiecePosition.x, prevPiecePosition.y);
+        Vector3 animatedPosition = Vector3.Lerp(oldPosition, targetPosition, prop);
+
+        currentPiece.transform.localPosition = animatedPosition;
+
+        prop = timeSinceLastRot / msNeededToLerp;
+
+        Quaternion targetRotation = orientations[currentPieceRotation];
+        Quaternion oldRotation = orientations[prevPieceRotation];
+        Quaternion animatedRotation = Quaternion.Slerp(oldRotation, targetRotation, prop);
+
+        currentPiece.transform.localRotation = animatedRotation;
+*/
     }
 
     private Vector3 GetLocalTranslationFromGridLocation(int x, int y)
@@ -234,8 +259,9 @@ public class GameGrid : MonoBehaviour
     bool isDownBeingHeld;
     bool isLeftBeingHeld;
     bool isRightBeingHeld;
-    readonly float fastButtonMashSpeed = (1f / 8f);
-    readonly float buttonMashDebounceInput = .2f;
+
+    float fastButtonMashSpeed = (1f / 8f);
+    float buttonMashDebounceInput = .2f;
 
     float timeSinceLastMoveUpEvent;
     float timeSinceLastMoveDownEvent;
@@ -257,6 +283,11 @@ public class GameGrid : MonoBehaviour
     // Update is called once per frame
     void Update ()
     {
+        if (!isLocalPlayer)
+        {
+            return;
+        }
+
         if (Time.timeScale == 0)
         {
             justExitedMenu = true;
@@ -334,7 +365,7 @@ public class GameGrid : MonoBehaviour
             if (forcedPlacements.Count > 0)
             {
                 bool inGoodPosition = false;
-                ForcedPlacementOptions forced = forcedPlacements[0];
+                multiForcedPlacementOptions forced = forcedPlacements[0];
                 for (int i = 0; i < forced.placements.Count; i++)
                 {
                     Vector3 posit = forced.placements[i];
@@ -734,7 +765,7 @@ public class GameGrid : MonoBehaviour
         currentPiecePosition = new Vector2Int(1, 1);
         UpdateCurrentPieceTransform();
 
-        nextPiece = MakeAPiece();
+        nextPiece = CmdMakeAPiece();
         nextPiece.transform.parent = nextPieceHolder;
         nextPiece.transform.localPosition = Vector3.zero;
 
@@ -836,7 +867,7 @@ public class GameGrid : MonoBehaviour
         }
     }
 
-    private List<ForcedPlacementOptions> forcedPlacements = new List<ForcedPlacementOptions>();
+    private List<multiForcedPlacementOptions> forcedPlacements = new List<multiForcedPlacementOptions>();
 
     private bool IsInInvalidArea(float x, float y)
     {
@@ -856,7 +887,7 @@ public class GameGrid : MonoBehaviour
     /// <param name="placements">Possible positions of tne piece.</param>
     public void AddForcedPosition(List<int> rotations, List<Vector2> placements)
     {
-        forcedPlacements.Add(new ForcedPlacementOptions(rotations, placements));
+        forcedPlacements.Add(new multiForcedPlacementOptions(rotations, placements));
     }
 
     //Is there a block in the square? (Also, is it off the edge of the board?)*/
@@ -871,6 +902,20 @@ public class GameGrid : MonoBehaviour
             return true;
         else
             return false;
+
+
+/*
+        if (x < 0||x>=numCells.x||y<0||y>=numCells.y)
+        {
+            return true;
+        }
+        if (grid[x,y] != null)
+        {
+            return true;
+        }
+        return false;
+        */
+
     }
 
     internal void DeathClear()
@@ -896,6 +941,7 @@ public class GameGrid : MonoBehaviour
         }
     }
 
+//    [Command]
     internal void DropNewCubeAt(int x, int y)
     {
         GameCube cube = GameObject.Instantiate<GameCube>(currentPiece.cube); // Probbably unsafe.
@@ -969,13 +1015,12 @@ public class GameGrid : MonoBehaviour
         pieceArray[9][0] = new int[3, 3] { { 1, 1, 1 }, { 1, 1, 1 }, { 1, 1, 1 } };
     }
 
-    public void SetMovementSpeed (float mySpeed) {
-        fastButtonMashSpeed = 1/mySpeed;
-    }
+
 
 }
 
-[Serializable]
+//[Serializable]
+/*
 public enum CellType
 {
     NORMAL,
@@ -985,13 +1030,15 @@ public enum CellType
     BROKEN,
     ENERGY
 }
+*/
 
-internal class ForcedPlacementOptions
+
+internal class multiForcedPlacementOptions
 {
     public List<int> rotations = new List<int>();
     public List<Vector2> placements = new List<Vector2>();
 
-    public ForcedPlacementOptions(List<int> rotations, List<Vector2> placements)
+    public multiForcedPlacementOptions(List<int> rotations, List<Vector2> placements)
     {
         this.rotations = rotations;
         this.placements = placements;
