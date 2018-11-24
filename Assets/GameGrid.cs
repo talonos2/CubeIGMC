@@ -1006,7 +1006,9 @@ public class GameGrid : MonoBehaviour
         pieceArray[9][0] = new int[3, 3] { { 1, 1, 1 }, { 1, 1, 1 }, { 1, 1, 1 } };
     }
 
-
+    public void SetMovementSpeed (float mySpeed) {
+        fastButtonMashSpeed = 1/mySpeed;
+    }
 
 }
 
