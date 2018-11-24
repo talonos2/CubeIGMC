@@ -8,6 +8,7 @@ public class SpaceshipPawn : MonoBehaviour {
     public LaserBullet bulletPrefab;
     public float distanceBetweenShips;
     public float distanceToMyNose;
+    public ParticleSystem chargeParticles;
 
     public AudioSource chargeSound;
     public AudioSource getHitHeavySound;
@@ -78,5 +79,13 @@ public class SpaceshipPawn : MonoBehaviour {
         //can also explode stuff, damage the ship, etc. Later.
     }
 
-
+    internal void StartChargeParticleVFX(float time)
+    {
+        ParticleSystem.MainModule main = chargeParticles.main;
+        ParticleSystem.MainModule subMain = chargeParticles.transform.GetChild(0).GetComponent<ParticleSystem>().main;
+        main.startLifetime = time;
+        subMain.duration = time;
+        chargeParticles.gameObject.SetActive(true);
+        chargeParticles.Play();
+    }
 }

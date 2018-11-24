@@ -61,7 +61,7 @@ public class Combatant : MonoBehaviour
         }
 
         healthBar.localScale = new Vector3(.2f, Math.Max((health / MaxHealth()), 0), .2f);
-        attackChargeBar.localScale = new Vector3(.2f, (attackCharge / AttackChargeTime()), .2f);
+        //attackChargeBar.localScale = new Vector3(.2f, (attackCharge / AttackChargeTime()), .2f);
     }
 
     //In our current formula, there are no reasons to have cubes other than the "standard" cube,
@@ -271,6 +271,7 @@ public class Combatant : MonoBehaviour
         {
             attackCharge = AttackChargeTime();
             pawn.chargeSound.Play();
+            pawn.StartChargeParticleVFX(AttackChargeTime());
         }
     }
 
@@ -291,7 +292,6 @@ public class Combatant : MonoBehaviour
     //Sets the lights to the correct energy amount.
     private void RefreshEnergyBars()
     {
-        Debug.Log("Energy is at " + energy);
         lights.SetAllLights((float)energy / (float)MaxEnergy());
         int energyMulter = Mathf.RoundToInt(EnergyMultiplier());
         multiplierText.ChangeText(energyMulter);

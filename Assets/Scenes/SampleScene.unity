@@ -4177,7 +4177,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &178464080
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11887,7 +11887,7 @@ Transform:
   m_Children:
   - {fileID: 833796754}
   m_Father: {fileID: 1967808057}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &542476124
 Prefab:
@@ -13104,7 +13104,7 @@ Transform:
   m_Children:
   - {fileID: 8762010}
   m_Father: {fileID: 1967808057}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &594879140
 GameObject:
@@ -14359,7 +14359,7 @@ Transform:
   - {fileID: 1483226942}
   - {fileID: 695019617}
   m_Father: {fileID: 1967808057}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &609688043
 MonoBehaviour:
@@ -16676,7 +16676,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4599745634285610, guid: 0dfe140aceaeddc46a89eedbbb378123, type: 2}
       propertyPath: m_RootOrder
-      value: 0
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 114674749853239702, guid: 0dfe140aceaeddc46a89eedbbb378123,
         type: 2}
@@ -16687,9 +16687,9 @@ Prefab:
       propertyPath: m_Name
       value: P2 Base Ship
       objectReference: {fileID: 0}
-    - target: {fileID: 4599745634285610, guid: 0dfe140aceaeddc46a89eedbbb378123, type: 2}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 120
+    - target: {fileID: 1959634148956074, guid: 0dfe140aceaeddc46a89eedbbb378123, type: 2}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0dfe140aceaeddc46a89eedbbb378123, type: 2}
@@ -46640,7 +46640,7 @@ Transform:
   - {fileID: 1650148691}
   - {fileID: 1834427765}
   m_Father: {fileID: 1967808057}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1800602484
 GameObject:
@@ -51738,11 +51738,11 @@ Transform:
   m_LocalPosition: {x: -50, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 661576525}
   - {fileID: 591614717}
   - {fileID: 534798576}
   - {fileID: 1800077638}
   - {fileID: 609688042}
+  - {fileID: 661576525}
   m_Father: {fileID: 0}
   m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
