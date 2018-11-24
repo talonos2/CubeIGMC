@@ -1493,7 +1493,6 @@ ParticleSystem:
     flipV: 0
     randomRow: 1
     sprites:
-    - sprite: {fileID: 21300000, guid: 4c4db2e7cab61f34399c966dc257eae0, type: 3}
     - sprite: {fileID: 21300000, guid: 94dcc9c13f2c5214aa424387a2e8d7db, type: 3}
   VelocityModule:
     enabled: 1

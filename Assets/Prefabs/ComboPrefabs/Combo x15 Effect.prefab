@@ -1524,19 +1524,6 @@ ParticleSystem:
     flipV: 0
     randomRow: 1
     sprites:
-    - sprite: {fileID: 21300000, guid: 4c4db2e7cab61f34399c966dc257eae0, type: 3}
-    - sprite: {fileID: 21300000, guid: 94dcc9c13f2c5214aa424387a2e8d7db, type: 3}
-    - sprite: {fileID: 21300000, guid: df764735382915e42826b339c491c2f5, type: 3}
-    - sprite: {fileID: 21300000, guid: 1dc1572d5370d4a46ae85858db9d25ad, type: 3}
-    - sprite: {fileID: 21300000, guid: 05212a9dce93e88418f445fd581d6e30, type: 3}
-    - sprite: {fileID: 21300000, guid: 398dab35ccf8273479ba764c2fc153d6, type: 3}
-    - sprite: {fileID: 21300000, guid: 79b82d4dd3a498146b985de5b1d2366f, type: 3}
-    - sprite: {fileID: 21300000, guid: 484961eab0ba63f4283b1731dc5dcb9d, type: 3}
-    - sprite: {fileID: 21300000, guid: e6867d96223a72e47af90c768f030dfb, type: 3}
-    - sprite: {fileID: 21300000, guid: f331b0d6cc1fabe4f926972864a1fa85, type: 3}
-    - sprite: {fileID: 21300000, guid: d8d355b66d41e724d928a4586a9661bb, type: 3}
-    - sprite: {fileID: 21300000, guid: 32fae45c7057ce745a9b62557f7f31e2, type: 3}
-    - sprite: {fileID: 21300000, guid: b4f15978357a48d4e868e43183e19311, type: 3}
     - sprite: {fileID: 21300000, guid: 8651a872bf7f18f44be0417066cc7710, type: 3}
   VelocityModule:
     enabled: 1
@@ -5563,7 +5550,7 @@ ParticleSystem:
     m_BurstCount: 1
     m_Bursts:
     - serializedVersion: 2
-      time: 0.65
+      time: 0
       countCurve:
         serializedVersion: 2
         minMaxState: 0

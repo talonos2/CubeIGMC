@@ -1,0 +1,63 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 1555778094118976}
+  m_IsPrefabAsset: 1
+--- !u!1 &1555778094118976
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4326798778405784}
+  - component: {fileID: 114908406823108728}
+  m_Layer: 0
+  m_Name: EM Particle Holder
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4326798778405784
+Transform:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1555778094118976}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114908406823108728
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1555778094118976}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7fe78d29e90226b4dacc17ed7661046c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  comboParticles:
+  - {fileID: 198090481450628146, guid: 2682ca413e8ee834d8cc8d8b672ee809, type: 2}
+  - {fileID: 198090481450628146, guid: 74497c47c305740468122e4fc46130d0, type: 2}
+  - {fileID: 198090481450628146, guid: e8eded38fd91b7c4ea0580af7d7876f5, type: 2}
+  - {fileID: 198090481450628146, guid: f43d8eff13dc4ab4eb05e37f5295d812, type: 2}
+  - {fileID: 198090481450628146, guid: c069610ec366fe34db3413d7037f3ff5, type: 2}
+  - {fileID: 198090481450628146, guid: 3294a470f66c6704285a079eb66e5ed1, type: 2}
+  - {fileID: 198090481450628146, guid: acfd96af192bbc54b842371cb872cdbb, type: 2}
+  - {fileID: 198090481450628146, guid: e4e3cc6fd0a3d044fa0c718541adeeb4, type: 2}
+  - {fileID: 198090481450628146, guid: b920e28315e73ef489a9f12a9eaf52a5, type: 2}

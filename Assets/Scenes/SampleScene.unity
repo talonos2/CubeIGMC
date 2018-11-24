@@ -29082,6 +29082,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: b4f15978357a48d4e868e43183e19311, type: 3}
   - {fileID: 21300000, guid: 8651a872bf7f18f44be0417066cc7710, type: 3}
   toChange: {fileID: 0}
+  holder: {fileID: 0}
 --- !u!212 &1141965991
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -42646,10 +42647,6 @@ Prefab:
       propertyPath: damageManager
       value: 
       objectReference: {fileID: 1779838209}
-    - target: {fileID: 4291716527305394, guid: 8007da74be9e7b947b304fd4cbb68b9a, type: 2}
-      propertyPath: m_RootOrder
-      value: 4
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8007da74be9e7b947b304fd4cbb68b9a, type: 2}
   m_IsPrefabAsset: 0
@@ -47643,6 +47640,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: b4f15978357a48d4e868e43183e19311, type: 3}
   - {fileID: 21300000, guid: 8651a872bf7f18f44be0417066cc7710, type: 3}
   toChange: {fileID: 0}
+  holder: {fileID: 0}
 --- !u!212 &1834427767
 SpriteRenderer:
   m_ObjectHideFlags: 0
