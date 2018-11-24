@@ -38,10 +38,10 @@ public class Mission1NarrationIntro : Mission
     public GameObject person1;
     public GameObject person2;
 
-    public ParticleSystem tutorialPlacement1;
-    public ParticleSystem tutorialPlacement2;
-    public ParticleSystem tutorialPlacement3;
-    public ParticleSystem tutorialPlacement4;
+    public GameObject tutorialPlacement1;
+    public GameObject tutorialPlacement2;
+    public GameObject tutorialPlacement3;
+    public GameObject tutorialPlacement4;
 
     public GameGrid gridToSetup;
 
