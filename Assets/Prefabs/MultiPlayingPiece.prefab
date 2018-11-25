@@ -84,7 +84,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4996018152856328}
-  - component: {fileID: 114846177624962848}
+  - component: {fileID: 114457105299155774}
   - component: {fileID: 114386826231754320}
   - component: {fileID: 114786569293018650}
   m_Layer: 0
@@ -589,6 +589,20 @@ MonoBehaviour:
     i15: 30
   m_ServerOnly: 0
   m_LocalPlayerAuthority: 0
+--- !u!114 &114457105299155774
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1795504469315864}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39195be5cd83f124daeacafa23923ec0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cube: {fileID: 114603887969207896, guid: dbfee68cbec62954db33c40fe3bea957, type: 2}
+  slideSounds: []
+  littlePlateThing: {fileID: 0}
 --- !u!114 &114786569293018650
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -610,14 +624,3 @@ MonoBehaviour:
   m_SnapThreshold: 5
   m_InterpolateRotation: 1
   m_InterpolateMovement: 1
---- !u!114 &114846177624962848
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1795504469315864}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 38c63914bb98d014e91f9e5b29d8cf9f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

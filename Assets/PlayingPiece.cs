@@ -48,10 +48,14 @@ public class PlayingPiece : MonoBehaviour
         return piecemap[x, y] != null;
     }
 
-    /*REPLACE*/
+    /*REPLACE'd*/
     public bool RotateCW(bool[,] surroundings)
     {
+        int newX = 0;
+        int newY = 2;
+
         GameCube[,] newPiecemap = new GameCube[3,3];
+/*
         newPiecemap[0,0] = piecemap[0,2];
         newPiecemap[0,1] = piecemap[1,2];
         newPiecemap[0,2] = piecemap[2,2];
@@ -61,26 +65,38 @@ public class PlayingPiece : MonoBehaviour
         newPiecemap[2,0] = piecemap[0,0];
         newPiecemap[2,1] = piecemap[1,0];
         newPiecemap[2,2] = piecemap[2,0];
+        */
+
 
         for (int x = 0; x < 3; x++)
         {
             for (int y = 0; y < 3; y++)
             {
+                newPiecemap[x, y] = piecemap[newX, newY];
+                newX++;
+
                 if (newPiecemap[x,y]!=null&&surroundings[x,y]==true)
                 {
                     return false;
                 }
             }
+            newY--;
+            newX = 0;
         }
         piecemap = newPiecemap;
         return true;
         //placeCubesCorrectly();
     }
 
-    /*REPLACE*/
+    /*REPLACE'd*/
     public bool rotateCCW(bool[,] surroundings)
     {
+
+        int newX = 0;
+        int newY = 2;
+
         GameCube[,] newPiecemap = new GameCube[3,3];
+/*
         newPiecemap[0,2] = piecemap[0,0];
         newPiecemap[1,2] = piecemap[0,1];
         newPiecemap[2,2] = piecemap[0,2];
@@ -90,16 +106,22 @@ public class PlayingPiece : MonoBehaviour
         newPiecemap[0,0] = piecemap[2,0];
         newPiecemap[1,0] = piecemap[2,1];
         newPiecemap[2,0] = piecemap[2,2];
+*/
 
         for (int x = 0; x < 3; x++)
         {
             for (int y = 0; y < 3; y++)
             {
+                newPiecemap[newX, newY] = piecemap[x, y];
+
                 if (newPiecemap[x, y] != null && surroundings[x, y] == true)
                 {
                     return false;
                 }
+                newX++;
             }
+            newY--;
+            newX = 0;
         }
         piecemap = newPiecemap;
         return true;
