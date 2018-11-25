@@ -42,6 +42,7 @@ public class Mission1NarrationIntro : Mission
     public GameObject tutorialPlacement2;
     public GameObject tutorialPlacement3;
     public GameObject tutorialPlacement4;
+    public GameObject doorHP;
 
     public GameGrid gridToSetup;
 
@@ -198,6 +199,7 @@ public class Mission1NarrationIntro : Mission
                 MissionManager.triggerCallbacksOnBlockDrop = false;
                 MissionManager.triggerCallbacksOnAttackHit = true;
                 tutorialTexts[4].gameObject.SetActive(true);
+                gridToSetup.player.enemy.health = doorHPNum;
                 break;
             case 12: //Wall impacted. Stuff becomes intense. Cutscene starts.
                 MissionManager.isInCutscene = true;
@@ -208,21 +210,25 @@ public class Mission1NarrationIntro : Mission
                 blastingTHroughWallsMusic.Play();
                 narrations[6].gameObject.SetActive(true);
                 MissionManager.triggerCallbacksOnAttackHit = false;
-                tutorialTexts[3].gameObject.SetActive(false);
+                tutorialTexts[4].gameObject.SetActive(false);
                 break;
             case 13: //Cutscene ends.
                 MissionManager.isInCutscene = false;
                 MissionManager.triggerCallbacksOnAttackHit = true;
+                doorHP.transform.GetChild(0).gameObject.GetComponent<Text>().text = "DOOR HP: " + (int)(gridToSetup.player.enemy.health / doorHPNum*100)+"%";
+                doorHP.SetActive(true);
                 break;
             case 14:
                 wallImpactExplosionSound.Play();
                 cameraToShake.ShakeCamera(3, 1);
+                doorHP.transform.GetChild(0).gameObject.GetComponent<Text>().text = "DOOR HP: " + (int)(gridToSetup.player.enemy.health / doorHPNum * 100) + "%";
                 if (gridToSetup.player.enemy.IsAlive())
                 {
                     stepNum--;
                 }
                 else
                 {
+                    doorHP.SetActive(false);
                     MissionManager.isInCutscene = true;
                     narrations[7].gameObject.SetActive(true);
                 }
@@ -245,7 +251,6 @@ public class Mission1NarrationIntro : Mission
         shipToMakeNotWiggle.enabled = false;
 
         gridToSetup.player.enemy.howManyItemsIHave = -1;
-        gridToSetup.player.enemy.health = 50;
         gridToSetup.player.enemy.damageManager = damageManagerForDoor;
 
         MissionManager.isInCutscene = true;
@@ -253,6 +258,7 @@ public class Mission1NarrationIntro : Mission
 
     private bool playedRunningSound;
     public DamageManager damageManagerForDoor;
+    private float doorHPNum = 50;
 
     // Update is called once per frame
     void Update ()
