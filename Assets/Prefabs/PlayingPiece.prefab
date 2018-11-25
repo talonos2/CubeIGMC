@@ -85,6 +85,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4962303914995420}
   - component: {fileID: 114006444645062500}
+  - component: {fileID: 114628265619088610}
+  - component: {fileID: 114071436065721454}
   m_Layer: 0
   m_Name: PlayingPiece
   m_TagString: Untagged
@@ -572,3 +574,56 @@ MonoBehaviour:
   - {fileID: 82822327893044748}
   - {fileID: 82190147964932964}
   littlePlateThing: {fileID: 1420598817660056}
+--- !u!114 &114071436065721454
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1475523195821368}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1768714887, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_TransformSyncMode: 1
+  m_SendInterval: 0.1
+  m_SyncRotationAxis: 7
+  m_RotationSyncCompression: 0
+  m_SyncSpin: 0
+  m_MovementTheshold: 0.001
+  m_VelocityThreshold: 0.0001
+  m_SnapThreshold: 5
+  m_InterpolateRotation: 1
+  m_InterpolateMovement: 1
+--- !u!114 &114628265619088610
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1475523195821368}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SceneId:
+    m_Value: 0
+  m_AssetId:
+    i0: 239
+    i1: 237
+    i2: 146
+    i3: 173
+    i4: 84
+    i5: 185
+    i6: 151
+    i7: 228
+    i8: 106
+    i9: 142
+    i10: 54
+    i11: 71
+    i12: 195
+    i13: 20
+    i14: 36
+    i15: 226
+  m_ServerOnly: 0
+  m_LocalPlayerAuthority: 0
