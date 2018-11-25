@@ -115,6 +115,6 @@ public class SpaceshipPawn : MonoBehaviour {
         main.startLifetime = time;
         subMain.duration = time;
         chargeParticles.gameObject.SetActive(true);
-        chargeParticles.Play();
+        //chargeParticles.Play();
     }
 }

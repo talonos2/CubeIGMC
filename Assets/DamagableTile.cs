@@ -17,6 +17,7 @@ public class DamagableTile : DamagableDisplay
         this.renderer.material = crackedMaterial;
         if (willSetFire)
         {
+            fires.transform.localScale = new Vector3(1.5f, 1.5f, 0.015f);
             fires.gameObject.SetActive(true);
         }
         this.isDamaged = true;
