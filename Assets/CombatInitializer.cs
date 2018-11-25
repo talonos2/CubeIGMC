@@ -3,8 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Networking;
 
-public class CombatInitializer : MonoBehaviour {
+public class CombatInitializer : NetworkBehaviour {
 
     public GameGrid grid1;
     public GameGrid grid2;
@@ -18,14 +19,18 @@ public class CombatInitializer : MonoBehaviour {
     public GameObject p2Menu;
     public GameObject endMenu;
 
+    public GameObject netWindow;
 
 
 
     // Use this for initialization
     void Start ()
     {
-		
-	}
+        if (Sharedgamedata.issingleplayer == false)
+        {
+            netWindow.SetActive(false);
+        }
+    }
 
     bool setup = false;
 	// Update is called once per frame

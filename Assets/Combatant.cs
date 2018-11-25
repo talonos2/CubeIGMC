@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Networking;
 
-public class Combatant : MonoBehaviour
+public class Combatant : NetworkBehaviour
 {
     internal float health;
     internal int energy;
@@ -28,7 +29,7 @@ public class Combatant : MonoBehaviour
 
     public CubeHolder cubeHolder;
 
-    private CombatInitializer initializer;
+    public CombatInitializer initializer;
     private PlayerCharacterSheet ThisPlayer= new PlayerCharacterSheet();
 
     public void Start()
@@ -43,7 +44,9 @@ public class Combatant : MonoBehaviour
         health = ThisPlayer.GetMaxHealth();
         energy = ThisPlayer.GetMaxEnergy() / 4;
         shields = ThisPlayer.GetStartingShields();
-        this.initializer = GameObject.Find("Initializer").GetComponent<CombatInitializer>();
+//        Transform Go = Transform.Find("Initializer");
+//        Debug.Log(Go);
+//        this.initializer = Go.GetComponent<CombatInitializer>();
         this.RefreshEnergyBars();
     }
 

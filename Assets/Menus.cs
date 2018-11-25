@@ -3,12 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.Networking;
 
-public class Menus : MonoBehaviour {
+public class Menus : NetworkBehaviour {
 
 
     public GameObject theMenu;
     bool pause = false;
+
+
 
 
     // Use this for initialization
@@ -48,6 +51,7 @@ public class Menus : MonoBehaviour {
     public void SinglePlayer()
     {
         Time.timeScale = 1;
+        Sharedgamedata.issingleplayer = true;
         SceneManager.LoadScene("SampleScene");
     }
 
