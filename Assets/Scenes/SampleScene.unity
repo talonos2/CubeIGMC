@@ -730,7 +730,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &26337880
 Transform:
   m_ObjectHideFlags: 0
@@ -11012,6 +11012,26 @@ Prefab:
       propertyPath: m_RootOrder
       value: 18
       objectReference: {fileID: 0}
+    - target: {fileID: 198806093483683612, guid: 0dfe140aceaeddc46a89eedbbb378123,
+        type: 2}
+      propertyPath: SubModule.subEmitters.Array.data[0].type
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 198806093483683612, guid: 0dfe140aceaeddc46a89eedbbb378123,
+        type: 2}
+      propertyPath: playOnAwake
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 198594574088528478, guid: 0dfe140aceaeddc46a89eedbbb378123,
+        type: 2}
+      propertyPath: playOnAwake
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 198806093483683612, guid: 0dfe140aceaeddc46a89eedbbb378123,
+        type: 2}
+      propertyPath: stopAction
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0dfe140aceaeddc46a89eedbbb378123, type: 2}
   m_IsPrefabAsset: 0
@@ -18922,6 +18942,21 @@ Prefab:
     - target: {fileID: 1246306855541748, guid: 0dfe140aceaeddc46a89eedbbb378123, type: 2}
       propertyPath: m_Name
       value: P2 Base Ship
+      objectReference: {fileID: 0}
+    - target: {fileID: 198594574088528478, guid: 0dfe140aceaeddc46a89eedbbb378123,
+        type: 2}
+      propertyPath: playOnAwake
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 198806093483683612, guid: 0dfe140aceaeddc46a89eedbbb378123,
+        type: 2}
+      propertyPath: playOnAwake
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 198806093483683612, guid: 0dfe140aceaeddc46a89eedbbb378123,
+        type: 2}
+      propertyPath: stopAction
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0dfe140aceaeddc46a89eedbbb378123, type: 2}
