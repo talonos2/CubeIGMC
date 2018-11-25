@@ -808,6 +808,8 @@ MonoBehaviour:
   sneakyShipMusic: {fileID: 1887867874}
   blastingTHroughWallsMusic: {fileID: 223388558}
   damageManagerForDoor: {fileID: 1174982063}
+  structure: {fileID: 70804716}
+  escapeParticles: {fileID: 457783276}
 --- !u!1 &51210649
 GameObject:
   m_ObjectHideFlags: 0
@@ -4347,7 +4349,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &178464080
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10844,7 +10846,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4599745634285610, guid: 0dfe140aceaeddc46a89eedbbb378123, type: 2}
       propertyPath: m_RootOrder
-      value: 0
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 114674749853239702, guid: 0dfe140aceaeddc46a89eedbbb378123,
         type: 2}
@@ -10877,6 +10879,10 @@ Prefab:
       propertyPath: m_RootOrder
       value: 17
       objectReference: {fileID: 0}
+    - target: {fileID: 4094374957450584, guid: 0dfe140aceaeddc46a89eedbbb378123, type: 2}
+      propertyPath: m_RootOrder
+      value: 18
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0dfe140aceaeddc46a89eedbbb378123, type: 2}
   m_IsPrefabAsset: 0
@@ -10897,6 +10903,11 @@ MonoBehaviour:
     type: 2}
   m_PrefabInternal: {fileID: 457783272}
   m_Script: {fileID: 11500000, guid: 765e49edc78165e418fb39ee31de726d, type: 3}
+--- !u!1 &457783276 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1899671663615202, guid: 0dfe140aceaeddc46a89eedbbb378123,
+    type: 2}
+  m_PrefabInternal: {fileID: 457783272}
 --- !u!1001 &469554247
 Prefab:
   m_ObjectHideFlags: 0
@@ -18782,10 +18793,6 @@ Prefab:
     - target: {fileID: 1246306855541748, guid: 0dfe140aceaeddc46a89eedbbb378123, type: 2}
       propertyPath: m_Name
       value: P2 Base Ship
-      objectReference: {fileID: 0}
-    - target: {fileID: 1959634148956074, guid: 0dfe140aceaeddc46a89eedbbb378123, type: 2}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0dfe140aceaeddc46a89eedbbb378123, type: 2}
@@ -30489,7 +30496,7 @@ Transform:
   m_Children:
   - {fileID: 56811800}
   m_Father: {fileID: 1191471939}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1057033107
 GameObject:
@@ -39164,11 +39171,11 @@ Transform:
   m_LocalPosition: {x: 50, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 457783273}
   - {fileID: 1051759533}
   - {fileID: 1296404868}
   - {fileID: 1488115334}
   - {fileID: 1779838208}
+  - {fileID: 457783273}
   m_Father: {fileID: 0}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -41709,7 +41716,7 @@ Transform:
   - {fileID: 1560031848}
   - {fileID: 569007499}
   m_Father: {fileID: 1191471939}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1297077321
 Prefab:
@@ -45375,7 +45382,7 @@ Transform:
   - {fileID: 470464783}
   - {fileID: 1141965989}
   m_Father: {fileID: 1191471939}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1488115335
 MonoBehaviour:
@@ -51428,7 +51435,7 @@ Transform:
   - {fileID: 2017895846}
   - {fileID: 1488586955}
   m_Father: {fileID: 1191471939}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1779838209
 MonoBehaviour:

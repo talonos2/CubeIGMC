@@ -18,6 +18,7 @@ public class Mission1NarrationIntro : Mission
     public SpaceshipPawn shipToMakeNotWiggle;
     public Light spaceLightToDisable;
     private GameObject ship;
+    public GameObject firesToTurnOff;
 
     public AudioSource turnOnLightsSound;
     public AudioSource runningSound;
@@ -233,6 +234,10 @@ public class Mission1NarrationIntro : Mission
                     narrations[7].gameObject.SetActive(true);
                 }
                 break;
+            case 15: // Cutscene ends, door is gone. Fly fly away!
+                timeSinceStepStarted = 0f;
+                escapeParticles.SetActive(true);
+                break;
         }
 }
 
@@ -259,18 +264,21 @@ public class Mission1NarrationIntro : Mission
     private bool playedRunningSound;
     public DamageManager damageManagerForDoor;
     private float doorHPNum = 50;
+    public GameObject structure;
+    private float shipAccelleration = .5f;
+    public  GameObject escapeParticles;
 
     // Update is called once per frame
-    void Update ()
+    void Update()
     {
 
         //Run in.
         if (stepNum == 1)
         {
             timeSinceStepStarted += Time.deltaTime;
-            float brightness = Mathf.Clamp01(timeSinceStepStarted/2);
-            darkness.color = new Color(0, 0, 0, 1-brightness);
-            float personPosit1time = Mathf.Clamp01((timeSinceStepStarted-2f) / 2f);
+            float brightness = Mathf.Clamp01(timeSinceStepStarted / 2);
+            darkness.color = new Color(0, 0, 0, 1 - brightness);
+            float personPosit1time = Mathf.Clamp01((timeSinceStepStarted - 2f) / 2f);
             float personPosit2time = Mathf.Clamp01((timeSinceStepStarted - 2.2f) / 2f);
             Vector3 personPosit1 = Vector3.Lerp(person1Start, person1End, personPosit1time);
             Vector3 personPosit2 = Vector3.Lerp(person2Start, person2End, personPosit2time);
@@ -286,6 +294,7 @@ public class Mission1NarrationIntro : Mission
             {
                 hackyCallback.enabled = true;
             }
+            //firesToTurnOff.gameObject.SetActive(false);
         }
 
         //Board slides up
@@ -293,8 +302,14 @@ public class Mission1NarrationIntro : Mission
         if (stepNum == 5)
         {
             timeSinceStepStarted += Time.deltaTime;
-            float t = Mathf.Cos(Mathf.Clamp01(timeSinceStepStarted / 2)*Mathf.PI);
+            float t = Mathf.Cos(Mathf.Clamp01(timeSinceStepStarted / 2) * Mathf.PI);
             cameraToMove.localPosition = Vector3.Lerp(Vector3.zero, toMoveCameraTo, t);
+        }
+
+        if (stepNum == 15)
+        {
+            timeSinceStepStarted += Time.deltaTime;
+            structure.transform.localPosition = new Vector3(.1f-(timeSinceStepStarted*timeSinceStepStarted*shipAccelleration), 24.77f, -14.93f);
         }
     }
 }
