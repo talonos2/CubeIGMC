@@ -55,18 +55,19 @@ public class PlayingPiece : MonoBehaviour
         int newY = 2;
 
         GameCube[,] newPiecemap = new GameCube[3,3];
-/*
-        newPiecemap[0,0] = piecemap[0,2];
-        newPiecemap[0,1] = piecemap[1,2];
-        newPiecemap[0,2] = piecemap[2,2];
-        newPiecemap[1,0] = piecemap[0,1];
-        newPiecemap[1,1] = piecemap[1,1];
-        newPiecemap[1,2] = piecemap[2,1];
-        newPiecemap[2,0] = piecemap[0,0];
-        newPiecemap[2,1] = piecemap[1,0];
-        newPiecemap[2,2] = piecemap[2,0];
-        */
+        /*
+                newPiecemap[0,0] = piecemap[0,2];
+                newPiecemap[0,1] = piecemap[1,2];
+                newPiecemap[0,2] = piecemap[2,2];
+                newPiecemap[1,0] = piecemap[0,1];
+                newPiecemap[1,1] = piecemap[1,1];
+                newPiecemap[1,2] = piecemap[2,1];
+                newPiecemap[2,0] = piecemap[0,0];
+                newPiecemap[2,1] = piecemap[1,0];
+                newPiecemap[2,2] = piecemap[2,0];
+                */
 
+        Debug.Log("cw");
 
         for (int x = 0; x < 3; x++)
         {
@@ -93,7 +94,7 @@ public class PlayingPiece : MonoBehaviour
     {
 
         int newX = 0;
-        int newY = 2;
+        int newY = 0;
 
         GameCube[,] newPiecemap = new GameCube[3,3];
 /*
@@ -108,20 +109,23 @@ public class PlayingPiece : MonoBehaviour
         newPiecemap[2,0] = piecemap[2,2];
 */
 
-        for (int x = 0; x < 3; x++)
+        for (int y = 2; y >= 0; y--)
         {
-            for (int y = 0; y < 3; y++)
+            for (int x = 0; x < 3; x++)
             {
-                newPiecemap[newX, newY] = piecemap[x, y];
+                newPiecemap[x, y] = piecemap[newX, newY];
+                
+                Debug.Log("ccw");
+                Debug.Log(x + " " + y + " " + newX + " " + newY);
 
-                if (newPiecemap[x, y] != null && surroundings[x, y] == true)
+                if (newPiecemap[x,y] != null && surroundings[x, y] == true)
                 {
                     return false;
                 }
-                newX++;
+                newY++;
             }
-            newY--;
-            newX = 0;
+            newX++;
+            newY = 0;
         }
         piecemap = newPiecemap;
         return true;
