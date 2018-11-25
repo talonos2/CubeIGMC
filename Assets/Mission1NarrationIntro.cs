@@ -56,6 +56,8 @@ public class Mission1NarrationIntro : Mission
         {
             case 1:  // Finish first narration, characters walk in.
                 timeSinceStepStarted = 0f;
+                ship.transform.localPosition = new Vector3(-58, 5.67f, 15.38f); //DON'T LOOK! MAGIC NUMBERS!
+                ship.transform.localRotation = Quaternion.Euler(new Vector3(-180, -90, 121.93f));
                 turnOnLightsSound.Play();
                 //Turn on lights
                 //Tiny figures walk up to ship.
@@ -69,8 +71,9 @@ public class Mission1NarrationIntro : Mission
                 break;
             case 4:  //Narration finishes, ships takes off, next narration plays.
                 startShipSound.Play();
-                shipToMakeNotWiggle.enabled = true;
                 shipToMakeNotWiggle.takeoff(5, ship.transform.position, ship.transform.rotation);
+                shipToMakeNotWiggle.enabled = true;
+                shipToMakeNotWiggle.SetHomePosition(new Vector3(-8, 6.25f, 15f), Quaternion.Euler(new Vector3(-180, -90, 120f)));
                 narrations[3].gameObject.SetActive(true);
                 break;
             case 5: // Narration finishes, board is setup and moves into view, next narration plays.

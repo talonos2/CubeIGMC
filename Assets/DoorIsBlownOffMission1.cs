@@ -9,7 +9,7 @@ public class DoorIsBlownOffMission1 : DeathEffect
     {
         Rigidbody rb = this.GetComponent<Rigidbody>();
         rb.isKinematic = false;
-        rb.AddForceAtPosition(new Vector3(1, 0, 0), this.gameObject.transform.position + new Vector3(0, 1, 0), ForceMode.Impulse);
+        rb.AddForceAtPosition(new Vector3(30, 0, 0), this.gameObject.transform.position + new Vector3(0, 1, 0), ForceMode.Impulse);
 
     }
 
