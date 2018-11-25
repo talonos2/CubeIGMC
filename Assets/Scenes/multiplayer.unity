@@ -14307,6 +14307,8 @@ GameObject:
   m_Component:
   - component: {fileID: 676543953}
   - component: {fileID: 676543952}
+  - component: {fileID: 676543955}
+  - component: {fileID: 676543954}
   m_Layer: 0
   m_Name: Initializer
   m_TagString: Untagged
@@ -14320,13 +14322,13 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 676543951}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 52e7a33e02e60de4b9a31432a3cfcf2b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  grid1: {fileID: 1488115336}
-  grid2: {fileID: 1800077637}
+  grid1: {fileID: 0}
+  grid2: {fileID: 0}
   p1Text: {fileID: 949501004}
   p2Text: {fileID: 1502072412}
   p1Menu: {fileID: 699534625}
@@ -14345,6 +14347,56 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &676543954
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 676543951}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 33342e8959b67434f91dfc3d95cf0318, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  grid1: {fileID: 1488115338}
+  grid2: {fileID: 1800077640}
+  p1Text: {fileID: 949501004}
+  p2Text: {fileID: 1502072412}
+  p1Menu: {fileID: 699534625}
+  p2Menu: {fileID: 470791452}
+  endMenu: {fileID: 3881357}
+--- !u!114 &676543955
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 676543951}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SceneId:
+    m_Value: 0
+  m_AssetId:
+    i0: 0
+    i1: 0
+    i2: 0
+    i3: 0
+    i4: 0
+    i5: 0
+    i6: 0
+    i7: 0
+    i8: 0
+    i9: 0
+    i10: 0
+    i11: 0
+    i12: 0
+    i13: 0
+    i14: 0
+    i15: 0
+  m_ServerOnly: 0
+  m_LocalPlayerAuthority: 0
 --- !u!1 &684714530
 GameObject:
   m_ObjectHideFlags: 0
@@ -35404,8 +35456,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1488115334}
+  - component: {fileID: 1488115338}
   - component: {fileID: 1488115336}
   - component: {fileID: 1488115335}
+  - component: {fileID: 1488115337}
   m_Layer: 0
   m_Name: GameGrid
   m_TagString: Untagged
@@ -35448,7 +35502,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1488115333}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3e43b25a844cfe449926cff45467c655, type: 3}
   m_Name: 
@@ -35457,7 +35511,77 @@ MonoBehaviour:
   strangeFrontPlateThing: {fileID: 829001792}
   ominousTick: {fileID: 1919655991}
   powerDown: {fileID: 996193729}
-  piecePrefab: {fileID: 114846177624962848, guid: ae313f24a41350f4fbb38c0af4a2e11e,
+  errorSound: {fileID: 0}
+  piecePrefab: {fileID: 0}
+  powerUpEffect: {fileID: 114389015036086872, guid: dda44019845f7c44fa179be01804bce1,
+    type: 2}
+  aIText: {fileID: 0}
+  cubeConversionManager: {fileID: 470464784}
+  attackCellPrefab: {fileID: 1834763695440478, guid: dc8ff9e2cd6191e46a0ef96d69aa851b,
+    type: 2}
+  shieldCellPrefab: {fileID: 1880061185552558, guid: a848c8b78f5e4c9498dff3761b69f4fe,
+    type: 2}
+  psiCellPrefab: {fileID: 1139390753616414, guid: bae25a628e6c19142a0fbcd0ce85f339,
+    type: 2}
+  comboParticleHolder: {fileID: 114908406823108728, guid: 30f70428dc4a81e47936deda7428e9a9,
+    type: 2}
+  dropSound: {fileID: 700514344}
+  matchSound: {fileID: 243356955}
+  pauseMenu: {fileID: 0}
+  justExitedMenu: 0
+  player: {fileID: 1637675550}
+  isPlayerOne: 1
+  isPlayedByAI: 0
+  chargeGiverPrefab: {fileID: 114403860689813174, guid: 71db1b17c9045464999b21904984cde9,
+    type: 2}
+--- !u!114 &1488115337
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1488115333}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SceneId:
+    m_Value: 0
+  m_AssetId:
+    i0: 0
+    i1: 0
+    i2: 0
+    i3: 0
+    i4: 0
+    i5: 0
+    i6: 0
+    i7: 0
+    i8: 0
+    i9: 0
+    i10: 0
+    i11: 0
+    i12: 0
+    i13: 0
+    i14: 0
+    i15: 0
+  m_ServerOnly: 0
+  m_LocalPlayerAuthority: 0
+--- !u!114 &1488115338
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1488115333}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 824ac003f219c4b499a6725d8a5e1a7d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isRecording: 0
+  strangeFrontPlateThing: {fileID: 829001792}
+  ominousTick: {fileID: 1919655991}
+  powerDown: {fileID: 996193729}
+  piecePrrefab: {fileID: 114457105299155774, guid: ae313f24a41350f4fbb38c0af4a2e11e,
     type: 2}
   powerUpEffect: {fileID: 114389015036086872, guid: dda44019845f7c44fa179be01804bce1,
     type: 2}
@@ -40642,8 +40766,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1800077638}
+  - component: {fileID: 1800077640}
   - component: {fileID: 1800077637}
   - component: {fileID: 1800077636}
+  - component: {fileID: 1800077639}
   m_Layer: 0
   m_Name: GameGrid
   m_TagString: Untagged
@@ -40668,7 +40794,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1800077635}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3e43b25a844cfe449926cff45467c655, type: 3}
   m_Name: 
@@ -40677,6 +40803,7 @@ MonoBehaviour:
   strangeFrontPlateThing: {fileID: 849759896}
   ominousTick: {fileID: 613066357}
   powerDown: {fileID: 821334821}
+  errorSound: {fileID: 0}
   piecePrefab: {fileID: 114006444645062500, guid: efed92ad54b997e46a8e3647c31424e2,
     type: 2}
   powerUpEffect: {fileID: 114389015036086872, guid: dda44019845f7c44fa179be01804bce1,
@@ -40721,6 +40848,76 @@ Transform:
   m_Father: {fileID: 1967808057}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1800077639
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1800077635}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SceneId:
+    m_Value: 0
+  m_AssetId:
+    i0: 0
+    i1: 0
+    i2: 0
+    i3: 0
+    i4: 0
+    i5: 0
+    i6: 0
+    i7: 0
+    i8: 0
+    i9: 0
+    i10: 0
+    i11: 0
+    i12: 0
+    i13: 0
+    i14: 0
+    i15: 0
+  m_ServerOnly: 0
+  m_LocalPlayerAuthority: 0
+--- !u!114 &1800077640
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1800077635}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 824ac003f219c4b499a6725d8a5e1a7d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isRecording: 0
+  strangeFrontPlateThing: {fileID: 849759896}
+  ominousTick: {fileID: 613066357}
+  powerDown: {fileID: 821334821}
+  piecePrrefab: {fileID: 114457105299155774, guid: ae313f24a41350f4fbb38c0af4a2e11e,
+    type: 2}
+  powerUpEffect: {fileID: 114389015036086872, guid: dda44019845f7c44fa179be01804bce1,
+    type: 2}
+  aIText: {fileID: 4900000, guid: 6b72856809a666342b971a5226a93845, type: 3}
+  cubeConversionManager: {fileID: 1650148690}
+  attackCellPrefab: {fileID: 1834763695440478, guid: dc8ff9e2cd6191e46a0ef96d69aa851b,
+    type: 2}
+  shieldCellPrefab: {fileID: 1880061185552558, guid: a848c8b78f5e4c9498dff3761b69f4fe,
+    type: 2}
+  psiCellPrefab: {fileID: 1139390753616414, guid: bae25a628e6c19142a0fbcd0ce85f339,
+    type: 2}
+  comboParticleHolder: {fileID: 114908406823108728, guid: 30f70428dc4a81e47936deda7428e9a9,
+    type: 2}
+  dropSound: {fileID: 402193082}
+  matchSound: {fileID: 182668321}
+  pauseMenu: {fileID: 0}
+  justExitedMenu: 0
+  player: {fileID: 2080038990}
+  isPlayerOne: 0
+  isPlayedByAI: 0
+  chargeGiverPrefab: {fileID: 114403860689813174, guid: 71db1b17c9045464999b21904984cde9,
+    type: 2}
 --- !u!1 &1806004483
 GameObject:
   m_ObjectHideFlags: 0

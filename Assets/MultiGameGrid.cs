@@ -16,7 +16,7 @@ public class MultiGameGrid : NetworkBehaviour
     public GameCube[,] grid = new GameCube[numCells.x, numCells.y];
     public CellType[,] cellTypes = new CellType[numCells.x, numCells.y];
     public TileFX[,] cellTypeFX = new TileFX[numCells.x, numCells.y];
-    public PlayingPiece piecePrefab;
+    public MultiPlayingPiece piecePrrefab;
     public PowerupEffect powerUpEffect;
     public TextAsset aIText;
     public CubeConversionManager cubeConversionManager;
@@ -52,8 +52,8 @@ public class MultiGameGrid : NetworkBehaviour
         return aIPlayer.seed;
     }
 
-    private PlayingPiece currentPiece;
-    private PlayingPiece nextPiece;
+    private MultiPlayingPiece currentPiece;
+    private MultiPlayingPiece nextPiece;
 
     private SeededRandom dice;
     private GameRecorder recorder;
@@ -69,12 +69,12 @@ public class MultiGameGrid : NetworkBehaviour
 
         SetupPieceArray();
 
-        currentPiece = CmdMakeAPiece();
+        CmdMakeAPiece(true);
         currentPiece.transform.parent = this.transform;
         UpdateCurrentPieceTransform();
 
         nextPieceHolder = transform.Find("PieceHolder");
-        nextPiece = CmdMakeAPiece();
+        CmdMakeAPiece(false);
         nextPiece.transform.parent = nextPieceHolder;
         nextPiece.transform.localPosition = Vector3.zero;
 
@@ -162,10 +162,10 @@ public class MultiGameGrid : NetworkBehaviour
 
     }
 
-//    [Command]
-    private PlayingPiece CmdMakeAPiece()
+    [Command]
+    private void CmdMakeAPiece(bool current)
     {
-        PlayingPiece toReturn = GameObject.Instantiate(piecePrefab);
+        MultiPlayingPiece toReturn = GameObject.Instantiate(piecePrrefab);
 
         int pieceSize = pieceSizeBag[dice.NextInt(0, pieceSizeBag.Length)];
 
@@ -180,16 +180,19 @@ public class MultiGameGrid : NetworkBehaviour
             toReturn.Initialize(this.player, dice, pieceArray[pieceSize][dice.NextInt(0, pieceArray[pieceSize].Length)]);
         }
 
-        return toReturn;
+        if (current)
+            currentPiece = toReturn;
+        else
+            nextPiece = toReturn;
     }
 
     public void ForcePieces(List <int[,]> forcedPieces)
     {
         this.forcedPieces = forcedPieces;
-        PlayingPiece oldPiece1 = currentPiece;
-        PlayingPiece oldPiece2 = nextPiece;
-        currentPiece = CmdMakeAPiece();
-        nextPiece = CmdMakeAPiece();
+        MultiPlayingPiece oldPiece1 = currentPiece;
+        MultiPlayingPiece oldPiece2 = nextPiece;
+        CmdMakeAPiece(true);
+        CmdMakeAPiece(false);
         GameObject.Destroy(oldPiece1.gameObject);
         GameObject.Destroy(oldPiece2.gameObject);
 
@@ -765,7 +768,7 @@ public class MultiGameGrid : NetworkBehaviour
         currentPiecePosition = new Vector2Int(1, 1);
         UpdateCurrentPieceTransform();
 
-        nextPiece = CmdMakeAPiece();
+        CmdMakeAPiece(false);
         nextPiece.transform.parent = nextPieceHolder;
         nextPiece.transform.localPosition = Vector3.zero;
 
@@ -941,8 +944,8 @@ public class MultiGameGrid : NetworkBehaviour
         }
     }
 
-//    [Command]
-    internal void DropNewCubeAt(int x, int y)
+    [Command]
+    internal void CmdDropNewCubeAt(int x, int y)
     {
         GameCube cube = GameObject.Instantiate<GameCube>(currentPiece.cube); // Probbably unsafe.
         cube.Initialize(player, dice);
