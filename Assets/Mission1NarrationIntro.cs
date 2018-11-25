@@ -18,6 +18,7 @@ public class Mission1NarrationIntro : Mission
     public SpaceshipPawn shipToMakeNotWiggle;
     public Light spaceLightToDisable;
     private GameObject ship;
+    public GameObject firesToTurnOff;
 
     public AudioSource turnOnLightsSound;
     public AudioSource runningSound;
@@ -42,6 +43,7 @@ public class Mission1NarrationIntro : Mission
     public GameObject tutorialPlacement2;
     public GameObject tutorialPlacement3;
     public GameObject tutorialPlacement4;
+    public GameObject doorHP;
 
     public GameGrid gridToSetup;
 
@@ -56,6 +58,8 @@ public class Mission1NarrationIntro : Mission
         {
             case 1:  // Finish first narration, characters walk in.
                 timeSinceStepStarted = 0f;
+                ship.transform.localPosition = new Vector3(-58, 5.67f, 15.38f); //DON'T LOOK! MAGIC NUMBERS!
+                ship.transform.localRotation = Quaternion.Euler(new Vector3(-180, -90, 121.93f));
                 turnOnLightsSound.Play();
                 //Turn on lights
                 //Tiny figures walk up to ship.
@@ -69,8 +73,9 @@ public class Mission1NarrationIntro : Mission
                 break;
             case 4:  //Narration finishes, ships takes off, next narration plays.
                 startShipSound.Play();
-                shipToMakeNotWiggle.enabled = true;
                 shipToMakeNotWiggle.takeoff(5, ship.transform.position, ship.transform.rotation);
+                shipToMakeNotWiggle.enabled = true;
+                shipToMakeNotWiggle.SetHomePosition(new Vector3(-8, 6.25f, 15f), Quaternion.Euler(new Vector3(-180, -90, 120f)));
                 narrations[3].gameObject.SetActive(true);
                 break;
             case 5: // Narration finishes, board is setup and moves into view, next narration plays.
@@ -195,6 +200,7 @@ public class Mission1NarrationIntro : Mission
                 MissionManager.triggerCallbacksOnBlockDrop = false;
                 MissionManager.triggerCallbacksOnAttackHit = true;
                 tutorialTexts[4].gameObject.SetActive(true);
+                gridToSetup.player.enemy.health = doorHPNum;
                 break;
             case 12: //Wall impacted. Stuff becomes intense. Cutscene starts.
                 MissionManager.isInCutscene = true;
@@ -205,24 +211,32 @@ public class Mission1NarrationIntro : Mission
                 blastingTHroughWallsMusic.Play();
                 narrations[6].gameObject.SetActive(true);
                 MissionManager.triggerCallbacksOnAttackHit = false;
-                tutorialTexts[3].gameObject.SetActive(false);
+                tutorialTexts[4].gameObject.SetActive(false);
                 break;
             case 13: //Cutscene ends.
                 MissionManager.isInCutscene = false;
                 MissionManager.triggerCallbacksOnAttackHit = true;
+                doorHP.transform.GetChild(0).gameObject.GetComponent<Text>().text = "DOOR HP: " + (int)(gridToSetup.player.enemy.health / doorHPNum*100)+"%";
+                doorHP.SetActive(true);
                 break;
             case 14:
                 wallImpactExplosionSound.Play();
                 cameraToShake.ShakeCamera(3, 1);
+                doorHP.transform.GetChild(0).gameObject.GetComponent<Text>().text = "DOOR HP: " + (int)(gridToSetup.player.enemy.health / doorHPNum * 100) + "%";
                 if (gridToSetup.player.enemy.IsAlive())
                 {
                     stepNum--;
                 }
                 else
                 {
+                    doorHP.SetActive(false);
                     MissionManager.isInCutscene = true;
                     narrations[7].gameObject.SetActive(true);
                 }
+                break;
+            case 15: // Cutscene ends, door is gone. Fly fly away!
+                timeSinceStepStarted = 0f;
+                escapeParticles.SetActive(true);
                 break;
         }
 }
@@ -242,7 +256,6 @@ public class Mission1NarrationIntro : Mission
         shipToMakeNotWiggle.enabled = false;
 
         gridToSetup.player.enemy.howManyItemsIHave = -1;
-        gridToSetup.player.enemy.health = 50;
         gridToSetup.player.enemy.damageManager = damageManagerForDoor;
 
         MissionManager.isInCutscene = true;
@@ -250,18 +263,22 @@ public class Mission1NarrationIntro : Mission
 
     private bool playedRunningSound;
     public DamageManager damageManagerForDoor;
+    private float doorHPNum = 50;
+    public GameObject structure;
+    private float shipAccelleration = .5f;
+    public  GameObject escapeParticles;
 
     // Update is called once per frame
-    void Update ()
+    void Update()
     {
 
         //Run in.
         if (stepNum == 1)
         {
             timeSinceStepStarted += Time.deltaTime;
-            float brightness = Mathf.Clamp01(timeSinceStepStarted/2);
-            darkness.color = new Color(0, 0, 0, 1-brightness);
-            float personPosit1time = Mathf.Clamp01((timeSinceStepStarted-2f) / 2f);
+            float brightness = Mathf.Clamp01(timeSinceStepStarted / 2);
+            darkness.color = new Color(0, 0, 0, 1 - brightness);
+            float personPosit1time = Mathf.Clamp01((timeSinceStepStarted - 2f) / 2f);
             float personPosit2time = Mathf.Clamp01((timeSinceStepStarted - 2.2f) / 2f);
             Vector3 personPosit1 = Vector3.Lerp(person1Start, person1End, personPosit1time);
             Vector3 personPosit2 = Vector3.Lerp(person2Start, person2End, personPosit2time);
@@ -277,6 +294,7 @@ public class Mission1NarrationIntro : Mission
             {
                 hackyCallback.enabled = true;
             }
+            //firesToTurnOff.gameObject.SetActive(false);
         }
 
         //Board slides up
@@ -284,8 +302,14 @@ public class Mission1NarrationIntro : Mission
         if (stepNum == 5)
         {
             timeSinceStepStarted += Time.deltaTime;
-            float t = Mathf.Cos(Mathf.Clamp01(timeSinceStepStarted / 2)*Mathf.PI);
+            float t = Mathf.Cos(Mathf.Clamp01(timeSinceStepStarted / 2) * Mathf.PI);
             cameraToMove.localPosition = Vector3.Lerp(Vector3.zero, toMoveCameraTo, t);
+        }
+
+        if (stepNum == 15)
+        {
+            timeSinceStepStarted += Time.deltaTime;
+            structure.transform.localPosition = new Vector3(.1f-(timeSinceStepStarted*timeSinceStepStarted*shipAccelleration), 24.77f, -14.93f);
         }
     }
 }

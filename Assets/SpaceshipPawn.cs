@@ -16,6 +16,10 @@ public class SpaceshipPawn : MonoBehaviour {
     public AudioSource shieldSound;
     public AudioSource fireSound;
 
+    private Vector3 takeOffFrom;
+    private Quaternion takeOffFromRot;
+    private float takeOffFromTime;
+    private float takeOffFromStartTime;
     public float transpositionalWaggle = .4f;
     public float positionalWaggle = 1;
     public float altitudinalWaggle = .2f;
@@ -36,15 +40,19 @@ public class SpaceshipPawn : MonoBehaviour {
     private float partialDerivativeSampleDistance = .001f;
 
     // Use this for initialization
-    void Start ()
+    void Start()
     {
-        rootPosition = this.transform.position;
+        if (rootPosition == Vector3.zero)
+        {
+            rootPosition = this.transform.position;
+        }
         this.phase = phaseOffset;
 	}
 	
 	// Update is called once per frame
 	void Update ()
     {
+        takeOffFromTime -= Time.deltaTime;
         float damMult = (damage*damageEffectOnWaggle) + 1;
         phase += Time.deltaTime * waggleSpeed * ((damage+1)*damageEffectOnWaggleSpeed);
         this.transform.position = rootPosition + new Vector3((Mathf.PerlinNoise(0, phase + 100) - .5f) * positionalWaggle*damMult, (Mathf.PerlinNoise(0, phase)-.5f)*transpositionalWaggle * damMult, (Mathf.PerlinNoise(phase, 0) - .5f) * altitudinalWaggle * damMult);
@@ -56,11 +64,32 @@ public class SpaceshipPawn : MonoBehaviour {
         this.transform.rotation = Quaternion.Euler(new Vector3(0, (dy/partialDerivativeSampleDistance*pitchWaggle * damMult + 90)*(distanceToMyNose > 1 ? 1 : -1), (dx/partialDerivativeSampleDistance*rollWaggle*damMult-70) * (distanceToMyNose > 1 ? 1 : -1)));
 
         damage *= damageDampeningAmount;
+
+        if (takeOffFromTime >= 0)
+        {
+            AdjustForTakeoff();
+        }
     }
 
-    internal void takeoff(int v, Vector3 position, Quaternion rotation)
+    private void AdjustForTakeoff()
     {
-        
+        Vector3 supposedToBeAt = this.transform.position;
+        Quaternion supposedToBeAtRot = this.transform.rotation;
+        this.transform.position = Vector3.Lerp(takeOffFrom, supposedToBeAt, 1-(takeOffFromTime / takeOffFromStartTime));
+        this.transform.rotation = Quaternion.Lerp(takeOffFromRot, supposedToBeAtRot, 1-(takeOffFromTime / takeOffFromStartTime));
+    }
+
+    internal void SetHomePosition(Vector3 posit, Quaternion rot)
+    {
+        rootPosition = posit;
+    }
+
+    internal void takeoff(float time, Vector3 position, Quaternion rotation)
+    {
+        takeOffFrom = position;
+        takeOffFromRot = rotation;
+        takeOffFromTime = time;
+        takeOffFromStartTime = time;
     }
 
     public void FireBullet(float damage, Combatant enemy, float flightTime)
