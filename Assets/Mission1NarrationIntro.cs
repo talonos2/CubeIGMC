@@ -64,7 +64,7 @@ public class Mission1NarrationIntro : Mission
                 //Turn on lights
                 //Tiny figures walk up to ship.
                 break;
-            case 2:  // Characters have sinished walking in.
+            case 2:  // Characters have finished walking in.
                 narrations[1].gameObject.SetActive(true);
                 break;
             case 3:  // Narration fnishes, characters open up ship, next narration plays.
@@ -76,6 +76,8 @@ public class Mission1NarrationIntro : Mission
                 shipToMakeNotWiggle.takeoff(5, ship.transform.position, ship.transform.rotation);
                 shipToMakeNotWiggle.enabled = true;
                 shipToMakeNotWiggle.SetHomePosition(new Vector3(-8, 6.25f, 15f), Quaternion.Euler(new Vector3(-180, -90, 120f)));
+                person1.gameObject.SetActive(false);
+                person2.gameObject.SetActive(false);
                 narrations[3].gameObject.SetActive(true);
                 break;
             case 5: // Narration finishes, board is setup and moves into view, next narration plays.

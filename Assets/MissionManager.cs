@@ -10,6 +10,7 @@ internal class MissionManager : MonoBehaviour
     public static bool isInCutscene;
     internal static bool triggerCallbacksOnBlockDrop;
     internal static bool triggerCallbacksOnAttackHit;
+    internal static bool triggerCallbacksOnShipReboot;
 
     public static bool TriggerCallbackOnEnemyDestroyed { get; internal set; }
 
