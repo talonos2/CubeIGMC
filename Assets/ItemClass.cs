@@ -8,6 +8,7 @@ public class ItemClass {
     private string ItemName = "Default";
     private string ItemDescription = "Default desc";
     private int ItemId = 0;
+    private int ItemTier = 0;
     private int GoldCost = 1000;
 
 
@@ -38,6 +39,10 @@ public class ItemClass {
         return this.ItemId;
     }
 
+    public int GetItemTier() {
+        return this.ItemTier;
+    }
+
     static public ItemClass GetItem(ItemSlot thisItem, int ItemId) {
         ItemClass newItem = new ItemClass();
 
@@ -56,55 +61,79 @@ public class ItemClass {
                         newItem.GoldCost = 1000;
                         newItem.ItemName = "tbi";
                         newItem.ItemDescription = "tbi desc";
+                        newItem.ItemTier = 1;
                         break;
                     case 2:
                         newItem.ItemId = ItemId;
                         newItem.GoldCost = 1000;
                         newItem.ItemName = "tbi";
                         newItem.ItemDescription = "tbi desc";
+                        newItem.ItemTier = 2;
                         break;
                     case 3:
                         newItem.ItemId = ItemId;
                         newItem.GoldCost = 1000;
                         newItem.ItemName = "tbi";
                         newItem.ItemDescription = "tbi desc";
+                        newItem.ItemTier = 3;
                         break;
                     case 4:
                         newItem.ItemId = ItemId;
                         newItem.GoldCost = 1000;
                         newItem.ItemName = "tbi";
                         newItem.ItemDescription = "tbi desc";
+                        newItem.ItemTier = 4;
                         break;
                     case 5:
                         newItem.ItemId = ItemId;
                         newItem.GoldCost = 1000;
                         newItem.ItemName = "tbi";
                         newItem.ItemDescription = "tbi desc";
+                        newItem.ItemTier = 1;
                         break;
                     case 6:
                         newItem.ItemId = ItemId;
                         newItem.GoldCost = 1000;
                         newItem.ItemName = "tbi";
                         newItem.ItemDescription = "tbi desc";
+                        newItem.ItemTier = 2;
                         break;
                     case 7:
                         newItem.ItemId = ItemId;
                         newItem.GoldCost = 1000;
                         newItem.ItemName = "tbi";
                         newItem.ItemDescription = "tbi desc";
+                        newItem.ItemTier = 3;
                         break;
                     case 8:
                         newItem.ItemId = ItemId;
                         newItem.GoldCost = 1000;
                         newItem.ItemName = "tbi";
                         newItem.ItemDescription = "tbi desc";
+                        newItem.ItemTier = 4;
                         break;
                     case 9:
                         newItem.ItemId = ItemId;
                         newItem.GoldCost = 1000;
                         newItem.ItemName = "tbi";
                         newItem.ItemDescription = "tbi desc";
+                        newItem.ItemTier = 2;
                         break;
+                    case 10:
+                        newItem.ItemId = ItemId;
+                        newItem.GoldCost = 1000;
+                        newItem.ItemName = "tbi";
+                        newItem.ItemDescription = "tbi desc";
+                        newItem.ItemTier = 4;
+                        break;
+                    case 11://Boss Weapon 1
+                        newItem.ItemId = ItemId;
+                        newItem.GoldCost = 1000;
+                        newItem.ItemName = "tbi";
+                        newItem.ItemDescription = "tbi desc";
+                        newItem.ItemTier = 5;
+                        break;
+
                 }
                 break;
 
@@ -122,60 +151,77 @@ public class ItemClass {
                         newItem.GoldCost = 1000;
                         newItem.ItemName = "tbi";
                         newItem.ItemDescription = "tbi desc";
+                        newItem.ItemTier = 1;
                         break;
                     case 2:
                         newItem.ItemId = ItemId;
                         newItem.GoldCost = 1000;
                         newItem.ItemName = "tbi";
                         newItem.ItemDescription = "tbi desc";
+                        newItem.ItemTier = 2;
                         break;
                     case 3:
                         newItem.ItemId = ItemId;
                         newItem.GoldCost = 1000;
                         newItem.ItemName = "tbi";
                         newItem.ItemDescription = "tbi desc";
+                        newItem.ItemTier = 3;
                         break;
                     case 4:
                         newItem.ItemId = ItemId;
                         newItem.GoldCost = 1000;
                         newItem.ItemName = "tbi";
                         newItem.ItemDescription = "tbi desc";
+                        newItem.ItemTier = 4;
                         break;
                     case 5:
                         newItem.ItemId = ItemId;
                         newItem.GoldCost = 1000;
                         newItem.ItemName = "tbi";
                         newItem.ItemDescription = "tbi desc";
+                        newItem.ItemTier = 1;
                         break;
                     case 6:
                         newItem.ItemId = ItemId;
                         newItem.GoldCost = 1000;
                         newItem.ItemName = "tbi";
                         newItem.ItemDescription = "tbi desc";
+                        newItem.ItemTier = 2;
                         break;
                     case 7:
                         newItem.ItemId = ItemId;
                         newItem.GoldCost = 1000;
                         newItem.ItemName = "tbi";
                         newItem.ItemDescription = "tbi desc";
+                        newItem.ItemTier = 3;
                         break;
                     case 8:
                         newItem.ItemId = ItemId;
                         newItem.GoldCost = 1000;
                         newItem.ItemName = "tbi";
                         newItem.ItemDescription = "tbi desc";
+                        newItem.ItemTier = 4;
                         break;
                     case 9:
                         newItem.ItemId = ItemId;
                         newItem.GoldCost = 1000;
                         newItem.ItemName = "tbi";
                         newItem.ItemDescription = "tbi desc";
+                        newItem.ItemTier = 2;
+                        break;
+                    case 10:
+                        newItem.ItemId = ItemId;
+                        newItem.GoldCost = 1000;
+                        newItem.ItemName = "tbi";
+                        newItem.ItemDescription = "tbi desc";
+                        newItem.ItemTier = 4;
                         break;
                 }
                 break;
 
             case ItemSlot.ENGINES:
-                switch (ItemId) {
+                switch (ItemId)
+                {
                     case 0:
                         newItem.ItemId = ItemId;
                         newItem.GoldCost = 1000;
@@ -187,54 +233,70 @@ public class ItemClass {
                         newItem.GoldCost = 1000;
                         newItem.ItemName = "tbi";
                         newItem.ItemDescription = "tbi desc";
+                        newItem.ItemTier = 1;
                         break;
                     case 2:
                         newItem.ItemId = ItemId;
                         newItem.GoldCost = 1000;
                         newItem.ItemName = "tbi";
                         newItem.ItemDescription = "tbi desc";
+                        newItem.ItemTier = 2;
                         break;
                     case 3:
                         newItem.ItemId = ItemId;
                         newItem.GoldCost = 1000;
                         newItem.ItemName = "tbi";
                         newItem.ItemDescription = "tbi desc";
+                        newItem.ItemTier = 3;
                         break;
                     case 4:
                         newItem.ItemId = ItemId;
                         newItem.GoldCost = 1000;
                         newItem.ItemName = "tbi";
                         newItem.ItemDescription = "tbi desc";
+                        newItem.ItemTier = 4;
                         break;
                     case 5:
                         newItem.ItemId = ItemId;
                         newItem.GoldCost = 1000;
                         newItem.ItemName = "tbi";
                         newItem.ItemDescription = "tbi desc";
+                        newItem.ItemTier = 1;
                         break;
                     case 6:
                         newItem.ItemId = ItemId;
                         newItem.GoldCost = 1000;
                         newItem.ItemName = "tbi";
                         newItem.ItemDescription = "tbi desc";
+                        newItem.ItemTier = 2;
                         break;
                     case 7:
                         newItem.ItemId = ItemId;
                         newItem.GoldCost = 1000;
                         newItem.ItemName = "tbi";
                         newItem.ItemDescription = "tbi desc";
+                        newItem.ItemTier = 3;
                         break;
                     case 8:
                         newItem.ItemId = ItemId;
                         newItem.GoldCost = 1000;
                         newItem.ItemName = "tbi";
                         newItem.ItemDescription = "tbi desc";
+                        newItem.ItemTier = 4;
                         break;
                     case 9:
                         newItem.ItemId = ItemId;
                         newItem.GoldCost = 1000;
                         newItem.ItemName = "tbi";
                         newItem.ItemDescription = "tbi desc";
+                        newItem.ItemTier = 2;
+                        break;
+                    case 10:
+                        newItem.ItemId = ItemId;
+                        newItem.GoldCost = 1000;
+                        newItem.ItemName = "tbi";
+                        newItem.ItemDescription = "tbi desc";
+                        newItem.ItemTier = 4;
                         break;
                 }
                 break;
@@ -253,54 +315,70 @@ public class ItemClass {
                         newItem.GoldCost = 1000;
                         newItem.ItemName = "tbi";
                         newItem.ItemDescription = "tbi desc";
+                        newItem.ItemTier = 1;
                         break;
                     case 2:
                         newItem.ItemId = ItemId;
                         newItem.GoldCost = 1000;
                         newItem.ItemName = "tbi";
                         newItem.ItemDescription = "tbi desc";
+                        newItem.ItemTier = 2;
                         break;
                     case 3:
                         newItem.ItemId = ItemId;
                         newItem.GoldCost = 1000;
                         newItem.ItemName = "tbi";
                         newItem.ItemDescription = "tbi desc";
+                        newItem.ItemTier = 3;
                         break;
                     case 4:
                         newItem.ItemId = ItemId;
                         newItem.GoldCost = 1000;
                         newItem.ItemName = "tbi";
                         newItem.ItemDescription = "tbi desc";
+                        newItem.ItemTier = 4;
                         break;
                     case 5:
                         newItem.ItemId = ItemId;
                         newItem.GoldCost = 1000;
                         newItem.ItemName = "tbi";
                         newItem.ItemDescription = "tbi desc";
+                        newItem.ItemTier = 1;
                         break;
                     case 6:
                         newItem.ItemId = ItemId;
                         newItem.GoldCost = 1000;
                         newItem.ItemName = "tbi";
                         newItem.ItemDescription = "tbi desc";
+                        newItem.ItemTier = 2;
                         break;
                     case 7:
                         newItem.ItemId = ItemId;
                         newItem.GoldCost = 1000;
                         newItem.ItemName = "tbi";
                         newItem.ItemDescription = "tbi desc";
+                        newItem.ItemTier = 3;
                         break;
                     case 8:
                         newItem.ItemId = ItemId;
                         newItem.GoldCost = 1000;
                         newItem.ItemName = "tbi";
                         newItem.ItemDescription = "tbi desc";
+                        newItem.ItemTier = 4;
                         break;
                     case 9:
                         newItem.ItemId = ItemId;
                         newItem.GoldCost = 1000;
                         newItem.ItemName = "tbi";
                         newItem.ItemDescription = "tbi desc";
+                        newItem.ItemTier = 2;
+                        break;
+                    case 10:
+                        newItem.ItemId = ItemId;
+                        newItem.GoldCost = 1000;
+                        newItem.ItemName = "tbi";
+                        newItem.ItemDescription = "tbi desc";
+                        newItem.ItemTier = 4;
                         break;
                 }
                 break;
@@ -319,54 +397,70 @@ public class ItemClass {
                         newItem.GoldCost = 1000;
                         newItem.ItemName = "tbi";
                         newItem.ItemDescription = "tbi desc";
+                        newItem.ItemTier = 1;
                         break;
                     case 2:
                         newItem.ItemId = ItemId;
                         newItem.GoldCost = 1000;
                         newItem.ItemName = "tbi";
                         newItem.ItemDescription = "tbi desc";
+                        newItem.ItemTier = 2;
                         break;
                     case 3:
                         newItem.ItemId = ItemId;
                         newItem.GoldCost = 1000;
                         newItem.ItemName = "tbi";
                         newItem.ItemDescription = "tbi desc";
+                        newItem.ItemTier = 3;
                         break;
                     case 4:
                         newItem.ItemId = ItemId;
                         newItem.GoldCost = 1000;
                         newItem.ItemName = "tbi";
                         newItem.ItemDescription = "tbi desc";
+                        newItem.ItemTier = 4;
                         break;
                     case 5:
                         newItem.ItemId = ItemId;
                         newItem.GoldCost = 1000;
                         newItem.ItemName = "tbi";
                         newItem.ItemDescription = "tbi desc";
+                        newItem.ItemTier = 1;
                         break;
                     case 6:
                         newItem.ItemId = ItemId;
                         newItem.GoldCost = 1000;
                         newItem.ItemName = "tbi";
                         newItem.ItemDescription = "tbi desc";
+                        newItem.ItemTier = 2;
                         break;
                     case 7:
                         newItem.ItemId = ItemId;
                         newItem.GoldCost = 1000;
                         newItem.ItemName = "tbi";
                         newItem.ItemDescription = "tbi desc";
+                        newItem.ItemTier = 3;
                         break;
                     case 8:
                         newItem.ItemId = ItemId;
                         newItem.GoldCost = 1000;
                         newItem.ItemName = "tbi";
                         newItem.ItemDescription = "tbi desc";
+                        newItem.ItemTier = 4;
                         break;
                     case 9:
                         newItem.ItemId = ItemId;
                         newItem.GoldCost = 1000;
                         newItem.ItemName = "tbi";
                         newItem.ItemDescription = "tbi desc";
+                        newItem.ItemTier = 2;
+                        break;
+                    case 10:
+                        newItem.ItemId = ItemId;
+                        newItem.GoldCost = 1000;
+                        newItem.ItemName = "tbi";
+                        newItem.ItemDescription = "tbi desc";
+                        newItem.ItemTier = 4;
                         break;
                 }
                 break;
@@ -408,6 +502,12 @@ public class ItemClass {
 
                 break;
             case 9:
+
+                break;
+            case 10:
+
+                break;
+            case 11:
 
                 break;
         }
@@ -468,6 +568,12 @@ public class ItemClass {
 
                 break;
             case 9:
+
+                break;
+            case 10:
+
+                break;
+            case 11:
 
                 break;
         }
@@ -534,11 +640,75 @@ public class ItemClass {
             case 9:
                 
                 break;
+            case 10:
+
+                break;
+            case 11:
+                for (int x = 0; x < 5; x++)
+                {
+                    for (int y = 0; y <11; y++)
+                    {
+                        cellTypes[x + 5, y + 5] = CellType.ATTACK;
+                    }
+                }
+                break;
         }
        
 
     }
 }
+
+//Alternate Weapons/shields: slots 5-8
+/*
+ 
+     aaaa
+     aaa
+     aa
+
+    aaaaa
+    aaaa
+    aaa
+    aa
+
+    aaaaaa
+    aaaaa
+    aaaa
+    aaa
+    aa
+
+    aaaaaaa
+    aaaaaa
+    aaaaa
+    aaaa
+    aaa
+    aa
+
+     */
+
+/* Slot 9,10
+Tier 2
+ a-a-a
+-----
+a-a-a
+-----
+a-a-a
+-----
+a-a-a
+-----
+a-a-a
+
+Tier 4
+a-a-a-
+-a-a-a
+a-a-a-
+-a-a-a
+a-a-a-
+-a-a-a
+a-a-a-
+-a-a-a
+a-a-a-
+
+ */
 
 [System.Serializable]
 public enum ItemSlot

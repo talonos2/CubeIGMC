@@ -41,8 +41,8 @@ public class Combatant : NetworkBehaviour
         //Example of making player 2 customly weaker or stronger. 
         //   if (transform.parent.parent.parent.name.Equals("Player2")) {
         //        ThisPlayer.BaseHealth = 30;
-        //        ThisPlayer.WeaponEquippedID = 3;
-        //        ThisPlayer.ShieldEquippedID = 4;
+        //        ThisPlayer.WeaponEquippedID = 11;
+        //        ThisPlayer.ShieldEquippedID = 0;
         //}
 
         health = ThisPlayer.GetMaxHealth();
