@@ -10,9 +10,9 @@ public class CubeConversionManager : MonoBehaviour
     private float timeStamp;
     public InvisibleDelayedChargeGiver chargeGiverPrefab;
     public Transform endPoint;
-    public float tweenTime = 3;
-    public float particleToShipTime = 1;
-    public float infusionParticleSpawnTime = 2;
+    public float tweenTime = 1.5f;
+    public float particleToShipTime = .6f;
+    public float infusionParticleSpawnTime = 1;
     public Combatant player;
     public PowerupEffect powerupEffectPrefab;
 

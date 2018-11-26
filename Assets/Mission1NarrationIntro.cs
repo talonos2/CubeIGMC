@@ -265,7 +265,7 @@ public class Mission1NarrationIntro : Mission
 
     private bool playedRunningSound;
     public DamageManager damageManagerForDoor;
-    private float doorHPNum = 50;
+    private float doorHPNum = 30;
     public GameObject structure;
     private float shipAccelleration = .5f;
     public  GameObject escapeParticles;

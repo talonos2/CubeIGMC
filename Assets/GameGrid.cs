@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -427,6 +426,10 @@ public class GameGrid : NetworkBehaviour
         powerDown.Play();
         MeltBoard();
         player.DeleteAllEnergy();
+        if (MissionManager.triggerCallbacksOnShipReboot)
+        {
+            MissionManager.instance.grossCallbackHack.enabled = true;
+        }
     }
 
     private void HandleUpMovement()
@@ -675,15 +678,18 @@ public class GameGrid : NetworkBehaviour
 
         foreach (float delay in delays)
         {
-            PowerupEffect pe = GameObject.Instantiate<PowerupEffect>(powerUpEffect);
-            GameCube sourceCube = cubesToExplode[UnityEngine.Random.Range(0,cubesToExplode.Count)];
-            pe.Initialize(sourceCube.transform.position, player.GetTargetOfParticle(PowerupType.ENERGY, 3), delay, PowerupType.ENERGY);
-            InvisibleDelayedChargeGiver chargeGiver = GameObject.Instantiate<InvisibleDelayedChargeGiver>(chargeGiverPrefab);
-            chargeGiver.target = player;
-            chargeGiver.delay = delay + 1;
-            chargeGiver.type = PowerupType.ENERGY;
-            chargeGiver.SetAmountForOneCube(PowerupType.ENERGY);
-            chargeGiver.amount /= 3; //(3 particles per square made);
+            if (player.HasRoomForMoreEnergy())
+            {
+                PowerupEffect pe = GameObject.Instantiate<PowerupEffect>(powerUpEffect);
+                GameCube sourceCube = cubesToExplode[UnityEngine.Random.Range(0, cubesToExplode.Count)];
+                pe.Initialize(sourceCube.transform.position, player.GetTargetOfParticle(PowerupType.ENERGY, 3), delay, PowerupType.ENERGY);
+                InvisibleDelayedChargeGiver chargeGiver = GameObject.Instantiate<InvisibleDelayedChargeGiver>(chargeGiverPrefab);
+                chargeGiver.target = player;
+                chargeGiver.delay = delay + 1;
+                chargeGiver.type = PowerupType.ENERGY;
+                chargeGiver.SetAmountForOneCube(PowerupType.ENERGY);
+                chargeGiver.amount /= 3; //(3 particles per square made);
+            }
         }
 
         if (numberOfSquaresMade != 0)
