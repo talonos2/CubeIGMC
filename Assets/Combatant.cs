@@ -40,8 +40,10 @@ public class Combatant : NetworkBehaviour
 
         //Example of making player 2 customly weaker or stronger. 
         //   if (transform.parent.parent.parent.name.Equals("Player2")) {
-        //       ThisPlayer.BaseHealth = 30;
-        //   }
+        //        ThisPlayer.BaseHealth = 30;
+        //        ThisPlayer.WeaponEquippedID = 3;
+        //        ThisPlayer.ShieldEquippedID = 4;
+        //}
 
         health = ThisPlayer.GetMaxHealth();
         energy = ThisPlayer.GetMaxEnergy() / 4;
@@ -193,6 +195,9 @@ public class Combatant : NetworkBehaviour
     internal void SetGridcellsStartingState(CellType[,] cellTypes)
     {
         //XILLITH: This is a set of bad hacks for now. When you do an inventory system, replace these hacks with inventory items!
+
+        //Talonos, I left howManyItemsIHave in for now. It only works for your tutorial/mission things, else everything uses the 
+        //character sheet and item system
         switch (howManyItemsIHave)
         {
             case 0:
@@ -205,7 +210,14 @@ public class Combatant : NetworkBehaviour
                         cellTypes[x + 2, y + 10] = CellType.ATTACK;
                     }
                 }
-                break;
+                return;
+                
+        }
+
+        ThisPlayer.GetWeaponPositions(cellTypes);
+        ThisPlayer.GetShieldPositions(cellTypes);
+        ThisPlayer.GetPsiPositions(cellTypes);
+ /*       
             case 2:
                 for (int x = 0; x < 3; x++)
                 {
@@ -226,7 +238,7 @@ public class Combatant : NetworkBehaviour
                     }
                 }
                 break;
-        }
+        }*/
 
     }
 

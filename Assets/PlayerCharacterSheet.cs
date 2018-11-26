@@ -35,9 +35,9 @@ public class PlayerCharacterSheet
     public float Psi=0;
     public float BaseEngineSpeed = 8f;
     public bool UnusedSave = true;
-    public int WeaponEquippedID = 0;
+    public int WeaponEquippedID = 3;
     public int ArmorEquippedID = 0;
-    public int ShieldEquippedID = 0;
+    public int ShieldEquippedID = 3;
     public int EngineEquippedID = 0;
     public int MiscEquippedID = 0;
 
@@ -83,6 +83,23 @@ public class PlayerCharacterSheet
         return ShieldDecayFactor;
     }
 
+    internal void GetWeaponPositions(CellType[,] cellTypes)
+    {
+        ItemClass.GetItem(ItemSlot.WEAPON, WeaponEquippedID).GetWeaponPositions(cellTypes);
+        //Pull slot locations from class next
+    }
+
+    internal void GetShieldPositions(CellType[,] cellTypes)
+    {
+        ItemClass.GetItem(ItemSlot.SHIELDS, ShieldEquippedID).GetShieldPositions(cellTypes);
+        //Pull slot locations from class next
+    }
+
+    internal void GetPsiPositions(CellType[,] cellTypes)
+    {
+        ItemClass.GetItem(ItemSlot.MISC, MiscEquippedID).GetPsiPositions(cellTypes);
+        //Pull slot locations from class next
+    }
 
     public static void SaveToDisk(PlayerCharacterSheet data, string savedFileName) {
 
@@ -110,5 +127,5 @@ public class PlayerCharacterSheet
         }
     }
 
-   
+  
 }
