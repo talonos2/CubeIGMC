@@ -31,15 +31,17 @@ public class Combatant : NetworkBehaviour
 
     public CombatInitializer initializer;
     private PlayerCharacterSheet ThisPlayer= new PlayerCharacterSheet();
+    private GameGrid ThisGameGrid;
 
     public void Start()
     {
         ThisPlayer = new PlayerCharacterSheet();
+        ThisGameGrid = transform.parent.parent.parent.GetComponentInChildren<GameGrid>();
 
         //Example of making player 2 customly weaker or stronger. 
-     //   if (transform.parent.parent.parent.name.Equals("Player2")) {
-     //       ThisPlayer.BaseHealth = 30;
-     //   }
+        //   if (transform.parent.parent.parent.name.Equals("Player2")) {
+        //       ThisPlayer.BaseHealth = 30;
+        //   }
 
         health = ThisPlayer.GetMaxHealth();
         energy = ThisPlayer.GetMaxEnergy() / 4;
