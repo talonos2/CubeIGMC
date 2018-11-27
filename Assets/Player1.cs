@@ -11,9 +11,12 @@ public class Player1 : NetworkBehaviour
     GameGrid gameGridHome;
     GameGrid gameGridGuest;
 
+    bool started = false;
+
 	// Use this for initialization
 	void Start ()
     {
+        Time.timeScale = 0;
         home = GameObject.Find("GameGridHome");
         guest = GameObject.Find("GameGridGuest");
         gameGridHome = home.GetComponent<GameGrid>();
@@ -29,13 +32,19 @@ public class Player1 : NetworkBehaviour
     {
         if (isLocalPlayer)
         {
-//            Debug.Log(gameGridHome);
-//            Debug.Log("I do a thing");
+            //            Debug.Log(gameGridHome);
+            //            Debug.Log("I do a thing");
             gameGridHome.proxyUpdate();
-//            Debug.Log("local");
+            //            Debug.Log("local");
         }
         else
         {
+            if (!started)
+            {
+                Time.timeScale = 1;
+                started = true;
+            }
+
             gameGridGuest.proxyUpdate();
 //            Debug.Log("not local");
 

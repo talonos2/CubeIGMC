@@ -70,7 +70,6 @@ public class PlayingPiece : NetworkBehaviour
                 newPiecemap[2,2] = piecemap[2,0];
                 */
 
-        Debug.Log("cw");
 
         for (int x = 0; x < 3; x++)
         {

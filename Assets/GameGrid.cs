@@ -63,7 +63,7 @@ public class GameGrid : NetworkBehaviour
     private PlayingPiece currentPiece;
     private PlayingPiece nextPiece;
 
-    private SeededRandom dice;
+    public SeededRandom dice;
     private GameRecorder recorder;
 
     internal void SetSeedAndStart(int randomSeed)
