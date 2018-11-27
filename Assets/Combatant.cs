@@ -335,6 +335,11 @@ public class Combatant : NetworkBehaviour
     //Taking Damage and attendant SFX:
     internal void TakeDamage(float damage)
     {
+        if (!IsAlive())
+        {
+            return;
+        }
+
         if (shields > damage)
         {
             shields -= damage;
@@ -379,8 +384,15 @@ public class Combatant : NetworkBehaviour
         //if dead...
         if (!IsAlive())
         {
-            initializer.StartDeathSequence();
             damageManager.ExplodeRemainingShip();
+            if (MissionManager.TriggerCallbackOnShipDestroyed)
+            {
+                MissionManager.instance.grossCallbackHack.enabled = true;
+            }
+            else
+            {
+                initializer.StartDeathSequence();
+            }
         }
     }
 

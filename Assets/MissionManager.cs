@@ -6,6 +6,8 @@ internal class MissionManager : MonoBehaviour
     public static MissionManager instance = null;//the single instance of design manager available
     public HackyCallback grossCallbackHack;
     public Mission mission;
+    public String playerCharacterSheetPath;
+    public String enemyCharacterSheetPath;
 
     public static bool isInCutscene;
     internal static bool triggerCallbacksOnBlockDrop;

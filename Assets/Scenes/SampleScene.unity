@@ -64482,6 +64482,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   grossCallbackHack: {fileID: 1222658067}
   mission: {fileID: 15258805}
+  playerCharacterSheetPath: save2.txt
+  enemyCharacterSheetPath: enemy2.txt
 --- !u!1001 &1929142592
 Prefab:
   m_ObjectHideFlags: 0
