@@ -127,7 +127,77 @@ public class PlayerCharacterSheet
         }
     }
 
-  
+    internal static PlayerCharacterSheet GetNPC(int NPCReference)
+    {
+        PlayerCharacterSheet tempSheet = new PlayerCharacterSheet();
+
+
+
+        switch (NPCReference) { 
+            case 0:
+                tempSheet.Level = 0;
+                tempSheet.BaseHealth = 70;
+                tempSheet.WeaponEquippedID = 0;
+                tempSheet.ShieldEquippedID = 0;
+                break;
+            case 1:
+                break;
+            case 2:
+                tempSheet.Level = 0;
+                tempSheet.BaseHealth = 25;
+                tempSheet.WeaponEquippedID = 11;
+                tempSheet.ShieldEquippedID = 0;
+                break;
+
+        }
+        return tempSheet;
+
+
+
+    }
+
+    internal static PlayerCharacterSheet GetRandomNPC(int level)
+    {
+        PlayerCharacterSheet tempSheet = new PlayerCharacterSheet();
+
+        tempSheet.Level = level;
+        tempSheet.WeaponEquippedID = 1;
+        tempSheet.ShieldEquippedID = 1;
+
+
+
+        switch (level) {
+            case 0:
+                tempSheet.BaseHealth = tempSheet.BaseHealth/2;
+                tempSheet.WeaponEquippedID = 1;
+                tempSheet.ShieldEquippedID = 1;
+                break;
+            case 1:
+                tempSheet.BaseHealth = 2*(tempSheet.BaseHealth / 3);
+                tempSheet.WeaponEquippedID = 1;
+                tempSheet.ShieldEquippedID = 1;
+                break;
+            case 2:
+                tempSheet.WeaponEquippedID = 2;
+                tempSheet.ShieldEquippedID = 2;
+                break;
+            case 3:
+                tempSheet.WeaponEquippedID = 3;
+                tempSheet.ShieldEquippedID = 3;
+                break;
+            case 4:
+                tempSheet.WeaponEquippedID = 3;
+                tempSheet.ShieldEquippedID = 3;
+                break;
+            case 5:
+                tempSheet.WeaponEquippedID = 4;
+                tempSheet.ShieldEquippedID = 4;
+                break;
+
+
+        }
+        return tempSheet;
+    }
 }
 
 

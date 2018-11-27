@@ -568,10 +568,26 @@ public class ItemClass {
 
                 break;
             case 9:
-
-                break;
+                for (int x = 0; x < 5; x++)
+                {
+                    for (int y = 0; y < 9; y++)
+                    {
+                        if (y % 2 == 0 && x % 2 == 0)
+                            cellTypes[x + 8, y + 7] = CellType.SHIELD;
+                    }
+                }
+                break;            
             case 10:
-
+                for (int x = 0; x < 5; x++)
+                {
+                    for (int y = 0; y < 9; y++)
+                    {
+                        if (y % 2 == 0 && x % 2 == 0)
+                            cellTypes[x + 8, y + 7] = CellType.SHIELD;
+                        if (y % 2 == 1 && x % 2 == 1)
+                            cellTypes[x + 8, y + 7] = CellType.SHIELD;
+                    }
+                }
                 break;
             case 11:
 
@@ -603,7 +619,6 @@ public class ItemClass {
                         cellTypes[x + 2, y + 10] = CellType.ATTACK;
                     }
                 }
-
                 break;
             case 3://4/4
                 for (int x = 0; x < 4; x++)
@@ -613,7 +628,6 @@ public class ItemClass {
                         cellTypes[x + 2, y + 10] = CellType.ATTACK;
                     }
                 }
-
                 break;
             case 4://5/4
                 for (int x = 0; x < 5; x++)
@@ -623,25 +637,102 @@ public class ItemClass {
                         cellTypes[x + 2, y + 10] = CellType.ATTACK;
                     }
                 }
-
                 break;
             case 5:
-                
+                for (int x = 0; x < 4; x++)
+                {
+                    for (int y = 0; y < 3; y++)
+                    {
+                        if (y==0)
+                            cellTypes[6-x, 13-y] = CellType.ATTACK;
+                        if (y==1&&x<3)
+                            cellTypes[6 - x, 13 - y] = CellType.ATTACK;
+                        if (y==2&&x<2)
+                            cellTypes[6 - x, 13 - y] = CellType.ATTACK;
+
+                    }
+                }
                 break;
             case 6:
-                
+                for (int x = 0; x < 5; x++)
+                {
+                    for (int y = 0; y < 4; y++)
+                    {
+                        if (y == 0)
+                            cellTypes[6 - x, 13 - y] = CellType.ATTACK;
+                        if (y == 1 && x < 4)
+                            cellTypes[6 - x, 13 - y] = CellType.ATTACK;
+                        if (y == 2 && x < 3)
+                            cellTypes[6 - x, 13 - y] = CellType.ATTACK;
+                        if (y == 3 && x < 2)
+                            cellTypes[6 - x, 13 - y] = CellType.ATTACK;
+
+                    }
+                }
                 break;
             case 7:
-                
+                for (int x = 0; x < 6; x++)
+                {
+                    for (int y = 0; y < 5; y++)
+                    {
+                        if (y == 0)
+                            cellTypes[6 - x, 14 - y] = CellType.ATTACK;
+                        if (y == 1 && x < 5)
+                            cellTypes[6 - x, 14 - y] = CellType.ATTACK;
+                        if (y == 2 && x < 4)
+                            cellTypes[6 - x, 14 - y] = CellType.ATTACK;
+                        if (y == 3 && x < 3)
+                            cellTypes[6 - x, 14 - y] = CellType.ATTACK;
+                        if (y == 4 && x < 2)
+                            cellTypes[6 - x, 14 - y] = CellType.ATTACK;
+
+                    }
+                }
+
                 break;
             case 8:
-               
+                for (int x = 0; x < 7; x++)
+                {
+                    for (int y = 0; y < 6; y++)
+                    {
+                        if (y == 0)
+                            cellTypes[6 - x, 14 - y] = CellType.ATTACK;
+                        if (y == 1 && x < 6)
+                            cellTypes[6 - x, 14 - y] = CellType.ATTACK;
+                        if (y == 2 && x < 5)
+                            cellTypes[6 - x, 14 - y] = CellType.ATTACK;
+                        if (y == 3 && x < 4)
+                            cellTypes[6 - x, 14 - y] = CellType.ATTACK;
+                        if (y == 4 && x < 3)
+                            cellTypes[6 - x, 14 - y] = CellType.ATTACK;
+                        if (y == 5 && x < 2)
+                            cellTypes[6 - x, 14 - y] = CellType.ATTACK;
+
+                    }
+                }
+
                 break;
             case 9:
-                
+                for (int x = 0; x < 5; x++)
+                {
+                    for (int y = 0; y < 9; y++)
+                    {
+                        if (y % 2 == 0 && x % 2 == 0)
+                            cellTypes[x + 2, y + 7] = CellType.ATTACK;
+                    }
+                }
                 break;
             case 10:
-
+                for (int x = 0; x < 5; x++)
+                {
+                    for (int y = 0; y < 9; y++)
+                    {
+                        if (y % 2 == 0 && x % 2 == 0)
+                            cellTypes[x + 2, y + 7] = CellType.ATTACK;
+                        if (y % 2 == 1 && x % 2 == 1)
+                            cellTypes[x + 2, y + 7] = CellType.ATTACK;
+                    }
+                }
                 break;
             case 11:
                 for (int x = 0; x < 5; x++)

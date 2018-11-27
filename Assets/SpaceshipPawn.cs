@@ -35,7 +35,7 @@ public class SpaceshipPawn : MonoBehaviour {
     private float damage;
 
     private float phase;
-    private Vector3 rootPosition;
+    internal Vector3 rootPosition;
 
     private float partialDerivativeSampleDistance = .001f;
 
@@ -96,7 +96,8 @@ public class SpaceshipPawn : MonoBehaviour {
     {
         LaserBullet bullet = GameObject.Instantiate(bulletPrefab);
         bullet.transform.SetPositionAndRotation(this.transform.position + new Vector3(distanceToMyNose, 0, 0), this.transform.rotation);
-        bullet.transform.localScale = new Vector3(damage / 100.0f, damage / 100.0f, damage / 100.0f);
+        float size = Mathf.Sqrt(damage) / 10.0f;
+        bullet.transform.localScale = new Vector3(size, size, size);
         bullet.GetComponent<Rigidbody>().velocity = new Vector3(distanceBetweenShips / flightTime, 0, 0);
         bullet.Initialize(enemy, flightTime, damage);
         

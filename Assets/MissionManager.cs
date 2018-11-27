@@ -6,13 +6,16 @@ internal class MissionManager : MonoBehaviour
     public static MissionManager instance = null;//the single instance of design manager available
     public HackyCallback grossCallbackHack;
     public Mission mission;
+    public String playerCharacterSheetPath;
+    public String enemyCharacterSheetPath;
 
     public static bool isInCutscene;
     internal static bool triggerCallbacksOnBlockDrop;
     internal static bool triggerCallbacksOnAttackHit;
     internal static bool triggerCallbacksOnShipReboot;
+    internal static bool freezeAI;
 
-    public static bool TriggerCallbackOnEnemyDestroyed { get; internal set; }
+    public static bool TriggerCallbackOnShipDestroyed { get; internal set; }
 
     /// <summary>
     /// Sets up the NarrationManager's singleton design pattern - only one instance of
@@ -37,9 +40,7 @@ internal class MissionManager : MonoBehaviour
         if (grossCallbackHack.enabled)
         {
             mission.Unblock();
-            Debug.Log("Here!");
             grossCallbackHack.enabled = false;
-            Debug.Log(grossCallbackHack.enabled);
         }
     }
 }

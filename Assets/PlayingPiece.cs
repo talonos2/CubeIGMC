@@ -117,9 +117,6 @@ public class PlayingPiece : NetworkBehaviour
             for (int x = 0; x < 3; x++)
             {
                 newPiecemap[x, y] = piecemap[newX, newY];
-                
-                Debug.Log("ccw");
-                Debug.Log(x + " " + y + " " + newX + " " + newY);
 
                 if (newPiecemap[x,y] != null && surroundings[x, y] == true)
                 {

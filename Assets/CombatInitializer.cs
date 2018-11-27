@@ -38,13 +38,11 @@ public class CombatInitializer : NetworkBehaviour {
     {
         if (!setup)
         {
-            grid1.SetEnemy();
-            grid2.SetEnemy();
 
             int randomSeed = UnityEngine.Random.Range(1, 65535);
             if (grid2.isPlayedByAI)
             {
-                grid2.LoadAI();
+                grid2.LoadAI(false, 0, false);
                 randomSeed = grid2.GetAISeed();
             }
 

@@ -35,15 +35,15 @@ public class Combatant : NetworkBehaviour
 
     public void Start()
     {
-        ThisPlayer = new PlayerCharacterSheet();
+ 
         ThisGameGrid = transform.parent.parent.parent.GetComponentInChildren<GameGrid>();
 
         //Example of making player 2 customly weaker or stronger. 
-        //   if (transform.parent.parent.parent.name.Equals("Player2")) {
-        //        ThisPlayer.BaseHealth = 30;
-        //        ThisPlayer.WeaponEquippedID = 11;
-        //        ThisPlayer.ShieldEquippedID = 0;
-        //}
+           if (transform.parent.parent.parent.name.Equals("Player2")) {
+                ThisPlayer.BaseHealth = 30;
+                ThisPlayer.WeaponEquippedID = 8;
+                ThisPlayer.ShieldEquippedID = 9;
+        }
 
         health = ThisPlayer.GetMaxHealth();
         energy = ThisPlayer.GetMaxEnergy() / 4;
@@ -95,6 +95,11 @@ public class Combatant : NetworkBehaviour
         return randomBag[dice.NextInt(0, randomBag.Count)];
     }
 
+    internal void RemoveDeathEffectFromDamageManager(TileFX tileFX)
+    {
+        damageManager.stuffThatHappensInTheFinalExplosion.Remove(tileFX);
+    }
+
     //Methods that return combat statistics:
 
     private float MaxShields()
@@ -114,14 +119,7 @@ public class Combatant : NetworkBehaviour
 
     private float MaxHealth()
     {
-
-        
-        if (howManyItemsIHave < 0) //XILLITH REPLACE THIS WHEN WE GET ITEMS! (The door should have an "Item" that cuts its maxHP in half.)
-        {
-            return 50;
-        }
         return ThisPlayer.GetMaxHealth() * (isImmortal ? 100 : 1);
-
     }
 
     private int MaxEnergy()
@@ -189,57 +187,12 @@ public class Combatant : NetworkBehaviour
         return 5;
     }
 
-    public int howManyItemsIHave = 3;
-
     //Modify this to change what a player's grid looks like when they start playing.
     internal void SetGridcellsStartingState(CellType[,] cellTypes)
     {
-        //XILLITH: This is a set of bad hacks for now. When you do an inventory system, replace these hacks with inventory items!
-
-        //Talonos, I left howManyItemsIHave in for now. It only works for your tutorial/mission things, else everything uses the 
-        //character sheet and item system
-        switch (howManyItemsIHave)
-        {
-            case 0:
-                return;
-            case 1:
-                for (int x = 0; x < 2; x++)
-                {
-                    for (int y = 0; y < 4; y++)
-                    {
-                        cellTypes[x + 2, y + 10] = CellType.ATTACK;
-                    }
-                }
-                return;
-                
-        }
-
         ThisPlayer.GetWeaponPositions(cellTypes);
         ThisPlayer.GetShieldPositions(cellTypes);
         ThisPlayer.GetPsiPositions(cellTypes);
- /*       
-            case 2:
-                for (int x = 0; x < 3; x++)
-                {
-                    for (int y = 0; y < 3; y++)
-                    {
-                        cellTypes[x + 2, y + 10] = CellType.ATTACK;
-                        cellTypes[x + 10, y + 10] = CellType.SHIELD;
-                    }
-                }
-                break;
-            case 3:
-                for (int x = 0; x < 4; x++)
-                {
-                    for (int y = 0; y < 4; y++)
-                    {
-                        cellTypes[x + 2, y + 10] = CellType.ATTACK;
-                        cellTypes[x + 9, y + 10] = CellType.SHIELD;
-                    }
-                }
-                break;
-        }*/
-
     }
 
     //Information methods:
@@ -382,6 +335,11 @@ public class Combatant : NetworkBehaviour
     //Taking Damage and attendant SFX:
     internal void TakeDamage(float damage)
     {
+        if (!IsAlive())
+        {
+            return;
+        }
+
         if (shields > damage)
         {
             shields -= damage;
@@ -426,8 +384,15 @@ public class Combatant : NetworkBehaviour
         //if dead...
         if (!IsAlive())
         {
-            initializer.StartDeathSequence();
             damageManager.ExplodeRemainingShip();
+            if (MissionManager.TriggerCallbackOnShipDestroyed)
+            {
+                MissionManager.instance.grossCallbackHack.enabled = true;
+            }
+            else
+            {
+                initializer.StartDeathSequence();
+            }
         }
     }
 
@@ -435,4 +400,26 @@ public class Combatant : NetworkBehaviour
     {
         return MaxHealth() * .3f;
     }
+
+    public PlayerCharacterSheet GetCharacterSheet() {
+        return ThisPlayer;
+    }
+
+    public void SetCharacterSheet(int NPCReference) {
+        ThisPlayer = PlayerCharacterSheet.GetNPC(NPCReference);
+    }
+
+    public void SetRandomNPC(int Level) {
+        ThisPlayer = PlayerCharacterSheet.GetRandomNPC(Level);
+    }
+
+    public void SetCharacterSheet(string SaveFileName) {
+        ThisPlayer = PlayerCharacterSheet.LoadFromDisk(SaveFileName);
+    }
+
+    public void SaveCharacterToDisk(string SaveFileName) {
+        PlayerCharacterSheet.SaveToDisk(ThisPlayer, SaveFileName);
+    }
+
+    //missionmanager.instance.player1.
 }

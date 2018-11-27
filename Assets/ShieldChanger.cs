@@ -10,9 +10,9 @@ public class ShieldChanger : MonoBehaviour
     private float recentShieldDamage = 0; //This is as a proportion of max shield amount
     private Material shieldMaterial;
 
-    const float fullShieldFresnelIntensity = 20;
-    const float fullShieldFresnelWidth = 1;
-    const float fullShieldDistortion = 3;
+    const float fullShieldFresnelIntensity = 30;
+    const float fullShieldFresnelWidth = 1.5f;
+    const float fullShieldDistortion = 4.5f;
 
     const float fresnelIntensityMultiplierOnDamage = 1;
     const float fresnelWidthMultiplierOnDamage = 1;
@@ -34,7 +34,7 @@ public class ShieldChanger : MonoBehaviour
         float percentUp = Mathf.Sqrt(shipToMonitor.getShieldPercent());
         float damageMultiplier = (Mathf.Min(proportionOfShieldThatCountsAsMaxDamage, recentShieldDamage) * (1/ proportionOfShieldThatCountsAsMaxDamage));
 
-        float fresnelInensity = percentUp * fullShieldFresnelIntensity * (1+damageMultiplier* fresnelIntensityMultiplierOnDamage);
+        float fresnelInensity = percentUp * fullShieldFresnelIntensity * (1+damageMultiplier* fresnelIntensityMultiplierOnDamage)*2;
         float fresnelWidth = percentUp * fullShieldFresnelWidth * (1 + damageMultiplier* fresnelWidthMultiplierOnDamage);
         float distortion = percentUp * fullShieldDistortion * (1 + damageMultiplier* distortionMultiplierOnDamage);
 

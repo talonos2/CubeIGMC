@@ -85,7 +85,6 @@ public class DamageManager : MonoBehaviour
             //From this list, pick a random component
             toDamage.Damage();
             damagedComponents.Add(toDamage);
-            Debug.Log("Remianing Components: " + (damagableComponents.Count - damagedComponents.Count));
             
             //Do that the specified number of times.
         }

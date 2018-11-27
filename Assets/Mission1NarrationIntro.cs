@@ -143,7 +143,7 @@ public class Mission1NarrationIntro : Mission
                 gridToSetup.DropNewCubeAt(5, 17);
 
                 gridToSetup.player.energy = 35;
-                gridToSetup.player.howManyItemsIHave = 0;
+
                 gridToSetup.SetGridCellTypeStateAndAttendentVFX();
 
                 timeSinceStepStarted = 0f;
@@ -196,8 +196,8 @@ public class Mission1NarrationIntro : Mission
                 tutorialTexts[3].gameObject.SetActive(false);
                 break;
             case 11: //Dialogue finished, attack spots appear.
+                gridToSetup.player.GetCharacterSheet().WeaponEquippedID = 1;
                 MissionManager.isInCutscene = false;
-                gridToSetup.player.howManyItemsIHave = 1;
                 gridToSetup.SetGridCellTypeStateAndAttendentVFX();
                 MissionManager.triggerCallbacksOnBlockDrop = false;
                 MissionManager.triggerCallbacksOnAttackHit = true;
@@ -214,6 +214,7 @@ public class Mission1NarrationIntro : Mission
                 narrations[6].gameObject.SetActive(true);
                 MissionManager.triggerCallbacksOnAttackHit = false;
                 tutorialTexts[4].gameObject.SetActive(false);
+                MissionManager.TriggerCallbackOnShipDestroyed = true;
                 break;
             case 13: //Cutscene ends.
                 MissionManager.isInCutscene = false;
@@ -256,8 +257,6 @@ public class Mission1NarrationIntro : Mission
         ship = shipToMakeNotWiggle.gameObject;
         spaceLightToDisable.enabled = false;
         shipToMakeNotWiggle.enabled = false;
-
-        gridToSetup.player.enemy.howManyItemsIHave = -1;
         gridToSetup.player.enemy.damageManager = damageManagerForDoor;
 
         MissionManager.isInCutscene = true;
@@ -270,10 +269,15 @@ public class Mission1NarrationIntro : Mission
     private float shipAccelleration = .5f;
     public  GameObject escapeParticles;
 
+    private bool firstRun = true;
     // Update is called once per frame
     void Update()
     {
-
+        if (firstRun)
+        {
+            gridToSetup.player.SetCharacterSheet(0);
+            firstRun = false;
+        }
         //Run in.
         if (stepNum == 1)
         {
