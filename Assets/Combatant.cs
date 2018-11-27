@@ -35,18 +35,20 @@ public class Combatant : NetworkBehaviour
 
     public void Start()
     {
+       
  
         ThisGameGrid = transform.parent.parent.parent.GetComponentInChildren<GameGrid>();
 
         //Example of making player 2 customly weaker or stronger. 
-           if (transform.parent.parent.parent.name.Equals("Player2")) {
-                ThisPlayer.BaseHealth = 30;
-                ThisPlayer.WeaponEquippedID = 8;
-                ThisPlayer.ShieldEquippedID = 9;
-        }
+      //     if (transform.parent.parent.parent.name.Equals("Player2")) {
+      //          ThisPlayer.BaseHealth = 30;
+     //           ThisPlayer.WeaponEquippedID = 8;
+     //           ThisPlayer.ShieldEquippedID = 8;
+    //    }
+
 
         health = ThisPlayer.GetMaxHealth();
-        energy = ThisPlayer.GetMaxEnergy() / 4;
+        energy = ThisPlayer.GetStartingEnergy();
         shields = ThisPlayer.GetStartingShields();
 //        Transform Go = Transform.Find("Initializer");
 //        Debug.Log(Go);
@@ -407,14 +409,17 @@ public class Combatant : NetworkBehaviour
 
     public void SetCharacterSheet(int NPCReference) {
         ThisPlayer = PlayerCharacterSheet.GetNPC(NPCReference);
+        ThisGameGrid.SetGridCellTypeStateAndAttendentVFX();
     }
 
     public void SetRandomNPC(int Level) {
         ThisPlayer = PlayerCharacterSheet.GetRandomNPC(Level);
+        ThisGameGrid.SetGridCellTypeStateAndAttendentVFX();
     }
 
     public void SetCharacterSheet(string SaveFileName) {
         ThisPlayer = PlayerCharacterSheet.LoadFromDisk(SaveFileName);
+        ThisGameGrid.SetGridCellTypeStateAndAttendentVFX();
     }
 
     public void SaveCharacterToDisk(string SaveFileName) {

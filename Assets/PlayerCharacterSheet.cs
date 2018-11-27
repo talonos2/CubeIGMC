@@ -27,13 +27,13 @@ public class PlayerCharacterSheet
     public int Exp=0;
     public int Gold=0;
     public float BaseHealth=70;
-    public int StartingEnergy=25;
-    public int MaxEnergy = 200;
-    public float StartingShields = 0;
-    public float MaxShields = 100;
-    public float ShieldDecayFactor = .8f;
-    public float Psi=0;
-    public float BaseEngineSpeed = 8f;
+    public int StartingEnergy=50;
+    private int MaxEnergy = 200;
+    private float StartingShields = 0;
+    private float MaxShields = 100;
+    private float ShieldDecayFactor = .8f;
+    private float Psi=0;
+    private float BaseEngineSpeed = 8f;
     public bool UnusedSave = true;
     public int WeaponEquippedID = 3;
     public int ArmorEquippedID = 0;
@@ -62,7 +62,18 @@ public class PlayerCharacterSheet
     }
 
     public float GetMaxHealth() {
-        return BaseHealth+Level*10;
+        if (BaseHealth > 100 || Level >5 || ArmorEquippedID >5)//to counter filthy cheaters
+            return 10;
+        return BaseHealth+Level*10+ArmorEquippedID*10;
+    }
+
+    internal int GetStartingEnergy()
+    {
+        if (StartingEnergy > 75)
+            return 0;
+        if (MiscEquippedID == 1)
+            return StartingEnergy + 25;
+        return StartingEnergy;
     }
 
     public int GetMaxEnergy() {

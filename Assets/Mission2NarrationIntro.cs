@@ -137,6 +137,7 @@ public class Mission2NarrationIntro : Mission
                 MissionManager.isInCutscene = true;
                 MissionManager.freezeAI = true;
                 narrations[3].gameObject.SetActive(true);
+                tractorParticles.gameObject.SetActive(false);
                 break;
             case 7:
                 timeSinceStepStarted = 0f;
