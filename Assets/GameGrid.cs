@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -86,6 +87,18 @@ public class GameGrid : NetworkBehaviour
         nextPiece.transform.localPosition = Vector3.zero;
 
         SetGridCellTypeStateAndAttendentVFX();
+        if (isPlayerOne)
+        {
+            string dataPath;
+
+            dataPath = Path.Combine(Application.persistentDataPath, MissionManager.instance.playerCharacterSheetPath);
+            if (!File.Exists(dataPath))
+            {
+                player.SaveCharacterToDisk(MissionManager.instance.playerCharacterSheetPath);
+            }
+
+            player.SetCharacterSheet(MissionManager.instance.playerCharacterSheetPath);
+        }
     }
 
     public void SetGridCellTypeStateAndAttendentVFX()

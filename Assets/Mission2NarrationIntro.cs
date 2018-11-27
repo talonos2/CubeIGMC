@@ -117,12 +117,14 @@ public class Mission2NarrationIntro : Mission
                 MissionManager.triggerCallbacksOnShipReboot = false;
                 break;
             case 4:  //Narration complete, tutorial thing pops up
+                gridToSetup.player.GetCharacterSheet().ShieldEquippedID = 1;
                 gridToSetup.SetGridCellTypeStateAndAttendentVFX();
                 foreach (GameObject go in gridAttachedPieces)
                 {
                     go.SetActive(true);
                 }
                 shieldInfo.gameObject.SetActive(true);
+
                 break;
             case 5:  //TutorialGone
                 postLockonMusic.Stop();
@@ -171,6 +173,7 @@ public class Mission2NarrationIntro : Mission
                 gridToSetup.SetGridCellTypeStateAndAttendentVFX();
                 gridToSetup.player.energy = 160;
                 cameraToMove.transform.localPosition = new Vector3(-25, 32, -18.7f);
+                //gridToSetup.player.
                 foreach (GameObject part in pawnToHide)
                 {
                     part.SetActive(false);
@@ -185,6 +188,7 @@ public class Mission2NarrationIntro : Mission
             float brightness = Mathf.Clamp01(timeSinceStepStarted / 2);
             darkness.color = new Color(0, 0, 0, 1 - brightness);
             gridToTurnIntoAI.player.health = TractorBeamHPNum;
+            gridToTurnIntoAI.player.SetCharacterSheet(2);
         }
         else if (stepNum < 3)
         {

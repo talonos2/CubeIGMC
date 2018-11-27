@@ -214,6 +214,7 @@ public class Mission1NarrationIntro : Mission
                 narrations[6].gameObject.SetActive(true);
                 MissionManager.triggerCallbacksOnAttackHit = false;
                 tutorialTexts[4].gameObject.SetActive(false);
+                MissionManager.TriggerCallbackOnShipDestroyed = true;
                 break;
             case 13: //Cutscene ends.
                 MissionManager.isInCutscene = false;
@@ -256,7 +257,6 @@ public class Mission1NarrationIntro : Mission
         ship = shipToMakeNotWiggle.gameObject;
         spaceLightToDisable.enabled = false;
         shipToMakeNotWiggle.enabled = false;
-        gridToSetup.player.SetCharacterSheet(0);
         gridToSetup.player.enemy.damageManager = damageManagerForDoor;
 
         MissionManager.isInCutscene = true;
@@ -269,10 +269,15 @@ public class Mission1NarrationIntro : Mission
     private float shipAccelleration = .5f;
     public  GameObject escapeParticles;
 
+    private bool firstRun = true;
     // Update is called once per frame
     void Update()
     {
-
+        if (firstRun)
+        {
+            gridToSetup.player.SetCharacterSheet(0);
+            firstRun = false;
+        }
         //Run in.
         if (stepNum == 1)
         {
