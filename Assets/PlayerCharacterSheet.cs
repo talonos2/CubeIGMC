@@ -129,12 +129,16 @@ public class PlayerCharacterSheet
 
     internal static PlayerCharacterSheet GetNPC(int NPCReference)
     {
-        PlayerCharacterSheet tempSheet = new PlayerCharacterSheet;
+        PlayerCharacterSheet tempSheet = new PlayerCharacterSheet();
 
 
 
         switch (NPCReference) { 
             case 0:
+                tempSheet.Level = 0;
+                tempSheet.BaseHealth = 70;
+                tempSheet.WeaponEquippedID = 0;
+                tempSheet.ShieldEquippedID = 0;
                 break;
             case 1:
                 break;

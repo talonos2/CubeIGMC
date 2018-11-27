@@ -196,6 +196,7 @@ public class Mission1NarrationIntro : Mission
                 tutorialTexts[3].gameObject.SetActive(false);
                 break;
             case 11: //Dialogue finished, attack spots appear.
+                gridToSetup.player.GetCharacterSheet().WeaponEquippedID = 1;
                 MissionManager.isInCutscene = false;
                 gridToSetup.SetGridCellTypeStateAndAttendentVFX();
                 MissionManager.triggerCallbacksOnBlockDrop = false;
@@ -255,7 +256,7 @@ public class Mission1NarrationIntro : Mission
         ship = shipToMakeNotWiggle.gameObject;
         spaceLightToDisable.enabled = false;
         shipToMakeNotWiggle.enabled = false;
-
+        gridToSetup.player.SetCharacterSheet(0);
         gridToSetup.player.enemy.damageManager = damageManagerForDoor;
 
         MissionManager.isInCutscene = true;
