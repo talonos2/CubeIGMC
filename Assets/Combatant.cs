@@ -407,14 +407,17 @@ public class Combatant : NetworkBehaviour
 
     public void SetCharacterSheet(int NPCReference) {
         ThisPlayer = PlayerCharacterSheet.GetNPC(NPCReference);
+        ThisGameGrid.SetGridCellTypeStateAndAttendentVFX();
     }
 
     public void SetRandomNPC(int Level) {
         ThisPlayer = PlayerCharacterSheet.GetRandomNPC(Level);
+        ThisGameGrid.SetGridCellTypeStateAndAttendentVFX();
     }
 
     public void SetCharacterSheet(string SaveFileName) {
         ThisPlayer = PlayerCharacterSheet.LoadFromDisk(SaveFileName);
+        ThisGameGrid.SetGridCellTypeStateAndAttendentVFX();
     }
 
     public void SaveCharacterToDisk(string SaveFileName) {

@@ -39,6 +39,7 @@ public class GameGrid : NetworkBehaviour
 
     internal void LoadAI(bool isRobotic, float speed, bool loop)
     {
+        Debug.LogError("HERE!!!");
         string inputJson = aIText.text;
         aIPlayer = JsonUtility.FromJson<AIPlayer>(inputJson);
         if (isRobotic)
