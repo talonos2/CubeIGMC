@@ -127,7 +127,30 @@ public class PlayerCharacterSheet
         }
     }
 
-  
+    internal static PlayerCharacterSheet GetNPC(int NPCReference)
+    {
+        PlayerCharacterSheet tempSheet = new PlayerCharacterSheet;
+
+
+
+        switch (NPCReference) { 
+            case 0:
+                break;
+            case 1:
+                break;
+            case 2:
+                tempSheet.Level = 0;
+                tempSheet.BaseHealth = 25;
+                tempSheet.WeaponEquippedID = 11;
+                tempSheet.ShieldEquippedID = 0;
+                break;
+
+        }
+        return tempSheet;
+
+
+
+    }
 }
 
 

@@ -30,7 +30,7 @@ public class Combatant : NetworkBehaviour
     public CubeHolder cubeHolder;
 
     public CombatInitializer initializer;
-    private PlayerCharacterSheet ThisPlayer= new PlayerCharacterSheet();
+    private PlayerCharacterSheet ThisPlayer;
     private GameGrid ThisGameGrid;
 
     public void Start()
@@ -388,4 +388,21 @@ public class Combatant : NetworkBehaviour
     {
         return MaxHealth() * .3f;
     }
+
+    public PlayerCharacterSheet GetCharacterSheet() {
+        return ThisPlayer;
+    }
+
+    public void SetCharacterSheet(int NPCReference) {
+        ThisPlayer = PlayerCharacterSheet.GetNPC(NPCReference);
+    }
+
+    public void SetCharacterSheet(string SaveFileName) {
+        ThisPlayer = PlayerCharacterSheet.LoadFromDisk(SaveFileName);
+    }
+
+    public void SaveCharacterToDisk(string SaveFileName) {
+        PlayerCharacterSheet.SaveToDisk(ThisPlayer, SaveFileName);
+    }
+
 }

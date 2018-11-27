@@ -603,7 +603,6 @@ public class ItemClass {
                         cellTypes[x + 2, y + 10] = CellType.ATTACK;
                     }
                 }
-
                 break;
             case 3://4/4
                 for (int x = 0; x < 4; x++)
@@ -613,7 +612,6 @@ public class ItemClass {
                         cellTypes[x + 2, y + 10] = CellType.ATTACK;
                     }
                 }
-
                 break;
             case 4://5/4
                 for (int x = 0; x < 5; x++)
@@ -623,10 +621,10 @@ public class ItemClass {
                         cellTypes[x + 2, y + 10] = CellType.ATTACK;
                     }
                 }
-
                 break;
             case 5:
-                
+               
+
                 break;
             case 6:
                 
@@ -638,10 +636,22 @@ public class ItemClass {
                
                 break;
             case 9:
-                
+                for (int x = 0; x < 5; x++)
+                {
+                    for (int y = 0; y < 9; y++)
+                    {
+                        cellTypes[x + 2, y + 7] = CellType.ATTACK;
+                    }
+                }
                 break;
             case 10:
-
+                for (int x = 0; x < 6; x++)
+                {
+                    for (int y = 0; y < 9; y++)
+                    {
+                        cellTypes[x + 2, y + 7] = CellType.ATTACK;
+                    }
+                }
                 break;
             case 11:
                 for (int x = 0; x < 5; x++)
