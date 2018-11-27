@@ -2,8 +2,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
-public class PlayingPiece : MonoBehaviour
+public class PlayingPiece : NetworkBehaviour
 {
     private Combatant owner;
     private GameCube[,] piecemap = new GameCube[3, 3];
@@ -39,6 +40,8 @@ public class PlayingPiece : MonoBehaviour
     private GameCube MakeCube(SeededRandom dice)
     {
         GameCube toReturn = GameObject.Instantiate(cube);
+        NetworkServer.Spawn(toReturn.gameObject);
+
         toReturn.Initialize(owner, dice);
         return toReturn;
     }

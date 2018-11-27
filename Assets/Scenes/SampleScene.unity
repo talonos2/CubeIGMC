@@ -486,7 +486,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &15258804
 Transform:
   m_ObjectHideFlags: 0
@@ -521,7 +521,8 @@ MonoBehaviour:
   - {fileID: 834836135}
   - {fileID: 483903967}
   - {fileID: 817322196}
-  shieldTutorialObject: {fileID: 0}
+  gridAttachedPieces: []
+  rebootTutorialObject: {fileID: 0}
   HPTutorialObject: {fileID: 0}
   darkness: {fileID: 1687384275}
   hackyCallback: {fileID: 1222658067}
@@ -533,6 +534,7 @@ MonoBehaviour:
   damageManagerForDoor: {fileID: 0}
   structure: {fileID: 0}
   escapeParticles: {fileID: 0}
+  cameraToMove: {fileID: 0}
 --- !u!1 &21298756
 GameObject:
   m_ObjectHideFlags: 0
@@ -4674,7 +4676,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &178464080
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14913,10 +14915,10 @@ Transform:
   - {fileID: 1327506860}
   - {fileID: 2002197757}
   - {fileID: 991053819}
+  - {fileID: 1314934050}
   - {fileID: 1935284592}
   - {fileID: 1715452982}
   - {fileID: 1699330008}
-  - {fileID: 1314934050}
   - {fileID: 506904337}
   - {fileID: 1703260351}
   - {fileID: 972250609}
@@ -19739,6 +19741,135 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 664534620}
   m_Mesh: {fileID: 4300000, guid: 8fac29760943c3a4bbafad01e838ea5c, type: 3}
+--- !u!1 &670621378
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 670621381}
+  - component: {fileID: 670621380}
+  - component: {fileID: 670621379}
+  m_Layer: 0
+  m_Name: Netowrk Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &670621379
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 670621378}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 227461547, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  manager: {fileID: 0}
+  showGUI: 1
+  offsetX: 0
+  offsetY: 0
+--- !u!114 &670621380
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 670621378}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -822479833, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_NetworkPort: 7777
+  m_ServerBindToIP: 0
+  m_ServerBindAddress: 
+  m_NetworkAddress: localhost
+  m_DontDestroyOnLoad: 1
+  m_RunInBackground: 1
+  m_ScriptCRCCheck: 1
+  m_MaxDelay: 0.01
+  m_LogLevel: 2
+  m_PlayerPrefab: {fileID: 1245898671120270, guid: 1fc3e02cf20497e45912c752deae97dd,
+    type: 2}
+  m_AutoCreatePlayer: 1
+  m_PlayerSpawnMethod: 0
+  m_OfflineScene: 
+  m_OnlineScene: 
+  m_SpawnPrefabs:
+  - {fileID: 1475523195821368, guid: efed92ad54b997e46a8e3647c31424e2, type: 2}
+  - {fileID: 1720843243692672, guid: 9bb7d0c1bff34df479b43c254d4ca629, type: 2}
+  m_CustomConfig: 0
+  m_MaxConnections: 4
+  m_ConnectionConfig:
+    m_PacketSize: 1440
+    m_FragmentSize: 500
+    m_ResendTimeout: 1200
+    m_DisconnectTimeout: 2000
+    m_ConnectTimeout: 2000
+    m_MinUpdateTimeout: 10
+    m_PingTimeout: 500
+    m_ReducedPingTimeout: 100
+    m_AllCostTimeout: 20
+    m_NetworkDropThreshold: 5
+    m_OverflowDropThreshold: 5
+    m_MaxConnectionAttempt: 10
+    m_AckDelay: 33
+    m_SendDelay: 10
+    m_MaxCombinedReliableMessageSize: 100
+    m_MaxCombinedReliableMessageCount: 10
+    m_MaxSentMessageQueueSize: 512
+    m_AcksType: 1
+    m_UsePlatformSpecificProtocols: 0
+    m_InitialBandwidth: 0
+    m_BandwidthPeakFactor: 2
+    m_WebSocketReceiveBufferMaxSize: 0
+    m_UdpSocketReceiveBufferMaxSize: 0
+    m_SSLCertFilePath: 
+    m_SSLPrivateKeyFilePath: 
+    m_SSLCAFilePath: 
+    m_Channels: []
+  m_GlobalConfig:
+    m_ThreadAwakeTimeout: 1
+    m_ReactorModel: 0
+    m_ReactorMaximumReceivedMessages: 1024
+    m_ReactorMaximumSentMessages: 1024
+    m_MaxPacketSize: 2000
+    m_MaxHosts: 16
+    m_ThreadPoolSize: 1
+    m_MinTimerTimeout: 1
+    m_MaxTimerTimeout: 12000
+    m_MinNetSimulatorTimeout: 1
+    m_MaxNetSimulatorTimeout: 12000
+  m_Channels: 
+  m_UseWebSockets: 0
+  m_UseSimulator: 0
+  m_SimulatedLatency: 1
+  m_PacketLossPercentage: 0
+  m_MaxBufferedPackets: 16
+  m_AllowFragmentation: 1
+  m_MatchHost: mm.unet.unity3d.com
+  m_MatchPort: 443
+  matchName: default
+  matchSize: 4
+  isNetworkActive: 0
+  matchMaker: {fileID: 0}
+--- !u!4 &670621381
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 670621378}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 23.18357, y: -3.9070683, z: 80.67995}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 15
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &670992200
 GameObject:
   m_ObjectHideFlags: 0
@@ -20046,7 +20177,7 @@ MonoBehaviour:
   p1Menu: {fileID: 699534625}
   p2Menu: {fileID: 470791452}
   endMenu: {fileID: 3881357}
-  netWindow: {fileID: 0}
+  netWindow: {fileID: 670621378}
 --- !u!4 &676543953
 Transform:
   m_ObjectHideFlags: 0
@@ -46925,7 +47056,7 @@ GameObject:
   - component: {fileID: 1488115336}
   - component: {fileID: 1488115335}
   m_Layer: 0
-  m_Name: GameGrid
+  m_Name: GameGridHome
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -46995,7 +47126,7 @@ MonoBehaviour:
   pauseMenu: {fileID: 0}
   justExitedMenu: 0
   player: {fileID: 1637675550}
-  isPlayerOne: 1
+  isPlayerOne: 0
   isPlayedByAI: 0
   chargeGiverPrefab: {fileID: 114403860689813174, guid: 71db1b17c9045464999b21904984cde9,
     type: 2}
@@ -54578,7 +54709,7 @@ GameObject:
   - component: {fileID: 1800077637}
   - component: {fileID: 1800077636}
   m_Layer: 0
-  m_Name: GameGrid
+  m_Name: GameGridGuest
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

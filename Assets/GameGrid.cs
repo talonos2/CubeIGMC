@@ -164,6 +164,7 @@ public class GameGrid : NetworkBehaviour
     private PlayingPiece MakeAPiece()
     {
         PlayingPiece toReturn = GameObject.Instantiate(piecePrefab);
+        NetworkServer.Spawn(toReturn.gameObject);
 
         int pieceSize = pieceSizeBag[dice.NextInt(0, pieceSizeBag.Length)];
 
@@ -257,6 +258,11 @@ public class GameGrid : NetworkBehaviour
     // Update is called once per frame
     void Update ()
     {
+
+    }
+
+    public void proxyUpdate()
+    {
         if (Time.timeScale == 0)
         {
             justExitedMenu = true;
@@ -280,7 +286,7 @@ public class GameGrid : NetworkBehaviour
             aIPlayer.TickAI();
         }
 
-        if (isPlayerOne?(Input.GetButton("Rotate1_P1")&& Input.GetButton("Rotate2_P1")): (Input.GetButton("Rotate1_P2") && Input.GetButton("Rotate2_P2")))
+        if (isPlayerOne ? (Input.GetButton("Rotate1_P1")&& Input.GetButton("Rotate2_P1")): (Input.GetButton("Rotate1_P2") && Input.GetButton("Rotate2_P2")))
         {
             float oldTimeHeld = timeHeldBothRotatesAtOnce;
             timeHeldBothRotatesAtOnce += Time.deltaTime;
@@ -432,7 +438,7 @@ public class GameGrid : NetworkBehaviour
         }
     }
 
-    private void HandleUpMovement()
+    public void HandleUpMovement()
     {
         float speed = player.GetMovementSpeed();
         if ((isPlayerOne ? Input.GetAxis("Vertical_P1") > 0 : Input.GetAxis("Vertical_P2") > 0 || aIPlayer.getButtonPressed("Up")) && !isUpBeingHeld)
@@ -481,7 +487,7 @@ public class GameGrid : NetworkBehaviour
         }
     }
 
-    private void HandleDownMovement()
+    public void HandleDownMovement()
     {
         float speed = player.GetMovementSpeed();
         if ((isPlayerOne ? Input.GetAxis("Vertical_P1") < 0 : Input.GetAxis("Vertical_P2") < 0 || aIPlayer.getButtonPressed("Down")) && !isDownBeingHeld)
@@ -530,7 +536,7 @@ public class GameGrid : NetworkBehaviour
         }
     }
 
-    private void HandleLeftMovement()
+    public void HandleLeftMovement()
     {
         float speed = player.GetMovementSpeed();
         if ((isPlayerOne ? Input.GetAxis("Horizontal_P1") < 0 : Input.GetAxis("Horizontal_P2") < 0 || aIPlayer.getButtonPressed("Left")) && !isLeftBeingHeld)
@@ -556,7 +562,7 @@ public class GameGrid : NetworkBehaviour
         }
     }
 
-    private void TryGoLeft()
+    public void TryGoLeft()
     {
         bool isBlocked = false;
         for (int x = 0; x < 3; x++)
@@ -579,7 +585,7 @@ public class GameGrid : NetworkBehaviour
         }
     }
 
-    private void HandleRightMovement()
+    public void HandleRightMovement()
     {
         float speed = player.GetMovementSpeed();
         if ((isPlayerOne ? Input.GetAxis("Horizontal_P1") > 0 : Input.GetAxis("Horizontal_P2") > 0 || aIPlayer.getButtonPressed("Right")) && !isRightBeingHeld)
@@ -916,6 +922,8 @@ public class GameGrid : NetworkBehaviour
     internal void DropNewCubeAt(int x, int y)
     {
         GameCube cube = GameObject.Instantiate<GameCube>(currentPiece.cube); // Probbably unsafe.
+        NetworkServer.Spawn(cube.gameObject);
+
         cube.Initialize(player, dice);
         grid[currentPiecePosition.x + x - 1, currentPiecePosition.y + y - 1] = cube;
         cube.transform.parent = this.transform;
