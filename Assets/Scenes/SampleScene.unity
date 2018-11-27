@@ -35816,17 +35816,17 @@ MonoBehaviour:
       drawAudio: 1
       lastCalculatedHeight: 126
       move: 0
-    - audio: {fileID: 8300000, guid: 8b37633e74157704eac1394ff042a55b, type: 3}
+    - audio: {fileID: 8300000, guid: 4e5c57e1f4dbae542be19ceccc31e2a6, type: 3}
       text: 'Teeke: Comms are outside my specialty. We''d need an expert.'
       duration: 1.08
-      portrait: {fileID: 21300000, guid: 44bb72255e0f5a0468383532be72c071, type: 3}
+      portrait: {fileID: 21300000, guid: b6b95699a0c35eb4083f7a4d28a0ba76, type: 3}
       drawAudio: 1
       lastCalculatedHeight: 126
       move: 0
-    - audio: {fileID: 8300000, guid: 8b37633e74157704eac1394ff042a55b, type: 3}
+    - audio: {fileID: 8300000, guid: 4e5c57e1f4dbae542be19ceccc31e2a6, type: 3}
       text: 'Teeke: But I have lots of contacts. I think I know just the guy...'
       duration: 1.08
-      portrait: {fileID: 21300000, guid: 44bb72255e0f5a0468383532be72c071, type: 3}
+      portrait: {fileID: 21300000, guid: b6b95699a0c35eb4083f7a4d28a0ba76, type: 3}
       drawAudio: 1
       lastCalculatedHeight: 126
       move: 0
@@ -53104,25 +53104,25 @@ MonoBehaviour:
     singleAudio_MultiSub: 0
     mainAudio: {fileID: 0}
     phrases:
-    - audio: {fileID: 8300000, guid: 8b37633e74157704eac1394ff042a55b, type: 3}
+    - audio: {fileID: 8300000, guid: 42f0c5970ff00b04491d0a06f9efe7a7, type: 3}
       text: '???: Halt! Your ship''s transmisison signature matches that of fugitive
         I2G0M1C8 "Kestral"...'
       duration: 1.9
-      portrait: {fileID: 21300000, guid: 44bb72255e0f5a0468383532be72c071, type: 3}
+      portrait: {fileID: 21300000, guid: a8d71245daf417a49a09a0e48e6d794b, type: 3}
       drawAudio: 1
       lastCalculatedHeight: 126
       move: 0
-    - audio: {fileID: 8300000, guid: 8b37633e74157704eac1394ff042a55b, type: 3}
+    - audio: {fileID: 8300000, guid: 42f0c5970ff00b04491d0a06f9efe7a7, type: 3}
       text: '???: ...who is wanted for unlawful possession of weapons-grade iridium.'
       duration: 1.9
-      portrait: {fileID: 21300000, guid: 44bb72255e0f5a0468383532be72c071, type: 3}
+      portrait: {fileID: 21300000, guid: a8d71245daf417a49a09a0e48e6d794b, type: 3}
       drawAudio: 1
       lastCalculatedHeight: 126
       move: 0
-    - audio: {fileID: 8300000, guid: 8b37633e74157704eac1394ff042a55b, type: 3}
+    - audio: {fileID: 8300000, guid: 42f0c5970ff00b04491d0a06f9efe7a7, type: 3}
       text: '???: Please power your engines down and submit to deepscan screening.'
       duration: 1.9
-      portrait: {fileID: 21300000, guid: 44bb72255e0f5a0468383532be72c071, type: 3}
+      portrait: {fileID: 21300000, guid: a8d71245daf417a49a09a0e48e6d794b, type: 3}
       drawAudio: 1
       lastCalculatedHeight: 126
       move: 0
@@ -53133,11 +53133,11 @@ MonoBehaviour:
       drawAudio: 1
       lastCalculatedHeight: 126
       move: 0
-    - audio: {fileID: 8300000, guid: 8b37633e74157704eac1394ff042a55b, type: 3}
+    - audio: {fileID: 8300000, guid: 4e5c57e1f4dbae542be19ceccc31e2a6, type: 3}
       text: 'Teeke: When we hailed that spaceport to go shopping, it must have picked
         up our comms signal.'
       duration: 1.9
-      portrait: {fileID: 21300000, guid: 44bb72255e0f5a0468383532be72c071, type: 3}
+      portrait: {fileID: 21300000, guid: b6b95699a0c35eb4083f7a4d28a0ba76, type: 3}
       drawAudio: 1
       lastCalculatedHeight: 126
       move: 0
@@ -53148,10 +53148,10 @@ MonoBehaviour:
       drawAudio: 1
       lastCalculatedHeight: 126
       move: 0
-    - audio: {fileID: 8300000, guid: 8b37633e74157704eac1394ff042a55b, type: 3}
+    - audio: {fileID: 8300000, guid: 4e5c57e1f4dbae542be19ceccc31e2a6, type: 3}
       text: 'Teeke: Sounds like a plan. I''ll charge up the weapons.'
       duration: 1.9
-      portrait: {fileID: 21300000, guid: 44bb72255e0f5a0468383532be72c071, type: 3}
+      portrait: {fileID: 21300000, guid: b6b95699a0c35eb4083f7a4d28a0ba76, type: 3}
       drawAudio: 1
       lastCalculatedHeight: 126
       move: 0
@@ -67347,11 +67347,11 @@ MonoBehaviour:
     singleAudio_MultiSub: 0
     mainAudio: {fileID: 0}
     phrases:
-    - audio: {fileID: 8300000, guid: 4e5c57e1f4dbae542be19ceccc31e2a6, type: 3}
+    - audio: {fileID: 8300000, guid: 8b37633e74157704eac1394ff042a55b, type: 3}
       text: 'Pyros: As sad as it is to part with that money, I gotta admit, I feel
         a lot safer with some new tech in our-'
       duration: 0.5
-      portrait: {fileID: 21300000, guid: b6b95699a0c35eb4083f7a4d28a0ba76, type: 3}
+      portrait: {fileID: 21300000, guid: 44bb72255e0f5a0468383532be72c071, type: 3}
       drawAudio: 1
       lastCalculatedHeight: 126
       move: 0

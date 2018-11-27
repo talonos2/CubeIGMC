@@ -352,6 +352,7 @@ public class Combatant : NetworkBehaviour
             damage -= shields;
             shields = 0;
             health -= damage;
+            Debug.Log("Damage has been taken: " + damage + ", " + health);
         }
 
         if (damage <= 0)

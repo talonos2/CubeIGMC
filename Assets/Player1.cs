@@ -16,7 +16,7 @@ public class Player1 : NetworkBehaviour
 	// Use this for initialization
 	void Start ()
     {
-        Time.timeScale = 0;
+        //Time.timeScale = 0;
         home = GameObject.Find("GameGridHome");
         guest = GameObject.Find("GameGridGuest");
         gameGridHome = home.GetComponent<GameGrid>();
