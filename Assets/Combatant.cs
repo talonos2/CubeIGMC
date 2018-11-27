@@ -30,20 +30,20 @@ public class Combatant : NetworkBehaviour
     public CubeHolder cubeHolder;
 
     public CombatInitializer initializer;
-    private PlayerCharacterSheet ThisPlayer;
+    private PlayerCharacterSheet ThisPlayer= new PlayerCharacterSheet();
     private GameGrid ThisGameGrid;
 
     public void Start()
     {
-        ThisPlayer = new PlayerCharacterSheet();
+ 
         ThisGameGrid = transform.parent.parent.parent.GetComponentInChildren<GameGrid>();
 
         //Example of making player 2 customly weaker or stronger. 
-        //   if (transform.parent.parent.parent.name.Equals("Player2")) {
-        //        ThisPlayer.BaseHealth = 30;
-        //        ThisPlayer.WeaponEquippedID = 11;
-        //        ThisPlayer.ShieldEquippedID = 0;
-        //}
+           if (transform.parent.parent.parent.name.Equals("Player2")) {
+                ThisPlayer.BaseHealth = 30;
+                ThisPlayer.WeaponEquippedID = 9;
+                ThisPlayer.ShieldEquippedID = 9;
+        }
 
         health = ThisPlayer.GetMaxHealth();
         energy = ThisPlayer.GetMaxEnergy() / 4;
@@ -409,6 +409,10 @@ public class Combatant : NetworkBehaviour
         ThisPlayer = PlayerCharacterSheet.GetNPC(NPCReference);
     }
 
+    public void SetRandomNPC(int Level) {
+        ThisPlayer = PlayerCharacterSheet.GetRandomNPC(Level);
+    }
+
     public void SetCharacterSheet(string SaveFileName) {
         ThisPlayer = PlayerCharacterSheet.LoadFromDisk(SaveFileName);
     }
@@ -417,4 +421,5 @@ public class Combatant : NetworkBehaviour
         PlayerCharacterSheet.SaveToDisk(ThisPlayer, SaveFileName);
     }
 
+    //missionmanager.instance.player1.
 }

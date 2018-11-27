@@ -568,10 +568,26 @@ public class ItemClass {
 
                 break;
             case 9:
-
-                break;
+                for (int x = 0; x < 5; x++)
+                {
+                    for (int y = 0; y < 9; y++)
+                    {
+                        if (y % 2 == 0 && x % 2 == 0)
+                            cellTypes[x + 8, y + 7] = CellType.SHIELD;
+                    }
+                }
+                break;            
             case 10:
-
+                for (int x = 0; x < 5; x++)
+                {
+                    for (int y = 0; y < 9; y++)
+                    {
+                        if (y % 2 == 0 && x % 2 == 0)
+                            cellTypes[x + 8, y + 7] = CellType.SHIELD;
+                        if (y % 2 == 1 && x % 2 == 1)
+                            cellTypes[x + 8, y + 7] = CellType.SHIELD;
+                    }
+                }
                 break;
             case 11:
 
@@ -623,7 +639,7 @@ public class ItemClass {
                 }
                 break;
             case 5:
-               
+                
 
                 break;
             case 6:
@@ -640,16 +656,20 @@ public class ItemClass {
                 {
                     for (int y = 0; y < 9; y++)
                     {
-                        cellTypes[x + 2, y + 7] = CellType.ATTACK;
+                        if (y % 2 == 0 && x % 2 == 0)
+                            cellTypes[x + 2, y + 7] = CellType.ATTACK;
                     }
                 }
                 break;
             case 10:
-                for (int x = 0; x < 6; x++)
+                for (int x = 0; x < 5; x++)
                 {
                     for (int y = 0; y < 9; y++)
                     {
-                        cellTypes[x + 2, y + 7] = CellType.ATTACK;
+                        if (y % 2 == 0 && x % 2 == 0)
+                            cellTypes[x + 2, y + 7] = CellType.ATTACK;
+                        if (y % 2 == 1 && x % 2 == 1)
+                            cellTypes[x + 2, y + 7] = CellType.ATTACK;
                     }
                 }
                 break;
