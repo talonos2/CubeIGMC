@@ -26,10 +26,13 @@ public class CombatInitializer : NetworkBehaviour {
     // Use this for initialization
     void Start ()
     {
- //       if (Sharedgamedata.issingleplayer == false)
- //       {
- //           netWindow.SetActive(false);
- //       }
+        //       if (Sharedgamedata.issingleplayer == false)
+        //       {
+        //           netWindow.SetActive(false);
+        //       }
+        if (!Sharedgamedata.issingleplayer)
+            netWindow.SetActive(false);
+
     }
 
     bool setup = false;

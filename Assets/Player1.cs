@@ -21,6 +21,7 @@ public class Player1 : NetworkBehaviour
         guest = GameObject.Find("GameGridGuest");
         gameGridHome = home.GetComponent<GameGrid>();
         gameGridGuest = guest.GetComponent<GameGrid>();
+        Sharedgamedata.issingleplayer = false;
         if (isLocalPlayer)
         {
             gameGridHome.isPlayerOne = true;
@@ -41,6 +42,7 @@ public class Player1 : NetworkBehaviour
         {
             if (!started)
             {
+                Debug.Log("timestarts");
                 Time.timeScale = 1;
                 started = true;
             }
