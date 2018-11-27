@@ -19,7 +19,7 @@ public class GameGrid : NetworkBehaviour
     public PowerupEffect powerUpEffect;
     public TextAsset aIText;
     public CubeConversionManager cubeConversionManager;
-    private AIPlayer aIPlayer = new AIPlayer();
+    internal AIPlayer aIPlayer = new AIPlayer();
 
     public GameObject attackCellPrefab;
     public GameObject shieldCellPrefab;
@@ -36,10 +36,18 @@ public class GameGrid : NetworkBehaviour
 
     public bool justExitedMenu;
 
-    internal void LoadAI()
+    internal void LoadAI(bool isRobotic, float speed, bool loop)
     {
         string inputJson = aIText.text;
         aIPlayer = JsonUtility.FromJson<AIPlayer>(inputJson);
+        if (isRobotic)
+        {
+            aIPlayer.MakeRobotic(speed);
+        }
+        if (loop)
+        {
+            aIPlayer.MakeLoop();
+        }
     }
 
     internal int GetAISeed()
@@ -97,6 +105,7 @@ public class GameGrid : NetworkBehaviour
             {
                 if (cellTypeFX[x,y] != null)
                 {
+                    player.RemoveDeathEffectFromDamageManager(cellTypeFX[x, y]);
                     GameObject.Destroy(cellTypeFX[x, y].gameObject);
                     cellTypeFX[x, y] = null;
         }
@@ -130,11 +139,6 @@ public class GameGrid : NetworkBehaviour
     public Combatant player;
     public bool isPlayerOne = true;
 
-    internal void SetEnemy()
-    {
-
-    }
-
     private Vector2Int prevPiecePosition = new Vector2Int(1, 1);//(7, 16);
     private Vector2Int currentPiecePosition = new Vector2Int(1, 1);//(7, 16);
 
@@ -165,7 +169,7 @@ public class GameGrid : NetworkBehaviour
     {
         PlayingPiece toReturn = GameObject.Instantiate(piecePrefab);
 
-        int pieceSize = pieceSizeBag[dice.NextInt(0, pieceSizeBag.Length)];
+
 
         if (forcedPieces.Count > 0)
         {
@@ -175,6 +179,8 @@ public class GameGrid : NetworkBehaviour
         }
         else
         {
+            int num = dice.NextInt(0, pieceSizeBag.Length);
+            int pieceSize = pieceSizeBag[num];
             toReturn.Initialize(this.player, dice, pieceArray[pieceSize][dice.NextInt(0, pieceArray[pieceSize].Length)]);
         }
 
@@ -668,7 +674,6 @@ public class GameGrid : NetworkBehaviour
         for (int x = 0; x < numberOfParticles; x++)
         {
             float delay = UnityEngine.Random.Range(0, Mathf.Sqrt(numberOfSquaresMade/2));
-            Debug.Log(numberOfSquaresMade + ", " + delay);
             delays.Add(delay);
         }
 
@@ -774,7 +779,6 @@ public class GameGrid : NetworkBehaviour
         y /= cubesToExplode.Count;
         z /= cubesToExplode.Count;
         Vector3 centroid = new Vector3(x, y+1.5f, z-.5f);
-        Debug.Log("Centroid is at " + centroid);
         return centroid;
     }
 

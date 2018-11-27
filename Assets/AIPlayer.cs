@@ -43,13 +43,14 @@ internal class AIPlayer
         BufferFurtherCommands();
     }
 
+    private float timeElapsed = 0;
+
     private void BufferFurtherCommands()
-    {
-        if (firstTimeStamp == 0)
+    { 
+        if (!MissionManager.freezeAI)
         {
-            this.firstTimeStamp = Time.timeSinceLevelLoad;
+            timeElapsed += Time.deltaTime;
         }
-        float timeElapsed = Time.timeSinceLevelLoad - this.firstTimeStamp;
         if (events.Count == 0)
         {
             return;
@@ -57,7 +58,6 @@ internal class AIPlayer
         while (events[0].time < timeElapsed)
         {
             InputEvent ie = events[0];
-            Debug.Log("At " + ie.time + ", got" + ie.eventType);
             commands.Enqueue(ie.eventType);
             events.RemoveAt(0);
             if (events.Count == 0)
@@ -170,5 +170,30 @@ internal class AIPlayer
             this.time = time;
         }
 
+    }
+
+    public void MakeRobotic(float speed)
+    {
+            float timeSoFar = 0;
+            foreach (InputEvent ie in events)
+            {
+                timeSoFar += speed;
+                ie.time = timeSoFar;
+            }
+    }
+
+    public void MakeLoop()
+    {
+        float timeToPlay = events[events.Count - 1].time;
+        for (int x = 0; x < 4; x++)
+        {
+            int threeGuessesHowICausedAnInfiniteLoopHere = events.Count;
+            for (int y = 0; y < threeGuessesHowICausedAnInfiniteLoopHere; y++)
+            {
+                InputEvent newIE = new InputEvent(events[y].eventType, events[y].time+timeToPlay);
+                events.Add(newIE);
+            }
+            timeToPlay *= 2;
+        }
     }
 }

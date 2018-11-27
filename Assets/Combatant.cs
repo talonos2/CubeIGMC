@@ -8,7 +8,7 @@ public class Combatant : NetworkBehaviour
 {
     internal float health;
     internal int energy;
-    private float shields;
+    public float shields;
     private float psi;
     private float attackCharge;
     public Combatant enemy;
@@ -112,12 +112,17 @@ public class Combatant : NetworkBehaviour
     {
 
         
-        if (howManyItemsIHave < 0) //XILLITH REPLACE THIS WHEN WE GET ITEMS! (The door should have an "Item" that cuts its maxHP in half.)
+        if (howManyItemsIHave == -1) //XILLITH REPLACE THIS WHEN WE GET ITEMS! (The door should have an "Item" that cuts its maxHP in half.)
         {
-            return 50;
+            return 75;
         }
         return ThisPlayer.GetMaxHealth() * (isImmortal ? 100 : 1);
 
+    }
+
+    internal void RemoveDeathEffectFromDamageManager(DeathEffect effect)
+    {
+        this.damageManager.stuffThatHappensInTheFinalExplosion.Remove(effect);
     }
 
     private int MaxEnergy()
@@ -205,12 +210,12 @@ public class Combatant : NetworkBehaviour
                 }
                 break;
             case 2:
-                for (int x = 0; x < 3; x++)
+                for (int x = 0; x < 2; x++)
                 {
-                    for (int y = 0; y < 3; y++)
+                    for (int y = 0; y < 4; y++)
                     {
                         cellTypes[x + 2, y + 10] = CellType.ATTACK;
-                        cellTypes[x + 10, y + 10] = CellType.SHIELD;
+                        cellTypes[x + 11, y + 10] = CellType.SHIELD;
                     }
                 }
                 break;
@@ -221,6 +226,15 @@ public class Combatant : NetworkBehaviour
                     {
                         cellTypes[x + 2, y + 10] = CellType.ATTACK;
                         cellTypes[x + 9, y + 10] = CellType.SHIELD;
+                    }
+                }
+                break;
+            case -1:
+                for (int x = 5; x <= 9; x++)
+                {
+                    for (int y = 5; y <= 15; y++)
+                    {
+                        cellTypes[x, y] = CellType.ATTACK;
                     }
                 }
                 break;
@@ -368,6 +382,11 @@ public class Combatant : NetworkBehaviour
     //Taking Damage and attendant SFX:
     internal void TakeDamage(float damage)
     {
+        if (!IsAlive())
+        {
+            //You can take damage if you're dead if there was a bullet going towards you when you exploded.
+            return;
+        }
         if (shields > damage)
         {
             shields -= damage;
@@ -412,8 +431,16 @@ public class Combatant : NetworkBehaviour
         //if dead...
         if (!IsAlive())
         {
-            initializer.StartDeathSequence();
             damageManager.ExplodeRemainingShip();
+            if (MissionManager.TriggerCallbackOnShipDestroyed)
+            {
+                MissionManager.instance.grossCallbackHack.enabled = true;
+                MissionManager.TriggerCallbackOnShipDestroyed = false;
+            }
+            else
+            {
+                initializer.StartDeathSequence();
+            }
         }
     }
 

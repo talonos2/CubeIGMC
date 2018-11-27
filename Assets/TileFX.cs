@@ -16,6 +16,7 @@ public class TileFX : DeathEffect
     public override void FinalityExplosion()
     {
         this.isExploding = true;
+        rb = gameObject.GetComponent<Rigidbody>();
         this.rb.isKinematic = false;
         this.nm.enabled = true;
         cf.force = new Vector3(0, UnityEngine.Random.value + 1.5f, 0);
