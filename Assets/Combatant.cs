@@ -8,7 +8,7 @@ public class Combatant : NetworkBehaviour
 {
     internal float health;
     internal int energy;
-    public float shields;
+    private float shields;
     private float psi;
     private float attackCharge;
     public Combatant enemy;
@@ -31,15 +31,19 @@ public class Combatant : NetworkBehaviour
 
     public CombatInitializer initializer;
     private PlayerCharacterSheet ThisPlayer= new PlayerCharacterSheet();
+    private GameGrid ThisGameGrid;
 
     public void Start()
     {
         ThisPlayer = new PlayerCharacterSheet();
+        ThisGameGrid = transform.parent.parent.parent.GetComponentInChildren<GameGrid>();
 
         //Example of making player 2 customly weaker or stronger. 
-     //   if (transform.parent.parent.parent.name.Equals("Player2")) {
-     //       ThisPlayer.BaseHealth = 30;
-     //   }
+        //   if (transform.parent.parent.parent.name.Equals("Player2")) {
+        //        ThisPlayer.BaseHealth = 30;
+        //        ThisPlayer.WeaponEquippedID = 11;
+        //        ThisPlayer.ShieldEquippedID = 0;
+        //}
 
         health = ThisPlayer.GetMaxHealth();
         energy = ThisPlayer.GetMaxEnergy() / 4;
@@ -91,6 +95,11 @@ public class Combatant : NetworkBehaviour
         return randomBag[dice.NextInt(0, randomBag.Count)];
     }
 
+    internal void RemoveDeathEffectFromDamageManager(TileFX tileFX)
+    {
+        damageManager.stuffThatHappensInTheFinalExplosion.Remove(tileFX);
+    }
+
     //Methods that return combat statistics:
 
     private float MaxShields()
@@ -110,19 +119,7 @@ public class Combatant : NetworkBehaviour
 
     private float MaxHealth()
     {
-
-        
-        if (howManyItemsIHave == -1) //XILLITH REPLACE THIS WHEN WE GET ITEMS! (The door should have an "Item" that cuts its maxHP in half.)
-        {
-            return 75;
-        }
         return ThisPlayer.GetMaxHealth() * (isImmortal ? 100 : 1);
-
-    }
-
-    internal void RemoveDeathEffectFromDamageManager(DeathEffect effect)
-    {
-        this.damageManager.stuffThatHappensInTheFinalExplosion.Remove(effect);
     }
 
     private int MaxEnergy()
@@ -190,56 +187,12 @@ public class Combatant : NetworkBehaviour
         return 5;
     }
 
-    public int howManyItemsIHave = 3;
-
     //Modify this to change what a player's grid looks like when they start playing.
     internal void SetGridcellsStartingState(CellType[,] cellTypes)
     {
-        //XILLITH: This is a set of bad hacks for now. When you do an inventory system, replace these hacks with inventory items!
-        switch (howManyItemsIHave)
-        {
-            case 0:
-                return;
-            case 1:
-                for (int x = 0; x < 2; x++)
-                {
-                    for (int y = 0; y < 4; y++)
-                    {
-                        cellTypes[x + 2, y + 10] = CellType.ATTACK;
-                    }
-                }
-                break;
-            case 2:
-                for (int x = 0; x < 2; x++)
-                {
-                    for (int y = 0; y < 4; y++)
-                    {
-                        cellTypes[x + 2, y + 10] = CellType.ATTACK;
-                        cellTypes[x + 11, y + 10] = CellType.SHIELD;
-                    }
-                }
-                break;
-            case 3:
-                for (int x = 0; x < 4; x++)
-                {
-                    for (int y = 0; y < 4; y++)
-                    {
-                        cellTypes[x + 2, y + 10] = CellType.ATTACK;
-                        cellTypes[x + 9, y + 10] = CellType.SHIELD;
-                    }
-                }
-                break;
-            case -1:
-                for (int x = 5; x <= 9; x++)
-                {
-                    for (int y = 5; y <= 15; y++)
-                    {
-                        cellTypes[x, y] = CellType.ATTACK;
-                    }
-                }
-                break;
-        }
-
+        ThisPlayer.GetWeaponPositions(cellTypes);
+        ThisPlayer.GetShieldPositions(cellTypes);
+        ThisPlayer.GetPsiPositions(cellTypes);
     }
 
     //Information methods:
@@ -382,11 +335,6 @@ public class Combatant : NetworkBehaviour
     //Taking Damage and attendant SFX:
     internal void TakeDamage(float damage)
     {
-        if (!IsAlive())
-        {
-            //You can take damage if you're dead if there was a bullet going towards you when you exploded.
-            return;
-        }
         if (shields > damage)
         {
             shields -= damage;
@@ -431,16 +379,8 @@ public class Combatant : NetworkBehaviour
         //if dead...
         if (!IsAlive())
         {
+            initializer.StartDeathSequence();
             damageManager.ExplodeRemainingShip();
-            if (MissionManager.TriggerCallbackOnShipDestroyed)
-            {
-                MissionManager.instance.grossCallbackHack.enabled = true;
-                MissionManager.TriggerCallbackOnShipDestroyed = false;
-            }
-            else
-            {
-                initializer.StartDeathSequence();
-            }
         }
     }
 

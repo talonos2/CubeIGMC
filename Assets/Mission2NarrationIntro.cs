@@ -117,7 +117,6 @@ public class Mission2NarrationIntro : Mission
                 MissionManager.triggerCallbacksOnShipReboot = false;
                 break;
             case 4:  //Narration complete, tutorial thing pops up
-                gridToSetup.player.howManyItemsIHave = 2;
                 gridToSetup.SetGridCellTypeStateAndAttendentVFX();
                 foreach (GameObject go in gridAttachedPieces)
                 {
@@ -169,8 +168,6 @@ public class Mission2NarrationIntro : Mission
             if (timeSinceStepStarted == 0)
             {
                 MissionManager.freezeAI = true;
-                gridToSetup.player.howManyItemsIHave = 1;
-                gridToSetup.player.enemy.howManyItemsIHave = -1;
                 gridToSetup.SetGridCellTypeStateAndAttendentVFX();
                 gridToSetup.player.energy = 160;
                 cameraToMove.transform.localPosition = new Vector3(-25, 32, -18.7f);

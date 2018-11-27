@@ -143,7 +143,7 @@ public class Mission1NarrationIntro : Mission
                 gridToSetup.DropNewCubeAt(5, 17);
 
                 gridToSetup.player.energy = 35;
-                gridToSetup.player.howManyItemsIHave = 0;
+
                 gridToSetup.SetGridCellTypeStateAndAttendentVFX();
 
                 timeSinceStepStarted = 0f;
@@ -197,7 +197,6 @@ public class Mission1NarrationIntro : Mission
                 break;
             case 11: //Dialogue finished, attack spots appear.
                 MissionManager.isInCutscene = false;
-                gridToSetup.player.howManyItemsIHave = 1;
                 gridToSetup.SetGridCellTypeStateAndAttendentVFX();
                 MissionManager.triggerCallbacksOnBlockDrop = false;
                 MissionManager.triggerCallbacksOnAttackHit = true;
@@ -257,7 +256,6 @@ public class Mission1NarrationIntro : Mission
         spaceLightToDisable.enabled = false;
         shipToMakeNotWiggle.enabled = false;
 
-        gridToSetup.player.enemy.howManyItemsIHave = -1;
         gridToSetup.player.enemy.damageManager = damageManagerForDoor;
 
         MissionManager.isInCutscene = true;

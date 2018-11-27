@@ -24,7 +24,6 @@ public class FreePlayMission : Mission {
     {
             if (timeSinceStepStarted == 0)
             {
-                gridToCheatWith.player.howManyItemsIHave = -1;
                 gridToCheatWith.SetGridCellTypeStateAndAttendentVFX();
                 gridToCheatWith.player.energy = 0;
 
