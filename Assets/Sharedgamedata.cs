@@ -1,4 +1,4 @@
 ﻿internal class Sharedgamedata
 {
-    internal static bool issingleplayer;
+    internal static bool issingleplayer = true;
 }

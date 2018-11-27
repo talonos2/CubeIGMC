@@ -77,7 +77,12 @@ public class GameGrid : NetworkBehaviour
 
         SetupPieceArray();
 
+        Debug.Log("IN Set Seed");
+
         currentPiece = MakeAPiece();
+
+        Debug.Log(currentPiece);
+
         currentPiece.transform.parent = this.transform;
         UpdateCurrentPieceTransform();
 
@@ -209,6 +214,7 @@ public class GameGrid : NetworkBehaviour
         PlayingPiece oldPiece2 = nextPiece;
         currentPiece = MakeAPiece();
         nextPiece = MakeAPiece();
+        Debug.Log(oldPiece1);
         GameObject.Destroy(oldPiece1.gameObject);
         GameObject.Destroy(oldPiece2.gameObject);
 
@@ -428,6 +434,7 @@ public class GameGrid : NetworkBehaviour
                 //Make some sort of sound.
             }
         }
+        UpdateCurrentPieceTransform();
     }
         public void proxyUpdate()
     {
@@ -797,6 +804,8 @@ public class GameGrid : NetworkBehaviour
         }
         if (!isBlocked)
         {
+            this.gameObject.name = "GameGrid"+UnityEngine.Random.Range(1, 100);
+            Debug.Log(this.gameObject.name);
             prevPiecePosition = currentPiecePosition;
             currentPiecePosition = currentPiecePosition + new Vector2Int(+1, 0);
             if (isRecording) { recorder.RegisterEvent(GameRecorder.RIGHT); }
