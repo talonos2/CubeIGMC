@@ -52,7 +52,6 @@ public class Mission2NarrationIntro : Mission
         switch (stepNum)
         {
             case 1:  // Finish First Narration, Tractor beam turns on, begin second narration;
-                Debug.Log("Here");
                 darkness.color = new Color(0, 0, 0, 0);
                 tractorParticles.gameObject.SetActive(true);
                 narrations[1].gameObject.SetActive(true);
@@ -137,6 +136,7 @@ public class Mission2NarrationIntro : Mission
                 MissionManager.isInCutscene = true;
                 MissionManager.freezeAI = true;
                 narrations[3].gameObject.SetActive(true);
+                tractorParticles.gameObject.SetActive(false);
                 break;
             case 7:
                 timeSinceStepStarted = 0f;

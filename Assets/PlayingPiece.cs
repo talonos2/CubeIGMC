@@ -40,7 +40,8 @@ public class PlayingPiece : NetworkBehaviour
     private GameCube MakeCube(SeededRandom dice)
     {
         GameCube toReturn = GameObject.Instantiate(cube);
-        NetworkServer.Spawn(toReturn.gameObject);
+        if (!Sharedgamedata.issingleplayer && NetworkServer.active)
+            NetworkServer.Spawn(toReturn.gameObject);
 
         toReturn.Initialize(owner, dice);
         return toReturn;
@@ -51,7 +52,7 @@ public class PlayingPiece : NetworkBehaviour
         return piecemap[x, y] != null;
     }
 
-    /*REPLACE'd*/
+
     public bool RotateCW(bool[,] surroundings)
     {
         int newX = 0;
@@ -91,7 +92,7 @@ public class PlayingPiece : NetworkBehaviour
         //placeCubesCorrectly();
     }
 
-    /*REPLACE'd*/
+
     public bool rotateCCW(bool[,] surroundings)
     {
 

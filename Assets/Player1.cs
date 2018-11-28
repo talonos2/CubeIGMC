@@ -16,15 +16,18 @@ public class Player1 : NetworkBehaviour
 	// Use this for initialization
 	void Start ()
     {
-        Time.timeScale = 0;
+        //Time.timeScale = 0;
         home = GameObject.Find("GameGridHome");
         guest = GameObject.Find("GameGridGuest");
         gameGridHome = home.GetComponent<GameGrid>();
         gameGridGuest = guest.GetComponent<GameGrid>();
+        Sharedgamedata.issingleplayer = false;
         if (isLocalPlayer)
         {
             gameGridHome.isPlayerOne = true;
         }
+
+
     }
 	
 	// Update is called once per frame
@@ -33,7 +36,7 @@ public class Player1 : NetworkBehaviour
         if (isLocalPlayer)
         {
             //            Debug.Log(gameGridHome);
-            //            Debug.Log("I do a thing");
+                        Debug.Log("I do one");
             gameGridHome.proxyUpdate();
             //            Debug.Log("local");
         }
@@ -41,10 +44,11 @@ public class Player1 : NetworkBehaviour
         {
             if (!started)
             {
+                Debug.Log("timestarts");
                 Time.timeScale = 1;
                 started = true;
             }
-
+            Debug.Log("I do the other");
             gameGridGuest.proxyUpdate();
 //            Debug.Log("not local");
 

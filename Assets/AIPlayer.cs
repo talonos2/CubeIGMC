@@ -179,7 +179,7 @@ internal class AIPlayer
             {
                 timeSoFar += speed;
                 ie.time = timeSoFar;
-            }
+        }
     }
 
     public void MakeLoop()

@@ -77,7 +77,12 @@ public class GameGrid : NetworkBehaviour
 
         SetupPieceArray();
 
+        Debug.Log("IN Set Seed");
+
         currentPiece = MakeAPiece();
+
+        Debug.Log(currentPiece);
+
         currentPiece.transform.parent = this.transform;
         UpdateCurrentPieceTransform();
 
@@ -181,7 +186,8 @@ public class GameGrid : NetworkBehaviour
     private PlayingPiece MakeAPiece()
     {
         PlayingPiece toReturn = GameObject.Instantiate(piecePrefab);
-        NetworkServer.Spawn(toReturn.gameObject);
+        if (!Sharedgamedata.issingleplayer && NetworkServer.active)
+            NetworkServer.Spawn(toReturn.gameObject);
 
 
 
@@ -208,6 +214,7 @@ public class GameGrid : NetworkBehaviour
         PlayingPiece oldPiece2 = nextPiece;
         currentPiece = MakeAPiece();
         nextPiece = MakeAPiece();
+        Debug.Log(oldPiece1);
         GameObject.Destroy(oldPiece1.gameObject);
         GameObject.Destroy(oldPiece2.gameObject);
 
@@ -275,13 +282,15 @@ public class GameGrid : NetworkBehaviour
     public InvisibleDelayedChargeGiver chargeGiverPrefab;
 
     // Update is called once per frame
-    void Update ()
+    void Update()
     {
 
-    }
+        if (!Sharedgamedata.issingleplayer)
+            return;
 
-    public void proxyUpdate()
-    {
+
+
+
         if (Time.timeScale == 0)
         {
             justExitedMenu = true;
@@ -305,7 +314,7 @@ public class GameGrid : NetworkBehaviour
             aIPlayer.TickAI();
         }
 
-        if (isPlayerOne ? (Input.GetButton("Rotate1_P1")&& Input.GetButton("Rotate2_P1")): (Input.GetButton("Rotate1_P2") && Input.GetButton("Rotate2_P2")))
+        if (isPlayerOne ? (Input.GetButton("Rotate1_P1") && Input.GetButton("Rotate2_P1")) : (Input.GetButton("Rotate1_P2") && Input.GetButton("Rotate2_P2")))
         {
             float oldTimeHeld = timeHeldBothRotatesAtOnce;
             timeHeldBothRotatesAtOnce += Time.deltaTime;
@@ -332,7 +341,7 @@ public class GameGrid : NetworkBehaviour
             if (aIPlayer.GetButtonDown("DOWN")) { TryGoDown(); }
             if (aIPlayer.GetButtonDown("LEFT")) { TryGoLeft(); }
             if (aIPlayer.GetButtonDown("RIGHT")) { TryGoRight(); }
-            if (aIPlayer.GetButtonDown("REBOOT")) {Reboot(); }
+            if (aIPlayer.GetButtonDown("REBOOT")) { Reboot(); }
         }
         else
         {
@@ -342,7 +351,7 @@ public class GameGrid : NetworkBehaviour
             HandleRightMovement();
         }
 
-        if (isPlayerOne ? Input.GetButtonDown("Place_P1") && justExitedMenu == false  : (Input.GetButtonDown("Place_P2")|| aIPlayer.GetButtonDown("Place")) && justExitedMenu == false)
+        if (isPlayerOne ? Input.GetButtonDown("Place_P1") && justExitedMenu == false : (Input.GetButtonDown("Place_P2") || aIPlayer.GetButtonDown("Place")) && justExitedMenu == false)
         {
             //Fallback: If there's somebohw someting directly underneath you, do not place. Should never happen in practice.
             for (int x = 0; x < 3; x++)
@@ -429,6 +438,166 @@ public class GameGrid : NetworkBehaviour
                 //Make some sort of sound.
             }
         }
+        UpdateCurrentPieceTransform();
+    }
+
+    public void proxyUpdate()
+    {
+
+//        if (!isLocalPlayer)
+//            return;
+
+
+
+        Debug.Log("active?" + NetworkServer.active);
+
+        if (Time.timeScale == 0)
+        {
+            justExitedMenu = true;
+            return;
+        }
+
+        if (MissionManager.isInCutscene)
+        {
+            return;
+        }
+        justExitedMenu = false;
+
+        if (Time.timeSinceLevelLoad > 300 & isRecording & !hasSaved)
+        {
+            recorder.PrintOut();
+            hasSaved = true;
+        }
+
+        if (isPlayedByAI)
+        {
+            aIPlayer.TickAI();
+        }
+
+        if (Input.GetButton("Rotate1_P1")&& Input.GetButton("Rotate2_P1") || (Input.GetButton("Rotate1_P2") && Input.GetButton("Rotate2_P2")))
+        {
+            float oldTimeHeld = timeHeldBothRotatesAtOnce;
+            timeHeldBothRotatesAtOnce += Time.deltaTime;
+            if ((int)timeHeldBothRotatesAtOnce != (int)oldTimeHeld)
+            {
+                ominousTick.Play();
+            }
+            if (timeHeldBothRotatesAtOnce > 5)
+            {
+                Reboot();
+                timeHeldBothRotatesAtOnce = 0;
+                if (isRecording) { recorder.RegisterEvent(GameRecorder.REBOOT); }
+            }
+        }
+        else
+        {
+            timeHeldBothRotatesAtOnce = 0;
+        }
+
+
+        if (isPlayedByAI)
+        {
+            if (aIPlayer.GetButtonDown("UP")) { TryGoUp(); }
+            if (aIPlayer.GetButtonDown("DOWN")) { TryGoDown(); }
+            if (aIPlayer.GetButtonDown("LEFT")) { TryGoLeft(); }
+            if (aIPlayer.GetButtonDown("RIGHT")) { TryGoRight(); }
+            if (aIPlayer.GetButtonDown("REBOOT")) {Reboot(); }
+        }
+        else
+        {
+            HandleUpMovement();
+            HandleDownMovement();
+            HandleLeftMovement();
+            HandleRightMovement();
+        }
+
+        if (((Input.GetButtonDown("Place_P1") || Input.GetButtonDown("Place_P2"))  && justExitedMenu == false))
+        {
+            //Fallback: If there's somebohw someting directly underneath you, do not place. Should never happen in practice.
+            for (int x = 0; x < 3; x++)
+            {
+                for (int y = 0; y < 3; y++)
+                {
+                    if (currentPiece.HasBlockAt(x, y) && IsInInvalidArea(currentPiecePosition.x + x - 1, currentPiecePosition.y + y - 1))
+                    {
+                        return;
+                    }
+                }
+            }
+
+            if (forcedPlacements.Count > 0)
+            {
+                bool inGoodPosition = false;
+                ForcedPlacementOptions forced = forcedPlacements[0];
+                for (int i = 0; i < forced.placements.Count; i++)
+                {
+                    Vector3 posit = forced.placements[i];
+                    if (currentPieceRotation == forced.rotations[i] &&
+                        currentPiecePosition.x == posit.x &&
+                        currentPiecePosition.y == posit.y)
+                    {
+                        inGoodPosition = true;
+                    }
+                }
+                if (!inGoodPosition)
+                {
+                    errorSound.Play();
+                    return;
+                }
+                forcedPlacements.RemoveAt(0);
+            }
+
+            if (isRecording) { recorder.RegisterEvent(GameRecorder.DROP); }
+            DropPiece();
+        }
+
+        if (Input.GetButtonDown("Rotate1_P1") || (Input.GetButtonDown("Rotate1_P2") || aIPlayer.GetButtonDown("Rotate1")))
+        {
+            bool[,] surroundings = new bool[3, 3];
+            for (int x = 0; x < 3; x++)
+            {
+                for (int y = 0; y < 3; y++)
+                {
+                    surroundings[x, y] = IsObstructedAt(currentPiecePosition.x + x - 1, currentPiecePosition.y + y - 1);
+                }
+            }
+            if (currentPiece.rotateCCW(surroundings))
+            {
+                prevPieceRotation = currentPieceRotation;
+                currentPieceRotation = (currentPieceRotation + 5) % 4;
+                timeSinceLastRot = 0f;
+                currentPiece.PlaySlideSound();
+                if (isRecording) { recorder.RegisterEvent(GameRecorder.CCW_ROTATE); }
+            }
+            else
+            {
+                //Make some sort of sound.
+            }
+        }
+
+        if (Input.GetButtonDown("Rotate2_P1") || (Input.GetButtonDown("Rotate2_P2") || aIPlayer.GetButtonDown("Rotate2")))
+        {
+            bool[,] surroundings = new bool[3, 3];
+            for (int x = 0; x < 3; x++)
+            {
+                for (int y = 0; y < 3; y++)
+                {
+                    surroundings[x, y] = IsObstructedAt(currentPiecePosition.x + x - 1, currentPiecePosition.y + y - 1);
+                }
+            }
+            if (currentPiece.RotateCW(surroundings))
+            {
+                prevPieceRotation = currentPieceRotation;
+                currentPieceRotation = (currentPieceRotation + 3) % 4;
+                timeSinceLastRot = 0f;
+                currentPiece.PlaySlideSound();
+                if (isRecording) { recorder.RegisterEvent(GameRecorder.CW_ROTATE); }
+            }
+            else
+            {
+                //Make some sort of sound.
+            }
+        }
 
         UpdateCurrentPieceTransform();
 
@@ -460,7 +629,7 @@ public class GameGrid : NetworkBehaviour
     public void HandleUpMovement()
     {
         float speed = player.GetMovementSpeed();
-        if ((isPlayerOne ? Input.GetAxis("Vertical_P1") > 0 : Input.GetAxis("Vertical_P2") > 0 || aIPlayer.getButtonPressed("Up")) && !isUpBeingHeld)
+        if ((Input.GetAxis("Vertical_P1") > 0 || Input.GetAxis("Vertical_P2") > 0 || aIPlayer.getButtonPressed("Up")) && !isUpBeingHeld)
         {
             isUpBeingHeld = true;
             timeSinceLastMoveUpEvent = speed * -buttonMashDebounceInput;
@@ -477,7 +646,7 @@ public class GameGrid : NetworkBehaviour
             }
             timeSinceLastMoveUpEvent += Time.deltaTime;
         }
-        if (!(isPlayerOne ? Input.GetAxis("Vertical_P1") > 0 : Input.GetAxis("Vertical_P2") > 0 || aIPlayer.getButtonPressed("Up")))
+        if (!(Input.GetAxis("Vertical_P1") > 0 || Input.GetAxis("Vertical_P2") > 0 || aIPlayer.getButtonPressed("Up")))
         {
             isUpBeingHeld = false;
         }
@@ -509,7 +678,7 @@ public class GameGrid : NetworkBehaviour
     public void HandleDownMovement()
     {
         float speed = player.GetMovementSpeed();
-        if ((isPlayerOne ? Input.GetAxis("Vertical_P1") < 0 : Input.GetAxis("Vertical_P2") < 0 || aIPlayer.getButtonPressed("Down")) && !isDownBeingHeld)
+        if ((Input.GetAxis("Vertical_P1") < 0 || Input.GetAxis("Vertical_P2") < 0 || aIPlayer.getButtonPressed("Down")) && !isDownBeingHeld)
         {
             isDownBeingHeld = true;
             timeSinceLastMoveDownEvent = speed * -buttonMashDebounceInput;
@@ -526,7 +695,7 @@ public class GameGrid : NetworkBehaviour
             }
             timeSinceLastMoveDownEvent += Time.deltaTime;
         }
-        if (!(isPlayerOne ? Input.GetAxis("Vertical_P1") < 0 : Input.GetAxis("Vertical_P2") < 0 || aIPlayer.getButtonPressed("Down")))
+        if (!(Input.GetAxis("Vertical_P1") < 0 || Input.GetAxis("Vertical_P2") < 0 || aIPlayer.getButtonPressed("Down")))
         {
             isDownBeingHeld = false;
         }
@@ -558,7 +727,7 @@ public class GameGrid : NetworkBehaviour
     public void HandleLeftMovement()
     {
         float speed = player.GetMovementSpeed();
-        if ((isPlayerOne ? Input.GetAxis("Horizontal_P1") < 0 : Input.GetAxis("Horizontal_P2") < 0 || aIPlayer.getButtonPressed("Left")) && !isLeftBeingHeld)
+        if ((Input.GetAxis("Horizontal_P1") < 0 || Input.GetAxis("Horizontal_P2") < 0 || aIPlayer.getButtonPressed("Left")) && !isLeftBeingHeld)
         {
             isLeftBeingHeld = true;
             timeSinceLastMoveLeftEvent = speed * -buttonMashDebounceInput;
@@ -575,7 +744,7 @@ public class GameGrid : NetworkBehaviour
             }
             timeSinceLastMoveLeftEvent += Time.deltaTime;
         }
-        if (!(isPlayerOne ? Input.GetAxis("Horizontal_P1") < 0 : Input.GetAxis("Horizontal_P2") < 0 || aIPlayer.getButtonPressed("Left")))
+        if (!(Input.GetAxis("Horizontal_P1") < 0 || Input.GetAxis("Horizontal_P2") < 0 || aIPlayer.getButtonPressed("Left")))
         {
             isLeftBeingHeld = false;
         }
@@ -607,7 +776,7 @@ public class GameGrid : NetworkBehaviour
     public void HandleRightMovement()
     {
         float speed = player.GetMovementSpeed();
-        if ((isPlayerOne ? Input.GetAxis("Horizontal_P1") > 0 : Input.GetAxis("Horizontal_P2") > 0 || aIPlayer.getButtonPressed("Right")) && !isRightBeingHeld)
+        if ((Input.GetAxis("Horizontal_P1") > 0 || Input.GetAxis("Horizontal_P2") > 0 || aIPlayer.getButtonPressed("Right")) && !isRightBeingHeld)
         {
             isRightBeingHeld = true;
             timeSinceLastMoveRightEvent = speed * -buttonMashDebounceInput;
@@ -624,7 +793,7 @@ public class GameGrid : NetworkBehaviour
             }
             timeSinceLastMoveRightEvent += Time.deltaTime;
         }
-        if (!(isPlayerOne ? Input.GetAxis("Horizontal_P1") > 0 : Input.GetAxis("Horizontal_P2") > 0 || aIPlayer.getButtonPressed("Right")))
+        if (!(Input.GetAxis("Horizontal_P1") > 0 || Input.GetAxis("Horizontal_P2") > 0 || aIPlayer.getButtonPressed("Right")))
         {
             isRightBeingHeld = false;
         }
@@ -645,6 +814,8 @@ public class GameGrid : NetworkBehaviour
         }
         if (!isBlocked)
         {
+//            this.gameObject.name = "GameGrid"+UnityEngine.Random.Range(1, 100);
+//            Debug.Log(this.gameObject.name);
             prevPiecePosition = currentPiecePosition;
             currentPiecePosition = currentPiecePosition + new Vector2Int(+1, 0);
             if (isRecording) { recorder.RegisterEvent(GameRecorder.RIGHT); }
@@ -939,7 +1110,8 @@ public class GameGrid : NetworkBehaviour
     internal void DropNewCubeAt(int x, int y)
     {
         GameCube cube = GameObject.Instantiate<GameCube>(currentPiece.cube); // Probbably unsafe.
-        NetworkServer.Spawn(cube.gameObject);
+        if (!Sharedgamedata.issingleplayer && NetworkServer.active)
+            NetworkServer.Spawn(cube.gameObject);
 
         cube.Initialize(player, dice);
         grid[currentPiecePosition.x + x - 1, currentPiecePosition.y + y - 1] = cube;

@@ -31,13 +31,14 @@ public class Combatant : NetworkBehaviour
 
     public CombatInitializer initializer;
     private PlayerCharacterSheet ThisPlayer= new PlayerCharacterSheet();
-    private GameGrid ThisGameGrid;
+    public GameGrid ThisGameGrid;
 
     public void Start()
     {
        
  
         ThisGameGrid = transform.parent.parent.parent.GetComponentInChildren<GameGrid>();
+//        Debug.Log("This game grid = " + ThisGameGrid);
 
         //Example of making player 2 customly weaker or stronger. 
       //     if (transform.parent.parent.parent.name.Equals("Player2")) {
@@ -352,6 +353,7 @@ public class Combatant : NetworkBehaviour
             damage -= shields;
             shields = 0;
             health -= damage;
+            Debug.Log("Damage has been taken: " + damage + ", " + health);
         }
 
         if (damage <= 0)
@@ -409,14 +411,17 @@ public class Combatant : NetworkBehaviour
 
     public void SetCharacterSheet(int NPCReference) {
         ThisPlayer = PlayerCharacterSheet.GetNPC(NPCReference);
+        ThisGameGrid.SetGridCellTypeStateAndAttendentVFX();
     }
 
     public void SetRandomNPC(int Level) {
         ThisPlayer = PlayerCharacterSheet.GetRandomNPC(Level);
+        ThisGameGrid.SetGridCellTypeStateAndAttendentVFX();
     }
 
     public void SetCharacterSheet(string SaveFileName) {
         ThisPlayer = PlayerCharacterSheet.LoadFromDisk(SaveFileName);
+        ThisGameGrid.SetGridCellTypeStateAndAttendentVFX();
     }
 
     public void SaveCharacterToDisk(string SaveFileName) {

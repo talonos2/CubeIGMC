@@ -9,16 +9,27 @@ public class Menus : NetworkBehaviour {
 
 
     public GameObject theMenu;
+
+
+
     bool pause = false;
 
+    GameObject home;
+    GameObject guest;
 
+    GameGrid gameGridHome;
+    GameGrid gameGridGuest;
+
+    GameObject networker;
 
 
     // Use this for initialization
     void Start ()
     {
-		
-	}
+
+
+
+    }
 	
 	// Update is called once per frame
 	void Update ()
@@ -58,7 +69,8 @@ public class Menus : NetworkBehaviour {
     public void ToMultiplayer()
     {
         Time.timeScale = 1;
-        SceneManager.LoadScene("multiplayer");
+        Sharedgamedata.issingleplayer = false;
+        SceneManager.LoadScene("SampleScene");
 
     }
 
