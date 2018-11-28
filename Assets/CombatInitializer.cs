@@ -9,6 +9,8 @@ public class CombatInitializer : NetworkBehaviour {
 
     public GameGrid grid1;
     public GameGrid grid2;
+    public GameObject gameGrid1;
+    public GameObject gameGrid2;
     private bool isDying;
     private float deathExplosionTime = 0;
 
@@ -21,6 +23,9 @@ public class CombatInitializer : NetworkBehaviour {
 
     public GameObject netWindow;
 
+    public GameObject darkCanvas;
+    public GameObject campaign;
+
 
 
     // Use this for initialization
@@ -30,8 +35,31 @@ public class CombatInitializer : NetworkBehaviour {
         //       {
         //           netWindow.SetActive(false);
         //       }
-        if (!Sharedgamedata.issingleplayer)
-            netWindow.SetActive(false);
+
+        
+
+        Debug.Log("does combat initializing");
+
+        gameGrid1.SetActive(true);
+        gameGrid2.SetActive(true);
+        Time.timeScale = 1;
+        Debug.Log(Sharedgamedata.issingleplayer);
+        if (Sharedgamedata.issingleplayer == true)
+        {
+            Debug.Log("is singleplayer");
+            //            netWindow.SetActive(false);
+            darkCanvas.SetActive(true);
+            campaign.SetActive(true);
+        }
+        else
+        {
+            Debug.Log("is multiplayer");
+            darkCanvas.SetActive(false);
+            campaign.SetActive(false);
+            //            netWindow.GetComponent<networkManager>();
+            Debug.Log("active?" + NetworkServer.active);
+        }
+
 
     }
 

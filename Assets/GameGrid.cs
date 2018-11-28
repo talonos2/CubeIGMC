@@ -186,7 +186,7 @@ public class GameGrid : NetworkBehaviour
     private PlayingPiece MakeAPiece()
     {
         PlayingPiece toReturn = GameObject.Instantiate(piecePrefab);
-        if (!Sharedgamedata.issingleplayer)
+        if (!Sharedgamedata.issingleplayer && NetworkServer.active)
             NetworkServer.Spawn(toReturn.gameObject);
 
 
@@ -284,8 +284,12 @@ public class GameGrid : NetworkBehaviour
     // Update is called once per frame
     void Update()
     {
+
         if (!Sharedgamedata.issingleplayer)
             return;
+
+
+
 
         if (Time.timeScale == 0)
         {
@@ -436,10 +440,16 @@ public class GameGrid : NetworkBehaviour
         }
         UpdateCurrentPieceTransform();
     }
-        public void proxyUpdate()
+
+    public void proxyUpdate()
     {
+        Debug.Log("is it even going?");
         if (!isLocalPlayer)
             return;
+        Debug.Log("yep");
+
+
+        Debug.Log("active?" + NetworkServer.active);
 
         if (Time.timeScale == 0)
         {
@@ -1100,7 +1110,7 @@ public class GameGrid : NetworkBehaviour
     internal void DropNewCubeAt(int x, int y)
     {
         GameCube cube = GameObject.Instantiate<GameCube>(currentPiece.cube); // Probbably unsafe.
-        if (!Sharedgamedata.issingleplayer)
+        if (!Sharedgamedata.issingleplayer && NetworkServer.active)
             NetworkServer.Spawn(cube.gameObject);
 
         cube.Initialize(player, dice);

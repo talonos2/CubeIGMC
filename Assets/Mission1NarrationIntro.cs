@@ -87,6 +87,9 @@ public class Mission1NarrationIntro : Mission
                 piecesToForce.Add(new int[3, 3] { { 1, 1, 0 }, { 1, 1, 0 }, { 1, 1, 0 } });
                 piecesToForce.Add(new int[3, 3] { { 0, 1, 0 }, { 0, 1, 0 }, { 0, 1, 0 } });
 
+                Debug.Log("Start of cubes");
+
+
                 gridToSetup.ForcePieces(piecesToForce);
 
                 gridToSetup.DropNewCubeAt(5, 5);
@@ -145,6 +148,8 @@ public class Mission1NarrationIntro : Mission
                 gridToSetup.player.energy = 35;
 
                 gridToSetup.SetGridCellTypeStateAndAttendentVFX();
+
+                Debug.Log("end of cubes");
 
                 timeSinceStepStarted = 0f;
                 narrations[4].gameObject.SetActive(true);

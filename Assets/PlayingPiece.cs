@@ -40,7 +40,7 @@ public class PlayingPiece : NetworkBehaviour
     private GameCube MakeCube(SeededRandom dice)
     {
         GameCube toReturn = GameObject.Instantiate(cube);
-        if (!Sharedgamedata.issingleplayer)
+        if (!Sharedgamedata.issingleplayer && NetworkServer.active)
             NetworkServer.Spawn(toReturn.gameObject);
 
         toReturn.Initialize(owner, dice);
