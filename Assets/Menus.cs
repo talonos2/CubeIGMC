@@ -63,7 +63,6 @@ public class Menus : NetworkBehaviour {
     {
         Time.timeScale = 1;
         Sharedgamedata.issingleplayer = true;
-        Debug.Log("crash?");
         SceneManager.LoadScene("SampleScene");
     }
 

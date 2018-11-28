@@ -36,16 +36,18 @@ public class CombatInitializer : NetworkBehaviour {
         //           netWindow.SetActive(false);
         //       }
 
-
+        
 
         Debug.Log("does combat initializing");
+
+        gameGrid1.SetActive(true);
+        gameGrid2.SetActive(true);
+        Time.timeScale = 1;
         Debug.Log(Sharedgamedata.issingleplayer);
         if (Sharedgamedata.issingleplayer == true)
         {
             Debug.Log("is singleplayer");
             //            netWindow.SetActive(false);
-            gameGrid1.SetActive(true);
-            gameGrid2.SetActive(true);
             darkCanvas.SetActive(true);
             campaign.SetActive(true);
         }
@@ -54,7 +56,8 @@ public class CombatInitializer : NetworkBehaviour {
             Debug.Log("is multiplayer");
             darkCanvas.SetActive(false);
             campaign.SetActive(false);
-//            netWindow.GetComponent<networkManager>();
+            //            netWindow.GetComponent<networkManager>();
+            Debug.Log("active?" + NetworkServer.active);
         }
 
 
