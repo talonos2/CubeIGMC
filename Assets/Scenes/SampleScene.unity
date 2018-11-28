@@ -1154,14 +1154,14 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &51658006
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 51658005}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 227461547, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
   m_Name: 
@@ -20950,12 +20950,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   grid1: {fileID: 1488115336}
   grid2: {fileID: 1800077637}
+  gameGrid1: {fileID: 1488115333}
+  gameGrid2: {fileID: 1800077635}
   p1Text: {fileID: 949501004}
   p2Text: {fileID: 1502072412}
   p1Menu: {fileID: 699534625}
   p2Menu: {fileID: 470791452}
   endMenu: {fileID: 3881357}
   netWindow: {fileID: 51658005}
+  darkCanvas: {fileID: 178464079}
+  campaign: {fileID: 1924475464}
 --- !u!4 &676543953
 Transform:
   m_ObjectHideFlags: 0
@@ -48563,6 +48567,7 @@ GameObject:
   - component: {fileID: 1488115334}
   - component: {fileID: 1488115336}
   - component: {fileID: 1488115335}
+  - component: {fileID: 1488115337}
   m_Layer: 0
   m_Name: GameGridHome
   m_TagString: Untagged
@@ -48638,6 +48643,38 @@ MonoBehaviour:
   isPlayedByAI: 0
   chargeGiverPrefab: {fileID: 114403860689813174, guid: 71db1b17c9045464999b21904984cde9,
     type: 2}
+--- !u!114 &1488115337
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1488115333}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SceneId:
+    m_Value: 0
+  m_AssetId:
+    i0: 0
+    i1: 0
+    i2: 0
+    i3: 0
+    i4: 0
+    i5: 0
+    i6: 0
+    i7: 0
+    i8: 0
+    i9: 0
+    i10: 0
+    i11: 0
+    i12: 0
+    i13: 0
+    i14: 0
+    i15: 0
+  m_ServerOnly: 0
+  m_LocalPlayerAuthority: 1
 --- !u!1 &1488586954
 GameObject:
   m_ObjectHideFlags: 0
@@ -51192,6 +51229,11 @@ Prefab:
       propertyPath: initializer
       value: 
       objectReference: {fileID: 676543952}
+    - target: {fileID: 114094642193837272, guid: 8007da74be9e7b947b304fd4cbb68b9a,
+        type: 2}
+      propertyPath: ThisGameGrid
+      value: 
+      objectReference: {fileID: 1488115336}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8007da74be9e7b947b304fd4cbb68b9a, type: 2}
   m_IsPrefabAsset: 0
@@ -56484,6 +56526,7 @@ GameObject:
   - component: {fileID: 1800077638}
   - component: {fileID: 1800077637}
   - component: {fileID: 1800077636}
+  - component: {fileID: 1800077639}
   m_Layer: 0
   m_Name: GameGridGuest
   m_TagString: Untagged
@@ -56563,6 +56606,38 @@ Transform:
   m_Father: {fileID: 1967808057}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1800077639
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1800077635}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SceneId:
+    m_Value: 0
+  m_AssetId:
+    i0: 0
+    i1: 0
+    i2: 0
+    i3: 0
+    i4: 0
+    i5: 0
+    i6: 0
+    i7: 0
+    i8: 0
+    i9: 0
+    i10: 0
+    i11: 0
+    i12: 0
+    i13: 0
+    i14: 0
+    i15: 0
+  m_ServerOnly: 1
+  m_LocalPlayerAuthority: 0
 --- !u!1 &1800602484
 GameObject:
   m_ObjectHideFlags: 0
@@ -70834,6 +70909,11 @@ Prefab:
       propertyPath: initializer
       value: 
       objectReference: {fileID: 676543952}
+    - target: {fileID: 114094642193837272, guid: 8007da74be9e7b947b304fd4cbb68b9a,
+        type: 2}
+      propertyPath: ThisGameGrid
+      value: 
+      objectReference: {fileID: 1800077637}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8007da74be9e7b947b304fd4cbb68b9a, type: 2}
   m_IsPrefabAsset: 0
