@@ -12,6 +12,9 @@ EditorBuildSettings:
     path: Assets/Scenes/SampleScene.unity
     guid: 99c9720ab356a0642a771bea13969a05
   - enabled: 0
+    path: Assets/Scenes/ShopMenu.unity
+    guid: 609d2643564223843b7472eae797178b
+  - enabled: 0
     path: Assets/Scenes/multiplayer.unity
     guid: df17425220ecae94d98246fabb9eac8a
   m_configObjects: {}
