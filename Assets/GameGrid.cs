@@ -444,8 +444,8 @@ public class GameGrid : NetworkBehaviour
     public void proxyUpdate()
     {
         Debug.Log("is it even going?");
-        if (!isLocalPlayer)
-            return;
+//        if (!isLocalPlayer)
+//            return;
         Debug.Log("yep");
 
 
