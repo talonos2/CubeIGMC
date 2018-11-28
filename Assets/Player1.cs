@@ -26,6 +26,8 @@ public class Player1 : NetworkBehaviour
         {
             gameGridHome.isPlayerOne = true;
         }
+
+
     }
 	
 	// Update is called once per frame
@@ -34,7 +36,7 @@ public class Player1 : NetworkBehaviour
         if (isLocalPlayer)
         {
             //            Debug.Log(gameGridHome);
-            //            Debug.Log("I do a thing");
+                        Debug.Log("I do one");
             gameGridHome.proxyUpdate();
             //            Debug.Log("local");
         }
@@ -46,7 +48,7 @@ public class Player1 : NetworkBehaviour
                 Time.timeScale = 1;
                 started = true;
             }
-
+            Debug.Log("I do the other");
             gameGridGuest.proxyUpdate();
 //            Debug.Log("not local");
 

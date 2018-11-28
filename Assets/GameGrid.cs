@@ -443,10 +443,10 @@ public class GameGrid : NetworkBehaviour
 
     public void proxyUpdate()
     {
-        Debug.Log("is it even going?");
+
 //        if (!isLocalPlayer)
 //            return;
-        Debug.Log("yep");
+
 
 
         Debug.Log("active?" + NetworkServer.active);
@@ -814,8 +814,8 @@ public class GameGrid : NetworkBehaviour
         }
         if (!isBlocked)
         {
-            this.gameObject.name = "GameGrid"+UnityEngine.Random.Range(1, 100);
-            Debug.Log(this.gameObject.name);
+//            this.gameObject.name = "GameGrid"+UnityEngine.Random.Range(1, 100);
+//            Debug.Log(this.gameObject.name);
             prevPiecePosition = currentPiecePosition;
             currentPiecePosition = currentPiecePosition + new Vector2Int(+1, 0);
             if (isRecording) { recorder.RegisterEvent(GameRecorder.RIGHT); }
