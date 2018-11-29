@@ -209,6 +209,20 @@ public class PlayerCharacterSheet
         }
         return tempSheet;
     }
+
+    internal void AddEquipment(ItemClass currentlySelectedItem)
+    {
+        if (currentlySelectedItem.GetItemType() == ItemSlot.WEAPON)
+            this.WeaponEquippedID = currentlySelectedItem.GetItemId();
+        if (currentlySelectedItem.GetItemType() == ItemSlot.SHIELDS)
+            this.ShieldEquippedID = currentlySelectedItem.GetItemId();
+        if (currentlySelectedItem.GetItemType() == ItemSlot.ARMOR)
+            this.ArmorEquippedID = currentlySelectedItem.GetItemId();
+        if (currentlySelectedItem.GetItemType() == ItemSlot.ENGINES)
+            this.EngineEquippedID = currentlySelectedItem.GetItemId();
+        if (currentlySelectedItem.GetItemType() == ItemSlot.MISC)
+            this.MiscEquippedID = currentlySelectedItem.GetItemId();
+    }
 }
 
 
