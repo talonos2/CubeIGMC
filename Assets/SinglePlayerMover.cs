@@ -7,15 +7,15 @@ internal class SinglePlayerMover : Mover
     private AudioSource ominousTick;
     private bool isUpBeingHeld;
     private float timeSinceLastMoveUpEvent;
-    private bool justPressedUp;
-    private bool returnJustUpped;
-    private bool returnJustDowned;
-    private bool returnJustLefted;
-    private bool returnJustRighted;
-    private bool returnJustRebooted;
-    private bool returnJustDropped;
-    private bool returnJustCCWed;
-    private bool returnJustCWed;
+    protected bool justPressedUp;
+    protected bool returnJustUpped;
+    protected bool returnJustDowned;
+    protected bool returnJustLefted;
+    protected bool returnJustRighted;
+    protected bool returnJustRebooted;
+    protected bool returnJustDropped;
+    protected bool returnJustCCWed;
+    protected bool returnJustCWed;
     private bool isDownBeingHeld;
     private float timeSinceLastMoveDownEvent;
     private bool justPressedDown;
@@ -40,11 +40,11 @@ internal class SinglePlayerMover : Mover
         switch (command)
         {
             case MoverCommand.DROP:
-                return false;
+                return returnJustDropped;
             case MoverCommand.CW:
-                return false;
+                return returnJustCWed;
             case MoverCommand.CCW:
-                return false;
+                return returnJustCCWed;
             case MoverCommand.LEFT:
                 return returnJustLefted;
             case MoverCommand.RIGHT:
@@ -54,7 +54,7 @@ internal class SinglePlayerMover : Mover
             case MoverCommand.DOWN:
                 return returnJustDowned;
             case MoverCommand.REBOOT:
-                return false;
+                return returnJustRebooted;
         }
         return false;
     }
@@ -68,6 +68,7 @@ internal class SinglePlayerMover : Mover
         returnJustRebooted = false;
         returnJustDropped = false;
         returnJustCCWed = false;
+        returnJustCWed = false;
 
         returnJustUpped = HandleMovement("Vertical_P1", "Vertical_P2", ref isUpBeingHeld, ref timeSinceLastMoveUpEvent, ref justPressedUp, true);
         returnJustDowned = HandleMovement("Vertical_P1", "Vertical_P2", ref isDownBeingHeld, ref timeSinceLastMoveDownEvent, ref justPressedDown, false);
@@ -100,7 +101,7 @@ internal class SinglePlayerMover : Mover
 
         //Handle rotations:
         returnJustCCWed = (Input.GetButtonDown("Rotate1_P1") || Input.GetButtonDown("Rotate1_P2"));
-        returnJustCCWed = (Input.GetButtonDown("Rotate2_P1") || Input.GetButtonDown("Rotate2_P2"));
+        returnJustCWed = (Input.GetButtonDown("Rotate2_P1") || Input.GetButtonDown("Rotate2_P2"));
     }
 
 

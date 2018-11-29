@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-internal class RemotePVPMover : Mover
+internal class RemoteNetworkedPVPMover : Mover
 {
 
     private bool justDropped;
@@ -29,12 +29,12 @@ internal class RemotePVPMover : Mover
 
     private Queue<int> commands = new Queue<int>();
 
-    public RemotePVPMover(EngineRoomNetworkManager ernm, bool isServer)
+    public RemoteNetworkedPVPMover(EngineRoomNetworkManager ernm, bool isServer)
     {
-        ernm.AttachToMover(this, isServer);
+        ernm.AttachToListenerMover(this, isServer);
     }
 
-    private void HandleMove(int command)
+    internal void HandleMove(int command)
     {
         commands.Enqueue(command);
     }

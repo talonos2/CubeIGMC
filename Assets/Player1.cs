@@ -60,11 +60,11 @@ internal class LocalPVPMover : Mover
         switch (command)
         {
             case MoverCommand.DROP:
-                return false;
+                return returnJustDropped;
             case MoverCommand.CW:
-                return false;
+                return returnJustCWed;
             case MoverCommand.CCW:
-                return false;
+                return returnJustCCWed;
             case MoverCommand.LEFT:
                 return returnJustLefted;
             case MoverCommand.RIGHT:
@@ -74,7 +74,7 @@ internal class LocalPVPMover : Mover
             case MoverCommand.DOWN:
                 return returnJustDowned;
             case MoverCommand.REBOOT:
-                return false;
+                return returnJustRebooted;
         }
         return false;
     }

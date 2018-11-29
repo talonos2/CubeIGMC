@@ -107,7 +107,12 @@ public class GameGrid : MonoBehaviour
 
     internal void SetRemotePVPPlayer()
     {
-        mover = new RemotePVPMover();
+        mover = new RemoteNetworkedPVPMover(MissionManager.instance.engineRoomNetworkManager,MissionManager.instance.mission.GameType()==EngineRoomGameType.SERVER_PVP);
+    }
+
+    internal void SetLocalPVPPlayer()
+    {
+        mover = new LocalNetworkedPVPMover(player, ominousTick, MissionManager.instance.engineRoomNetworkManager, MissionManager.instance.mission.GameType() == EngineRoomGameType.SERVER_PVP);
     }
 
     public void SetGridCellTypeStateAndAttendentVFX()

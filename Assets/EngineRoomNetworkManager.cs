@@ -11,8 +11,29 @@ public class EngineRoomNetworkManager : MonoBehaviour
     NetworkClient myClient;
 
     public short sendMoveMessageID = 1003;
-    private RemotePVPMover mover;
+    private RemoteNetworkedPVPMover moverListener;
+    private LocalNetworkedPVPMover moverSender;
     private bool isServer;
+
+    internal void AttachToSenderMover(LocalNetworkedPVPMover localNetworkedPVPMover, bool isServer)
+    {
+        this.moverSender = localNetworkedPVPMover;
+        this.isServer = isServer;
+    }
+
+    internal void Send(int toSend)
+    {
+        if (isServer)
+        {
+            Debug.Log("Server sending: " + toSend);
+            NetworkServer.SendToAll(sendMoveMessageID, new IntegerMessage(toSend));
+        }
+        else
+        {
+            Debug.Log("Client sending: " + toSend);
+            myClient.Send(sendMoveMessageID, new IntegerMessage(toSend));
+        }
+    }
 
     /*void Update()
     {
@@ -106,7 +127,8 @@ public class EngineRoomNetworkManager : MonoBehaviour
         Debug.Log("Client Recieved Move:" +", "+beginMessage.value);
         if (!isServer)
         {
-            mover.HandleMove(beginMessage.value);
+            Debug.Log("Client getting: " + beginMessage.value);
+            moverListener.HandleMove(beginMessage.value);
         }
     }
 
@@ -116,13 +138,14 @@ public class EngineRoomNetworkManager : MonoBehaviour
         Debug.LogWarning("Server Recieved Move:" + ", " + beginMessage.value);
         if (isServer)
         {
-            mover.HandleMove(beginMessage.value);
+            Debug.Log("Server getting: " + beginMessage.value);
+            moverListener.HandleMove(beginMessage.value);
         }
     }
 
-    internal void AttachToMover(RemotePVPMover mover, bool isServer)
+    internal void AttachToListenerMover(RemoteNetworkedPVPMover mover, bool isServer)
     {
-        this.mover = mover;
+        this.moverListener = mover;
         this.isServer = isServer;
     }
 }
