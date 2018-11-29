@@ -193,6 +193,8 @@ public class Combatant : MonoBehaviour
     //Modify this to change what a player's grid looks like when they start playing.
     internal void SetGridcellsStartingState(CellType[,] cellTypes)
     {
+
+        //Debug.Log (""ThisPlayer.ShieldEquippedID)
         ThisPlayer.GetWeaponPositions(cellTypes);
         ThisPlayer.GetShieldPositions(cellTypes);
         ThisPlayer.GetPsiPositions(cellTypes);

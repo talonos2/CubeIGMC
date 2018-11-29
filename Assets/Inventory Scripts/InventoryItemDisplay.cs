@@ -6,10 +6,17 @@ using UnityEngine.UI;
 
 public class InventoryItemDisplay : MonoBehaviour {
 
-    public int ItemId;
+    public int LocationInList;
     public ItemClass Item;
     public Text textName;
     public Text ItemPrice;
+    public Transform ShadingPanel;
+    public Sprite WpnSprite;
+    public Sprite ShldSprite;
+    public Sprite EngineSprite;
+    public Sprite ArmorSprite;
+    public Sprite PowerSprite;
+    public Transform SpriteToSet;
     public bool Weapon;
     public bool Shields;
     public bool Engines;
@@ -26,12 +33,15 @@ public class InventoryItemDisplay : MonoBehaviour {
     void Start () {
 
         RefreshEquipment();
-       
-
-
         //Item = ItemClass.GetItem(ItemSlot.WEAPON, 3);
         //Debug.Log("Item Received " + Item.GetItemDesc());
         //    Prime(Item);
+
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
 
     }
 
@@ -70,10 +80,7 @@ public class InventoryItemDisplay : MonoBehaviour {
         }
     }
 
-    // Update is called once per frame
-    void Update () {
-		
-	}
+  
     public void Prime(ItemClass item) {
             this.Item = item;
         
@@ -82,6 +89,31 @@ public class InventoryItemDisplay : MonoBehaviour {
         //    ItemSprite.sprite = item.sprite;
   
             ItemPrice.text = "$"+item.GetGoldCost();
+        if (item.GetItemType()==ItemSlot.WEAPON)
+            SpriteToSet.GetComponent<Image>().sprite = WpnSprite;
+        if (item.GetItemType() == ItemSlot.SHIELDS)
+            SpriteToSet.GetComponent<Image>().sprite = ShldSprite;
+        if (item.GetItemType() == ItemSlot.ENGINES)
+            SpriteToSet.GetComponent<Image>().sprite = EngineSprite;
+        if (item.GetItemType() == ItemSlot.ARMOR)
+            SpriteToSet.GetComponent<Image>().sprite = ArmorSprite;
+        if (item.GetItemType() == ItemSlot.MISC)
+            SpriteToSet.GetComponent<Image>().sprite = PowerSprite;
         //ItemDescription.text = item.GetItemDesc();
     }
+
+    public void ShadeItem() {
+        ShadingPanel.GetComponent<Image>().color = new Color(0f, 0f, 0f, 0.392f);
+    }
+
+    public void UnShadeItem() {
+        ShadingPanel.GetComponent<Image>().color = new Color(1f, 1f, 1f, 0.392f); ;
+    }
+
+    public void ClickedItem() {
+        GameObject selectionManager = GameObject.Find("SelectionManager");
+        selectionManager.GetComponent<ItemSelectionManager>().ClickedItem(this.LocationInList);
+        
+    }
+
 }
