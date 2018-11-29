@@ -6697,6 +6697,16 @@ Prefab:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 114899827479038178, guid: a6b117bd6ab899e41b656548b0b5ebe9,
+        type: 2}
+      propertyPath: mission
+      value: 
+      objectReference: {fileID: 2137882474}
+    - target: {fileID: 114935931831525738, guid: a6b117bd6ab899e41b656548b0b5ebe9,
+        type: 2}
+      propertyPath: doNothing
+      value: 
+      objectReference: {fileID: 4900000, guid: e90d561a39795bb4e87a44f364d2e81d, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a6b117bd6ab899e41b656548b0b5ebe9, type: 2}
   m_IsPrefabAsset: 0
@@ -36714,7 +36724,6 @@ MonoBehaviour:
     type: 2}
   powerUpEffect: {fileID: 114389015036086872, guid: dda44019845f7c44fa179be01804bce1,
     type: 2}
-  aIText: {fileID: 0}
   cubeConversionManager: {fileID: 470464784}
   attackCellPrefab: {fileID: 1834763695440478, guid: dc8ff9e2cd6191e46a0ef96d69aa851b,
     type: 2}
@@ -36728,7 +36737,6 @@ MonoBehaviour:
   matchSound: {fileID: 243356955}
   pauseMenu: {fileID: 0}
   justExitedMenu: 0
-  seeded: 0
   currentPiece: {fileID: 0}
   player: {fileID: 1637675550}
   isPlayerOne: 1
@@ -42253,7 +42261,6 @@ MonoBehaviour:
     type: 2}
   powerUpEffect: {fileID: 114389015036086872, guid: dda44019845f7c44fa179be01804bce1,
     type: 2}
-  aIText: {fileID: 4900000, guid: 6b72856809a666342b971a5226a93845, type: 3}
   cubeConversionManager: {fileID: 1650148690}
   attackCellPrefab: {fileID: 1834763695440478, guid: dc8ff9e2cd6191e46a0ef96d69aa851b,
     type: 2}
@@ -42267,7 +42274,6 @@ MonoBehaviour:
   matchSound: {fileID: 182668321}
   pauseMenu: {fileID: 0}
   justExitedMenu: 0
-  seeded: 0
   currentPiece: {fileID: 0}
   player: {fileID: 2080038990}
   isPlayerOne: 0
@@ -50132,6 +50138,12 @@ MonoBehaviour:
     type: 2}
   m_PrefabInternal: {fileID: 2137129920}
   m_Script: {fileID: 11500000, guid: 45334f1dc498b0a46ad4e5f37219e0d4, type: 3}
+--- !u!114 &2137882474 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 114935931831525738, guid: a6b117bd6ab899e41b656548b0b5ebe9,
+    type: 2}
+  m_PrefabInternal: {fileID: 392443965}
+  m_Script: {fileID: 11500000, guid: bcdb00faf292bd64e8161b9eb1290f8e, type: 3}
 --- !u!1 &2146050140
 GameObject:
   m_ObjectHideFlags: 0

@@ -379,6 +379,19 @@ Prefab:
       propertyPath: isHost
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4034646683656062, guid: a6b117bd6ab899e41b656548b0b5ebe9, type: 2}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4661968089857030, guid: a6b117bd6ab899e41b656548b0b5ebe9, type: 2}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114899827479038178, guid: a6b117bd6ab899e41b656548b0b5ebe9,
+        type: 2}
+      propertyPath: mission
+      value: 
+      objectReference: {fileID: 866990038}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a6b117bd6ab899e41b656548b0b5ebe9, type: 2}
   m_IsPrefabAsset: 0
@@ -853,6 +866,12 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &866990038 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 114935931831525738, guid: a6b117bd6ab899e41b656548b0b5ebe9,
+    type: 2}
+  m_PrefabInternal: {fileID: 349200295}
+  m_Script: {fileID: 11500000, guid: bcdb00faf292bd64e8161b9eb1290f8e, type: 3}
 --- !u!1 &1116558001
 GameObject:
   m_ObjectHideFlags: 0
