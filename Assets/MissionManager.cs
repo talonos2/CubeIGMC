@@ -21,6 +21,7 @@ internal class MissionManager : MonoBehaviour
     internal static bool triggerCallbacksOnShipReboot;
     internal static bool freezeAI;
     internal PointerHolder pointers;
+    public EngineRoomNetworkManager engineRoomNetworkManager;
 
     public static bool TriggerCallbackOnShipDestroyed { get; internal set; }
 

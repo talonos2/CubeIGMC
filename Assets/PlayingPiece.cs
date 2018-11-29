@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class PlayingPiece : NetworkBehaviour
+public class PlayingPiece : MonoBehaviour
 {
     private Combatant owner;
     private GameCube[,] piecemap = new GameCube[3, 3];
@@ -40,9 +40,6 @@ public class PlayingPiece : NetworkBehaviour
     private GameCube MakeCube(SeededRandom dice)
     {
         GameCube toReturn = GameObject.Instantiate(cube);
-        if (!Sharedgamedata.issingleplayer && NetworkServer.active)
-            NetworkServer.Spawn(toReturn.gameObject);
-
         toReturn.Initialize(owner, dice);
         return toReturn;
     }

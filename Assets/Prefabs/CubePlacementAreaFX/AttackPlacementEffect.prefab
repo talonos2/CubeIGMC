@@ -24,7 +24,6 @@ GameObject:
   - component: {fileID: 114877669127660826}
   - component: {fileID: 54805581575990150}
   - component: {fileID: 75543454745157686}
-  - component: {fileID: 114562627793817268}
   m_Layer: 0
   m_Name: AttackPlacementEffect
   m_TagString: Untagged
@@ -71,38 +70,6 @@ ConstantForce:
   m_RelativeForce: {x: 0, y: 0, z: 0}
   m_Torque: {x: 0, y: 0, z: 0}
   m_RelativeTorque: {x: 0, y: 0, z: 0}
---- !u!114 &114562627793817268
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1834763695440478}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SceneId:
-    m_Value: 0
-  m_AssetId:
-    i0: 220
-    i1: 143
-    i2: 249
-    i3: 226
-    i4: 205
-    i5: 97
-    i6: 145
-    i7: 228
-    i8: 106
-    i9: 14
-    i10: 249
-    i11: 109
-    i12: 105
-    i13: 170
-    i14: 133
-    i15: 27
-  m_ServerOnly: 0
-  m_LocalPlayerAuthority: 0
 --- !u!114 &114877669127660826
 MonoBehaviour:
   m_ObjectHideFlags: 1

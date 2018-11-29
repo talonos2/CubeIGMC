@@ -20,7 +20,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4479481942799990}
   - component: {fileID: 108726117864488562}
-  - component: {fileID: 114900416508935774}
   m_Layer: 0
   m_Name: ExplosionParticleLight
   m_TagString: Untagged
@@ -78,35 +77,3 @@ Light:
   m_UseColorTemperature: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
---- !u!114 &114900416508935774
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1338024204754458}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SceneId:
-    m_Value: 0
-  m_AssetId:
-    i0: 84
-    i1: 117
-    i2: 234
-    i3: 132
-    i4: 195
-    i5: 108
-    i6: 220
-    i7: 4
-    i8: 106
-    i9: 208
-    i10: 230
-    i11: 62
-    i12: 230
-    i13: 213
-    i14: 94
-    i15: 173
-  m_ServerOnly: 0
-  m_LocalPlayerAuthority: 1

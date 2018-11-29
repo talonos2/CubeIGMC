@@ -337,4 +337,14 @@ public class Mission1NarrationIntro : Mission
             structure.transform.localPosition = new Vector3(.1f-(timeSinceStepStarted*timeSinceStepStarted*shipAccelleration), 24.77f, -14.93f);
         }
     }
+
+    internal override AIParams GetAIParams()
+    {
+        return null;
+    }
+
+    internal override EngineRoomGameType GameType()
+    {
+        return EngineRoomGameType.SINGLE_PLAYER;
+    }
 }
