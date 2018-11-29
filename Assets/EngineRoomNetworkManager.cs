@@ -11,6 +11,8 @@ public class EngineRoomNetworkManager : MonoBehaviour
     NetworkClient myClient;
 
     public short sendMoveMessageID = 1003;
+    public short sendSeedID = 1004;
+
     private RemoteNetworkedPVPMover moverListener;
     private LocalNetworkedPVPMover moverSender;
     private bool isServer;
@@ -83,7 +85,7 @@ public class EngineRoomNetworkManager : MonoBehaviour
         NetworkServer.Listen(4444);
         NetworkServer.RegisterHandler(MsgType.Connect, ServerHandlesConnection);
         NetworkServer.RegisterHandler(sendMoveMessageID, ServerHandlesMove);
-        Debug.Log("Here" + NetworkServer.handlers+", "+NetworkServer.handlers[1003]);
+        myClient.RegisterHandler(sendSeedID, ServerAcceptsSeed);
         isAtStartup = false;
     }
 
@@ -93,6 +95,7 @@ public class EngineRoomNetworkManager : MonoBehaviour
         myClient = new NetworkClient();
         myClient.RegisterHandler(MsgType.Connect, OnConnected);
         myClient.RegisterHandler(sendMoveMessageID, RecieveMove);
+        myClient.RegisterHandler(sendSeedID, ClientAcceptsSeed);
         myClient.Connect("127.0.0.1", 4444);
         isAtStartup = false;
     }
@@ -103,6 +106,7 @@ public class EngineRoomNetworkManager : MonoBehaviour
         myClient = ClientScene.ConnectLocalServer();
         myClient.RegisterHandler(MsgType.Connect, OnConnected);
         myClient.RegisterHandler(sendMoveMessageID, RecieveMove);
+        myClient.RegisterHandler(sendSeedID, ClientAcceptsSeed);
         isAtStartup = false;
     }
 
@@ -110,14 +114,14 @@ public class EngineRoomNetworkManager : MonoBehaviour
     public void OnConnected(NetworkMessage netMsg)
     {
         Debug.Log("Connected to server");
-        myClient.Send(sendMoveMessageID, new IntegerMessage(254));
+        //myClient.Send(sendMoveMessageID, new IntegerMessage(254));
     }
 
     // client function
     public void ServerHandlesConnection(NetworkMessage netMsg)
     {
         Debug.Log("Connected to client");
-        //myClient.Send(sendMoveMessageID, new IntegerMessage(254));
+        NetworkServer.SendToAll(sendSeedID, new IntegerMessage(moverSender.GetParentSeed()));
     }
 
     // client function
@@ -148,5 +152,18 @@ public class EngineRoomNetworkManager : MonoBehaviour
         this.moverListener = mover;
         this.isServer = isServer;
     }
+
+    public void ClientAcceptsSeed(NetworkMessage seedMessage)
+    {
+        int toReturn = seedMessage.ReadMessage<IntegerMessage>().value;
+        Debug.Log(toReturn);
+        this.moverSender.AcceptSeed(toReturn);
+    }
+
+    public void ServerAcceptsSeed(NetworkMessage seedMessage)
+    {
+        Debug.LogError("I am the server. Why are you telling me what do do?");
+    }
+
 }
 

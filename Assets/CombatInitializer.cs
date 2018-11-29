@@ -42,6 +42,7 @@ public class CombatInitializer : MonoBehaviour
     {
         if (!setup)
         {
+            bool doStart = true;
             //There are three scenarios: Either we're against an AI, in local co-op, or online. Each one needs a different seed.
             //If against an AI, look at its info and extract a scene from it.
             AIParams pars = MissionManager.instance.mission.GetAIParams();
@@ -74,10 +75,14 @@ public class CombatInitializer : MonoBehaviour
                 ernm.SetupClient();
                 grid2.SetRemotePVPPlayer();
                 grid1.SetLocalPVPPlayer();
+                doStart = false; //Client waits to start until server says what the seed is.
             }
 
-            grid1.SetSeedAndStart(randomSeed);
-            grid2.SetSeedAndStart(randomSeed);
+            if (doStart)
+            {
+                grid1.SetSeedAndStart(randomSeed);
+                grid2.SetSeedAndStart(randomSeed);
+            }
 
             setup = true;
         }

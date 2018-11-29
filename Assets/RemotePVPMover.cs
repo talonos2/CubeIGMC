@@ -112,6 +112,4 @@ internal class RemoteNetworkedPVPMover : Mover
         }
         return false;
     }
-
-
 }

@@ -37,8 +37,6 @@ public class GameGrid : MonoBehaviour
 
     public bool justExitedMenu;
 
-    public int seeded;
-
     internal AIPlayer LoadAI(bool isRobotic, float speed, bool loop, String json)
     {
         string inputJson = aIText.text;
@@ -58,6 +56,12 @@ public class GameGrid : MonoBehaviour
     internal void SetLocalPVPMover(bool isPlayer1)
     {
         this.mover = new LocalPVPMover(player,ominousTick,isPlayer1);
+    }
+
+    internal void getSeedFromServer(int value)
+    {
+        this.SetSeedAndStart(value);
+        player.enemy.ThisGameGrid.SetSeedAndStart(value);
     }
 
     public PlayingPiece currentPiece;
@@ -112,7 +116,7 @@ public class GameGrid : MonoBehaviour
 
     internal void SetLocalPVPPlayer()
     {
-        mover = new LocalNetworkedPVPMover(player, ominousTick, MissionManager.instance.engineRoomNetworkManager, MissionManager.instance.mission.GameType() == EngineRoomGameType.SERVER_PVP);
+        mover = new LocalNetworkedPVPMover(player, ominousTick, MissionManager.instance.engineRoomNetworkManager, this, seeded, MissionManager.instance.mission.GameType() == EngineRoomGameType.SERVER_PVP);
     }
 
     public void SetGridCellTypeStateAndAttendentVFX()
@@ -241,6 +245,10 @@ public class GameGrid : MonoBehaviour
     /* This moves the graphical representation of the piece.*/
     public void UpdateCurrentPieceTransform()
     {
+        if (currentPiece == null)
+        {
+            return;
+        }
 
         timeSinceLastMove += Time.deltaTime * 1000;
         timeSinceLastRot += Time.deltaTime * 1000;
@@ -752,6 +760,8 @@ public class GameGrid : MonoBehaviour
     }
 
     private List<ForcedPlacementOptions> forcedPlacements = new List<ForcedPlacementOptions>();
+
+    internal int seeded;
 
     public bool IsInInvalidArea(float x, float y)
     {
