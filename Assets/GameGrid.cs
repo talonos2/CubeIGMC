@@ -825,6 +825,21 @@ public class GameGrid : MonoBehaviour
         }
     }
 
+    public void ClearBoardSilently()
+    {
+        for (int x = 0; x < numCells.x; x++)
+        {
+            for (int y = 0; y < numCells.y; y++)
+            {
+                if (grid[x, y] != null)
+                {
+                    GameObject.Destroy(grid[x, y].gameObject);
+                    grid[x, y] = null;
+                }
+            }
+        }
+    }
+
     internal void DropNewCubeAt(int x, int y)
     {
         GameCube cube = GameObject.Instantiate<GameCube>(currentPiece.cube); // Probably unsafe.
