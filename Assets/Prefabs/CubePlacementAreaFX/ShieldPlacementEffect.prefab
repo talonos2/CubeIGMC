@@ -24,6 +24,7 @@ GameObject:
   - component: {fileID: 114942623397833880}
   - component: {fileID: 54456849589032090}
   - component: {fileID: 75474493274080076}
+  - component: {fileID: 114238156069750464}
   m_Layer: 0
   m_Name: ShieldPlacementEffect
   m_TagString: Untagged
@@ -70,6 +71,38 @@ ConstantForce:
   m_RelativeForce: {x: 0, y: 0, z: 0}
   m_Torque: {x: 0, y: 0, z: 0}
   m_RelativeTorque: {x: 0, y: 0, z: 0}
+--- !u!114 &114238156069750464
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1880061185552558}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SceneId:
+    m_Value: 0
+  m_AssetId:
+    i0: 168
+    i1: 72
+    i2: 200
+    i3: 183
+    i4: 143
+    i5: 94
+    i6: 76
+    i7: 148
+    i8: 152
+    i9: 223
+    i10: 243
+    i11: 118
+    i12: 27
+    i13: 105
+    i14: 244
+    i15: 254
+  m_ServerOnly: 0
+  m_LocalPlayerAuthority: 0
 --- !u!114 &114942623397833880
 MonoBehaviour:
   m_ObjectHideFlags: 1

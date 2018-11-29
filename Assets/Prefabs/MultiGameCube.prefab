@@ -237,7 +237,7 @@ MonoBehaviour:
     i14: 169
     i15: 87
   m_ServerOnly: 0
-  m_LocalPlayerAuthority: 0
+  m_LocalPlayerAuthority: 1
 --- !u!114 &114603887969207896
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -249,3 +249,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c3e216d58bbcde45a494651f88e6f0c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  energyMaterial: {fileID: 0}
+  attackMaterial: {fileID: 0}
+  shieldMaterial: {fileID: 0}
+  psiMaterial: {fileID: 0}
+  glowMaterial: {fileID: 0}
+  coloredSection: {fileID: 0}
+  lightOnTop: {fileID: 0}
+  type: 0
+  fallSpeed: 3

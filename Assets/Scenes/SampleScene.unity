@@ -874,6 +874,23 @@ MonoBehaviour:
   m_SpawnPrefabs:
   - {fileID: 1475523195821368, guid: efed92ad54b997e46a8e3647c31424e2, type: 2}
   - {fileID: 1720843243692672, guid: 9bb7d0c1bff34df479b43c254d4ca629, type: 2}
+  - {fileID: 1834763695440478, guid: dc8ff9e2cd6191e46a0ef96d69aa851b, type: 2}
+  - {fileID: 1139390753616414, guid: bae25a628e6c19142a0fbcd0ce85f339, type: 2}
+  - {fileID: 1880061185552558, guid: a848c8b78f5e4c9498dff3761b69f4fe, type: 2}
+  - {fileID: 1726440220928248, guid: 810c93c84a3537744a5f528dcd2928ff, type: 2}
+  - {fileID: 1144559668537116, guid: 71db1b17c9045464999b21904984cde9, type: 2}
+  - {fileID: 1338024204754458, guid: 5475ea84c36cdc046ad0e63ee6d55ead, type: 2}
+  - {fileID: 1241247196152422, guid: dda44019845f7c44fa179be01804bce1, type: 2}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   m_CustomConfig: 0
   m_MaxConnections: 4
   m_ConnectionConfig:
@@ -14962,7 +14979,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4854238171959992, guid: 0dfe140aceaeddc46a89eedbbb378123, type: 2}
       propertyPath: m_RootOrder
-      value: 20
+      value: 19
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0dfe140aceaeddc46a89eedbbb378123, type: 2}
@@ -15267,6 +15284,7 @@ MonoBehaviour:
   netWindow: {fileID: 51658005}
   darkCanvas: {fileID: 178464079}
   campaign: {fileID: 1924475464}
+  randomSeed: 0
 --- !u!4 &676543953
 Transform:
   m_ObjectHideFlags: 0
@@ -36891,8 +36909,27 @@ MonoBehaviour:
   matchSound: {fileID: 243356955}
   pauseMenu: {fileID: 0}
   justExitedMenu: 0
+  seeded: 0
+  currentPiece: {fileID: 0}
   player: {fileID: 1637675550}
   isPlayerOne: 1
+  currentPiecePosition: {x: 1, y: 1}
+  currentPieceRotation: 0
+  prevPieceRotation: 0
+  timeSinceLastMove: 0
+  timeSinceLastRot: 0
+  isUpBeingHeld: 0
+  isDownBeingHeld: 0
+  isLeftBeingHeld: 0
+  isRightBeingHeld: 0
+  timeSinceLastMoveUpEvent: 0
+  timeSinceLastMoveDownEvent: 0
+  timeSinceLastMoveLeftEvent: 0
+  timeSinceLastMoveRightEvent: 0
+  justPressedUp: 0
+  justPressedDown: 0
+  justPressedLeft: 0
+  justPressedRight: 0
   isPlayedByAI: 0
   chargeGiverPrefab: {fileID: 114403860689813174, guid: 71db1b17c9045464999b21904984cde9,
     type: 2}
@@ -42439,8 +42476,27 @@ MonoBehaviour:
   matchSound: {fileID: 182668321}
   pauseMenu: {fileID: 0}
   justExitedMenu: 0
+  seeded: 0
+  currentPiece: {fileID: 0}
   player: {fileID: 2080038990}
   isPlayerOne: 0
+  currentPiecePosition: {x: 1, y: 1}
+  currentPieceRotation: 0
+  prevPieceRotation: 0
+  timeSinceLastMove: 0
+  timeSinceLastRot: 0
+  isUpBeingHeld: 0
+  isDownBeingHeld: 0
+  isLeftBeingHeld: 0
+  isRightBeingHeld: 0
+  timeSinceLastMoveUpEvent: 0
+  timeSinceLastMoveDownEvent: 0
+  timeSinceLastMoveLeftEvent: 0
+  timeSinceLastMoveRightEvent: 0
+  justPressedUp: 0
+  justPressedDown: 0
+  justPressedLeft: 0
+  justPressedRight: 0
   isPlayedByAI: 0
   chargeGiverPrefab: {fileID: 114403860689813174, guid: 71db1b17c9045464999b21904984cde9,
     type: 2}
