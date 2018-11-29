@@ -236,6 +236,9 @@ public class Combatant : NetworkBehaviour
         this.queuedDamage = 0;
     }
 
+
+
+
     public void AddFlatAmountToAttackCharge(int amount)
     {
         //WARNING: You now must pay energy costs from the calling fuction!

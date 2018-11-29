@@ -8180,6 +8180,11 @@ Prefab:
       propertyPath: engineParticles
       value: 
       objectReference: {fileID: 457783276}
+    - target: {fileID: 114427743476571758, guid: 0dfe140aceaeddc46a89eedbbb378123,
+        type: 2}
+      propertyPath: m_LocalPlayerAuthority
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0dfe140aceaeddc46a89eedbbb378123, type: 2}
   m_IsPrefabAsset: 0
@@ -14980,6 +14985,11 @@ Prefab:
     - target: {fileID: 4854238171959992, guid: 0dfe140aceaeddc46a89eedbbb378123, type: 2}
       propertyPath: m_RootOrder
       value: 19
+      objectReference: {fileID: 0}
+    - target: {fileID: 114427743476571758, guid: 0dfe140aceaeddc46a89eedbbb378123,
+        type: 2}
+      propertyPath: m_LocalPlayerAuthority
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0dfe140aceaeddc46a89eedbbb378123, type: 2}

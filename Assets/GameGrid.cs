@@ -908,7 +908,7 @@ public class GameGrid : NetworkBehaviour
                 GameCube sourceCube = cubesToExplode[UnityEngine.Random.Range(0, cubesToExplode.Count)];
                 pe.Initialize(sourceCube.transform.position, player.GetTargetOfParticle(PowerupType.ENERGY, 3), delay, PowerupType.ENERGY);
                 InvisibleDelayedChargeGiver chargeGiver = GameObject.Instantiate<InvisibleDelayedChargeGiver>(chargeGiverPrefab);
-                if (!Sharedgamedata.issingleplayer) NetworkServer.Spawn(chargeGiverPrefab.gameObject);
+                if (!Sharedgamedata.issingleplayer) NetworkServer.Spawn(chargeGiver.gameObject);
                 chargeGiver.target = player;
                 chargeGiver.delay = delay + 1;
                 chargeGiver.type = PowerupType.ENERGY;
