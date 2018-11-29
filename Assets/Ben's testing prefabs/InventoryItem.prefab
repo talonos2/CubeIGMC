@@ -130,7 +130,7 @@ MonoBehaviour:
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
     m_FontSize: 25
-    m_FontStyle: 0
+    m_FontStyle: 1
     m_BestFit: 0
     m_MinSize: 2
     m_MaxSize: 40
@@ -188,6 +188,25 @@ MonoBehaviour:
   ItemId: 0
   textName: {fileID: 114543670680057504}
   ItemPrice: {fileID: 114608010636747022}
+  Weapon: 0
+  Shields: 0
+  Engines: 0
+  Armor: 0
+  Power: 0
+  CurrentPlayer:
+    PlayerName: Unknown Captain
+    Level: 1
+    Exp: 0
+    Gold: 0
+    BaseHealth: 70
+    StartingEnergy: 50
+    UnusedSave: 1
+    WeaponEquippedID: 3
+    ArmorEquippedID: 0
+    ShieldEquippedID: 3
+    EngineEquippedID: 0
+    MiscEquippedID: 0
+  PlayerStorage: {fileID: 0}
 --- !u!114 &114665011675258046
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -298,7 +317,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 486, y: -470}
+  m_AnchoredPosition: {x: 288, y: -470}
   m_SizeDelta: {x: 450, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224481469488207928
