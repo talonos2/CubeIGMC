@@ -218,9 +218,6 @@ public class Mission2NarrationIntro : Mission
                 }
 
                 gridToTurnIntoAI.ForcePieces(piecesToForce);
-                gridToTurnIntoAI.aIText = tractorBeamAI;
-                gridToTurnIntoAI.isPlayedByAI = true;
-                gridToTurnIntoAI.LoadAI(true, .4f, true);
                 damageManagerForTractorBeam.stuffThatHappensInTheFinalExplosion.Add(moreStuffToExplodeOnDeath);
             }
             timeSinceStepStarted += Time.deltaTime;
@@ -299,7 +296,17 @@ public class Mission2NarrationIntro : Mission
 
                     new int[3, 3] { { 0, 1, 0 }, { 0, 1, 1 }, { 0, 1, 1 } }, //5-6
                     new int[3, 3] { { 1, 0, 1 }, { 1, 1, 1 }, { 1, 1, 1 } }, //5-7
-                };
+        };
         return piecesToForce;
+    }
+
+    internal override AIParams GetAIParams()
+    {
+        return new AIParams(tractorBeamAI.text, true, .4f, true);
+    }
+
+    internal override EngineRoomGameType GameType()
+    {
+        return EngineRoomGameType.SINGLE_PLAYER;
     }
 }

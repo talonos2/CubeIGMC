@@ -5,7 +5,8 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using UnityEngine.Networking;
 
-public class Menus : NetworkBehaviour {
+public class Menus : MonoBehaviour
+{
 
 
     public GameObject theMenu;
@@ -62,14 +63,12 @@ public class Menus : NetworkBehaviour {
     public void SinglePlayer()
     {
         Time.timeScale = 1;
-        Sharedgamedata.issingleplayer = true;
         SceneManager.LoadScene("SampleScene");
     }
 
     public void ToMultiplayer()
     {
         Time.timeScale = 1;
-        Sharedgamedata.issingleplayer = false;
         SceneManager.LoadScene("SampleScene");
 
     }

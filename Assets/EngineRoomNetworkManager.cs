@@ -1,0 +1,129 @@
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.Networking;
+using UnityEngine.Networking.NetworkSystem;
+
+public class EngineRoomNetworkManager : MonoBehaviour
+{
+    public bool isAtStartup = true;
+    NetworkClient myClient;
+
+    public short sendMoveMessageID = 1003;
+    private RemotePVPMover mover;
+    private bool isServer;
+
+    /*void Update()
+    {
+        //Debug.Log("Update:" + NetworkServer.handlers);
+        if (isAtStartup)
+        {
+            if (Input.GetKeyDown(KeyCode.S))
+            {
+                SetupServer();
+            }
+            if (Input.GetKeyDown(KeyCode.C))
+            {
+                SetupClient();
+            }
+            if (Input.GetKeyDown(KeyCode.B))
+            {
+                SetupServer();
+                SetupLocalClient();
+            }
+        }
+        else
+        {
+            if (Input.GetKeyDown(KeyCode.I))
+            {
+                //Debug.Log("Here" + NetworkServer.handlers + ", " + NetworkServer.handlers[1003]);
+                myClient.Send(sendMoveMessageID, new IntegerMessage(254));
+            }
+        }
+    }
+    void OnGUI()
+    {
+        if (isAtStartup)
+        {
+            GUI.Label(new Rect(2, 10, 150, 100), "Press S for server");
+            GUI.Label(new Rect(2, 30, 150, 100), "Press B for both");
+            GUI.Label(new Rect(2, 50, 150, 100), "Press C for client");
+        }
+        else
+        {
+            GUI.Label(new Rect(2, 10, 150, 100), "Press I for moveMessage");
+        }
+    }*/
+
+    // Create a server and listen on a port
+    public void SetupServer()
+    {
+        NetworkServer.Listen(4444);
+        NetworkServer.RegisterHandler(MsgType.Connect, ServerHandlesConnection);
+        NetworkServer.RegisterHandler(sendMoveMessageID, ServerHandlesMove);
+        Debug.Log("Here" + NetworkServer.handlers+", "+NetworkServer.handlers[1003]);
+        isAtStartup = false;
+    }
+
+    // Create a client and connect to the server port
+    public void SetupClient()
+    {
+        myClient = new NetworkClient();
+        myClient.RegisterHandler(MsgType.Connect, OnConnected);
+        myClient.RegisterHandler(sendMoveMessageID, RecieveMove);
+        myClient.Connect("127.0.0.1", 4444);
+        isAtStartup = false;
+    }
+
+    // Create a local client and connect to the local server
+    public void SetupLocalClient()
+    {
+        myClient = ClientScene.ConnectLocalServer();
+        myClient.RegisterHandler(MsgType.Connect, OnConnected);
+        myClient.RegisterHandler(sendMoveMessageID, RecieveMove);
+        isAtStartup = false;
+    }
+
+    // client function
+    public void OnConnected(NetworkMessage netMsg)
+    {
+        Debug.Log("Connected to server");
+        myClient.Send(sendMoveMessageID, new IntegerMessage(254));
+    }
+
+    // client function
+    public void ServerHandlesConnection(NetworkMessage netMsg)
+    {
+        Debug.Log("Connected to client");
+        //myClient.Send(sendMoveMessageID, new IntegerMessage(254));
+    }
+
+    // client function
+    public void RecieveMove(NetworkMessage netMsg)
+    {
+        IntegerMessage beginMessage = netMsg.ReadMessage<IntegerMessage>();
+        Debug.Log("Client Recieved Move:" +", "+beginMessage.value);
+        if (!isServer)
+        {
+            mover.HandleMove(beginMessage.value);
+        }
+    }
+
+    public void ServerHandlesMove(NetworkMessage netMsg)
+    {
+        IntegerMessage beginMessage = netMsg.ReadMessage<IntegerMessage>();
+        Debug.LogWarning("Server Recieved Move:" + ", " + beginMessage.value);
+        if (isServer)
+        {
+            mover.HandleMove(beginMessage.value);
+        }
+    }
+
+    internal void AttachToMover(RemotePVPMover mover, bool isServer)
+    {
+        this.mover = mover;
+        this.isServer = isServer;
+    }
+}
+

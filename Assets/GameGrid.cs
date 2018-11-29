@@ -5,7 +5,7 @@ using System.Threading;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class GameGrid : NetworkBehaviour
+public class GameGrid : MonoBehaviour
 {
     public bool isRecording = false;
     
@@ -21,7 +21,6 @@ public class GameGrid : NetworkBehaviour
     public PowerupEffect powerUpEffect;
     public TextAsset aIText;
     public CubeConversionManager cubeConversionManager;
-    internal AIPlayer aIPlayer = new AIPlayer();
 
     public GameObject attackCellPrefab;
     public GameObject shieldCellPrefab;
@@ -40,27 +39,25 @@ public class GameGrid : NetworkBehaviour
 
     public int seeded;
 
-    internal void LoadAI(bool isRobotic, float speed, bool loop)
+    internal AIPlayer LoadAI(bool isRobotic, float speed, bool loop, String json)
     {
         string inputJson = aIText.text;
-        aIPlayer = JsonUtility.FromJson<AIPlayer>(inputJson);
+        AIPlayer ai = JsonUtility.FromJson<AIPlayer>(inputJson);
         if (isRobotic)
         {
-            aIPlayer.MakeRobotic(speed);
+            ai.MakeRobotic(speed);
         }
         if (loop)
         {
-            aIPlayer.MakeLoop();
+            ai.MakeLoop();
         }
+        mover = ai;
+        return ai;
     }
 
-    internal int GetAISeed()
+    internal void SetLocalPVPMover(bool isPlayer1)
     {
-        if (!isPlayedByAI)
-        {
-            Debug.LogError("Warning: Request for the seed of an AI that shouldn't exist!");
-        }
-        return aIPlayer.seed;
+        this.mover = new LocalPVPMover(player,ominousTick,isPlayer1);
     }
 
     public PlayingPiece currentPiece;
@@ -73,8 +70,6 @@ public class GameGrid : NetworkBehaviour
     {
         seeded = randomSeed;
 
-        Debug.Log("setseed and start ---------------------------");
-
         if (isRecording)
         {
             recorder = new GameRecorder(randomSeed);
@@ -84,22 +79,16 @@ public class GameGrid : NetworkBehaviour
 
         SetupPieceArray();
 
-        Debug.Log("IN Set Seed");
-
         currentPiece = MakeAPiece();
-
-        Debug.Log(currentPiece);
 
         currentPiece.transform.parent = this.transform;
         UpdateCurrentPieceTransform();
 
-        nextPieceHolder = transform.Find("PieceHolder");
         nextPiece = MakeAPiece();
         nextPiece.transform.parent = nextPieceHolder;
         nextPiece.transform.localPosition = Vector3.zero;
 
-        if (Sharedgamedata.issingleplayer == true)
-            SetGridCellTypeStateAndAttendentVFX();
+        SetGridCellTypeStateAndAttendentVFX();
 
 
         if (isPlayerOne)
@@ -116,16 +105,13 @@ public class GameGrid : NetworkBehaviour
         }
     }
 
+    internal void SetRemotePVPPlayer()
+    {
+        mover = new RemotePVPMover();
+    }
+
     public void SetGridCellTypeStateAndAttendentVFX()
     {
-        if (!Sharedgamedata.issingleplayer && NetworkServer.active == false)
-        {
-            Debug.Log("Network server is annoyed.");
-            return;
-        }
-
-        Debug.Log("running long variable name " + this.gameObject + " for " + Sharedgamedata.issingleplayer);
-
         for (int x = 0; x < numCells.x; x++)
         {
             for (int y = 0; y < numCells.y; y++)
@@ -152,23 +138,18 @@ public class GameGrid : NetworkBehaviour
                         cellTypeFX[x, y].transform.parent = this.transform;
                         cellTypeFX[x, y].transform.localPosition = GetLocalTranslationFromGridLocation(x, y);
                         player.AddDeathEffectToDamageManager(cellTypeFX[x, y]);
-                        if (!Sharedgamedata.issingleplayer) NetworkServer.Spawn(cellTypeFX[x, y].GetComponent<TileFX>().gameObject);
                         break;
                     case CellType.SHIELD:
                         cellTypeFX[x, y] = GameObject.Instantiate(shieldCellPrefab).GetComponent<TileFX>();
-                        //if (!Sharedgamedata.issingleplayer) NetworkServer.Spawn(cellTypeFX[x, y].GetComponent<TileFX>().gameObject);
                         cellTypeFX[x, y].transform.parent = this.transform;
                         cellTypeFX[x, y].transform.localPosition = GetLocalTranslationFromGridLocation(x, y);
                         player.AddDeathEffectToDamageManager(cellTypeFX[x, y]);
-                        if (!Sharedgamedata.issingleplayer) NetworkServer.Spawn(cellTypeFX[x, y].GetComponent<TileFX>().gameObject);
                         break;
                     case CellType.PSI:
                         cellTypeFX[x, y] = GameObject.Instantiate(psiCellPrefab).GetComponent<TileFX>();
-                        //if (!Sharedgamedata.issingleplayer) NetworkServer.Spawn(cellTypeFX[x, y].GetComponent<TileFX>().gameObject);
                         cellTypeFX[x, y].transform.parent = this.transform;
                         cellTypeFX[x, y].transform.localPosition = GetLocalTranslationFromGridLocation(x, y);
                         player.AddDeathEffectToDamageManager(cellTypeFX[x, y]);
-                        if (!Sharedgamedata.issingleplayer) NetworkServer.Spawn(cellTypeFX[x, y].GetComponent<TileFX>().gameObject);
                         break;
                     default:
                         break;
@@ -186,7 +167,7 @@ public class GameGrid : NetworkBehaviour
     public int currentPieceRotation = 0;
     public int prevPieceRotation = 0;
 
-    private Transform nextPieceHolder;
+    public Transform nextPieceHolder;
 
     public float timeSinceLastMove = 0;
     public float timeSinceLastRot = 0;
@@ -203,20 +184,17 @@ public class GameGrid : NetworkBehaviour
 	// Use this for initialization
 	void Start ()
     {
-
+        if (mover == null)
+        {
+            mover = new SinglePlayerMover(player, ominousTick);
+        }
     }
 
     private PlayingPiece MakeAPiece()
     {
 
-
-
-
+        Debug.Log("Piece Made");
         PlayingPiece toReturn = GameObject.Instantiate(piecePrefab);
-        if (!Sharedgamedata.issingleplayer && NetworkServer.active)
-            NetworkServer.Spawn(toReturn.gameObject);
-
-
 
         if (forcedPieces.Count > 0)
         {
@@ -289,7 +267,6 @@ public class GameGrid : NetworkBehaviour
     public bool isDownBeingHeld;
     public bool isLeftBeingHeld;
     public bool isRightBeingHeld;
-    public readonly float buttonMashDebounceInput = .2f;
 
     public float timeSinceLastMoveUpEvent;
     public float timeSinceLastMoveDownEvent;
@@ -305,26 +282,46 @@ public class GameGrid : NetworkBehaviour
 
     private bool hasSaved;
 
-    public bool isPlayedByAI;
     public InvisibleDelayedChargeGiver chargeGiverPrefab;
+
+    Mover mover;
 
     // Update is called once per frame
     void Update()
     {
-        if (!Sharedgamedata.issingleplayer)
-            return;
-
         if (Time.timeScale == 0)
         {
             justExitedMenu = true;
             return;
         }
 
+        justExitedMenu = false;
+
         if (MissionManager.isInCutscene)
         {
             return;
         }
-        justExitedMenu = false;
+
+        //There are five places input could come from.
+        // -1: The Single player, which can be keyboard or controller.
+        // -2: Local player 1, which is keyboard
+        // -3: Local player 2, which is controller
+        // -4: The AI
+        // -5: The remote player.
+
+        //These sources can all perform the same basic commands: LRUD, CW, CCW, Drop, and Reboot.
+        //To figure out which we're doing, we query the "Mover" for a command.
+
+        mover.Tick(justExitedMenu);
+
+        if (mover.GetInput(MoverCommand.UP)) { TryGoUp(); }
+        if (mover.GetInput(MoverCommand.DOWN)) { TryGoDown(); }
+        if (mover.GetInput(MoverCommand.LEFT)) { TryGoLeft(); }
+        if (mover.GetInput(MoverCommand.RIGHT)) { TryGoRight(); }
+        if (mover.GetInput(MoverCommand.CW)) { TryRotateCW(); }
+        if (mover.GetInput(MoverCommand.CCW)) { TryRotateCCW(); }
+        if (mover.GetInput(MoverCommand.DROP)) { TryDrop(); }
+        if (mover.GetInput(MoverCommand.REBOOT)) { Reboot(); }
 
         if (Time.timeSinceLevelLoad > 300 & isRecording & !hasSaved)
         {
@@ -332,136 +329,96 @@ public class GameGrid : NetworkBehaviour
             hasSaved = true;
         }
 
-        if (isPlayedByAI)
-        {
-            aIPlayer.TickAI();
-        }
+        UpdateCurrentPieceTransform();
 
-        if (isPlayerOne ? (Input.GetButton("Rotate1_P1") && Input.GetButton("Rotate2_P1")) : (Input.GetButton("Rotate1_P2") && Input.GetButton("Rotate2_P2")))
+    }
+
+    private void TryDrop()
+    {
+        //Fallback: If there's somebohw someting directly underneath you, do not place. Should never happen in practice.
+        for (int x = 0; x < 3; x++)
         {
-            float oldTimeHeld = timeHeldBothRotatesAtOnce;
-            timeHeldBothRotatesAtOnce += Time.deltaTime;
-            if ((int)timeHeldBothRotatesAtOnce != (int)oldTimeHeld)
+            for (int y = 0; y < 3; y++)
             {
-                ominousTick.Play();
-            }
-            if (timeHeldBothRotatesAtOnce > 5)
-            {
-                Reboot();
-                timeHeldBothRotatesAtOnce = 0;
-                if (isRecording) { recorder.RegisterEvent(GameRecorder.REBOOT); }
-            }
-        }
-        else
-        {
-            timeHeldBothRotatesAtOnce = 0;
-        }
-
-
-        if (isPlayedByAI)
-        {
-            if (aIPlayer.GetButtonDown("UP")) { TryGoUp(); }
-            if (aIPlayer.GetButtonDown("DOWN")) { TryGoDown(); }
-            if (aIPlayer.GetButtonDown("LEFT")) { TryGoLeft(); }
-            if (aIPlayer.GetButtonDown("RIGHT")) { TryGoRight(); }
-            if (aIPlayer.GetButtonDown("REBOOT")) { Reboot(); }
-        }
-        else
-        {
-            HandleUpMovement();
-            HandleDownMovement();
-            HandleLeftMovement();
-            HandleRightMovement();
-        }
-
-        if (isPlayerOne ? Input.GetButtonDown("Place_P1") && justExitedMenu == false : (Input.GetButtonDown("Place_P2") || aIPlayer.GetButtonDown("Place")) && justExitedMenu == false)
-        {
-            //Fallback: If there's somebohw someting directly underneath you, do not place. Should never happen in practice.
-            for (int x = 0; x < 3; x++)
-            {
-                for (int y = 0; y < 3; y++)
+                if (currentPiece.HasBlockAt(x, y) && IsInInvalidArea(currentPiecePosition.x + x - 1, currentPiecePosition.y + y - 1))
                 {
-                    if (currentPiece.HasBlockAt(x, y) && IsInInvalidArea(currentPiecePosition.x + x - 1, currentPiecePosition.y + y - 1))
-                    {
-                        return;
-                    }
-                }
-            }
-
-            if (forcedPlacements.Count > 0)
-            {
-                bool inGoodPosition = false;
-                ForcedPlacementOptions forced = forcedPlacements[0];
-                for (int i = 0; i < forced.placements.Count; i++)
-                {
-                    Vector3 posit = forced.placements[i];
-                    if (currentPieceRotation == forced.rotations[i] &&
-                        currentPiecePosition.x == posit.x &&
-                        currentPiecePosition.y == posit.y)
-                    {
-                        inGoodPosition = true;
-                    }
-                }
-                if (!inGoodPosition)
-                {
-                    errorSound.Play();
                     return;
                 }
-                forcedPlacements.RemoveAt(0);
             }
-
-            if (isRecording) { recorder.RegisterEvent(GameRecorder.DROP); }
-            DropPiece();
         }
 
-        if (isPlayerOne ? Input.GetButtonDown("Rotate1_P1") : (Input.GetButtonDown("Rotate1_P2") || aIPlayer.GetButtonDown("Rotate1")))
+        if (forcedPlacements.Count > 0)
         {
-            bool[,] surroundings = new bool[3, 3];
-            for (int x = 0; x < 3; x++)
+            bool inGoodPosition = false;
+            ForcedPlacementOptions forced = forcedPlacements[0];
+            for (int i = 0; i < forced.placements.Count; i++)
             {
-                for (int y = 0; y < 3; y++)
+                Vector3 posit = forced.placements[i];
+                if (currentPieceRotation == forced.rotations[i] &&
+                    currentPiecePosition.x == posit.x &&
+                    currentPiecePosition.y == posit.y)
                 {
-                    surroundings[x, y] = IsObstructedAt(currentPiecePosition.x + x - 1, currentPiecePosition.y + y - 1);
+                    inGoodPosition = true;
                 }
             }
-            if (currentPiece.rotateCCW(surroundings))
+            if (!inGoodPosition)
             {
-                prevPieceRotation = currentPieceRotation;
-                currentPieceRotation = (currentPieceRotation + 5) % 4;
-                timeSinceLastRot = 0f;
-                currentPiece.PlaySlideSound();
-                if (isRecording) { recorder.RegisterEvent(GameRecorder.CCW_ROTATE); }
+                errorSound.Play();
+                return;
             }
-            else
-            {
-                //Make some sort of sound.
-            }
+            forcedPlacements.RemoveAt(0);
         }
 
-        if (isPlayerOne ? Input.GetButtonDown("Rotate2_P1") : (Input.GetButtonDown("Rotate2_P2") || aIPlayer.GetButtonDown("Rotate2")))
+        if (isRecording) { recorder.RegisterEvent(GameRecorder.DROP); }
+        DropPiece();
+    }
+
+    private void TryRotateCCW()
+    {
+        bool[,] surroundings = new bool[3, 3];
+        for (int x = 0; x < 3; x++)
         {
-            bool[,] surroundings = new bool[3, 3];
-            for (int x = 0; x < 3; x++)
+            for (int y = 0; y < 3; y++)
             {
-                for (int y = 0; y < 3; y++)
-                {
-                    surroundings[x, y] = IsObstructedAt(currentPiecePosition.x + x - 1, currentPiecePosition.y + y - 1);
-                }
-            }
-            if (currentPiece.RotateCW(surroundings))
-            {
-                prevPieceRotation = currentPieceRotation;
-                currentPieceRotation = (currentPieceRotation + 3) % 4;
-                timeSinceLastRot = 0f;
-                currentPiece.PlaySlideSound();
-                if (isRecording) { recorder.RegisterEvent(GameRecorder.CW_ROTATE); }
-            }
-            else
-            {
-                //Make some sort of sound.
+                surroundings[x, y] = IsObstructedAt(currentPiecePosition.x + x - 1, currentPiecePosition.y + y - 1);
             }
         }
-        UpdateCurrentPieceTransform();
+        if (currentPiece.rotateCCW(surroundings))
+        {
+            prevPieceRotation = currentPieceRotation;
+            currentPieceRotation = (currentPieceRotation + 5) % 4;
+            timeSinceLastRot = 0f;
+            currentPiece.PlaySlideSound();
+            if (isRecording) { recorder.RegisterEvent(GameRecorder.CCW_ROTATE); }
+        }
+        else
+        {
+            //Make some sort of sound.
+        }
+    }
+
+    private void TryRotateCW()
+    {
+        bool[,] surroundings = new bool[3, 3];
+        for (int x = 0; x < 3; x++)
+        {
+            for (int y = 0; y < 3; y++)
+            {
+                surroundings[x, y] = IsObstructedAt(currentPiecePosition.x + x - 1, currentPiecePosition.y + y - 1);
+            }
+        }
+        if (currentPiece.RotateCW(surroundings))
+        {
+            prevPieceRotation = currentPieceRotation;
+            currentPieceRotation = (currentPieceRotation + 3) % 4;
+            timeSinceLastRot = 0f;
+            currentPiece.PlaySlideSound();
+            if (isRecording) { recorder.RegisterEvent(GameRecorder.CW_ROTATE); }
+        }
+        else
+        {
+            //Make some sort of sound.
+        }
     }
 
     public void Reboot()
@@ -475,31 +432,7 @@ public class GameGrid : NetworkBehaviour
         }
     }
 
-    public void HandleUpMovement()
-    {
-        float speed = player.GetMovementSpeed();
-        if ((Input.GetAxis("Vertical_P1") > 0 || Input.GetAxis("Vertical_P2") > 0 || aIPlayer.getButtonPressed("Up")) && !isUpBeingHeld)
-        {
-            isUpBeingHeld = true;
-            timeSinceLastMoveUpEvent = speed * -buttonMashDebounceInput;
-            justPressedUp = true;
-        }
-        if (isUpBeingHeld)
-        {
-            if (timeSinceLastMoveUpEvent > speed || justPressedUp)
-            {
-                justPressedUp = false;
-                TryGoUp();
 
-                timeSinceLastMoveUpEvent %= speed;
-            }
-            timeSinceLastMoveUpEvent += Time.deltaTime;
-        }
-        if (!(Input.GetAxis("Vertical_P1") > 0 || Input.GetAxis("Vertical_P2") > 0 || aIPlayer.getButtonPressed("Up")))
-        {
-            isUpBeingHeld = false;
-        }
-    }
 
     public void TryGoUp()
     {
@@ -521,32 +454,6 @@ public class GameGrid : NetworkBehaviour
             currentPiece.PlaySlideSound();
             if (isRecording) { recorder.RegisterEvent(GameRecorder.UP); }
             timeSinceLastMove = 0f;
-        }
-    }
-
-    public void HandleDownMovement()
-    {
-        float speed = player.GetMovementSpeed();
-        if ((Input.GetAxis("Vertical_P1") < 0 || Input.GetAxis("Vertical_P2") < 0 || aIPlayer.getButtonPressed("Down")) && !isDownBeingHeld)
-        {
-            isDownBeingHeld = true;
-            timeSinceLastMoveDownEvent = speed * -buttonMashDebounceInput;
-            justPressedDown = true;
-        }
-        if (isDownBeingHeld)
-        {
-            if (timeSinceLastMoveDownEvent > speed || justPressedDown)
-            {
-                justPressedDown = false;
-                TryGoDown();
-
-                timeSinceLastMoveDownEvent %= speed;
-            }
-            timeSinceLastMoveDownEvent += Time.deltaTime;
-        }
-        if (!(Input.GetAxis("Vertical_P1") < 0 || Input.GetAxis("Vertical_P2") < 0 || aIPlayer.getButtonPressed("Down")))
-        {
-            isDownBeingHeld = false;
         }
     }
 
@@ -573,32 +480,6 @@ public class GameGrid : NetworkBehaviour
         }
     }
 
-    public void HandleLeftMovement()
-    {
-        float speed = player.GetMovementSpeed();
-        if ((Input.GetAxis("Horizontal_P1") < 0 || Input.GetAxis("Horizontal_P2") < 0 || aIPlayer.getButtonPressed("Left")) && !isLeftBeingHeld)
-        {
-            isLeftBeingHeld = true;
-            timeSinceLastMoveLeftEvent = speed * -buttonMashDebounceInput;
-            justPressedLeft = true;
-        }
-        if (isLeftBeingHeld)
-        {
-            if (timeSinceLastMoveLeftEvent > speed || justPressedLeft)
-            {
-                justPressedLeft = false;
-                TryGoLeft();
-
-                timeSinceLastMoveLeftEvent %= speed;
-            }
-            timeSinceLastMoveLeftEvent += Time.deltaTime;
-        }
-        if (!(Input.GetAxis("Horizontal_P1") < 0 || Input.GetAxis("Horizontal_P2") < 0 || aIPlayer.getButtonPressed("Left")))
-        {
-            isLeftBeingHeld = false;
-        }
-    }
-
     public void TryGoLeft()
     {
         bool isBlocked = false;
@@ -619,32 +500,6 @@ public class GameGrid : NetworkBehaviour
             if (isRecording) { recorder.RegisterEvent(GameRecorder.LEFT); }
             currentPiece.PlaySlideSound();
             timeSinceLastMove = 0f;
-        }
-    }
-
-    public void HandleRightMovement()
-    {
-        float speed = player.GetMovementSpeed();
-        if ((Input.GetAxis("Horizontal_P1") > 0 || Input.GetAxis("Horizontal_P2") > 0 || aIPlayer.getButtonPressed("Right")) && !isRightBeingHeld)
-        {
-            isRightBeingHeld = true;
-            timeSinceLastMoveRightEvent = speed * -buttonMashDebounceInput;
-            justPressedRight = true;
-        }
-        if (isRightBeingHeld)
-        {
-            if (timeSinceLastMoveRightEvent > speed || justPressedRight)
-            {
-                justPressedRight = false;
-                TryGoRight();
-
-                timeSinceLastMoveRightEvent %= speed;
-            }
-            timeSinceLastMoveRightEvent += Time.deltaTime;
-        }
-        if (!(Input.GetAxis("Horizontal_P1") > 0 || Input.GetAxis("Horizontal_P2") > 0 || aIPlayer.getButtonPressed("Right")))
-        {
-            isRightBeingHeld = false;
         }
     }
 
@@ -725,11 +580,9 @@ public class GameGrid : NetworkBehaviour
             if (player.HasRoomForMoreEnergy())
             {
                 PowerupEffect pe = GameObject.Instantiate<PowerupEffect>(powerUpEffect);
-                if (!Sharedgamedata.issingleplayer) NetworkServer.Spawn(pe.gameObject);
                 GameCube sourceCube = cubesToExplode[UnityEngine.Random.Range(0, cubesToExplode.Count)];
                 pe.Initialize(sourceCube.transform.position, player.GetTargetOfParticle(PowerupType.ENERGY, 3), delay, PowerupType.ENERGY);
                 InvisibleDelayedChargeGiver chargeGiver = GameObject.Instantiate<InvisibleDelayedChargeGiver>(chargeGiverPrefab);
-                if (!Sharedgamedata.issingleplayer) NetworkServer.Spawn(chargeGiver.gameObject);
                 chargeGiver.target = player;
                 chargeGiver.delay = delay + 1;
                 chargeGiver.type = PowerupType.ENERGY;
@@ -746,7 +599,6 @@ public class GameGrid : NetworkBehaviour
                 Vector3 centroid = FindCentroid(cubesToExplode);
                 GameObject comboParticles = comboParticleHolder.comboParticles[numberOfSquaresMade].gameObject;
                 GameObject go = GameObject.Instantiate(comboParticles);
-                if (!Sharedgamedata.issingleplayer) NetworkServer.Spawn(go);
                 go.transform.position = centroid;
             }
         }
@@ -961,15 +813,7 @@ public class GameGrid : NetworkBehaviour
 
     internal void DropNewCubeAt(int x, int y)
     {
-        while (!Sharedgamedata.issingleplayer && !NetworkServer.active)
-        {
-            Thread.Sleep(10);
-        }
-
-
-            GameCube cube = GameObject.Instantiate<GameCube>(currentPiece.cube); // Probbably unsafe.
-        if (!Sharedgamedata.issingleplayer && NetworkServer.active)
-            NetworkServer.Spawn(cube.gameObject);
+        GameCube cube = GameObject.Instantiate<GameCube>(currentPiece.cube); // Probably unsafe.
 
         cube.Initialize(player, dice);
         grid[currentPiecePosition.x + x - 1, currentPiecePosition.y + y - 1] = cube;

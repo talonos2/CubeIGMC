@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Networking;
 
-public class Combatant : NetworkBehaviour
+public class Combatant : MonoBehaviour
 {
     internal float health;
     internal int energy;

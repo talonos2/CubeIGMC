@@ -20,7 +20,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4318358761888948}
   - component: {fileID: 114389015036086872}
-  - component: {fileID: 114456314852483866}
   m_Layer: 0
   m_Name: PowerupEffect
   m_TagString: Untagged
@@ -274,38 +273,6 @@ MonoBehaviour:
   duration: 1
   height: 4
   collectionSound: {fileID: 82182821990522302}
---- !u!114 &114456314852483866
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1241247196152422}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SceneId:
-    m_Value: 0
-  m_AssetId:
-    i0: 221
-    i1: 164
-    i2: 64
-    i3: 25
-    i4: 132
-    i5: 95
-    i6: 124
-    i7: 68
-    i8: 250
-    i9: 23
-    i10: 155
-    i11: 224
-    i12: 24
-    i13: 4
-    i14: 188
-    i15: 225
-  m_ServerOnly: 0
-  m_LocalPlayerAuthority: 1
 --- !u!198 &198162948393885240
 ParticleSystem:
   m_ObjectHideFlags: 1

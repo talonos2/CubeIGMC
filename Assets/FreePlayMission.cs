@@ -12,17 +12,22 @@ public class FreePlayMission : Mission {
 
     // Use this for initialization
     void Start () {
-		
-	}
+        PointerHolder p = MissionManager.instance.pointers;
+        darkness = p.daaaaaknesssss;
+    }
 
     public GameGrid gridToCheatWith;
     private float timeSinceStepStarted;
     public Image darkness;
 
+    public bool cheaty;
+
 	// Update is called once per frame
 	void Update ()
     {
-            if (timeSinceStepStarted == 0)
+        if (timeSinceStepStarted == 0)
+        {
+            if (cheaty)
             {
                 gridToCheatWith.SetGridCellTypeStateAndAttendentVFX();
                 gridToCheatWith.player.energy = 0;
@@ -66,10 +71,22 @@ public class FreePlayMission : Mission {
                     new int[3, 3] { { 0, 1, 0 }, { 0, 1, 1 }, { 0, 1, 1 } }, //5-6
                     new int[3, 3] { { 1, 0, 1 }, { 1, 1, 1 }, { 1, 1, 1 } }, //5-7
                 };
-            gridToCheatWith.ForcePieces(piecesToForce);
+                gridToCheatWith.ForcePieces(piecesToForce);
+            }
         }
-            timeSinceStepStarted += Time.deltaTime;
-            float brightness = Mathf.Clamp01(timeSinceStepStarted / 2);
-            darkness.color = new Color(0, 0, 0, 1 - brightness);
+
+        timeSinceStepStarted += Time.deltaTime;
+        float brightness = Mathf.Clamp01(timeSinceStepStarted / 2);
+        darkness.color = new Color(0, 0, 0, 1 - brightness);
+    }
+
+    internal override AIParams GetAIParams()
+    {
+        return null;
+    }
+
+    internal override EngineRoomGameType GameType()
+    {
+        return EngineRoomGameType.LOCAL_PVP;
     }
 }

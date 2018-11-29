@@ -4,7 +4,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class SpaceshipPawn : NetworkBehaviour {
+public class SpaceshipPawn : MonoBehaviour
+{
 
     public LaserBullet bulletPrefab;
     public float distanceBetweenShips;
@@ -106,14 +107,6 @@ public class SpaceshipPawn : NetworkBehaviour {
         bullet.transform.localScale = new Vector3(size, size, size);
         bullet.GetComponent<Rigidbody>().velocity = new Vector3(distanceBetweenShips / flightTime, 0, 0);
         bullet.Initialize(enemy, flightTime, damage);
-
-
-        if (!Sharedgamedata.issingleplayer)
-        {
-            bullet.CmdInitialize(enemy, flightTime, damage);
-            NetworkServer.Spawn(bullet.gameObject);
-
-        }
 
     }
 

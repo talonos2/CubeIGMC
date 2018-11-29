@@ -24,7 +24,6 @@ GameObject:
   - component: {fileID: 114679843183655322}
   - component: {fileID: 54963237557217264}
   - component: {fileID: 75035924617153802}
-  - component: {fileID: 114915035795813398}
   m_Layer: 0
   m_Name: PsiPlacementEffect
   m_TagString: Untagged
@@ -82,38 +81,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea608c0fc8347d541a66bc0d18867d10, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &114915035795813398
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1139390753616414}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SceneId:
-    m_Value: 0
-  m_AssetId:
-    i0: 186
-    i1: 226
-    i2: 90
-    i3: 98
-    i4: 142
-    i5: 108
-    i6: 25
-    i7: 20
-    i8: 42
-    i9: 15
-    i10: 188
-    i11: 208
-    i12: 206
-    i13: 133
-    i14: 243
-    i15: 57
-  m_ServerOnly: 0
-  m_LocalPlayerAuthority: 0
 --- !u!198 &198805869858304784
 ParticleSystem:
   m_ObjectHideFlags: 1

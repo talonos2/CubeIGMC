@@ -4,7 +4,7 @@ using System.IO;
 using UnityEngine;
 
 [Serializable]
-internal class AIPlayer
+internal class AIPlayer : Mover
 {
     public int seed;
 
@@ -35,12 +35,6 @@ internal class AIPlayer
     public AIPlayer()
     {
 
-    }
-
-    public void TickAI()
-    {
-        PlayNextCommand();
-        BufferFurtherCommands();
     }
 
     private float timeElapsed = 0;
@@ -112,52 +106,6 @@ internal class AIPlayer
         }
     }
 
-    public bool GetButtonDown(string v)
-    {
-        switch (v)
-        {
-            case "Place":
-                return justDropped;
-            case "Rotate2":
-                return justCWed;
-            case "Rotate1":
-                return justCCWed;
-            case "LEFT":
-                return isPressingLeft;
-            case "RIGHT":
-                return isPressingRight;
-            case "UP":
-                return isPressingUp;
-            case "DOWN":
-                return isPressingDown;
-            case "REBOOT":
-                return justRebooted;
-
-            default:
-                Debug.LogError("Bad string passed to AIPlayer.GetButtonDown: " + v);
-                return false;
-        }
-    }
-
-    public bool getButtonPressed(string v)
-    {
-        switch (v)
-        {
-            case "Left":
-                return isPressingLeft;
-            case "Right":
-                return isPressingRight;
-            case "Up":
-                return isPressingUp;
-            case "Down":
-                return isPressingDown;
-            default:
-                Debug.LogError("Bad string passed to AIPlayer.GetButtonPressed: " + v);
-                return false;
-        }
-    }
-
-
     [Serializable]
     public class InputEvent
     {
@@ -195,5 +143,35 @@ internal class AIPlayer
             }
             timeToPlay *= 2;
         }
+    }
+
+    internal override bool GetInput(MoverCommand command)
+    {
+        switch (command)
+        {
+            case MoverCommand.DROP:
+                return justDropped;
+            case MoverCommand.CW:
+                return justCWed;
+            case MoverCommand.CCW:
+                return justCCWed;
+            case MoverCommand.LEFT:
+                return isPressingLeft;
+            case MoverCommand.RIGHT:
+                return isPressingRight;
+            case MoverCommand.UP:
+                return isPressingUp;
+            case MoverCommand.DOWN:
+                return isPressingDown;
+            case MoverCommand.REBOOT:
+                return justRebooted;
+        }
+        return false;
+    }
+
+    internal override void Tick(bool unused)
+    {
+        PlayNextCommand();
+        BufferFurtherCommands();
     }
 }

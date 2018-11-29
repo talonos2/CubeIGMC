@@ -4,4 +4,7 @@ using UnityEngine;
 public abstract class Mission : MonoBehaviour
 {
     internal abstract void Unblock();
+    internal abstract AIParams GetAIParams();
+
+    internal abstract EngineRoomGameType GameType();
 }

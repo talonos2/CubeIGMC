@@ -49,7 +49,6 @@ public class Mission3NarractionIntro : Mission {
                 timeSinceStepStarted = 0;
                 shipWrapper.transform.parent = gridToTurnIntoAI.player.pawn.transform;
                 gridToTurnIntoAI.player.pawn.gameObject.SetActive(true);
-                gridToTurnIntoAI.LoadAI(true, .2f, true);
                 break;
             case 2:
                 timeSinceStepStarted = 0;
@@ -125,7 +124,6 @@ public class Mission3NarractionIntro : Mission {
                 }
                 preLockonMusic.Play();
                 damageManager.stuffThatHappensInTheFinalExplosion.Add(moreStuffToExplodeOnDeath);
-                gridToTurnIntoAI.isPlayedByAI = true;
             }
             timeSinceStepStarted += Time.deltaTime;
             float brightness = Mathf.Clamp01(timeSinceStepStarted / 2);
@@ -142,5 +140,15 @@ public class Mission3NarractionIntro : Mission {
             float cameraPosit = Mathf.Lerp(-33f, 0, timeSinceStepStarted / 3);
             cameraToMove.transform.localPosition = new Vector3(cameraPosit, 32, -18.7f);
         }
+    }
+
+    internal override AIParams GetAIParams()
+    {
+        return new AIParams(droneAIs[UnityEngine.Random.Range(0, droneAIs.Length)].text, true, .2f, false);
+    }
+
+    internal override EngineRoomGameType GameType()
+    {
+        return EngineRoomGameType.SINGLE_PLAYER;
     }
 }

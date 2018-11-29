@@ -5,7 +5,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Networking;
 
-public class CombatInitializer : NetworkBehaviour {
+public class CombatInitializer : MonoBehaviour
+{
 
     public GameGrid grid1;
     public GameGrid grid2;
@@ -28,58 +29,11 @@ public class CombatInitializer : NetworkBehaviour {
 
     public int randomSeed;
 
-    private void Awake()
-    {
-        if (Sharedgamedata.issingleplayer == true)
-        {
-            Debug.Log("is singleplayer");
-            //            netWindow.SetActive(false);
-            darkCanvas.SetActive(true);
-            campaign.SetActive(true);
-        }
-        else
-        {
-            Debug.Log("is multiplayer");
-            darkCanvas.SetActive(false);
-            campaign.SetActive(false);
-            //            netWindow.GetComponent<networkManager>();
-            Debug.Log("active?" + NetworkServer.active);
-        }
-    }
-
     // Use this for initialization
     void Start ()
     {
-        //       if (Sharedgamedata.issingleplayer == false)
-        //       {
-        //           netWindow.SetActive(false);
-        //       }
-
-        
-
-        Debug.Log("does combat initializing");
-
         gameGrid1.SetActive(true);
         gameGrid2.SetActive(true);
-        Time.timeScale = 1;
-        Debug.Log(Sharedgamedata.issingleplayer);
-        if (Sharedgamedata.issingleplayer == true)
-        {
-            Debug.Log("is singleplayer");
-            //            netWindow.SetActive(false);
-            darkCanvas.SetActive(true);
-            campaign.SetActive(true);
-        }
-        else
-        {
-            Debug.Log("is multiplayer");
-            darkCanvas.SetActive(false);
-            campaign.SetActive(false);
-            //            netWindow.GetComponent<networkManager>();
-            Debug.Log("active?" + NetworkServer.active);
-        }
-
-
     }
 
     bool setup = false;
@@ -88,22 +42,41 @@ public class CombatInitializer : NetworkBehaviour {
     {
         if (!setup)
         {
-
-
-            randomSeed = UnityEngine.Random.Range(1, 65535);
-
-
-            if (grid2.isPlayedByAI)
+            //There are three scenarios: Either we're against an AI, in local co-op, or online. Each one needs a different seed.
+            //If against an AI, look at its info and extract a scene from it.
+            AIParams pars = MissionManager.instance.mission.GetAIParams();
+            if (pars != null)
             {
-                grid2.LoadAI(false, 0, false);
-                randomSeed = grid2.GetAISeed();
+                AIPlayer ai = grid2.LoadAI(pars.robotic, pars.robotSpeed, pars.loop, pars.text);
+                randomSeed = ai.seed;
+            }
+            //elseif connecting then get the seed from the host. (To Be Implemented)
+            else //Single player
+            {
+                randomSeed = UnityEngine.Random.Range(1, 65535);
+            }
+            if (MissionManager.instance.mission.GameType() == EngineRoomGameType.LOCAL_PVP)
+            {
+                grid1.SetLocalPVPMover(true);
+                grid2.SetLocalPVPMover(false);
+            }
+            if (MissionManager.instance.mission.GameType() == EngineRoomGameType.SERVER_PVP)
+            {
+                EngineRoomNetworkManager ernm = MissionManager.instance.engineRoomNetworkManager;
+                ernm.SetupLocalClient();
+                ernm.SetupServer();
+                grid2.SetRemotePVPPlayer();
+            }
+            if (MissionManager.instance.mission.GameType() == EngineRoomGameType.CLIENT_PVP)
+            {
+                EngineRoomNetworkManager ernm = MissionManager.instance.engineRoomNetworkManager;
+                ernm.SetupClient();
+                grid2.SetRemotePVPPlayer();
             }
 
-            if (Sharedgamedata.issingleplayer)
-            {
-                grid1.SetSeedAndStart(randomSeed);
-                grid2.SetSeedAndStart(randomSeed);
-            }
+            grid1.SetSeedAndStart(randomSeed);
+            grid2.SetSeedAndStart(randomSeed);
+
             setup = true;
         }
 
