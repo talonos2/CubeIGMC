@@ -17,7 +17,7 @@ public class Mission3NarractionIntro : Mission {
     public GameGrid gridToSetup;
     public GameGrid gridToTurnIntoAI;
 
-    public GameObject[] pawnToHide;
+    public List<GameObject> pawnToHide;
 
     public AudioSource preLockonMusic;
     public AudioSource combatMusicThatsNotAsIntrusive;
@@ -44,9 +44,11 @@ public class Mission3NarractionIntro : Mission {
             case 1:  // Finish First Narration, Tractor beam turns on, begin second narration;
                 darkness.color = new Color(0, 0, 0, 0);
                 shipIsMovingIn = true;
+
                 narrations[1].gameObject.SetActive(true);
                 timeSinceStepStarted = 0;
                 shipWrapper.transform.parent = gridToTurnIntoAI.player.pawn.transform;
+                gridToTurnIntoAI.player.pawn.gameObject.SetActive(true);
                 gridToTurnIntoAI.LoadAI(true, .2f, true);
                 break;
             case 2:
@@ -81,12 +83,25 @@ public class Mission3NarractionIntro : Mission {
     }
 
     // Use this for initialization
-    void Start()
+    void OnEnable()
     {
+
+        gridAttachedPieces = new GameObject[4];
+        PointerHolder p = MissionManager.instance.pointers;
+        gridAttachedPieces[0] = p.combatant1.healthBar.gameObject;
+        gridAttachedPieces[1] = p.combatant2.healthBar.gameObject;
+        gridAttachedPieces[2] = p.combatant2.multiplierText.gameObject;
+        gridAttachedPieces[3] = p.player2Grid.transform.Find("NextPieceText").gameObject;
+        darkness = p.daaaaaknesssss;
+        gridToSetup = p.player1Grid;
+        gridToTurnIntoAI = p.player2Grid;
+        pawnToHide = p.ship2.stuffToHideIfThisPawnIsDisabledByTheMission;
+        cameraToMove = p.cameraWrapper2.gameObject;
+        shipWrapper.GetComponent<DestroySpaceshipOnDeath>().stuffToHide.Add(p.combatant2.multiplierText.GetComponent<SpriteRenderer>());
+        shipWrapper.GetComponent<DestroySpaceshipOnDeath>().stuffToHide.Add(gridAttachedPieces[3].GetComponent<SpriteRenderer>());
+        damageManager = p.combatant2.damageManager;
+
         narrations[0].gameObject.SetActive(true);
-
-        //gridToSetup.player.enemy.damageManager = damageManagerForDoor;
-
         MissionManager.isInCutscene = true;
     }
 

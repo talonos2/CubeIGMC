@@ -20,7 +20,7 @@ public class Mission2NarrationIntro : Mission
 
     public GameGrid gridToSetup;
     public GameGrid gridToTurnIntoAI;
-    public GameObject[] pawnToHide;
+    public List<GameObject> pawnToHide;
 
     public AudioSource tractorBeamLockonSound;
     public AudioSource spaceDoorOpenSound;
@@ -165,10 +165,13 @@ public class Mission2NarrationIntro : Mission
         gridToSetup = p.player1Grid;
         gridToTurnIntoAI = p.player2Grid;
         pawnToHide = p.ship2.stuffToHideIfThisPawnIsDisabledByTheMission;
+        pawnToHide.Add(p.ship2.transform.Find("Shield").gameObject);
         tractorBeamLockonSound = p.ship1.getHitHeavySound;
         damageManagerForTractorBeam = p.combatant2.damageManager;
         cameraToMove = p.cameraWrapper2.gameObject;
         shipToMakeFlyAway = p.ship1;
+        mothershipToMoveIn.GetComponent<DestroySpaceshipOnDeath>().stuffToHide.Add(p.combatant2.multiplierText.GetComponent<SpriteRenderer>());
+        mothershipToMoveIn.GetComponent<DestroySpaceshipOnDeath>().stuffToHide.Add(gridAttachedPieces[3].GetComponent<SpriteRenderer>());
 
         narrations[0].gameObject.SetActive(true);
         //gridToSetup.player.enemy.damageManager = damageManagerForDoor;

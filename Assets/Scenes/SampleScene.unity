@@ -15000,7 +15000,7 @@ Prefab:
     - target: {fileID: 114233455349525356, guid: 0dfe140aceaeddc46a89eedbbb378123,
         type: 2}
       propertyPath: stuffToHideIfThisPawnIsDisabledByTheMission.Array.size
-      value: 13
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 4599745634285610, guid: 0dfe140aceaeddc46a89eedbbb378123, type: 2}
       propertyPath: m_LocalPosition.x
@@ -15070,62 +15070,62 @@ Prefab:
         type: 2}
       propertyPath: stuffToHideIfThisPawnIsDisabledByTheMission.Array.data[0]
       value: 
-      objectReference: {fileID: 436011836}
+      objectReference: {fileID: 188491612}
     - target: {fileID: 114233455349525356, guid: 0dfe140aceaeddc46a89eedbbb378123,
         type: 2}
       propertyPath: stuffToHideIfThisPawnIsDisabledByTheMission.Array.data[1]
       value: 
-      objectReference: {fileID: 188491612}
+      objectReference: {fileID: 1625913034}
     - target: {fileID: 114233455349525356, guid: 0dfe140aceaeddc46a89eedbbb378123,
         type: 2}
       propertyPath: stuffToHideIfThisPawnIsDisabledByTheMission.Array.data[2]
       value: 
-      objectReference: {fileID: 1625913034}
+      objectReference: {fileID: 1065053448}
     - target: {fileID: 114233455349525356, guid: 0dfe140aceaeddc46a89eedbbb378123,
         type: 2}
       propertyPath: stuffToHideIfThisPawnIsDisabledByTheMission.Array.data[3]
       value: 
-      objectReference: {fileID: 1065053448}
+      objectReference: {fileID: 362872433}
     - target: {fileID: 114233455349525356, guid: 0dfe140aceaeddc46a89eedbbb378123,
         type: 2}
       propertyPath: stuffToHideIfThisPawnIsDisabledByTheMission.Array.data[4]
       value: 
-      objectReference: {fileID: 362872433}
+      objectReference: {fileID: 1185260392}
     - target: {fileID: 114233455349525356, guid: 0dfe140aceaeddc46a89eedbbb378123,
         type: 2}
       propertyPath: stuffToHideIfThisPawnIsDisabledByTheMission.Array.data[5]
       value: 
-      objectReference: {fileID: 1185260392}
+      objectReference: {fileID: 1850089836}
     - target: {fileID: 114233455349525356, guid: 0dfe140aceaeddc46a89eedbbb378123,
         type: 2}
       propertyPath: stuffToHideIfThisPawnIsDisabledByTheMission.Array.data[6]
       value: 
-      objectReference: {fileID: 1850089836}
+      objectReference: {fileID: 238327997}
     - target: {fileID: 114233455349525356, guid: 0dfe140aceaeddc46a89eedbbb378123,
         type: 2}
       propertyPath: stuffToHideIfThisPawnIsDisabledByTheMission.Array.data[7]
       value: 
-      objectReference: {fileID: 238327997}
+      objectReference: {fileID: 877458254}
     - target: {fileID: 114233455349525356, guid: 0dfe140aceaeddc46a89eedbbb378123,
         type: 2}
       propertyPath: stuffToHideIfThisPawnIsDisabledByTheMission.Array.data[8]
       value: 
-      objectReference: {fileID: 877458254}
+      objectReference: {fileID: 1894454296}
     - target: {fileID: 114233455349525356, guid: 0dfe140aceaeddc46a89eedbbb378123,
         type: 2}
       propertyPath: stuffToHideIfThisPawnIsDisabledByTheMission.Array.data[9]
       value: 
-      objectReference: {fileID: 1894454296}
+      objectReference: {fileID: 1585959597}
     - target: {fileID: 114233455349525356, guid: 0dfe140aceaeddc46a89eedbbb378123,
         type: 2}
       propertyPath: stuffToHideIfThisPawnIsDisabledByTheMission.Array.data[10]
       value: 
-      objectReference: {fileID: 1585959597}
+      objectReference: {fileID: 2063079237}
     - target: {fileID: 114233455349525356, guid: 0dfe140aceaeddc46a89eedbbb378123,
         type: 2}
       propertyPath: stuffToHideIfThisPawnIsDisabledByTheMission.Array.data[11]
       value: 
-      objectReference: {fileID: 2063079237}
+      objectReference: {fileID: 45698516}
     - target: {fileID: 114233455349525356, guid: 0dfe140aceaeddc46a89eedbbb378123,
         type: 2}
       propertyPath: stuffToHideIfThisPawnIsDisabledByTheMission.Array.data[12]

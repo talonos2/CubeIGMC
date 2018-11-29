@@ -118,10 +118,9 @@ public class GameGrid : NetworkBehaviour
 
     public void SetGridCellTypeStateAndAttendentVFX()
     {
-
-        if (NetworkServer.active == false)
+        if (!Sharedgamedata.issingleplayer && NetworkServer.active == false)
         {
-            Debug.Log("notreadyyet");
+            Debug.Log("Network server is annoyed.");
             return;
         }
 
@@ -312,12 +311,8 @@ public class GameGrid : NetworkBehaviour
     // Update is called once per frame
     void Update()
     {
-
         if (!Sharedgamedata.issingleplayer)
             return;
-
-
-
 
         if (Time.timeScale == 0)
         {
@@ -467,180 +462,6 @@ public class GameGrid : NetworkBehaviour
             }
         }
         UpdateCurrentPieceTransform();
-    }
-
-    public void proxyUpdate()
-    {
-
-//        if (!isLocalPlayer)
-//            return;
-
-
-
-        Debug.Log("active?" + NetworkServer.active);
-
-        if (Time.timeScale == 0)
-        {
-            justExitedMenu = true;
-            return;
-        }
-
-        if (MissionManager.isInCutscene)
-        {
-            return;
-        }
-        justExitedMenu = false;
-
-        if (Time.timeSinceLevelLoad > 300 & isRecording & !hasSaved)
-        {
-            recorder.PrintOut();
-            hasSaved = true;
-        }
-
-        if (isPlayedByAI)
-        {
-            aIPlayer.TickAI();
-        }
-
-        if (Input.GetButton("Rotate1_P1")&& Input.GetButton("Rotate2_P1") || (Input.GetButton("Rotate1_P2") && Input.GetButton("Rotate2_P2")))
-        {
-            float oldTimeHeld = timeHeldBothRotatesAtOnce;
-            timeHeldBothRotatesAtOnce += Time.deltaTime;
-            if ((int)timeHeldBothRotatesAtOnce != (int)oldTimeHeld)
-            {
-                ominousTick.Play();
-            }
-            if (timeHeldBothRotatesAtOnce > 5)
-            {
-                Reboot();
-                timeHeldBothRotatesAtOnce = 0;
-                if (isRecording) { recorder.RegisterEvent(GameRecorder.REBOOT); }
-            }
-        }
-        else
-        {
-            timeHeldBothRotatesAtOnce = 0;
-        }
-
-
-        if (isPlayedByAI)
-        {
-            if (aIPlayer.GetButtonDown("UP")) { TryGoUp(); }
-            if (aIPlayer.GetButtonDown("DOWN")) { TryGoDown(); }
-            if (aIPlayer.GetButtonDown("LEFT")) { TryGoLeft(); }
-            if (aIPlayer.GetButtonDown("RIGHT")) { TryGoRight(); }
-            if (aIPlayer.GetButtonDown("REBOOT")) {Reboot(); }
-        }
-        else
-        {
-            HandleUpMovement();
-            HandleDownMovement();
-            HandleLeftMovement();
-            HandleRightMovement();
-        }
-
-        if (((Input.GetButtonDown("Place_P1") || Input.GetButtonDown("Place_P2"))  && justExitedMenu == false))
-        {
-            //Fallback: If there's somebohw someting directly underneath you, do not place. Should never happen in practice.
-            for (int x = 0; x < 3; x++)
-            {
-                for (int y = 0; y < 3; y++)
-                {
-                    if (currentPiece.HasBlockAt(x, y) && IsInInvalidArea(currentPiecePosition.x + x - 1, currentPiecePosition.y + y - 1))
-                    {
-                        return;
-                    }
-                }
-            }
-
-            if (forcedPlacements.Count > 0)
-            {
-                bool inGoodPosition = false;
-                ForcedPlacementOptions forced = forcedPlacements[0];
-                for (int i = 0; i < forced.placements.Count; i++)
-                {
-                    Vector3 posit = forced.placements[i];
-                    if (currentPieceRotation == forced.rotations[i] &&
-                        currentPiecePosition.x == posit.x &&
-                        currentPiecePosition.y == posit.y)
-                    {
-                        inGoodPosition = true;
-                    }
-                }
-                if (!inGoodPosition)
-                {
-                    errorSound.Play();
-                    return;
-                }
-                forcedPlacements.RemoveAt(0);
-            }
-
-            if (isRecording) { recorder.RegisterEvent(GameRecorder.DROP); }
-            DropPiece();
-        }
-
-        if (Input.GetButtonDown("Rotate1_P1") || (Input.GetButtonDown("Rotate1_P2") || aIPlayer.GetButtonDown("Rotate1")))
-        {
-            bool[,] surroundings = new bool[3, 3];
-            for (int x = 0; x < 3; x++)
-            {
-                for (int y = 0; y < 3; y++)
-                {
-                    surroundings[x, y] = IsObstructedAt(currentPiecePosition.x + x - 1, currentPiecePosition.y + y - 1);
-                }
-            }
-            if (currentPiece.rotateCCW(surroundings))
-            {
-                prevPieceRotation = currentPieceRotation;
-                currentPieceRotation = (currentPieceRotation + 5) % 4;
-                timeSinceLastRot = 0f;
-                currentPiece.PlaySlideSound();
-                if (isRecording) { recorder.RegisterEvent(GameRecorder.CCW_ROTATE); }
-            }
-            else
-            {
-                //Make some sort of sound.
-            }
-        }
-
-        if (Input.GetButtonDown("Rotate2_P1") || (Input.GetButtonDown("Rotate2_P2") || aIPlayer.GetButtonDown("Rotate2")))
-        {
-            bool[,] surroundings = new bool[3, 3];
-            for (int x = 0; x < 3; x++)
-            {
-                for (int y = 0; y < 3; y++)
-                {
-                    surroundings[x, y] = IsObstructedAt(currentPiecePosition.x + x - 1, currentPiecePosition.y + y - 1);
-                }
-            }
-            if (currentPiece.RotateCW(surroundings))
-            {
-                prevPieceRotation = currentPieceRotation;
-                currentPieceRotation = (currentPieceRotation + 3) % 4;
-                timeSinceLastRot = 0f;
-                currentPiece.PlaySlideSound();
-                if (isRecording) { recorder.RegisterEvent(GameRecorder.CW_ROTATE); }
-            }
-            else
-            {
-                //Make some sort of sound.
-            }
-        }
-
-        UpdateCurrentPieceTransform();
-
-        for (int x = 0; x < numCells.x; x++)
-        {
-            for (int y = 0; y < numCells.y; y++)
-            {
-                if (grid[x, y] != null)
-                {
-                    Debug.DrawLine(new Vector3(this.transform.position.x + x - numCells.x / 2, 0, this.transform.position.y + y - numCells.y / 2), new Vector3(this.transform.position.x + x - numCells.x / 2, 4, this.transform.position.y + y - numCells.y / 2));
-                }
-            }
-        }
-
-
     }
 
     public void Reboot()
