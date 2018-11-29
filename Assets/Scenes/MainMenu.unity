@@ -384,6 +384,11 @@ Prefab:
       propertyPath: player2CharacterSheetPath
       value: mission2.txt
       objectReference: {fileID: 0}
+    - target: {fileID: 114899827479038178, guid: a6b117bd6ab899e41b656548b0b5ebe9,
+        type: 2}
+      propertyPath: mission
+      value: 
+      objectReference: {fileID: 1159570855}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a6b117bd6ab899e41b656548b0b5ebe9, type: 2}
   m_IsPrefabAsset: 0
@@ -1011,6 +1016,12 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1142993224}
   m_CullTransparentMesh: 0
+--- !u!114 &1159570855 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 114419429734620310, guid: a6b117bd6ab899e41b656548b0b5ebe9,
+    type: 2}
+  m_PrefabInternal: {fileID: 349200295}
+  m_Script: {fileID: 11500000, guid: 541fdddc211bae942bebe13a5b2ed72a, type: 3}
 --- !u!1 &1264469387
 GameObject:
   m_ObjectHideFlags: 0

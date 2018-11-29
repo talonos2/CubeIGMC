@@ -259,7 +259,7 @@ public class Mission1NarrationIntro : Mission
         thingsToHide[1] = pointers.ship2.gameObject;
         thingsToHide[2] = pointers.combatant1.multiplierText.gameObject;
         cameraToDisable = pointers.camera2;
-        cameraToMove = pointers.camera1.transform;
+        cameraToMove = pointers.cameraWrapper1.transform;
         shipToMakeNotWiggle = pointers.ship1;
         spaceLightToDisable = pointers.spaceLight;
         cameraToShake = pointers.spaceCamera.GetComponent<CameraShake>();
