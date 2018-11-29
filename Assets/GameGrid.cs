@@ -73,6 +73,8 @@ public class GameGrid : NetworkBehaviour
     {
         seeded = randomSeed;
 
+        Debug.Log("setseed and start ---------------------------");
+
         if (isRecording)
         {
             recorder = new GameRecorder(randomSeed);
@@ -118,7 +120,10 @@ public class GameGrid : NetworkBehaviour
     {
 
         if (NetworkServer.active == false)
+        {
+            Debug.Log("notreadyyet");
             return;
+        }
 
         Debug.Log("running long variable name " + this.gameObject + " for " + Sharedgamedata.issingleplayer);
 
