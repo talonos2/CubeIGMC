@@ -362,10 +362,10 @@ public class ItemClass {
                         break;
                     case 1:
                         newItem.ItemId = ItemId;
-                        newItem.GoldCost = 3000;
+                        newItem.GoldCost = 4000;
                         newItem.ItemName = "Battery Reserves";
                         newItem.ItemDescription = "Load a nice large pile of batteries. Starting Energy+25";
-                        newItem.ItemTier = 1;
+                        newItem.ItemTier = 2;
                         break;
                     case 2:
                         newItem.ItemId = ItemId;

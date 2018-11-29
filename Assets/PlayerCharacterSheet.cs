@@ -24,12 +24,9 @@ public class PlayerCharacterSheet
 
     public string PlayerName ="Unknown Captain";
     public float Level = 1f;
-    public int Exp=0;
-
- 
-
-    public int Gold=0;
-    public float BaseHealth=70;
+    public int Exp=1000;
+    public int Gold=1000;
+    public float BaseHealth=75;
     public int StartingEnergy=50;
     private int MaxEnergy = 200;
     private float StartingShields = 0;
@@ -44,6 +41,8 @@ public class PlayerCharacterSheet
     public int EngineEquippedID = 0;
     public int MiscEquippedID = 0;
     public int lastMissionBeaten = 0;
+    public bool isAi = false;
+    public string AiController = "";
 
 
 
@@ -68,7 +67,7 @@ public class PlayerCharacterSheet
     public float GetMaxHealth() {
         if (BaseHealth > 100 || Level >5 || ArmorEquippedID >5)//to counter filthy cheaters
             return 10;
-        return BaseHealth+Level*10+ArmorEquippedID*10;
+        return BaseHealth+Level*5+ArmorEquippedID*10;
     }
 
     internal int GetStartingEnergy()
@@ -96,6 +95,21 @@ public class PlayerCharacterSheet
     internal float GetShieldDecayFactor()
     {
         return ShieldDecayFactor;
+    }
+
+    public void AddGold(int AddedGold) {
+
+        Gold += AddedGold;
+        Exp += AddedGold;
+        if (Exp >= 5000)
+            Level = 2;
+        if (Exp >= 10000)
+            Level = 3;
+        if (Exp >= 15000)
+            Level = 4;
+        if (Exp >= 20000)
+            Level = 5;
+
     }
 
     internal void GetWeaponPositions(CellType[,] cellTypes)
@@ -173,12 +187,15 @@ public class PlayerCharacterSheet
 
     internal static PlayerCharacterSheet GetRandomNPC(int level)
     {
+        string[] aiControllers = { "hmasdf", "asf" };
         PlayerCharacterSheet tempSheet = new PlayerCharacterSheet();
-
+        System.Random rnd = new System.Random();
+        int wpnadjust = rnd.Next(5);
+        int armradjust = rnd.Next(5);
         tempSheet.Level = level;
         tempSheet.WeaponEquippedID = 1;
         tempSheet.ShieldEquippedID = 1;
-
+        tempSheet.isAi = true;
 
 
         switch (level) {
@@ -188,25 +205,88 @@ public class PlayerCharacterSheet
                 tempSheet.ShieldEquippedID = 1;
                 break;
             case 1:
-                tempSheet.BaseHealth = 2*(tempSheet.BaseHealth / 3);
-                tempSheet.WeaponEquippedID = 1;
-                tempSheet.ShieldEquippedID = 1;
+                tempSheet.BaseHealth = (2*tempSheet.BaseHealth) / 3;
+                if (wpnadjust>2)
+                    tempSheet.WeaponEquippedID = 5;
+                if (armradjust>2)
+                    tempSheet.ShieldEquippedID = 5;
                 break;
             case 2:
-                tempSheet.WeaponEquippedID = 2;
-                tempSheet.ShieldEquippedID = 2;
+                if (wpnadjust == 0)
+                    tempSheet.WeaponEquippedID = 1;
+                if (wpnadjust == 1 || wpnadjust == 2)
+                    tempSheet.WeaponEquippedID = 2;
+                if (wpnadjust == 3)
+                    tempSheet.WeaponEquippedID = 6;
+                if (wpnadjust == 4)
+                    tempSheet.WeaponEquippedID = 9;
+                tempSheet.ShieldEquippedID = 2;                
                 break;
             case 3:
-                tempSheet.WeaponEquippedID = 3;
-                tempSheet.ShieldEquippedID = 3;
+                if (wpnadjust==0)
+                    tempSheet.WeaponEquippedID = 2;
+                if (wpnadjust == 1 || wpnadjust==2)
+                    tempSheet.WeaponEquippedID = 3;
+                if (wpnadjust == 3)
+                    tempSheet.WeaponEquippedID = 7;
+                if (wpnadjust == 4)
+                    tempSheet.WeaponEquippedID = 9;
+
+                if (armradjust==0)
+                    tempSheet.ShieldEquippedID = 2;
+                if (armradjust == 1 || armradjust == 2)
+                    tempSheet.ShieldEquippedID = 3;
+                if (armradjust == 3)
+                    tempSheet.ShieldEquippedID = 7;
+                if (armradjust == 4)
+                    tempSheet.ShieldEquippedID = 9;
+
+                tempSheet.ArmorEquippedID = 1;
                 break;
             case 4:
-                tempSheet.WeaponEquippedID = 3;
-                tempSheet.ShieldEquippedID = 3;
+                if (wpnadjust == 0)
+                    tempSheet.WeaponEquippedID = 7;
+                if (wpnadjust == 1 || wpnadjust == 2)
+                    tempSheet.WeaponEquippedID = 3;
+                if (wpnadjust == 3)
+                    tempSheet.WeaponEquippedID = 4;
+                if (wpnadjust == 4)
+                    tempSheet.WeaponEquippedID = 9;
+
+                if (armradjust == 0)
+                    tempSheet.ShieldEquippedID = 7;
+                if (armradjust == 1 || armradjust == 2)
+                    tempSheet.ShieldEquippedID = 3;
+                if (armradjust == 3)
+                    tempSheet.ShieldEquippedID = 4;
+                if (armradjust == 4)
+                    tempSheet.ShieldEquippedID = 9;
+
+
+                tempSheet.ArmorEquippedID = 2;
+
                 break;
             case 5:
-                tempSheet.WeaponEquippedID = 4;
-                tempSheet.ShieldEquippedID = 4;
+                if (wpnadjust == 0)
+                    tempSheet.WeaponEquippedID = 7;
+                if (wpnadjust == 1 || wpnadjust == 2)
+                    tempSheet.WeaponEquippedID = 4;
+                if (wpnadjust == 3)
+                    tempSheet.WeaponEquippedID = 8;
+                if (wpnadjust == 4)
+                    tempSheet.WeaponEquippedID = 10;
+
+                if (armradjust == 0)
+                    tempSheet.ShieldEquippedID = 7;
+                if (armradjust == 1 || armradjust == 2)
+                    tempSheet.ShieldEquippedID = 4;
+                if (armradjust == 3)
+                    tempSheet.ShieldEquippedID = 8;
+                if (armradjust == 4)
+                    tempSheet.ShieldEquippedID = 10;
+                tempSheet.ArmorEquippedID = 3;
+                if (armradjust >= 3)
+                    tempSheet.ArmorEquippedID = 4;
                 break;
 
 
