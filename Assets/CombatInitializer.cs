@@ -26,6 +26,8 @@ public class CombatInitializer : NetworkBehaviour {
     public GameObject darkCanvas;
     public GameObject campaign;
 
+    public int randomSeed;
+
 
 
     // Use this for initialization
@@ -70,15 +72,21 @@ public class CombatInitializer : NetworkBehaviour {
         if (!setup)
         {
 
-            int randomSeed = UnityEngine.Random.Range(1, 65535);
+
+            randomSeed = UnityEngine.Random.Range(1, 65535);
+
+
             if (grid2.isPlayedByAI)
             {
                 grid2.LoadAI(false, 0, false);
                 randomSeed = grid2.GetAISeed();
             }
 
-            grid1.SetSeedAndStart(randomSeed);
-            grid2.SetSeedAndStart(randomSeed);
+            if (Sharedgamedata.issingleplayer)
+            {
+                grid1.SetSeedAndStart(randomSeed);
+                grid2.SetSeedAndStart(randomSeed);
+            }
             setup = true;
         }
 

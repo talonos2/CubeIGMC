@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -37,6 +38,8 @@ public class GameGrid : NetworkBehaviour
 
     public bool justExitedMenu;
 
+    public int seeded;
+
     internal void LoadAI(bool isRobotic, float speed, bool loop)
     {
         string inputJson = aIText.text;
@@ -68,6 +71,8 @@ public class GameGrid : NetworkBehaviour
 
     internal void SetSeedAndStart(int randomSeed)
     {
+        seeded = randomSeed;
+
         if (isRecording)
         {
             recorder = new GameRecorder(randomSeed);
@@ -91,7 +96,10 @@ public class GameGrid : NetworkBehaviour
         nextPiece.transform.parent = nextPieceHolder;
         nextPiece.transform.localPosition = Vector3.zero;
 
-        SetGridCellTypeStateAndAttendentVFX();
+        if (Sharedgamedata.issingleplayer == true)
+            SetGridCellTypeStateAndAttendentVFX();
+
+
         if (isPlayerOne)
         {
             string dataPath;
@@ -108,6 +116,12 @@ public class GameGrid : NetworkBehaviour
 
     public void SetGridCellTypeStateAndAttendentVFX()
     {
+
+        if (NetworkServer.active == false)
+            return;
+
+        Debug.Log("running long variable name " + this.gameObject + " for " + Sharedgamedata.issingleplayer);
+
         for (int x = 0; x < numCells.x; x++)
         {
             for (int y = 0; y < numCells.y; y++)
@@ -131,10 +145,10 @@ public class GameGrid : NetworkBehaviour
                 {
                     case CellType.ATTACK:
                         cellTypeFX[x, y] = GameObject.Instantiate(attackCellPrefab).GetComponent<TileFX>();
-                        //if (!Sharedgamedata.issingleplayer) NetworkServer.Spawn(cellTypeFX[x, y].GetComponent<TileFX>().gameObject);
                         cellTypeFX[x, y].transform.parent = this.transform;
                         cellTypeFX[x, y].transform.localPosition = GetLocalTranslationFromGridLocation(x, y);
                         player.AddDeathEffectToDamageManager(cellTypeFX[x, y]);
+                        if (!Sharedgamedata.issingleplayer) NetworkServer.Spawn(cellTypeFX[x, y].GetComponent<TileFX>().gameObject);
                         break;
                     case CellType.SHIELD:
                         cellTypeFX[x, y] = GameObject.Instantiate(shieldCellPrefab).GetComponent<TileFX>();
@@ -142,6 +156,7 @@ public class GameGrid : NetworkBehaviour
                         cellTypeFX[x, y].transform.parent = this.transform;
                         cellTypeFX[x, y].transform.localPosition = GetLocalTranslationFromGridLocation(x, y);
                         player.AddDeathEffectToDamageManager(cellTypeFX[x, y]);
+                        if (!Sharedgamedata.issingleplayer) NetworkServer.Spawn(cellTypeFX[x, y].GetComponent<TileFX>().gameObject);
                         break;
                     case CellType.PSI:
                         cellTypeFX[x, y] = GameObject.Instantiate(psiCellPrefab).GetComponent<TileFX>();
@@ -149,6 +164,7 @@ public class GameGrid : NetworkBehaviour
                         cellTypeFX[x, y].transform.parent = this.transform;
                         cellTypeFX[x, y].transform.localPosition = GetLocalTranslationFromGridLocation(x, y);
                         player.AddDeathEffectToDamageManager(cellTypeFX[x, y]);
+                        if (!Sharedgamedata.issingleplayer) NetworkServer.Spawn(cellTypeFX[x, y].GetComponent<TileFX>().gameObject);
                         break;
                     default:
                         break;
@@ -188,6 +204,10 @@ public class GameGrid : NetworkBehaviour
 
     private PlayingPiece MakeAPiece()
     {
+
+
+
+
         PlayingPiece toReturn = GameObject.Instantiate(piecePrefab);
         if (!Sharedgamedata.issingleplayer && NetworkServer.active)
             NetworkServer.Spawn(toReturn.gameObject);
@@ -879,9 +899,11 @@ public class GameGrid : NetworkBehaviour
             if (player.HasRoomForMoreEnergy())
             {
                 PowerupEffect pe = GameObject.Instantiate<PowerupEffect>(powerUpEffect);
+                if (!Sharedgamedata.issingleplayer) NetworkServer.Spawn(pe.gameObject);
                 GameCube sourceCube = cubesToExplode[UnityEngine.Random.Range(0, cubesToExplode.Count)];
                 pe.Initialize(sourceCube.transform.position, player.GetTargetOfParticle(PowerupType.ENERGY, 3), delay, PowerupType.ENERGY);
                 InvisibleDelayedChargeGiver chargeGiver = GameObject.Instantiate<InvisibleDelayedChargeGiver>(chargeGiverPrefab);
+                if (!Sharedgamedata.issingleplayer) NetworkServer.Spawn(chargeGiverPrefab.gameObject);
                 chargeGiver.target = player;
                 chargeGiver.delay = delay + 1;
                 chargeGiver.type = PowerupType.ENERGY;
@@ -898,6 +920,7 @@ public class GameGrid : NetworkBehaviour
                 Vector3 centroid = FindCentroid(cubesToExplode);
                 GameObject comboParticles = comboParticleHolder.comboParticles[numberOfSquaresMade].gameObject;
                 GameObject go = GameObject.Instantiate(comboParticles);
+                if (!Sharedgamedata.issingleplayer) NetworkServer.Spawn(go);
                 go.transform.position = centroid;
             }
         }
@@ -1112,7 +1135,13 @@ public class GameGrid : NetworkBehaviour
 
     internal void DropNewCubeAt(int x, int y)
     {
-        GameCube cube = GameObject.Instantiate<GameCube>(currentPiece.cube); // Probbably unsafe.
+        while (!Sharedgamedata.issingleplayer && !NetworkServer.active)
+        {
+            Thread.Sleep(10);
+        }
+
+
+            GameCube cube = GameObject.Instantiate<GameCube>(currentPiece.cube); // Probbably unsafe.
         if (!Sharedgamedata.issingleplayer && NetworkServer.active)
             NetworkServer.Spawn(cube.gameObject);
 

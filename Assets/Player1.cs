@@ -12,6 +12,10 @@ public class Player1 : NetworkBehaviour
     GameGrid gameGridGuest;
     GameGrid myGameGrid;
 
+    int seed;
+
+    CombatInitializer init;
+
     public bool justExitedMenu;
     private float timeHeldBothRotatesAtOnce;
 
@@ -28,19 +32,27 @@ public class Player1 : NetworkBehaviour
         gameGridGuest = guest.GetComponent<GameGrid>();
         Sharedgamedata.issingleplayer = false;
 
+        init = GameObject.Find("Initializer").GetComponent<CombatInitializer>();
+
+        seed = init.randomSeed;
+
         if (Sharedgamedata.logger == false)
         {
             //gameGridHome.isPlayerOne = true;
             myGameGrid = gameGridHome;
+            Debug.Log("The seed is " + seed);
+            myGameGrid.SetSeedAndStart(seed);
             Sharedgamedata.logger = true;
         }
         else
         {
             myGameGrid = gameGridGuest;
+            Debug.Log("second seed is " + gameGridHome.seeded);
+            myGameGrid.SetSeedAndStart(gameGridHome.seeded);
         }
 
 
-
+        myGameGrid.SetGridCellTypeStateAndAttendentVFX();
 
 
     }
@@ -79,6 +91,8 @@ public class Player1 : NetworkBehaviour
     void Update()
     {
 
+        if (!isLocalPlayer)
+            return;
 
 
         if (Time.timeScale == 0)

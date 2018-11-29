@@ -30,7 +30,7 @@ public class Combatant : NetworkBehaviour
     public CubeHolder cubeHolder;
 
     public CombatInitializer initializer;
-    private PlayerCharacterSheet ThisPlayer= new PlayerCharacterSheet();
+    public PlayerCharacterSheet ThisPlayer= new PlayerCharacterSheet();
     public GameGrid ThisGameGrid;
 
     public void Start()
