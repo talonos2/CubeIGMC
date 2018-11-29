@@ -9,7 +9,9 @@ public class ItemClass {
     private string ItemDescription = "Default desc";
     private int ItemId = 0;
     private int ItemTier = 0;
+    private ItemSlot ItemType = ItemSlot.WEAPON;
     private int GoldCost = 1000;
+    internal Sprite sprite;
 
 
     // Use this for initialization
@@ -20,6 +22,10 @@ public class ItemClass {
     // Update is called once per frame
     void Update() {
 
+    }
+
+    public ItemSlot GetItemType() {
+        return this.ItemType;
     }
 
     public string GetItemName() {
@@ -43,11 +49,37 @@ public class ItemClass {
         return this.ItemTier;
     }
 
+    static public List<ItemClass> GetAllItems() {
+        List<ItemClass> AllItems=new List<ItemClass>();
+        for (int i = 1; i < 11; i++)
+        {
+            AllItems.Add(GetItem(ItemSlot.WEAPON, i));
+        }
+        for (int i = 0; i < 6; i++)
+        {
+            AllItems.Add(GetItem(ItemSlot.ARMOR, i));
+        }
+        for (int i = 1; i < 11; i++)
+        {
+            AllItems.Add(GetItem(ItemSlot.SHIELDS, i));
+        }
+        for (int i = 0; i < 6; i++)
+        {
+            AllItems.Add(GetItem(ItemSlot.ENGINES, i));
+        }
+        for (int i = 0; i < 3; i++)
+        {
+            AllItems.Add(GetItem(ItemSlot.MISC, i));
+        }
+        return AllItems;
+    }
+
     static public ItemClass GetItem(ItemSlot thisItem, int ItemId) {
         ItemClass newItem = new ItemClass();
 
         switch (thisItem) {
             case ItemSlot.WEAPON:
+                newItem.ItemType = ItemSlot.WEAPON;
                 switch (ItemId)
                 {
                     case 0:
@@ -55,6 +87,7 @@ public class ItemClass {
                         newItem.GoldCost = 0;
                         newItem.ItemName = "Rock thrower";
                         newItem.ItemDescription = "Stick your head out the airlock and throw rocks. ";
+                        
                         break;
                     case 1:
                         newItem.ItemId = ItemId;
@@ -138,6 +171,7 @@ public class ItemClass {
                 break;
 
             case ItemSlot.ARMOR:
+                newItem.ItemType = ItemSlot.ARMOR;
                 switch (ItemId)
                 {
                     case 0:
@@ -150,35 +184,35 @@ public class ItemClass {
                         newItem.ItemId = ItemId;
                         newItem.GoldCost = 1000;
                         newItem.ItemName = "Tinfoil Hull";
-                        newItem.ItemDescription = "Gaurenteed to not have holes for long!";
+                        newItem.ItemDescription = "Gaurenteed to not have holes for long! +10 HP";
                         newItem.ItemTier = 1;
                         break;
                     case 2:
                         newItem.ItemId = ItemId;
                         newItem.GoldCost = 2000;
                         newItem.ItemName = "Aluminum Hull";
-                        newItem.ItemDescription = "Holds the ship together just fine, thank you very much!";
+                        newItem.ItemDescription = "Holds the ship together just fine, thank you very much! +20 HP";
                         newItem.ItemTier = 2;
                         break;
                     case 3:
                         newItem.ItemId = ItemId;
                         newItem.GoldCost = 4000;
                         newItem.ItemName = "Steel Hull";
-                        newItem.ItemDescription = "Yes, you still have to pay for it.";
+                        newItem.ItemDescription = "Yes, you still have to pay for it. +30 HP";
                         newItem.ItemTier = 3;
                         break;
                     case 4:
                         newItem.ItemId = ItemId;
                         newItem.GoldCost = 8000;
                         newItem.ItemName = "Titanium Hull";
-                        newItem.ItemDescription = "Now that's some fine grade metal.";
+                        newItem.ItemDescription = "Now that's some fine grade metal. +40 HP";
                         newItem.ItemTier = 4;
                         break;
                     case 5:
                         newItem.ItemId = ItemId;
                         newItem.GoldCost = 12000;
                         newItem.ItemName = "Carbon Threaded Hull";
-                        newItem.ItemDescription = "A girl's best friend.";
+                        newItem.ItemDescription = "Litterally made from diamonds. +50 HP";
                         newItem.ItemTier = 1;
                         break;
                     
@@ -186,6 +220,7 @@ public class ItemClass {
                 break;
 
             case ItemSlot.ENGINES:
+                newItem.ItemType = ItemSlot.ENGINES;
                 switch (ItemId)
                 {
                     case 0:
@@ -233,6 +268,7 @@ public class ItemClass {
                 break;
 
             case ItemSlot.SHIELDS:
+                newItem.ItemType = ItemSlot.SHIELDS;
                 switch (ItemId)
                 {
                     case 0:
@@ -315,6 +351,7 @@ public class ItemClass {
                 break;
 
             case ItemSlot.MISC:
+                newItem.ItemType = ItemSlot.MISC;
                 switch (ItemId)
                 {
                     case 0:
@@ -325,7 +362,7 @@ public class ItemClass {
                         break;
                     case 1:
                         newItem.ItemId = ItemId;
-                        newItem.GoldCost = 2000;
+                        newItem.GoldCost = 3000;
                         newItem.ItemName = "Battery Reserves";
                         newItem.ItemDescription = "Load a nice large pile of batteries. Starting Energy+25";
                         newItem.ItemTier = 1;

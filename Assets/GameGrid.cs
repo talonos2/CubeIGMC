@@ -60,7 +60,7 @@ public class GameGrid : NetworkBehaviour
         return aIPlayer.seed;
     }
 
-    private PlayingPiece currentPiece;
+    public PlayingPiece currentPiece;
     private PlayingPiece nextPiece;
 
     public SeededRandom dice;
@@ -131,18 +131,21 @@ public class GameGrid : NetworkBehaviour
                 {
                     case CellType.ATTACK:
                         cellTypeFX[x, y] = GameObject.Instantiate(attackCellPrefab).GetComponent<TileFX>();
+                        //if (!Sharedgamedata.issingleplayer) NetworkServer.Spawn(cellTypeFX[x, y].GetComponent<TileFX>().gameObject);
                         cellTypeFX[x, y].transform.parent = this.transform;
                         cellTypeFX[x, y].transform.localPosition = GetLocalTranslationFromGridLocation(x, y);
                         player.AddDeathEffectToDamageManager(cellTypeFX[x, y]);
                         break;
                     case CellType.SHIELD:
                         cellTypeFX[x, y] = GameObject.Instantiate(shieldCellPrefab).GetComponent<TileFX>();
+                        //if (!Sharedgamedata.issingleplayer) NetworkServer.Spawn(cellTypeFX[x, y].GetComponent<TileFX>().gameObject);
                         cellTypeFX[x, y].transform.parent = this.transform;
                         cellTypeFX[x, y].transform.localPosition = GetLocalTranslationFromGridLocation(x, y);
                         player.AddDeathEffectToDamageManager(cellTypeFX[x, y]);
                         break;
                     case CellType.PSI:
                         cellTypeFX[x, y] = GameObject.Instantiate(psiCellPrefab).GetComponent<TileFX>();
+                        //if (!Sharedgamedata.issingleplayer) NetworkServer.Spawn(cellTypeFX[x, y].GetComponent<TileFX>().gameObject);
                         cellTypeFX[x, y].transform.parent = this.transform;
                         cellTypeFX[x, y].transform.localPosition = GetLocalTranslationFromGridLocation(x, y);
                         player.AddDeathEffectToDamageManager(cellTypeFX[x, y]);
@@ -158,15 +161,15 @@ public class GameGrid : NetworkBehaviour
     public bool isPlayerOne = true;
 
     private Vector2Int prevPiecePosition = new Vector2Int(1, 1);//(7, 16);
-    private Vector2Int currentPiecePosition = new Vector2Int(1, 1);//(7, 16);
+    public Vector2Int currentPiecePosition = new Vector2Int(1, 1);//(7, 16);
 
-    private int currentPieceRotation = 0;
-    private int prevPieceRotation = 0;
+    public int currentPieceRotation = 0;
+    public int prevPieceRotation = 0;
 
     private Transform nextPieceHolder;
 
-    private float timeSinceLastMove = 0;
-    private float timeSinceLastRot = 0;
+    public float timeSinceLastMove = 0;
+    public float timeSinceLastRot = 0;
     private readonly float msNeededToLerp = 62;
     private float tickMove = 0;
     private float tickRot = 0;
@@ -229,7 +232,7 @@ public class GameGrid : NetworkBehaviour
     }
 
     /* This moves the graphical representation of the piece.*/
-    private void UpdateCurrentPieceTransform()
+    public void UpdateCurrentPieceTransform()
     {
 
         timeSinceLastMove += Time.deltaTime * 1000;
@@ -258,21 +261,21 @@ public class GameGrid : NetworkBehaviour
         return new Vector3(x - numCells.x / 2.0f + .5f, 0, y - numCells.y / 2.0f + .5f);
     }
 
-    bool isUpBeingHeld;
-    bool isDownBeingHeld;
-    bool isLeftBeingHeld;
-    bool isRightBeingHeld;
-    readonly float buttonMashDebounceInput = .2f;
+    public bool isUpBeingHeld;
+    public bool isDownBeingHeld;
+    public bool isLeftBeingHeld;
+    public bool isRightBeingHeld;
+    public readonly float buttonMashDebounceInput = .2f;
 
-    float timeSinceLastMoveUpEvent;
-    float timeSinceLastMoveDownEvent;
-    float timeSinceLastMoveLeftEvent;
-    float timeSinceLastMoveRightEvent;
+    public float timeSinceLastMoveUpEvent;
+    public float timeSinceLastMoveDownEvent;
+    public float timeSinceLastMoveLeftEvent;
+    public float timeSinceLastMoveRightEvent;
 
-    bool justPressedUp;
-    bool justPressedDown;
-    bool justPressedLeft;
-    bool justPressedRight;
+    public bool justPressedUp;
+    public bool justPressedDown;
+    public bool justPressedLeft;
+    public bool justPressedRight;
 
     private float timeHeldBothRotatesAtOnce;
 
@@ -615,7 +618,7 @@ public class GameGrid : NetworkBehaviour
 
     }
 
-    private void Reboot()
+    public void Reboot()
     {
         powerDown.Play();
         MeltBoard();
@@ -652,7 +655,7 @@ public class GameGrid : NetworkBehaviour
         }
     }
 
-    private void TryGoUp()
+    public void TryGoUp()
     {
         bool isBlocked = false;
         for (int x = 0; x < 3; x++)
@@ -701,7 +704,7 @@ public class GameGrid : NetworkBehaviour
         }
     }
 
-    private void TryGoDown()
+    public void TryGoDown()
     {
         bool isBlocked = false;
         for (int x = 0; x < 3; x++)
@@ -799,7 +802,7 @@ public class GameGrid : NetworkBehaviour
         }
     }
 
-    private void TryGoRight()
+    public void TryGoRight()
     {
         bool isBlocked = false;
         for (int x = 0; x < 3; x++)
@@ -824,7 +827,7 @@ public class GameGrid : NetworkBehaviour
         }
     }
 
-    private void DropPiece()
+    public void DropPiece()
     {
         //Place the cubes from the piece to the board.
         for (int x = 0; x < 3; x++)
@@ -1044,7 +1047,7 @@ public class GameGrid : NetworkBehaviour
 
     private List<ForcedPlacementOptions> forcedPlacements = new List<ForcedPlacementOptions>();
 
-    private bool IsInInvalidArea(float x, float y)
+    public bool IsInInvalidArea(float x, float y)
     {
         if (forcedPlacements.Count <= 0)
         {
@@ -1071,7 +1074,7 @@ public class GameGrid : NetworkBehaviour
     }
 
     //Is there a block in the square? (Also, is it off the edge of the board?)*/
-    private bool IsObstructedAt(int x, int y)
+    public bool IsObstructedAt(int x, int y)
     {
 
         if (x < 0 || x >= numCells.x)
