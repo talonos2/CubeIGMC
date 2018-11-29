@@ -8158,6 +8158,11 @@ Prefab:
       propertyPath: stopAction
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114233455349525356, guid: 0dfe140aceaeddc46a89eedbbb378123,
+        type: 2}
+      propertyPath: engineParticles
+      value: 
+      objectReference: {fileID: 457783276}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0dfe140aceaeddc46a89eedbbb378123, type: 2}
   m_IsPrefabAsset: 0
@@ -45996,6 +46001,58 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1946811963}
   m_Mesh: {fileID: 4300000, guid: aad26453ab060fb45a11de569a2c40ec, type: 3}
+--- !u!1 &1948206309
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1948206310}
+  - component: {fileID: 1948206311}
+  m_Layer: 0
+  m_Name: Pointer Holder
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1948206310
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1948206309}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -77.03125, y: 7.171875, z: 71.0625}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 17
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1948206311
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1948206309}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 157684210d27c4146a87aa0c9e77cd86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player1Grid: {fileID: 1488115336}
+  player2Grid: {fileID: 1800077637}
+  ship1: {fileID: 457783275}
+  ship2: {fileID: 661576524}
+  camera1: {fileID: 56811801}
+  camera2: {fileID: 8762011}
+  spaceCamera: {fileID: 1545254992}
+  combatant1: {fileID: 1637675550}
+  combatant2: {fileID: 2080038990}
+  daaaaaknesssss: {fileID: 1687384275}
+  spaceLight: {fileID: 409128309}
+  narrationSystem: {fileID: 1520819631}
 --- !u!1001 &1951523521
 Prefab:
   m_ObjectHideFlags: 0

@@ -38,6 +38,7 @@ public class SpaceshipPawn : MonoBehaviour {
     internal Vector3 rootPosition;
 
     private float partialDerivativeSampleDistance = .001f;
+    public GameObject engineParticles;
 
     // Use this for initialization
     void Start()
