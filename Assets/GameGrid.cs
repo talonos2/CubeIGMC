@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -37,6 +38,8 @@ public class GameGrid : NetworkBehaviour
 
     public bool justExitedMenu;
 
+    public int seeded;
+
     internal void LoadAI(bool isRobotic, float speed, bool loop)
     {
         string inputJson = aIText.text;
@@ -60,7 +63,7 @@ public class GameGrid : NetworkBehaviour
         return aIPlayer.seed;
     }
 
-    private PlayingPiece currentPiece;
+    public PlayingPiece currentPiece;
     private PlayingPiece nextPiece;
 
     public SeededRandom dice;
@@ -68,6 +71,10 @@ public class GameGrid : NetworkBehaviour
 
     internal void SetSeedAndStart(int randomSeed)
     {
+        seeded = randomSeed;
+
+        Debug.Log("setseed and start ---------------------------");
+
         if (isRecording)
         {
             recorder = new GameRecorder(randomSeed);
@@ -91,23 +98,34 @@ public class GameGrid : NetworkBehaviour
         nextPiece.transform.parent = nextPieceHolder;
         nextPiece.transform.localPosition = Vector3.zero;
 
-        SetGridCellTypeStateAndAttendentVFX();
+        if (Sharedgamedata.issingleplayer == true)
+            SetGridCellTypeStateAndAttendentVFX();
+
+
         if (isPlayerOne)
         {
             string dataPath;
 
-            dataPath = Path.Combine(Application.persistentDataPath, MissionManager.instance.playerCharacterSheetPath);
+            dataPath = Path.Combine(Application.persistentDataPath, MissionManager.instance.player1CharacterSheetPath);
             if (!File.Exists(dataPath))
             {
-                player.SaveCharacterToDisk(MissionManager.instance.playerCharacterSheetPath);
+                player.SaveCharacterToDisk(MissionManager.instance.player1CharacterSheetPath);
             }
 
-            player.SetCharacterSheet(MissionManager.instance.playerCharacterSheetPath);
+            player.SetCharacterSheet(MissionManager.instance.player1CharacterSheetPath);
         }
     }
 
     public void SetGridCellTypeStateAndAttendentVFX()
     {
+        if (!Sharedgamedata.issingleplayer && NetworkServer.active == false)
+        {
+            Debug.Log("Network server is annoyed.");
+            return;
+        }
+
+        Debug.Log("running long variable name " + this.gameObject + " for " + Sharedgamedata.issingleplayer);
+
         for (int x = 0; x < numCells.x; x++)
         {
             for (int y = 0; y < numCells.y; y++)
@@ -134,18 +152,23 @@ public class GameGrid : NetworkBehaviour
                         cellTypeFX[x, y].transform.parent = this.transform;
                         cellTypeFX[x, y].transform.localPosition = GetLocalTranslationFromGridLocation(x, y);
                         player.AddDeathEffectToDamageManager(cellTypeFX[x, y]);
+                        if (!Sharedgamedata.issingleplayer) NetworkServer.Spawn(cellTypeFX[x, y].GetComponent<TileFX>().gameObject);
                         break;
                     case CellType.SHIELD:
                         cellTypeFX[x, y] = GameObject.Instantiate(shieldCellPrefab).GetComponent<TileFX>();
+                        //if (!Sharedgamedata.issingleplayer) NetworkServer.Spawn(cellTypeFX[x, y].GetComponent<TileFX>().gameObject);
                         cellTypeFX[x, y].transform.parent = this.transform;
                         cellTypeFX[x, y].transform.localPosition = GetLocalTranslationFromGridLocation(x, y);
                         player.AddDeathEffectToDamageManager(cellTypeFX[x, y]);
+                        if (!Sharedgamedata.issingleplayer) NetworkServer.Spawn(cellTypeFX[x, y].GetComponent<TileFX>().gameObject);
                         break;
                     case CellType.PSI:
                         cellTypeFX[x, y] = GameObject.Instantiate(psiCellPrefab).GetComponent<TileFX>();
+                        //if (!Sharedgamedata.issingleplayer) NetworkServer.Spawn(cellTypeFX[x, y].GetComponent<TileFX>().gameObject);
                         cellTypeFX[x, y].transform.parent = this.transform;
                         cellTypeFX[x, y].transform.localPosition = GetLocalTranslationFromGridLocation(x, y);
                         player.AddDeathEffectToDamageManager(cellTypeFX[x, y]);
+                        if (!Sharedgamedata.issingleplayer) NetworkServer.Spawn(cellTypeFX[x, y].GetComponent<TileFX>().gameObject);
                         break;
                     default:
                         break;
@@ -158,15 +181,15 @@ public class GameGrid : NetworkBehaviour
     public bool isPlayerOne = true;
 
     private Vector2Int prevPiecePosition = new Vector2Int(1, 1);//(7, 16);
-    private Vector2Int currentPiecePosition = new Vector2Int(1, 1);//(7, 16);
+    public Vector2Int currentPiecePosition = new Vector2Int(1, 1);//(7, 16);
 
-    private int currentPieceRotation = 0;
-    private int prevPieceRotation = 0;
+    public int currentPieceRotation = 0;
+    public int prevPieceRotation = 0;
 
     private Transform nextPieceHolder;
 
-    private float timeSinceLastMove = 0;
-    private float timeSinceLastRot = 0;
+    public float timeSinceLastMove = 0;
+    public float timeSinceLastRot = 0;
     private readonly float msNeededToLerp = 62;
     private float tickMove = 0;
     private float tickRot = 0;
@@ -185,6 +208,10 @@ public class GameGrid : NetworkBehaviour
 
     private PlayingPiece MakeAPiece()
     {
+
+
+
+
         PlayingPiece toReturn = GameObject.Instantiate(piecePrefab);
         if (!Sharedgamedata.issingleplayer && NetworkServer.active)
             NetworkServer.Spawn(toReturn.gameObject);
@@ -229,7 +256,7 @@ public class GameGrid : NetworkBehaviour
     }
 
     /* This moves the graphical representation of the piece.*/
-    private void UpdateCurrentPieceTransform()
+    public void UpdateCurrentPieceTransform()
     {
 
         timeSinceLastMove += Time.deltaTime * 1000;
@@ -258,21 +285,21 @@ public class GameGrid : NetworkBehaviour
         return new Vector3(x - numCells.x / 2.0f + .5f, 0, y - numCells.y / 2.0f + .5f);
     }
 
-    bool isUpBeingHeld;
-    bool isDownBeingHeld;
-    bool isLeftBeingHeld;
-    bool isRightBeingHeld;
-    readonly float buttonMashDebounceInput = .2f;
+    public bool isUpBeingHeld;
+    public bool isDownBeingHeld;
+    public bool isLeftBeingHeld;
+    public bool isRightBeingHeld;
+    public readonly float buttonMashDebounceInput = .2f;
 
-    float timeSinceLastMoveUpEvent;
-    float timeSinceLastMoveDownEvent;
-    float timeSinceLastMoveLeftEvent;
-    float timeSinceLastMoveRightEvent;
+    public float timeSinceLastMoveUpEvent;
+    public float timeSinceLastMoveDownEvent;
+    public float timeSinceLastMoveLeftEvent;
+    public float timeSinceLastMoveRightEvent;
 
-    bool justPressedUp;
-    bool justPressedDown;
-    bool justPressedLeft;
-    bool justPressedRight;
+    public bool justPressedUp;
+    public bool justPressedDown;
+    public bool justPressedLeft;
+    public bool justPressedRight;
 
     private float timeHeldBothRotatesAtOnce;
 
@@ -284,12 +311,8 @@ public class GameGrid : NetworkBehaviour
     // Update is called once per frame
     void Update()
     {
-
         if (!Sharedgamedata.issingleplayer)
             return;
-
-
-
 
         if (Time.timeScale == 0)
         {
@@ -441,181 +464,7 @@ public class GameGrid : NetworkBehaviour
         UpdateCurrentPieceTransform();
     }
 
-    public void proxyUpdate()
-    {
-
-//        if (!isLocalPlayer)
-//            return;
-
-
-
-        Debug.Log("active?" + NetworkServer.active);
-
-        if (Time.timeScale == 0)
-        {
-            justExitedMenu = true;
-            return;
-        }
-
-        if (MissionManager.isInCutscene)
-        {
-            return;
-        }
-        justExitedMenu = false;
-
-        if (Time.timeSinceLevelLoad > 300 & isRecording & !hasSaved)
-        {
-            recorder.PrintOut();
-            hasSaved = true;
-        }
-
-        if (isPlayedByAI)
-        {
-            aIPlayer.TickAI();
-        }
-
-        if (Input.GetButton("Rotate1_P1")&& Input.GetButton("Rotate2_P1") || (Input.GetButton("Rotate1_P2") && Input.GetButton("Rotate2_P2")))
-        {
-            float oldTimeHeld = timeHeldBothRotatesAtOnce;
-            timeHeldBothRotatesAtOnce += Time.deltaTime;
-            if ((int)timeHeldBothRotatesAtOnce != (int)oldTimeHeld)
-            {
-                ominousTick.Play();
-            }
-            if (timeHeldBothRotatesAtOnce > 5)
-            {
-                Reboot();
-                timeHeldBothRotatesAtOnce = 0;
-                if (isRecording) { recorder.RegisterEvent(GameRecorder.REBOOT); }
-            }
-        }
-        else
-        {
-            timeHeldBothRotatesAtOnce = 0;
-        }
-
-
-        if (isPlayedByAI)
-        {
-            if (aIPlayer.GetButtonDown("UP")) { TryGoUp(); }
-            if (aIPlayer.GetButtonDown("DOWN")) { TryGoDown(); }
-            if (aIPlayer.GetButtonDown("LEFT")) { TryGoLeft(); }
-            if (aIPlayer.GetButtonDown("RIGHT")) { TryGoRight(); }
-            if (aIPlayer.GetButtonDown("REBOOT")) {Reboot(); }
-        }
-        else
-        {
-            HandleUpMovement();
-            HandleDownMovement();
-            HandleLeftMovement();
-            HandleRightMovement();
-        }
-
-        if (((Input.GetButtonDown("Place_P1") || Input.GetButtonDown("Place_P2"))  && justExitedMenu == false))
-        {
-            //Fallback: If there's somebohw someting directly underneath you, do not place. Should never happen in practice.
-            for (int x = 0; x < 3; x++)
-            {
-                for (int y = 0; y < 3; y++)
-                {
-                    if (currentPiece.HasBlockAt(x, y) && IsInInvalidArea(currentPiecePosition.x + x - 1, currentPiecePosition.y + y - 1))
-                    {
-                        return;
-                    }
-                }
-            }
-
-            if (forcedPlacements.Count > 0)
-            {
-                bool inGoodPosition = false;
-                ForcedPlacementOptions forced = forcedPlacements[0];
-                for (int i = 0; i < forced.placements.Count; i++)
-                {
-                    Vector3 posit = forced.placements[i];
-                    if (currentPieceRotation == forced.rotations[i] &&
-                        currentPiecePosition.x == posit.x &&
-                        currentPiecePosition.y == posit.y)
-                    {
-                        inGoodPosition = true;
-                    }
-                }
-                if (!inGoodPosition)
-                {
-                    errorSound.Play();
-                    return;
-                }
-                forcedPlacements.RemoveAt(0);
-            }
-
-            if (isRecording) { recorder.RegisterEvent(GameRecorder.DROP); }
-            DropPiece();
-        }
-
-        if (Input.GetButtonDown("Rotate1_P1") || (Input.GetButtonDown("Rotate1_P2") || aIPlayer.GetButtonDown("Rotate1")))
-        {
-            bool[,] surroundings = new bool[3, 3];
-            for (int x = 0; x < 3; x++)
-            {
-                for (int y = 0; y < 3; y++)
-                {
-                    surroundings[x, y] = IsObstructedAt(currentPiecePosition.x + x - 1, currentPiecePosition.y + y - 1);
-                }
-            }
-            if (currentPiece.rotateCCW(surroundings))
-            {
-                prevPieceRotation = currentPieceRotation;
-                currentPieceRotation = (currentPieceRotation + 5) % 4;
-                timeSinceLastRot = 0f;
-                currentPiece.PlaySlideSound();
-                if (isRecording) { recorder.RegisterEvent(GameRecorder.CCW_ROTATE); }
-            }
-            else
-            {
-                //Make some sort of sound.
-            }
-        }
-
-        if (Input.GetButtonDown("Rotate2_P1") || (Input.GetButtonDown("Rotate2_P2") || aIPlayer.GetButtonDown("Rotate2")))
-        {
-            bool[,] surroundings = new bool[3, 3];
-            for (int x = 0; x < 3; x++)
-            {
-                for (int y = 0; y < 3; y++)
-                {
-                    surroundings[x, y] = IsObstructedAt(currentPiecePosition.x + x - 1, currentPiecePosition.y + y - 1);
-                }
-            }
-            if (currentPiece.RotateCW(surroundings))
-            {
-                prevPieceRotation = currentPieceRotation;
-                currentPieceRotation = (currentPieceRotation + 3) % 4;
-                timeSinceLastRot = 0f;
-                currentPiece.PlaySlideSound();
-                if (isRecording) { recorder.RegisterEvent(GameRecorder.CW_ROTATE); }
-            }
-            else
-            {
-                //Make some sort of sound.
-            }
-        }
-
-        UpdateCurrentPieceTransform();
-
-        for (int x = 0; x < numCells.x; x++)
-        {
-            for (int y = 0; y < numCells.y; y++)
-            {
-                if (grid[x, y] != null)
-                {
-                    Debug.DrawLine(new Vector3(this.transform.position.x + x - numCells.x / 2, 0, this.transform.position.y + y - numCells.y / 2), new Vector3(this.transform.position.x + x - numCells.x / 2, 4, this.transform.position.y + y - numCells.y / 2));
-                }
-            }
-        }
-
-
-    }
-
-    private void Reboot()
+    public void Reboot()
     {
         powerDown.Play();
         MeltBoard();
@@ -652,7 +501,7 @@ public class GameGrid : NetworkBehaviour
         }
     }
 
-    private void TryGoUp()
+    public void TryGoUp()
     {
         bool isBlocked = false;
         for (int x = 0; x < 3; x++)
@@ -701,7 +550,7 @@ public class GameGrid : NetworkBehaviour
         }
     }
 
-    private void TryGoDown()
+    public void TryGoDown()
     {
         bool isBlocked = false;
         for (int x = 0; x < 3; x++)
@@ -799,7 +648,7 @@ public class GameGrid : NetworkBehaviour
         }
     }
 
-    private void TryGoRight()
+    public void TryGoRight()
     {
         bool isBlocked = false;
         for (int x = 0; x < 3; x++)
@@ -824,7 +673,7 @@ public class GameGrid : NetworkBehaviour
         }
     }
 
-    private void DropPiece()
+    public void DropPiece()
     {
         //Place the cubes from the piece to the board.
         for (int x = 0; x < 3; x++)
@@ -876,9 +725,11 @@ public class GameGrid : NetworkBehaviour
             if (player.HasRoomForMoreEnergy())
             {
                 PowerupEffect pe = GameObject.Instantiate<PowerupEffect>(powerUpEffect);
+                if (!Sharedgamedata.issingleplayer) NetworkServer.Spawn(pe.gameObject);
                 GameCube sourceCube = cubesToExplode[UnityEngine.Random.Range(0, cubesToExplode.Count)];
                 pe.Initialize(sourceCube.transform.position, player.GetTargetOfParticle(PowerupType.ENERGY, 3), delay, PowerupType.ENERGY);
                 InvisibleDelayedChargeGiver chargeGiver = GameObject.Instantiate<InvisibleDelayedChargeGiver>(chargeGiverPrefab);
+                if (!Sharedgamedata.issingleplayer) NetworkServer.Spawn(chargeGiver.gameObject);
                 chargeGiver.target = player;
                 chargeGiver.delay = delay + 1;
                 chargeGiver.type = PowerupType.ENERGY;
@@ -895,6 +746,7 @@ public class GameGrid : NetworkBehaviour
                 Vector3 centroid = FindCentroid(cubesToExplode);
                 GameObject comboParticles = comboParticleHolder.comboParticles[numberOfSquaresMade].gameObject;
                 GameObject go = GameObject.Instantiate(comboParticles);
+                if (!Sharedgamedata.issingleplayer) NetworkServer.Spawn(go);
                 go.transform.position = centroid;
             }
         }
@@ -1044,7 +896,7 @@ public class GameGrid : NetworkBehaviour
 
     private List<ForcedPlacementOptions> forcedPlacements = new List<ForcedPlacementOptions>();
 
-    private bool IsInInvalidArea(float x, float y)
+    public bool IsInInvalidArea(float x, float y)
     {
         if (forcedPlacements.Count <= 0)
         {
@@ -1071,7 +923,7 @@ public class GameGrid : NetworkBehaviour
     }
 
     //Is there a block in the square? (Also, is it off the edge of the board?)*/
-    private bool IsObstructedAt(int x, int y)
+    public bool IsObstructedAt(int x, int y)
     {
 
         if (x < 0 || x >= numCells.x)
@@ -1109,7 +961,13 @@ public class GameGrid : NetworkBehaviour
 
     internal void DropNewCubeAt(int x, int y)
     {
-        GameCube cube = GameObject.Instantiate<GameCube>(currentPiece.cube); // Probbably unsafe.
+        while (!Sharedgamedata.issingleplayer && !NetworkServer.active)
+        {
+            Thread.Sleep(10);
+        }
+
+
+            GameCube cube = GameObject.Instantiate<GameCube>(currentPiece.cube); // Probbably unsafe.
         if (!Sharedgamedata.issingleplayer && NetworkServer.active)
             NetworkServer.Spawn(cube.gameObject);
 

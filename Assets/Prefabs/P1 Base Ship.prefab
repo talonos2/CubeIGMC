@@ -147,6 +147,7 @@ GameObject:
   - component: {fileID: 4599745634285610}
   - component: {fileID: 114233455349525356}
   - component: {fileID: 114712321617746032}
+  - component: {fileID: 114427743476571758}
   m_Layer: 0
   m_Name: P1 Base Ship
   m_TagString: Untagged
@@ -2112,6 +2113,39 @@ MonoBehaviour:
   damageDampeningAmount: 0.99
   damageEffectOnWaggle: 0.1
   damageEffectOnWaggleSpeed: 0.25
+  engineParticles: {fileID: 0}
+--- !u!114 &114427743476571758
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1246306855541748}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SceneId:
+    m_Value: 0
+  m_AssetId:
+    i0: 13
+    i1: 254
+    i2: 20
+    i3: 10
+    i4: 206
+    i5: 174
+    i6: 221
+    i7: 196
+    i8: 106
+    i9: 137
+    i10: 238
+    i11: 219
+    i12: 187
+    i13: 55
+    i14: 129
+    i15: 35
+  m_ServerOnly: 0
+  m_LocalPlayerAuthority: 0
 --- !u!114 &114674749853239702
 MonoBehaviour:
   m_ObjectHideFlags: 1

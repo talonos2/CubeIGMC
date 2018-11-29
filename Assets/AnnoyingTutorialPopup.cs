@@ -18,6 +18,10 @@ public class AnnoyingTutorialPopup : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
+        if (darkness == null)
+        {
+            darkness = MissionManager.instance.pointers.daaaaaknesssss;
+        }
         timeSoFar += Time.deltaTime;
         if (!hasPressedConfirm)
         {

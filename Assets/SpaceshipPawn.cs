@@ -2,8 +2,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
-public class SpaceshipPawn : MonoBehaviour {
+public class SpaceshipPawn : NetworkBehaviour {
 
     public LaserBullet bulletPrefab;
     public float distanceBetweenShips;
@@ -38,6 +39,9 @@ public class SpaceshipPawn : MonoBehaviour {
     internal Vector3 rootPosition;
 
     private float partialDerivativeSampleDistance = .001f;
+    public GameObject engineParticles;
+
+    public List<GameObject> stuffToHideIfThisPawnIsDisabledByTheMission;
 
     // Use this for initialization
     void Start()
@@ -95,12 +99,22 @@ public class SpaceshipPawn : MonoBehaviour {
     public void FireBullet(float damage, Combatant enemy, float flightTime)
     {
         LaserBullet bullet = GameObject.Instantiate(bulletPrefab);
+        
+
         bullet.transform.SetPositionAndRotation(this.transform.position + new Vector3(distanceToMyNose, 0, 0), this.transform.rotation);
         float size = Mathf.Sqrt(damage) / 10.0f;
         bullet.transform.localScale = new Vector3(size, size, size);
         bullet.GetComponent<Rigidbody>().velocity = new Vector3(distanceBetweenShips / flightTime, 0, 0);
         bullet.Initialize(enemy, flightTime, damage);
-        
+
+
+        if (!Sharedgamedata.issingleplayer)
+        {
+            bullet.CmdInitialize(enemy, flightTime, damage);
+            NetworkServer.Spawn(bullet.gameObject);
+
+        }
+
     }
 
     public void Damage(float damage)

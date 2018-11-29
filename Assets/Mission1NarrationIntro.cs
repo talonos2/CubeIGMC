@@ -10,13 +10,13 @@ public class Mission1NarrationIntro : Mission
     public GameObject[] tutorialTexts;
     private int stepNum;
     private float timeSinceStepStarted;
-    public Image darkness;
-    public GameObject[] thingsToHide;
-    public Camera cameraToDisable;
-    public Transform cameraToMove;
-    public Vector3 toMoveCameraTo;
-    public SpaceshipPawn shipToMakeNotWiggle;
-    public Light spaceLightToDisable;
+    private Image darkness;
+    private GameObject[] thingsToHide;
+    private Camera cameraToDisable;
+    private Transform cameraToMove;
+    private Vector3 toMoveCameraTo;
+    private SpaceshipPawn shipToMakeNotWiggle;
+    private Light spaceLightToDisable;
     private GameObject ship;
     public GameObject firesToTurnOff;
 
@@ -28,7 +28,7 @@ public class Mission1NarrationIntro : Mission
     public AudioSource wallImpactExplosionSound;
 
     public KlaxonSpin klaxonToTurnOn;
-    public CameraShake cameraToShake;
+    private CameraShake cameraToShake;
 
     public Vector3 person1Start;
     public Vector3 person1End;
@@ -45,7 +45,7 @@ public class Mission1NarrationIntro : Mission
     public GameObject tutorialPlacement4;
     public GameObject doorHP;
 
-    public GameGrid gridToSetup;
+    private GameGrid gridToSetup;
 
     public AudioSource sneakyShipMusic;
     public AudioSource blastingTHroughWallsMusic;
@@ -250,8 +250,22 @@ public class Mission1NarrationIntro : Mission
 }
 
     // Use this for initialization
-    void Start ()
+    void OnEnable ()
     {
+        PointerHolder pointers = MissionManager.instance.pointers;
+        darkness = pointers.daaaaaknesssss;
+        thingsToHide = new GameObject[3];
+        thingsToHide[0] = pointers.combatant1.healthBar.gameObject;
+        thingsToHide[1] = pointers.ship2.gameObject;
+        thingsToHide[2] = pointers.combatant1.multiplierText.gameObject;
+        cameraToDisable = pointers.camera2;
+        cameraToMove = pointers.cameraWrapper1.transform;
+        shipToMakeNotWiggle = pointers.ship1;
+        spaceLightToDisable = pointers.spaceLight;
+        cameraToShake = pointers.spaceCamera.GetComponent<CameraShake>();
+        gridToSetup = pointers.player1Grid;
+        escapeParticles = pointers.ship1.engineParticles;
+
         narrations[0].gameObject.SetActive(true);
         foreach (GameObject go in thingsToHide)
         {
@@ -272,7 +286,7 @@ public class Mission1NarrationIntro : Mission
     private float doorHPNum = 30;
     public GameObject structure;
     private float shipAccelleration = .5f;
-    public  GameObject escapeParticles;
+    private GameObject escapeParticles;
 
     private bool firstRun = true;
     // Update is called once per frame

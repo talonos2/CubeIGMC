@@ -43,6 +43,7 @@ public class PlayerCharacterSheet
     public int ShieldEquippedID = 3;
     public int EngineEquippedID = 0;
     public int MiscEquippedID = 0;
+    public int lastMissionBeaten = 0;
 
 
 

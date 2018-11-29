@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
-public class LaserBullet : MonoBehaviour {
+public class LaserBullet : NetworkBehaviour {
 
     private Combatant personImAttacking;
     private float flightTime;
@@ -34,4 +35,13 @@ public class LaserBullet : MonoBehaviour {
         this.flightTime = flightTime;
         this.damage = damage;
     }
+
+    [Command]
+    public void CmdInitialize(Combatant personImAttacking, float flightTime, float damage)
+    {
+        this.personImAttacking = personImAttacking;
+        this.flightTime = flightTime;
+        this.damage = damage;
+    }
+
 }

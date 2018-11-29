@@ -20,6 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4978338453951054}
   - component: {fileID: 114403860689813174}
+  - component: {fileID: 114107935970299504}
   m_Layer: 0
   m_Name: InvisibleDelayedChargeGiver
   m_TagString: Untagged
@@ -40,6 +41,38 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114107935970299504
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1144559668537116}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SceneId:
+    m_Value: 0
+  m_AssetId:
+    i0: 113
+    i1: 219
+    i2: 27
+    i3: 23
+    i4: 201
+    i5: 4
+    i6: 84
+    i7: 100
+    i8: 153
+    i9: 155
+    i10: 33
+    i11: 144
+    i12: 73
+    i13: 132
+    i14: 205
+    i15: 233
+  m_ServerOnly: 0
+  m_LocalPlayerAuthority: 1
 --- !u!114 &114403860689813174
 MonoBehaviour:
   m_ObjectHideFlags: 1
