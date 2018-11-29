@@ -25,6 +25,9 @@ public class PlayerCharacterSheet
     public string PlayerName ="Unknown Captain";
     public float Level = 1f;
     public int Exp=0;
+
+ 
+
     public int Gold=0;
     public float BaseHealth=70;
     public int StartingEnergy=50;
@@ -223,6 +226,18 @@ public class PlayerCharacterSheet
         if (currentlySelectedItem.GetItemType() == ItemSlot.MISC)
             this.MiscEquippedID = currentlySelectedItem.GetItemId();
     }
+
+    internal ItemClass GetItem(ItemSlot itemSlot)
+    {
+        int ItemReference=0;
+        if (itemSlot==ItemSlot.ARMOR)  ItemReference = ArmorEquippedID;
+        if (itemSlot == ItemSlot.WEAPON) ItemReference = WeaponEquippedID;
+        if (itemSlot == ItemSlot.MISC) ItemReference = MiscEquippedID;
+        if (itemSlot == ItemSlot.SHIELDS) ItemReference = ShieldEquippedID;
+        if (itemSlot == ItemSlot.ENGINES) ItemReference = EngineEquippedID;
+        return ItemClass.GetItem(itemSlot, ItemReference);
+    }
+
 }
 
 

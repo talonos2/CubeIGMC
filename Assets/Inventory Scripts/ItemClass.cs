@@ -59,7 +59,7 @@ public class ItemClass {
         {
             AllItems.Add(GetItem(ItemSlot.ARMOR, i));
         }
-        for (int i = 1; i < 11; i++)
+        for (int i = 0; i < 11; i++)
         {
             AllItems.Add(GetItem(ItemSlot.SHIELDS, i));
         }
@@ -178,7 +178,7 @@ public class ItemClass {
                         newItem.ItemId = ItemId;
                         newItem.GoldCost = 0;
                         newItem.ItemName = "Wood Hull";
-                        newItem.ItemDescription = "There may be leaks.";
+                        newItem.ItemDescription = "There may be leaks...";
                         break;
                     case 1:
                         newItem.ItemId = ItemId;
@@ -227,7 +227,7 @@ public class ItemClass {
                         newItem.ItemId = ItemId;
                         newItem.GoldCost = 0;
                         newItem.ItemName = "Sputterig Engine";
-                        newItem.ItemDescription = "Barley gets you by.";
+                        newItem.ItemDescription = "Barely gets you by.";
                         break;
                     case 1:
                         newItem.ItemId = ItemId;
@@ -281,7 +281,7 @@ public class ItemClass {
                         newItem.ItemId = ItemId;
                         newItem.GoldCost = 1000;
                         newItem.ItemName = "Tiny Shield";
-                        newItem.ItemDescription = "It's there I promise.";
+                        newItem.ItemDescription = "It's there I promise...";
                         newItem.ItemTier = 1;
                         break;
                     case 2:
@@ -302,7 +302,7 @@ public class ItemClass {
                         newItem.ItemId = ItemId;
                         newItem.GoldCost = 8000;
                         newItem.ItemName = "Large Shield";
-                        newItem.ItemDescription = "Protect everything with this handy dandy shield!";
+                        newItem.ItemDescription = "Maximum defence with this handy dandy shield!";
                         newItem.ItemTier = 4;
                         break;
                     case 5:
@@ -337,13 +337,13 @@ public class ItemClass {
                         newItem.ItemId = ItemId;
                         newItem.GoldCost = 3000;
                         newItem.ItemName = "Drone Defence Field";
-                        newItem.ItemDescription = "Launch a bunch of drone! Make them jump in the way of enemy fire!";
+                        newItem.ItemDescription = "Launch a bunch of drones! Make them jump in the way of enemy fire!";
                         newItem.ItemTier = 2;
                         break;
                     case 10:
                         newItem.ItemId = ItemId;
                         newItem.GoldCost = 12000;
-                        newItem.ItemName = "Advanced Drone Defence Field";
+                        newItem.ItemName = "Advanced Drone Field";
                         newItem.ItemDescription = "Now with more drones!";
                         newItem.ItemTier = 4;
                         break;
@@ -358,7 +358,7 @@ public class ItemClass {
                         newItem.ItemId = ItemId;
                         newItem.GoldCost = 0;
                         newItem.ItemName = "Generic Power Core";
-                        newItem.ItemDescription = "Generic Power Core";
+                        newItem.ItemDescription = "Generic Power Core. It is very... generic. Nothing at all special about it.";
                         break;
                     case 1:
                         newItem.ItemId = ItemId;
@@ -371,7 +371,8 @@ public class ItemClass {
                         newItem.ItemId = ItemId;
                         newItem.GoldCost = 6000;
                         newItem.ItemName = "Passive Shield Generator";
-                        newItem.ItemDescription = "Generates a small starting shield that always recovers between shots.";
+                        newItem.ItemDescription = "Generates a small starting shield that always recovers between shots. " +
+                            "It doesn't actually work though, so there's that...";
                         newItem.ItemTier = 3;
                         break;                   
                 }
