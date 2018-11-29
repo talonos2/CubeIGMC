@@ -37,48 +37,6 @@ public class EngineRoomNetworkManager : MonoBehaviour
         }
     }
 
-    /*void Update()
-    {
-        //Debug.Log("Update:" + NetworkServer.handlers);
-        if (isAtStartup)
-        {
-            if (Input.GetKeyDown(KeyCode.S))
-            {
-                SetupServer();
-            }
-            if (Input.GetKeyDown(KeyCode.C))
-            {
-                SetupClient();
-            }
-            if (Input.GetKeyDown(KeyCode.B))
-            {
-                SetupServer();
-                SetupLocalClient();
-            }
-        }
-        else
-        {
-            if (Input.GetKeyDown(KeyCode.I))
-            {
-                //Debug.Log("Here" + NetworkServer.handlers + ", " + NetworkServer.handlers[1003]);
-                myClient.Send(sendMoveMessageID, new IntegerMessage(254));
-            }
-        }
-    }
-    void OnGUI()
-    {
-        if (isAtStartup)
-        {
-            GUI.Label(new Rect(2, 10, 150, 100), "Press S for server");
-            GUI.Label(new Rect(2, 30, 150, 100), "Press B for both");
-            GUI.Label(new Rect(2, 50, 150, 100), "Press C for client");
-        }
-        else
-        {
-            GUI.Label(new Rect(2, 10, 150, 100), "Press I for moveMessage");
-        }
-    }*/
-
     // Create a server and listen on a port
     public void SetupServer()
     {
@@ -128,10 +86,8 @@ public class EngineRoomNetworkManager : MonoBehaviour
     public void RecieveMove(NetworkMessage netMsg)
     {
         IntegerMessage beginMessage = netMsg.ReadMessage<IntegerMessage>();
-        Debug.Log("Client Recieved Move:" +", "+beginMessage.value);
         if (!isServer)
         {
-            Debug.Log("Client getting: " + beginMessage.value);
             moverListener.HandleMove(beginMessage.value);
         }
     }
@@ -139,10 +95,8 @@ public class EngineRoomNetworkManager : MonoBehaviour
     public void ServerHandlesMove(NetworkMessage netMsg)
     {
         IntegerMessage beginMessage = netMsg.ReadMessage<IntegerMessage>();
-        Debug.LogWarning("Server Recieved Move:" + ", " + beginMessage.value);
         if (isServer)
         {
-            Debug.Log("Server getting: " + beginMessage.value);
             moverListener.HandleMove(beginMessage.value);
         }
     }
