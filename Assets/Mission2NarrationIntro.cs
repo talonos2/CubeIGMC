@@ -153,12 +153,11 @@ public class Mission2NarrationIntro : Mission
     }
 
     // Use this for initialization
-    void Start()
+    void OnAwake()
     {
+
         narrations[0].gameObject.SetActive(true);
-
         //gridToSetup.player.enemy.damageManager = damageManagerForDoor;
-
         MissionManager.isInCutscene = true;
     }
 

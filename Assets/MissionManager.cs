@@ -1,19 +1,26 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 internal class MissionManager : MonoBehaviour
 {
     public static MissionManager instance = null;//the single instance of design manager available
     public HackyCallback grossCallbackHack;
     public Mission mission;
-    public String playerCharacterSheetPath;
-    public String enemyCharacterSheetPath;
+    public String player1CharacterSheetPath;
+    public String player2CharacterSheetPath;
+
+    public List<Mission> missions = new List<Mission>();
+
+
 
     public static bool isInCutscene;
     internal static bool triggerCallbacksOnBlockDrop;
     internal static bool triggerCallbacksOnAttackHit;
     internal static bool triggerCallbacksOnShipReboot;
     internal static bool freezeAI;
+    internal PointerHolder pointers;
 
     public static bool TriggerCallbackOnShipDestroyed { get; internal set; }
 
@@ -43,4 +50,28 @@ internal class MissionManager : MonoBehaviour
             grossCallbackHack.enabled = false;
         }
     }
+
+    void OnEnable()
+    {
+        //Tell our 'OnLevelFinishedLoading' function to start listening for a scene change as soon as this script is enabled.
+        SceneManager.sceneLoaded += OnLevelFinishedLoading;
+    }
+
+    void OnDisable()
+    {
+        //Tell our 'OnLevelFinishedLoading' function to stop listening for a scene change as soon as this script is disabled. Remember to always have an unsubscription for every delegate you subscribe to!
+        SceneManager.sceneLoaded -= OnLevelFinishedLoading;
+    }
+
+    void OnLevelFinishedLoading(Scene scene, LoadSceneMode mode)
+    {
+        GameObject p = GameObject.Find("Pointer Holder");
+        if (p != null)
+        {
+            pointers = p.GetComponent<PointerHolder>();
+            mission.gameObject.SetActive(true);
+            pointers.narrationSystem.characterController = this.grossCallbackHack;
+        }
+    }
+
 }

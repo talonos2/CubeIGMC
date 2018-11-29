@@ -104,13 +104,13 @@ public class GameGrid : NetworkBehaviour
         {
             string dataPath;
 
-            dataPath = Path.Combine(Application.persistentDataPath, MissionManager.instance.playerCharacterSheetPath);
+            dataPath = Path.Combine(Application.persistentDataPath, MissionManager.instance.player1CharacterSheetPath);
             if (!File.Exists(dataPath))
             {
-                player.SaveCharacterToDisk(MissionManager.instance.playerCharacterSheetPath);
+                player.SaveCharacterToDisk(MissionManager.instance.player1CharacterSheetPath);
             }
 
-            player.SetCharacterSheet(MissionManager.instance.playerCharacterSheetPath);
+            player.SetCharacterSheet(MissionManager.instance.player1CharacterSheetPath);
         }
     }
 
