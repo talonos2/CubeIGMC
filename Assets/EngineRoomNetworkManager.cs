@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -10,6 +11,8 @@ public class EngineRoomNetworkManager : MonoBehaviour
     NetworkClient myClient;
 
     public short sendMoveMessageID = 1003;
+    private RemotePVPMover mover;
+    private bool isServer;
 
     /*void Update()
     {
@@ -101,12 +104,26 @@ public class EngineRoomNetworkManager : MonoBehaviour
     {
         IntegerMessage beginMessage = netMsg.ReadMessage<IntegerMessage>();
         Debug.Log("Client Recieved Move:" +", "+beginMessage.value);
+        if (!isServer)
+        {
+            mover.HandleMove(beginMessage.value);
+        }
     }
 
     public void ServerHandlesMove(NetworkMessage netMsg)
     {
         IntegerMessage beginMessage = netMsg.ReadMessage<IntegerMessage>();
         Debug.LogWarning("Server Recieved Move:" + ", " + beginMessage.value);
+        if (isServer)
+        {
+            mover.HandleMove(beginMessage.value);
+        }
+    }
+
+    internal void AttachToMover(RemotePVPMover mover, bool isServer)
+    {
+        this.mover = mover;
+        this.isServer = isServer;
     }
 }
 

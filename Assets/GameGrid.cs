@@ -105,6 +105,11 @@ public class GameGrid : MonoBehaviour
         }
     }
 
+    internal void SetRemotePVPPlayer()
+    {
+        mover = new RemotePVPMover();
+    }
+
     public void SetGridCellTypeStateAndAttendentVFX()
     {
         for (int x = 0; x < numCells.x; x++)

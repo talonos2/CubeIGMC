@@ -65,11 +65,13 @@ public class CombatInitializer : MonoBehaviour
                 EngineRoomNetworkManager ernm = MissionManager.instance.engineRoomNetworkManager;
                 ernm.SetupLocalClient();
                 ernm.SetupServer();
+                grid2.SetRemotePVPPlayer();
             }
             if (MissionManager.instance.mission.GameType() == EngineRoomGameType.CLIENT_PVP)
             {
                 EngineRoomNetworkManager ernm = MissionManager.instance.engineRoomNetworkManager;
                 ernm.SetupClient();
+                grid2.SetRemotePVPPlayer();
             }
 
             grid1.SetSeedAndStart(randomSeed);
