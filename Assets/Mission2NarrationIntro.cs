@@ -153,8 +153,22 @@ public class Mission2NarrationIntro : Mission
     }
 
     // Use this for initialization
-    void OnAwake()
+    void OnEnable()
     {
+        gridAttachedPieces = new GameObject[4];
+        PointerHolder p = MissionManager.instance.pointers;
+        gridAttachedPieces[0] = p.combatant1.healthBar.gameObject;
+        gridAttachedPieces[1] = p.combatant2.healthBar.gameObject;
+        gridAttachedPieces[2] = p.combatant2.multiplierText.gameObject;
+        gridAttachedPieces[3] = p.player2Grid.transform.Find("NextPieceText").gameObject;
+        darkness = p.daaaaaknesssss;
+        gridToSetup = p.player1Grid;
+        gridToTurnIntoAI = p.player2Grid;
+        pawnToHide = p.ship2.stuffToHideIfThisPawnIsDisabledByTheMission;
+        tractorBeamLockonSound = p.ship1.getHitHeavySound;
+        damageManagerForTractorBeam = p.combatant2.damageManager;
+        cameraToMove = p.cameraWrapper2.gameObject;
+        shipToMakeFlyAway = p.ship1;
 
         narrations[0].gameObject.SetActive(true);
         //gridToSetup.player.enemy.damageManager = damageManagerForDoor;
@@ -222,7 +236,6 @@ public class Mission2NarrationIntro : Mission
             if (timeSinceStepStarted < 3)
             {
                 Color colorToTurnDarkness = new Color(0, 0, 0, Mathf.Lerp(0, 1, timeSinceStepStarted / 2));
-                Debug.Log(colorToTurnDarkness);
                 darkness.color = colorToTurnDarkness;
                 combatMusicThatsNotAsIntrusive.volume = Mathf.Lerp(1, 0, timeSinceStepStarted / 3);
             }

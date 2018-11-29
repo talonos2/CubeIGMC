@@ -41,6 +41,8 @@ public class SpaceshipPawn : NetworkBehaviour {
     private float partialDerivativeSampleDistance = .001f;
     public GameObject engineParticles;
 
+    public GameObject[] stuffToHideIfThisPawnIsDisabledByTheMission;
+
     // Use this for initialization
     void Start()
     {

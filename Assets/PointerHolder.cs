@@ -18,9 +18,11 @@ public class PointerHolder : MonoBehaviour
     public Image daaaaaknesssss;
     public Light spaceLight;
     public NarrationManager narrationSystem;
+    public GameObject cameraWrapper1;
+    public GameObject cameraWrapper2;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
 		
 	}
 	
