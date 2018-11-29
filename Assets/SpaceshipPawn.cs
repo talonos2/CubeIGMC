@@ -99,13 +99,21 @@ public class SpaceshipPawn : NetworkBehaviour {
     public void FireBullet(float damage, Combatant enemy, float flightTime)
     {
         LaserBullet bullet = GameObject.Instantiate(bulletPrefab);
+        
 
         bullet.transform.SetPositionAndRotation(this.transform.position + new Vector3(distanceToMyNose, 0, 0), this.transform.rotation);
         float size = Mathf.Sqrt(damage) / 10.0f;
         bullet.transform.localScale = new Vector3(size, size, size);
         bullet.GetComponent<Rigidbody>().velocity = new Vector3(distanceBetweenShips / flightTime, 0, 0);
         bullet.Initialize(enemy, flightTime, damage);
-        if (!Sharedgamedata.issingleplayer) NetworkServer.Spawn(bullet.gameObject);
+
+
+        if (!Sharedgamedata.issingleplayer)
+        {
+            bullet.CmdInitialize(enemy, flightTime, damage);
+            NetworkServer.Spawn(bullet.gameObject);
+
+        }
 
     }
 
