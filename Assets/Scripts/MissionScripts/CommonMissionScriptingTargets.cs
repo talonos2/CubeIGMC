@@ -31,7 +31,9 @@ public class CommonMissionScriptingTargets : MonoBehaviour
     public Button nextMissionButton;
     public Text replayMissionText;
 
-    public GameObject youHaveDiedScreen;
+    public GameObject singlePlayerVictoryOrDefeatSprite;
+
+    public AudioSource gameStartTickSound;
 
     // Use this for initialization
     void Start () {

@@ -24,14 +24,26 @@ using UnityEngine;
 public class CrossScenePlayerData : MonoBehaviour
 {
     public static CrossScenePlayerData instance;
-    internal static bool isEnteringAsHost;
+
+    /// <summary>
+    /// This was something in the mission manager, but I'm not sure this is used anymore. We might axe it soon.
+    /// </summary>
+    public static bool isEnteringAsHost;
 
     /// <summary>
     /// The MissionManager reads this when you enter the "GameScreen" scene to know what mission to load.
     /// </summary>
-    internal int missionNumToLoad;
-    internal string player1CharacterSheetPath;
-    internal string player2CharacterSheetPath;
+    public int missionNumToLoad;
+
+    /// <summary>
+    /// The file path to player 1's character sheet. Will probably be replaced with the character sheet itself.
+    /// </summary>
+    public string player1CharacterSheetPath;
+
+    /// <summary>
+    /// The file path to player 2's character sheet. Will probably be replaced with the character sheet itself.
+    /// </summary>
+    public string player2CharacterSheetPath;
 
     void Awake()
     {

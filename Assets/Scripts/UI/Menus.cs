@@ -73,7 +73,7 @@ public class Menus : MonoBehaviour
         SceneManager.LoadScene("SampleScene");
     }
 
-    public void joinMultiplayer()
+    public void JoinMultiplayer()
     {
         CrossScenePlayerData.instance.missionNumToLoad = MissionManager.ONLINE_MULTIPLAYER_GUEST;
         if (inputIP.text == "")

@@ -56,6 +56,7 @@ public class MissionManager : MonoBehaviour
         if (CrossScenePlayerData.instance.missionNumToLoad != -1)
         {
             mission = missions[CrossScenePlayerData.instance.missionNumToLoad];
+            mission.gameObject.SetActive(true);
         }
     }
 

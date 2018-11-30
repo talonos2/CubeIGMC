@@ -3,9 +3,9 @@ using UnityEngine;
 
 public abstract class Mission : MonoBehaviour
 {
+    protected CommonMissionScriptingTargets pointers;
     internal abstract void Unblock();
     internal abstract AIParams GetAIParams();
-
     internal abstract EngineRoomGameType GameType();
 
     internal void Win(bool shop)
@@ -18,7 +18,7 @@ public abstract class Mission : MonoBehaviour
             p.shopButton.gameObject.SetActive(true);
         }
         p.replayMissionText.text = "Replay";
-        p.youHaveDiedScreen.gameObject.SetActive(true);
+        p.singlePlayerVictoryOrDefeatSprite.gameObject.SetActive(true);
     }
 
     internal void Lose()
@@ -28,6 +28,6 @@ public abstract class Mission : MonoBehaviour
         p.nextMissionButton.gameObject.SetActive(false);
         p.shopButton.gameObject.SetActive(false);
         p.replayMissionText.text = "Retry";
-        p.youHaveDiedScreen.gameObject.SetActive(true);
+        p.singlePlayerVictoryOrDefeatSprite.gameObject.SetActive(true);
     }
 }

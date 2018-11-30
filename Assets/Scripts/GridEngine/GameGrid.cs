@@ -103,14 +103,21 @@ public class GameGrid : MonoBehaviour
         if (isPlayerOne)
         {
             string dataPath;
-
-
             dataPath = Path.Combine(Application.persistentDataPath, CrossScenePlayerData.instance.player1CharacterSheetPath);
             if (!File.Exists(dataPath))
             {
                 player.SaveCharacterToDisk(CrossScenePlayerData.instance.player1CharacterSheetPath);
             }
-
+            player.SetCharacterSheet(CrossScenePlayerData.instance.player1CharacterSheetPath);
+        }
+        else if (MissionManager.instance.GameType() == EngineRoomGameType.LOCAL_PVP)
+        {
+            string dataPath;
+            dataPath = Path.Combine(Application.persistentDataPath, CrossScenePlayerData.instance.player2CharacterSheetPath);
+            if (!File.Exists(dataPath))
+            {
+                player.SaveCharacterToDisk(CrossScenePlayerData.instance.player2CharacterSheetPath);
+            }
             player.SetCharacterSheet(CrossScenePlayerData.instance.player1CharacterSheetPath);
         }
     }

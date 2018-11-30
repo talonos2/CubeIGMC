@@ -3,29 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class FreePlayMission : Mission {
-
-    internal override void Unblock()
-    {
-        
-    }
-
+public class FreePlayMission : Mission
+{
     // Use this for initialization
     void Start () {
-        CommonMissionScriptingTargets p = MissionManager.instance.pointers;
-        darkness = p.daaaaaknesssss;
-        p.restartButton1.gameObject.SetActive(true);
-        p.restartButton2.gameObject.SetActive(true);
-        tick = p.player1Grid.ominousTick;
+        pointers = MissionManager.instance.pointers;
+        pointers.restartButton1.gameObject.SetActive(true);
+        pointers.restartButton2.gameObject.SetActive(true);
     }
 
-    public GameGrid gridToCheatWith;
     private float timeSinceStepStarted;
-    public Image darkness;
-
-    public bool cheaty;
-
-    private AudioSource tick;
 
     private bool[] ticks = new bool[4];
 
@@ -36,32 +23,31 @@ public class FreePlayMission : Mission {
         {
             MissionManager.freezePlayerBoard = true;
         }
+
         timeSinceStepStarted += Time.deltaTime;
+
+        //Fade in from black.
         float brightness = Mathf.Clamp01(timeSinceStepStarted / 2);
-        darkness.color = new Color(0, 0, 0, 1 - brightness);
+        pointers.daaaaaknesssss.color = new Color(0, 0, 0, 1 - brightness);
 
+        //Tick before starting.
         for (int x = 0; x < 4; x++)
+        {
+            if (timeSinceStepStarted > .5 + x && !ticks[x])
             {
-                if (timeSinceStepStarted > .5 + x && !ticks[x])
-                {
-                    tick.Play();
-                    ticks[x] = true;
-                }
+                pointers.gameStartTickSound.Play();
+                ticks[x] = true;
             }
-            if (timeSinceStepStarted > 3.5)
-            {
-                MissionManager.freezePlayerBoard = false;
-            }
+        }
 
+        //Unfreeze after four ticks.
+        if (timeSinceStepStarted > 3.5)
+        {
+            MissionManager.freezePlayerBoard = false;
+        }
     }
 
-    internal override AIParams GetAIParams()
-    {
-        return null;
-    }
-
-    internal override EngineRoomGameType GameType()
-    {
-        return EngineRoomGameType.LOCAL_PVP;
-    }
+    internal override void Unblock() {/*NOOP*/}
+    internal override AIParams GetAIParams(){return null;}
+    internal override EngineRoomGameType GameType(){return EngineRoomGameType.LOCAL_PVP;}
 }

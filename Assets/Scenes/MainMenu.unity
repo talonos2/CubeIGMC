@@ -1040,22 +1040,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 224758543758174624, guid: 34c7da69a7ea45049b9374f04f652b77,
     type: 2}
   m_PrefabInternal: {fileID: 546612968}
---- !u!1 &546612970 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1276058868232014, guid: 34c7da69a7ea45049b9374f04f652b77,
-    type: 2}
-  m_PrefabInternal: {fileID: 546612968}
---- !u!114 &546612971
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 546612970}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3882e29572f41a648a63c8da75d36a50, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &591039566
 GameObject:
   m_ObjectHideFlags: 0
@@ -1404,8 +1388,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 70192613}
-        m_MethodName: MultiPlayerGetChar
+      - m_Target: {fileID: 1272836302}
+        m_MethodName: ToLocalMultiplayer
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2403,11 +2387,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   theMenu: {fileID: 858082987}
-  getReady: {fileID: 0}
-  campaign: {fileID: 0}
-  localMulti: {fileID: 0}
-  onlineMulti: {fileID: 0}
-  ernm: {fileID: 0}
   Primary: {fileID: 858082987}
   loginPage: {fileID: 611970593}
   infoPage: {fileID: 6542332}
@@ -2520,6 +2499,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77cce8a79865a194294ad940dd2fef7d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  missionNumToLoad: 0
+  player1CharacterSheetPath: Save1.txt
+  player2CharacterSheetPath: Save1.txt
 --- !u!4 &1343719509
 Transform:
   m_ObjectHideFlags: 0
