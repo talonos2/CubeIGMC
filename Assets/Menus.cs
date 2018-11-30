@@ -14,7 +14,7 @@ public class Menus : MonoBehaviour
     public MissionManager getReady;
     public Mission campaign;
     public Mission localMulti;
-    public Mission onlineMulti;
+    public NetworkedMission onlineMulti;
 
     public EngineRoomNetworkManager ernm;
 
@@ -92,8 +92,7 @@ public class Menus : MonoBehaviour
     {
         //Time.timeScale = 0;
         getReady.mission = onlineMulti;
-        ernm.SetupServer();
-
+        onlineMulti.isHost = true;
 
         SceneManager.LoadScene("SampleScene");
     }
@@ -102,8 +101,12 @@ public class Menus : MonoBehaviour
     {
        // Time.timeScale = 1;
         getReady.mission = onlineMulti;
-        ernm.SetupClient();
-
+        if (inputIP.text == "")
+        {
+            return;
+        }
+        ernm.loadIPSlug(inputIP.text);
+        onlineMulti.isHost = false;
 
         SceneManager.LoadScene("SampleScene");
     }

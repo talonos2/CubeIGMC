@@ -19,7 +19,7 @@ public class EngineRoomNetworkManager : MonoBehaviour
     private LocalNetworkedPVPMover moverSender;
     private bool isServer;
 
-    public Text IPinput;
+    private string ip;
     public NetworkedMission omm;
 
 
@@ -57,17 +57,19 @@ public class EngineRoomNetworkManager : MonoBehaviour
     // Create a client and connect to the server port
     public void SetupClient()
     {
-        Debug.Log(IPinput.text);
-
-        if (IPinput.text == "")
-            return;
+        Debug.Log(ip);
 
         myClient = new NetworkClient();
         myClient.RegisterHandler(MsgType.Connect, OnConnected);
         myClient.RegisterHandler(sendMoveMessageID, RecieveMove);
         myClient.RegisterHandler(sendSeedID, ClientAcceptsSeed);
-        myClient.Connect(IPinput.text, 4444);
+        myClient.Connect(ip, 4444);
         isAtStartup = false;
+    }
+
+    internal void loadIPSlug(string text)
+    {
+        this.ip = ip;
     }
 
     // Create a local client and connect to the local server
