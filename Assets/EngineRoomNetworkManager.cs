@@ -125,7 +125,8 @@ public class EngineRoomNetworkManager : MonoBehaviour
     {
         int toReturn = seedMessage.ReadMessage<IntegerMessage>().value;
         Debug.Log(toReturn);
-        this.moverSender.AcceptSeed(toReturn);
+        if(!isServer)
+            this.moverSender.AcceptSeed(toReturn);
     }
 
     public void ServerAcceptsSeed(NetworkMessage seedMessage)

@@ -292,6 +292,8 @@ public class Mission1NarrationIntro : Mission
     private GameObject escapeParticles;
 
     private bool firstRun = true;
+    private bool victoryScreen;
+
     // Update is called once per frame
     void Update()
     {
@@ -338,6 +340,11 @@ public class Mission1NarrationIntro : Mission
         {
             timeSinceStepStarted += Time.deltaTime;
             structure.transform.localPosition = new Vector3(.1f-(timeSinceStepStarted*timeSinceStepStarted*shipAccelleration), 24.77f, -14.93f);
+            if (timeSinceStepStarted > 1.5 && !victoryScreen)
+            {
+                Win(false);
+                victoryScreen = true;
+            }
         }
     }
 

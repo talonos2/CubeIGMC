@@ -149,6 +149,9 @@ public class Mission2NarrationIntro : Mission
                 narrations[5].gameObject.SetActive(true);
                 spaceDoorOpenSound.Play();
                 break;
+            case 9:
+                Win(true);
+            break;
         }
     }
 
