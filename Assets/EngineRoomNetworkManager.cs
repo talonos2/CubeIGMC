@@ -14,9 +14,12 @@ public class EngineRoomNetworkManager : MonoBehaviour
 
     public short sendMoveMessageID = 1003;
     public short sendSeedID = 1004;
+    public short sendCharSheet = 1005;
 
     private RemoteNetworkedPVPMover moverListener;
     private LocalNetworkedPVPMover moverSender;
+    private GameGrid serverGrid;
+    private GameGrid clientGrid;
     private bool isServer;
 
     private string ip;
@@ -51,6 +54,7 @@ public class EngineRoomNetworkManager : MonoBehaviour
         NetworkServer.RegisterHandler(MsgType.Connect, ServerHandlesConnection);
         NetworkServer.RegisterHandler(sendMoveMessageID, ServerHandlesMove);
         NetworkServer.RegisterHandler(sendSeedID, ServerAcceptsSeed);
+        NetworkServer.RegisterHandler(sendCharSheet, ServerAcceptsCharSheet);
         isAtStartup = false;
     }
 
@@ -63,6 +67,7 @@ public class EngineRoomNetworkManager : MonoBehaviour
         myClient.RegisterHandler(MsgType.Connect, OnConnected);
         myClient.RegisterHandler(sendMoveMessageID, RecieveMove);
         myClient.RegisterHandler(sendSeedID, ClientAcceptsSeed);
+        myClient.RegisterHandler(sendCharSheet, ClientAcceptsCharSheet);
         myClient.Connect(ip, 4444);
         isAtStartup = false;
     }
@@ -79,6 +84,7 @@ public class EngineRoomNetworkManager : MonoBehaviour
         myClient.RegisterHandler(MsgType.Connect, OnConnected);
         myClient.RegisterHandler(sendMoveMessageID, RecieveMove);
         myClient.RegisterHandler(sendSeedID, ClientAcceptsSeed);
+        myClient.RegisterHandler(sendCharSheet, ServerAcceptsCharSheet);
         isAtStartup = false;
     }
 
@@ -121,6 +127,28 @@ public class EngineRoomNetworkManager : MonoBehaviour
     {
         this.moverListener = mover;
         this.isServer = isServer;
+    }
+
+    public void ClientAcceptsCharSheet(NetworkMessage charSheetMessage)
+    {
+        String toReturn = charSheetMessage.ReadMessage<StringMessage>().value;
+
+        if (!isServer)
+        {
+//            charSheetListener.HandleMove(beginMessage.value);
+        }
+
+    }
+
+    public void ServerAcceptsCharSheet(NetworkMessage charSheetMessage)
+    {
+        String toReturn = charSheetMessage.ReadMessage<StringMessage>().value;
+        //        string loadedString = streamReader.ReadToEnd();
+        //        return JsonUtility.FromJson<PlayerCharacterSheet>(loadedString);
+        if (isServer)
+        {
+//            moverListener.HandleMove(beginMessage.value);
+        }
     }
 
     public void ClientAcceptsSeed(NetworkMessage seedMessage)

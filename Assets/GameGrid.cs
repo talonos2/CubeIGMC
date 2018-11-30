@@ -63,6 +63,12 @@ public class GameGrid : MonoBehaviour
         player.enemy.ThisGameGrid.SetSeedAndStart(value);
     }
 
+    internal void getCharSheetFromServer(int value)
+    {
+
+
+    }
+
     public PlayingPiece currentPiece;
     private PlayingPiece nextPiece;
 
@@ -97,6 +103,7 @@ public class GameGrid : MonoBehaviour
         if (isPlayerOne)
         {
             string dataPath;
+
 
             dataPath = Path.Combine(Application.persistentDataPath, MissionManager.instance.player1CharacterSheetPath);
             if (!File.Exists(dataPath))
