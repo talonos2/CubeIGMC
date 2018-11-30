@@ -2953,7 +2953,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &178464080
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2974,6 +2974,7 @@ MonoBehaviour:
   Primary: {fileID: 0}
   loginPage: {fileID: 0}
   infoPage: {fileID: 0}
+  LoadCharacterPage: {fileID: 0}
   inputIP: {fileID: 0}
 --- !u!114 &178464081
 MonoBehaviour:
@@ -6941,6 +6942,11 @@ Prefab:
       propertyPath: darkness
       value: 
       objectReference: {fileID: 1687384275}
+    - target: {fileID: 114899827479038178, guid: a6b117bd6ab899e41b656548b0b5ebe9,
+        type: 2}
+      propertyPath: mission
+      value: 
+      objectReference: {fileID: 2097024701}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a6b117bd6ab899e41b656548b0b5ebe9, type: 2}
   m_IsPrefabAsset: 0
@@ -11110,6 +11116,7 @@ MonoBehaviour:
   Primary: {fileID: 0}
   loginPage: {fileID: 0}
   infoPage: {fileID: 0}
+  LoadCharacterPage: {fileID: 0}
   inputIP: {fileID: 0}
 --- !u!1 &569007498
 GameObject:
@@ -49810,6 +49817,12 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4596137841453722, guid: 8007da74be9e7b947b304fd4cbb68b9a,
     type: 2}
   m_PrefabInternal: {fileID: 2080038989}
+--- !u!114 &2097024701 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 114499502399387762, guid: a6b117bd6ab899e41b656548b0b5ebe9,
+    type: 2}
+  m_PrefabInternal: {fileID: 392443965}
+  m_Script: {fileID: 11500000, guid: 8dbd222894fcce24db00717ff31c17d7, type: 3}
 --- !u!1001 &2108488209
 Prefab:
   m_ObjectHideFlags: 0
