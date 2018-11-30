@@ -36,12 +36,12 @@ public class EngineRoomNetworkManager : MonoBehaviour
     {
         if (isServer)
         {
-            Debug.Log("Server sending: " + toSend);
+            //Debug.Log("Server sending: " + toSend);
             NetworkServer.SendToAll(sendMoveMessageID, new IntegerMessage(toSend));
         }
         else
         {
-            Debug.Log("Client sending: " + toSend);
+            //Debug.Log("Client sending: " + toSend);
             myClient.Send(sendMoveMessageID, new IntegerMessage(toSend));
         }
     }
@@ -93,7 +93,10 @@ public class EngineRoomNetworkManager : MonoBehaviour
     {
         Debug.Log("Connected to server");
         MissionManager.instance.weAreAllHere = true;
-        myClient.Send(sendCharSheet, new StringMessage(moverSender.GetParentCharSheetString()));
+        if (!isServer)
+        {
+            myClient.Send(sendCharSheet, new StringMessage(moverSender.GetParentCharSheetString()));
+        }
     }
 
     // server function
@@ -101,8 +104,11 @@ public class EngineRoomNetworkManager : MonoBehaviour
     {
         Debug.Log("Connected to client");
         MissionManager.instance.weAreAllHere = true;
-        NetworkServer.SendToAll(sendSeedID, new IntegerMessage(moverSender.GetParentSeed()));
-        NetworkServer.SendToAll(sendCharSheet, new StringMessage(moverSender.GetParentCharSheetString()));
+        if (isServer)
+        {
+            NetworkServer.SendToAll(sendSeedID, new IntegerMessage(moverSender.GetParentSeed()));
+            NetworkServer.SendToAll(sendCharSheet, new StringMessage(moverSender.GetParentCharSheetString()));
+        }
     }
 
     // client function
