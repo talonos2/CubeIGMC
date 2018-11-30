@@ -16,6 +16,7 @@ public class FreePlayMission : Mission {
         darkness = p.daaaaaknesssss;
         p.restartButton1.gameObject.SetActive(true);
         p.restartButton2.gameObject.SetActive(true);
+        tick = p.player1Grid.ominousTick;
     }
 
     public GameGrid gridToCheatWith;
@@ -24,27 +25,34 @@ public class FreePlayMission : Mission {
 
     public bool cheaty;
 
-	// Update is called once per frame
-	void Update ()
+    private AudioSource tick;
+
+    private bool[] ticks = new bool[4];
+
+    // Update is called once per frame
+    void Update()
     {
         if (timeSinceStepStarted == 0)
         {
-            if (cheaty)
-            {
-                gridToCheatWith.SetGridCellTypeStateAndAttendentVFX();
-                gridToCheatWith.player.energy = 0;
-
-                List<int[,]> piecesToForce = new List<int[,]>
-                {
-
-                };
-                gridToCheatWith.ForcePieces(piecesToForce);
-            }
+            MissionManager.isInCutscene = true;
         }
-
         timeSinceStepStarted += Time.deltaTime;
         float brightness = Mathf.Clamp01(timeSinceStepStarted / 2);
         darkness.color = new Color(0, 0, 0, 1 - brightness);
+
+        for (int x = 0; x < 4; x++)
+            {
+                if (timeSinceStepStarted > .5 + x && !ticks[x])
+                {
+                    tick.Play();
+                    ticks[x] = true;
+                }
+            }
+            if (timeSinceStepStarted > 4.5)
+            {
+                MissionManager.isInCutscene = false;
+            }
+
     }
 
     internal override AIParams GetAIParams()
