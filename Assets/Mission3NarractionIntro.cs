@@ -78,6 +78,9 @@ public class Mission3NarractionIntro : Mission {
                 MissionManager.isInCutscene = true;
                 narrations[3].gameObject.SetActive(true);
                 break;
+            case 6:
+                Win(false);
+                break;
         }
     }
 
