@@ -225,28 +225,29 @@ public class CharacterSelectManager : MonoBehaviour {
     }
 
     public void SinglePlayerGetChar() {
-        LoadCharMenu.SetActive(true);
-        MainMenu.SetActive(false);
+      //  LoadCharMenu.SetActive(true);
+       // MainMenu.SetActive(false);
         GameType = 1;
-        //ACanvas.GetComponent<Menus>().SinglePlayer();
+        ACanvas.GetComponent<Menus>().SinglePlayer();
     }
 
     public void MultiPlayerGetChar() {
-        LoadCharMenu.SetActive(true);
-        MainMenu.SetActive(false);
-        GameType = 2;
-        LoadText.text = "Select Player 1:";
+      //  LoadCharMenu.SetActive(true);
+     //   MainMenu.SetActive(false);
+     //   GameType = 2;
+     //   LoadText.text = "Select Player 1:";
        // if (GameType == 2) {
            // GameType = 3;
            // ResetCharacterSelect();
         //}
-        //ACanvas.GetComponent<Menus>().ToLocalMultiplayer();
+        ACanvas.GetComponent<Menus>().ToLocalMultiplayer();
     }
 
     public void NetworkMultiplayerGetChar() {
-        LoadCharMenu.SetActive(true);
-        MainMenu.SetActive(false);
+        //LoadCharMenu.SetActive(true);
+        //MainMenu.SetActive(false);
         GameType = 4;
+        ACanvas.GetComponent<Menus>().ToMultiplayerOptions();
         //ACanvas.GetComponent<Menus>().ToMultiplayerOptions();
     }
 
