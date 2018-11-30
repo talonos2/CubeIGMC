@@ -23,6 +23,8 @@ public class MissionManager : MonoBehaviour
     internal PointerHolder pointers;
     public EngineRoomNetworkManager engineRoomNetworkManager;
 
+    internal bool weAreAllHere;
+
     public static bool TriggerCallbackOnShipDestroyed { get; internal set; }
 
     /// <summary>
