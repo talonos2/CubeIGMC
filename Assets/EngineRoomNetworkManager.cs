@@ -93,15 +93,16 @@ public class EngineRoomNetworkManager : MonoBehaviour
     {
         Debug.Log("Connected to server");
         MissionManager.instance.weAreAllHere = true;
-        //myClient.Send(sendMoveMessageID, new IntegerMessage(254));
+        myClient.Send(sendSeedID, new StringMessage(moverSender.GetParentCharSheetString()));
     }
 
-    // client function
+    // server function
     public void ServerHandlesConnection(NetworkMessage netMsg)
     {
         Debug.Log("Connected to client");
         MissionManager.instance.weAreAllHere = true;
         NetworkServer.SendToAll(sendSeedID, new IntegerMessage(moverSender.GetParentSeed()));
+        NetworkServer.SendToAll(sendSeedID, new StringMessage(moverSender.GetParentCharSheetString()));
     }
 
     // client function
