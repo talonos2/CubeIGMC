@@ -205,6 +205,8 @@ public class Mission2NarrationIntro : Mission
             darkness.color = new Color(0, 0, 0, 1 - brightness);
             gridToTurnIntoAI.player.health = TractorBeamHPNum;
             gridToTurnIntoAI.player.SetCharacterSheet(2);
+            pointers.restartButton1.gameObject.SetActive(true);
+            pointers.restartButton2.gameObject.SetActive(true);
         }
         else if (stepNum < 3)
         {

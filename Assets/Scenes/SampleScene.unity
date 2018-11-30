@@ -129,7 +129,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &3881358
 RectTransform:
   m_ObjectHideFlags: 0
@@ -35926,7 +35926,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1461837485
 RectTransform:
   m_ObjectHideFlags: 0
@@ -36337,7 +36337,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e43b25a844cfe449926cff45467c655, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isRecording: 1
+  isRecording: 0
   strangeFrontPlateThing: {fileID: 829001792}
   ominousTick: {fileID: 1919655991}
   powerDown: {fileID: 996193729}
@@ -44367,7 +44367,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1890996302
 RectTransform:
   m_ObjectHideFlags: 0
@@ -45507,6 +45507,7 @@ MonoBehaviour:
   narrationSystem: {fileID: 1520819631}
   cameraWrapper1: {fileID: 1051759532}
   cameraWrapper2: {fileID: 591614716}
+  restartButton: {fileID: 1890996303}
 --- !u!1001 &1951523521
 Prefab:
   m_ObjectHideFlags: 0
@@ -48981,7 +48982,7 @@ Prefab:
     - target: {fileID: 114094642193837272, guid: 8007da74be9e7b947b304fd4cbb68b9a,
         type: 2}
       propertyPath: isImmortal
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8007da74be9e7b947b304fd4cbb68b9a, type: 2}
