@@ -343,7 +343,7 @@ public class Combatant : MonoBehaviour
     //Taking Damage and attendant SFX:
     internal void TakeDamage(float damage)
     {
-        if (!IsAlive())
+        if (!IsAlive()||isImmortal)
         {
             return;
         }
@@ -417,6 +417,7 @@ public class Combatant : MonoBehaviour
     public void SetCharacterSheet(int NPCReference) {
         ThisPlayer = PlayerCharacterSheet.GetNPC(NPCReference);
         ThisGameGrid.SetGridCellTypeStateAndAttendentVFX();
+        this.health = this.MaxHealth();
     }
 
     public void SetRandomNPC(int Level)
@@ -429,6 +430,7 @@ public class Combatant : MonoBehaviour
     public void SetCharacterSheet(string SaveFileName) {
         ThisPlayer = PlayerCharacterSheet.LoadFromDisk(SaveFileName);
         ThisGameGrid.SetGridCellTypeStateAndAttendentVFX();
+        this.health = this.MaxHealth();
     }
 
     public void SaveCharacterToDisk(string SaveFileName) {

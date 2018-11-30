@@ -335,7 +335,7 @@ public class GameGrid : MonoBehaviour
         if (mover.GetInput(MoverCommand.DROP)) { TryDrop(); }
         if (mover.GetInput(MoverCommand.REBOOT)) { Reboot(); }
 
-        if (Time.timeSinceLevelLoad > 10 & isRecording & !hasSaved)
+        if (Time.timeSinceLevelLoad > 300 & isRecording & !hasSaved)
         {
             recorder.PrintOut();
             hasSaved = true;
