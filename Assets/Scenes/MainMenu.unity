@@ -712,6 +712,18 @@ Prefab:
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a6b117bd6ab899e41b656548b0b5ebe9, type: 2}
   m_IsPrefabAsset: 0
+--- !u!114 &349200296 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 114450923043371848, guid: a6b117bd6ab899e41b656548b0b5ebe9,
+    type: 2}
+  m_PrefabInternal: {fileID: 349200295}
+  m_Script: {fileID: 11500000, guid: 2560331b3378a3241addb5e456ec60f3, type: 3}
+--- !u!114 &349200297 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 114625891606739024, guid: a6b117bd6ab899e41b656548b0b5ebe9,
+    type: 2}
+  m_PrefabInternal: {fileID: 349200295}
+  m_Script: {fileID: 11500000, guid: 7610b00e2b9fdab41a26080f6b47962e, type: 3}
 --- !u!1 &365880909 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1784542030599648, guid: 34c7da69a7ea45049b9374f04f652b77,
@@ -2499,13 +2511,13 @@ MonoBehaviour:
   campaign: {fileID: 866990038}
   campaign2: {fileID: 0}
   campaign3: {fileID: 0}
-  campaign4: {fileID: 0}
+  campaign4: {fileID: 349200297}
   localMulti: {fileID: 1265611664}
-  onlineMulti: {fileID: 0}
-  ernm: {fileID: 0}
-  Primary: {fileID: 0}
-  loginPage: {fileID: 0}
-  infoPage: {fileID: 0}
+  onlineMulti: {fileID: 1750910362}
+  ernm: {fileID: 349200296}
+  Primary: {fileID: 858082987}
+  loginPage: {fileID: 611970593}
+  infoPage: {fileID: 6542332}
   LoadCharacterPage: {fileID: 0}
   inputIP: {fileID: 917374283}
 --- !u!114 &1272836303
