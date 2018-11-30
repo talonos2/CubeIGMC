@@ -1097,7 +1097,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 635228773}
   m_Direction: 2
   m_Value: 1
-  m_Size: 0.35984448
+  m_Size: 0.35984445
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -1404,6 +1404,48 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: e8c721df9dfa30a48bdb36f19c81b90f,
     type: 2}
   m_PrefabInternal: {fileID: 1038548461}
+--- !u!1001 &489426105
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4513155291736264, guid: a6b117bd6ab899e41b656548b0b5ebe9, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: -10.5546875
+      objectReference: {fileID: 0}
+    - target: {fileID: 4513155291736264, guid: a6b117bd6ab899e41b656548b0b5ebe9, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: -19.085938
+      objectReference: {fileID: 0}
+    - target: {fileID: 4513155291736264, guid: a6b117bd6ab899e41b656548b0b5ebe9, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 30.78125
+      objectReference: {fileID: 0}
+    - target: {fileID: 4513155291736264, guid: a6b117bd6ab899e41b656548b0b5ebe9, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4513155291736264, guid: a6b117bd6ab899e41b656548b0b5ebe9, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4513155291736264, guid: a6b117bd6ab899e41b656548b0b5ebe9, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4513155291736264, guid: a6b117bd6ab899e41b656548b0b5ebe9, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4513155291736264, guid: a6b117bd6ab899e41b656548b0b5ebe9, type: 2}
+      propertyPath: m_RootOrder
+      value: 10
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: a6b117bd6ab899e41b656548b0b5ebe9, type: 2}
+  m_IsPrefabAsset: 0
 --- !u!1 &501936256
 GameObject:
   m_ObjectHideFlags: 0
@@ -6211,6 +6253,10 @@ MonoBehaviour:
     ShieldEquippedID: 3
     EngineEquippedID: 0
     MiscEquippedID: 0
+    lastMissionBeaten: 0
+    isAi: 0
+    AiController: 
+  TemporaryPlayerStore: {fileID: 1718757915}
 --- !u!114 &1718757917
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6232,6 +6278,8 @@ MonoBehaviour:
   EnginesEquipped: {fileID: 820727061}
   ArmorEquipped: {fileID: 1073343873}
   PowerEquipped: {fileID: 640532908}
+  CharacterSheetLocation: mission1.txt
+  EngineRoomManager: {fileID: 0}
 --- !u!1 &1722134081
 GameObject:
   m_ObjectHideFlags: 0

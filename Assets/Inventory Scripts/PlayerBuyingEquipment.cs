@@ -6,10 +6,12 @@ using UnityEngine;
 public class PlayerBuyingEquipment : MonoBehaviour {
 
     public PlayerCharacterSheet APlayer = new PlayerCharacterSheet();
+    public Transform TemporaryPlayerStore;
     private bool InitializePlayer = true;
+    public string CharacterSheetLocation;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
         
 	}
 	
@@ -22,7 +24,9 @@ public class PlayerBuyingEquipment : MonoBehaviour {
     {
         if (InitializePlayer)
         {
-            APlayer = PlayerCharacterSheet.LoadFromDisk("save1.txt");
+            Transform EngineRoomManager = GameObject.Find("EngineRoomMissionManager").transform;
+            CharacterSheetLocation = EngineRoomManager.GetComponent<MissionManager>().player1CharacterSheetPath;
+            APlayer = PlayerCharacterSheet.LoadFromDisk(CharacterSheetLocation);
             InitializePlayer = false;
         }
         return APlayer;

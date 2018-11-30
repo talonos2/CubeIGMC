@@ -13,12 +13,15 @@ public class PurchaseManager : MonoBehaviour {
     public Transform ShieldEquipped;
     public Transform EnginesEquipped;
     public Transform ArmorEquipped;
-    public Transform PowerEquipped; 
+    public Transform PowerEquipped;
+    public string CharacterSheetLocation;
+    public Transform EngineRoomManager;
     
     // Use this for initialization
     void Start () {
         //PlayerCharacterSheet CurrentPlayer = PlayerStorage.GetComponent<PlayerBuyingEquipment>().GetPlayer();
-
+        EngineRoomManager = GameObject.Find("EngineRoomMissionManager").transform;
+        CharacterSheetLocation=EngineRoomManager.GetComponent<MissionManager>().player1CharacterSheetPath;
     }
 	
 	// Update is called once per frame
@@ -47,7 +50,7 @@ public class PurchaseManager : MonoBehaviour {
         CurrentPlayer.Gold = CurrentPlayer.Gold - (CurrentlySelectedItem.GetGoldCost() - OldItem.GetGoldCost());
         CurrentPlayer.AddEquipment(CurrentlySelectedItem);
         CurrentFundsBox.text = "Current Funds $" + CurrentPlayer.Gold;
-        PlayerCharacterSheet.SaveToDisk(CurrentPlayer, "save1.txt");        
+        PlayerCharacterSheet.SaveToDisk(CurrentPlayer, CharacterSheetLocation);        
         PlayerStorage.GetComponent<PlayerBuyingEquipment>().UpdateRequired();
         WeaponEquipped.GetComponent<InventoryItemDisplay>().RefreshEquipment();
         ArmorEquipped.GetComponent<InventoryItemDisplay>().RefreshEquipment();
