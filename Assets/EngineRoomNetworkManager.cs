@@ -135,7 +135,7 @@ public class EngineRoomNetworkManager : MonoBehaviour
 
         if (!isServer)
         {
-//            charSheetListener.HandleMove(beginMessage.value);
+            moverListener.AcceptRemoteCharacterSheet(JsonUtility.FromJson<PlayerCharacterSheet>(toReturn));
         }
 
     }
@@ -143,11 +143,9 @@ public class EngineRoomNetworkManager : MonoBehaviour
     public void ServerAcceptsCharSheet(NetworkMessage charSheetMessage)
     {
         String toReturn = charSheetMessage.ReadMessage<StringMessage>().value;
-        //        string loadedString = streamReader.ReadToEnd();
-        //        return JsonUtility.FromJson<PlayerCharacterSheet>(loadedString);
         if (isServer)
         {
-//            moverListener.HandleMove(beginMessage.value);
+            moverListener.AcceptRemoteCharacterSheet(JsonUtility.FromJson<PlayerCharacterSheet>(toReturn));
         }
     }
 
