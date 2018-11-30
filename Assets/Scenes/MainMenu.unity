@@ -508,6 +508,11 @@ Prefab:
       propertyPath: IPinput
       value: 
       objectReference: {fileID: 1259249265}
+    - target: {fileID: 114450923043371848, guid: a6b117bd6ab899e41b656548b0b5ebe9,
+        type: 2}
+      propertyPath: omm
+      value: 
+      objectReference: {fileID: 349200298}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a6b117bd6ab899e41b656548b0b5ebe9, type: 2}
   m_IsPrefabAsset: 0

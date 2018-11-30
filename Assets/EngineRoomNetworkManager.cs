@@ -20,6 +20,7 @@ public class EngineRoomNetworkManager : MonoBehaviour
     private bool isServer;
 
     public Text IPinput;
+    public NetworkedMission omm;
 
 
     internal void AttachToSenderMover(LocalNetworkedPVPMover localNetworkedPVPMover, bool isServer)
@@ -45,6 +46,7 @@ public class EngineRoomNetworkManager : MonoBehaviour
     // Create a server and listen on a port
     public void SetupServer()
     {
+        omm.isHost = true;
         NetworkServer.Listen(4444);
         NetworkServer.RegisterHandler(MsgType.Connect, ServerHandlesConnection);
         NetworkServer.RegisterHandler(sendMoveMessageID, ServerHandlesMove);
@@ -55,6 +57,8 @@ public class EngineRoomNetworkManager : MonoBehaviour
     // Create a client and connect to the server port
     public void SetupClient()
     {
+        Debug.Log(IPinput.text);
+
         if (IPinput.text == "")
             return;
 
