@@ -1337,12 +1337,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 67898602}
   m_Mesh: {fileID: 4300000, guid: 8fac29760943c3a4bbafad01e838ea5c, type: 3}
---- !u!114 &75153912 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 114935931831525738, guid: a6b117bd6ab899e41b656548b0b5ebe9,
-    type: 2}
-  m_PrefabInternal: {fileID: 392443965}
-  m_Script: {fileID: 11500000, guid: bcdb00faf292bd64e8161b9eb1290f8e, type: 3}
 --- !u!1 &82887053
 GameObject:
   m_ObjectHideFlags: 0
@@ -6927,16 +6921,6 @@ Prefab:
       propertyPath: cameraToMove
       value: 
       objectReference: {fileID: 591614716}
-    - target: {fileID: 114369696648500618, guid: a6b117bd6ab899e41b656548b0b5ebe9,
-        type: 2}
-      propertyPath: gridToCheatWith
-      value: 
-      objectReference: {fileID: 1488115336}
-    - target: {fileID: 114369696648500618, guid: a6b117bd6ab899e41b656548b0b5ebe9,
-        type: 2}
-      propertyPath: darkness
-      value: 
-      objectReference: {fileID: 1687384275}
     - target: {fileID: 114499502399387762, guid: a6b117bd6ab899e41b656548b0b5ebe9,
         type: 2}
       propertyPath: gridToCheatWith
@@ -6947,48 +6931,19 @@ Prefab:
       propertyPath: darkness
       value: 
       objectReference: {fileID: 1687384275}
-    - target: {fileID: 114899827479038178, guid: a6b117bd6ab899e41b656548b0b5ebe9,
-        type: 2}
-      propertyPath: mission
-      value: 
-      objectReference: {fileID: 75153912}
-    - target: {fileID: 4027171298377280, guid: a6b117bd6ab899e41b656548b0b5ebe9, type: 2}
-      propertyPath: m_RootOrder
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 4645787794733414, guid: a6b117bd6ab899e41b656548b0b5ebe9, type: 2}
-      propertyPath: m_RootOrder
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 4507080532972408, guid: a6b117bd6ab899e41b656548b0b5ebe9, type: 2}
-      propertyPath: m_RootOrder
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 4102806810584722, guid: a6b117bd6ab899e41b656548b0b5ebe9, type: 2}
-      propertyPath: m_RootOrder
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 4038067870926444, guid: a6b117bd6ab899e41b656548b0b5ebe9, type: 2}
-      propertyPath: m_RootOrder
-      value: 9
-      objectReference: {fileID: 0}
-    - target: {fileID: 1238591015517528, guid: a6b117bd6ab899e41b656548b0b5ebe9, type: 2}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 114369696648500618, guid: a6b117bd6ab899e41b656548b0b5ebe9,
         type: 2}
-      propertyPath: waiting
+      propertyPath: gridToCheatWith
       value: 
-      objectReference: {fileID: 840384974}
+      objectReference: {fileID: 1488115336}
+    - target: {fileID: 114369696648500618, guid: a6b117bd6ab899e41b656548b0b5ebe9,
+        type: 2}
+      propertyPath: darkness
+      value: 
+      objectReference: {fileID: 1687384275}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a6b117bd6ab899e41b656548b0b5ebe9, type: 2}
   m_IsPrefabAsset: 0
---- !u!4 &392443966 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4034646683656062, guid: a6b117bd6ab899e41b656548b0b5ebe9,
-    type: 2}
-  m_PrefabInternal: {fileID: 392443965}
 --- !u!1 &402193080
 GameObject:
   m_ObjectHideFlags: 0
@@ -18501,84 +18456,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 839136136}
   m_Mesh: {fileID: 4300000, guid: aad26453ab060fb45a11de569a2c40ec, type: 3}
---- !u!1 &840384972
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 1195604751145300, guid: a6b117bd6ab899e41b656548b0b5ebe9,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 840384973}
-  - component: {fileID: 840384974}
-  m_Layer: 0
-  m_Name: Waiting
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &840384973
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 4110842774631266, guid: a6b117bd6ab899e41b656548b0b5ebe9,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 840384972}
-  m_LocalRotation: {x: -0, y: -0, z: -0.0000001872535, w: 1}
-  m_LocalPosition: {x: 19, y: 258, z: 71}
-  m_LocalScale: {x: 15, y: 15, z: 5}
-  m_Children: []
-  m_Father: {fileID: 392443966}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 60, y: 0, z: -0.000015258789}
---- !u!212 &840384974
-SpriteRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 212336998951197238, guid: a6b117bd6ab899e41b656548b0b5ebe9,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 840384972}
-  m_Enabled: 1
-  m_CastShadows: 0
-  m_ReceiveShadows: 0
-  m_DynamicOccludee: 1
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RenderingLayerMask: 4294967295
-  m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 0
-  m_SelectedEditorRenderState: 0
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: d36e16c2fd00ed043a56f7d93755409f, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 0
-  m_FlipY: 0
-  m_DrawMode: 0
-  m_Size: {x: 5.12, y: 2.56}
-  m_AdaptiveModeThreshold: 0.5
-  m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
-  m_MaskInteraction: 0
-  m_SpriteSortPoint: 0
 --- !u!1 &847874741
 GameObject:
   m_ObjectHideFlags: 0
