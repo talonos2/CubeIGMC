@@ -15,8 +15,11 @@ public class CombatInitializer : MonoBehaviour
     private bool isDying;
     private float deathExplosionTime = 0;
 
-    public Text p1Text;
-    public Text p2Text;
+    public Image p1Text;
+    public Image p2Text;
+
+    public Sprite victory;
+    public Sprite defeat;
 
     public GameObject p1Menu;
     public GameObject p2Menu;
@@ -99,23 +102,23 @@ public class CombatInitializer : MonoBehaviour
 
                 if (grid1.player.IsAlive()&&!grid2.player.IsAlive())
                 {
-                    p1Text.text = "You Won";
-                    p2Text.text = "You Lost";
+                    p1Text.sprite = victory;
+                    p2Text.sprite = defeat;
                 }
                 if (grid2.player.IsAlive() && !grid1.player.IsAlive())
                 {
-                    p2Text.text = "You Won";
-                    p1Text.text = "You Lost";
+                    p2Text.sprite = victory;
+                    p1Text.sprite = defeat;
                 }
                 if (!grid1.player.IsAlive() && !grid2.player.IsAlive())
                 {
-                    p1Text.text = "Pyrrhic Draw!";
-                    p2Text.text = "Pyrrhic Draw!";
+                    p1Text.sprite = defeat;
+                    p2Text.sprite = defeat;
                 }
                 if (grid1.player.IsAlive() && grid2.player.IsAlive())
                 {
-                    p1Text.text = "...peace and love?";
-                    p2Text.text = "...more likely a bug...";
+                    p1Text.sprite = victory;
+                    p2Text.sprite = victory;
                 }
                 //Time.timeScale = 0;
                 isDying = false;
