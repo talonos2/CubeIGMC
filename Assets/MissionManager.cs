@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-internal class MissionManager : MonoBehaviour
+public class MissionManager : MonoBehaviour
 {
     public static MissionManager instance = null;//the single instance of design manager available
     public HackyCallback grossCallbackHack;
