@@ -244,6 +244,7 @@ public class Mission2NarrationIntro : Mission
                 if (!sceneSwitched)
                 {
                     sceneSwitched = true;
+                    gridToSetup.ClearBoardSilently();
                     moreStuffToExplodeOnDeath.gameObject.SetActive(false);
                     combatMusicThatsNotAsIntrusive.Stop();
                     preLockonMusic.Play();
