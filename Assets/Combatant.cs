@@ -420,6 +420,13 @@ public class Combatant : MonoBehaviour
         this.health = this.MaxHealth();
     }
 
+    public void SetCharacterSheet(PlayerCharacterSheet sheet)
+    {
+        ThisPlayer = sheet;
+        ThisGameGrid.SetGridCellTypeStateAndAttendentVFX();
+        this.health = this.MaxHealth();
+    }
+
     public void SetRandomNPC(int Level)
     {
         ThisPlayer = PlayerCharacterSheet.GetRandomNPC(Level);

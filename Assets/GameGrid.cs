@@ -117,7 +117,7 @@ public class GameGrid : MonoBehaviour
 
     internal void SetRemotePVPPlayer()
     {
-        mover = new RemoteNetworkedPVPMover(MissionManager.instance.engineRoomNetworkManager,MissionManager.instance.mission.GameType()==EngineRoomGameType.SERVER_PVP);
+        mover = new RemoteNetworkedPVPMover(MissionManager.instance.engineRoomNetworkManager,MissionManager.instance.mission.GameType()==EngineRoomGameType.SERVER_PVP, player);
     }
 
     internal void SetLocalPVPPlayer()
