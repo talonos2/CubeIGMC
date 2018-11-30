@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class ItemSelectionManager : MonoBehaviour {
@@ -32,7 +33,7 @@ public class ItemSelectionManager : MonoBehaviour {
             ScrollingDn = 0;
         }
             
-
+        
 
         if (Input.GetAxis("Vertical") > .1f && ListLocation>0 && TimeSinceLastInput > 5 ) {
             if (Scrolling == 0 || Scrolling > 2)
@@ -68,6 +69,11 @@ public class ItemSelectionManager : MonoBehaviour {
             ScrollingDn++;
         }
         
+    }
+
+    public void goToSampleScene()
+    {
+        SceneManager.LoadScene("SampleScene");
     }
 
     public void ClickedItem(int locationInArray) {
