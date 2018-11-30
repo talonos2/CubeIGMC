@@ -13,7 +13,7 @@ public class MissionManager : MonoBehaviour
 
     public List<Mission> missions = new List<Mission>();
 
-
+    public List<AudioSource> allMusic = new List<AudioSource>();
 
     public static bool isInCutscene;
     internal static bool triggerCallbacksOnBlockDrop;
@@ -72,6 +72,14 @@ public class MissionManager : MonoBehaviour
             pointers = p.GetComponent<PointerHolder>();
             mission.gameObject.SetActive(true);
             pointers.narrationSystem.characterController = this.grossCallbackHack;
+        }
+    }
+
+    public void StopAllMusic()
+    {
+        foreach (AudioSource music in allMusic)
+        {
+            music.Stop();
         }
     }
 

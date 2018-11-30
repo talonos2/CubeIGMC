@@ -31,6 +31,8 @@ public class Mission3NarractionIntro : Mission {
     private bool shipIsMovingIn;
     private float shipMovingInTime;
 
+    public AudioSource loseMusic;
+
     public GameObject shipWrapper;
 
     //Ship is at x=32, goes to 19.
@@ -74,9 +76,18 @@ public class Mission3NarractionIntro : Mission {
                 MissionManager.TriggerCallbackOnShipDestroyed = true;
                 break;
             case 5:
-                MissionManager.freezeAI = true;
-                MissionManager.isInCutscene = true;
-                narrations[3].gameObject.SetActive(true);
+                if (gridToSetup.player.IsAlive())
+                {
+                    MissionManager.freezeAI = true;
+                    MissionManager.isInCutscene = true;
+                    narrations[3].gameObject.SetActive(true);
+                }
+                else
+                {
+                    combatMusicThatsNotAsIntrusive.Stop();
+                    loseMusic.Play();
+                    Lose();
+                }
                 break;
             case 6:
                 Win(false);

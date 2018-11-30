@@ -28,6 +28,7 @@ public class Mission2NarrationIntro : Mission
     public AudioSource preLockonMusic;
     public AudioSource postLockonMusic;
     public AudioSource combatMusicThatsNotAsIntrusive;
+    public AudioSource loseMusic;
 
     public AnnoyingTutorialPopup shieldInfo;
 
@@ -133,10 +134,19 @@ public class Mission2NarrationIntro : Mission
                 MissionManager.TriggerCallbackOnShipDestroyed = true;
                 break;
             case 6: // Tutorial complete, You talk
-                MissionManager.isInCutscene = true;
-                MissionManager.freezeAI = true;
-                narrations[3].gameObject.SetActive(true);
-                tractorParticles.gameObject.SetActive(false);
+                if (gridToSetup.player.IsAlive())
+                {
+                    MissionManager.isInCutscene = true;
+                    MissionManager.freezeAI = true;
+                    narrations[3].gameObject.SetActive(true);
+                    tractorParticles.gameObject.SetActive(false);
+                }
+                else
+                {
+                    combatMusicThatsNotAsIntrusive.Stop();
+                    loseMusic.Play();
+                    Lose();
+                }
                 break;
             case 7:
                 timeSinceStepStarted = 0f;
