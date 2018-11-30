@@ -93,7 +93,7 @@ public class EngineRoomNetworkManager : MonoBehaviour
     {
         Debug.Log("Connected to server");
         MissionManager.instance.weAreAllHere = true;
-        myClient.Send(sendSeedID, new StringMessage(moverSender.GetParentCharSheetString()));
+        myClient.Send(sendCharSheet, new StringMessage(moverSender.GetParentCharSheetString()));
     }
 
     // server function
@@ -102,7 +102,7 @@ public class EngineRoomNetworkManager : MonoBehaviour
         Debug.Log("Connected to client");
         MissionManager.instance.weAreAllHere = true;
         NetworkServer.SendToAll(sendSeedID, new IntegerMessage(moverSender.GetParentSeed()));
-        NetworkServer.SendToAll(sendSeedID, new StringMessage(moverSender.GetParentCharSheetString()));
+        NetworkServer.SendToAll(sendCharSheet, new StringMessage(moverSender.GetParentCharSheetString()));
     }
 
     // client function
