@@ -41,11 +41,11 @@ public class Combatant : MonoBehaviour
 //        Debug.Log("This game grid = " + ThisGameGrid);
 
         //Example of making player 2 customly weaker or stronger. 
-      //     if (transform.parent.parent.parent.name.Equals("Player2")) {
+          // if (transform.parent.parent.parent.name.Equals("Player1")) {
       //          ThisPlayer.BaseHealth = 30;
-     //           ThisPlayer.WeaponEquippedID = 8;
-     //           ThisPlayer.ShieldEquippedID = 8;
-    //    }
+                ThisPlayer.WeaponEquippedID = 6;
+                ThisPlayer.ShieldEquippedID = 6;
+       // }
 
 
         health = ThisPlayer.GetMaxHealth();
@@ -343,7 +343,7 @@ public class Combatant : MonoBehaviour
     //Taking Damage and attendant SFX:
     internal void TakeDamage(float damage)
     {
-        if (!IsAlive())
+        if (!IsAlive()||isImmortal)
         {
             return;
         }
@@ -417,16 +417,20 @@ public class Combatant : MonoBehaviour
     public void SetCharacterSheet(int NPCReference) {
         ThisPlayer = PlayerCharacterSheet.GetNPC(NPCReference);
         ThisGameGrid.SetGridCellTypeStateAndAttendentVFX();
+        this.health = this.MaxHealth();
     }
 
-    public void SetRandomNPC(int Level) {
+    public void SetRandomNPC(int Level)
+    {
         ThisPlayer = PlayerCharacterSheet.GetRandomNPC(Level);
         ThisGameGrid.SetGridCellTypeStateAndAttendentVFX();
+        this.health = this.MaxHealth();
     }
 
     public void SetCharacterSheet(string SaveFileName) {
         ThisPlayer = PlayerCharacterSheet.LoadFromDisk(SaveFileName);
         ThisGameGrid.SetGridCellTypeStateAndAttendentVFX();
+        this.health = this.MaxHealth();
     }
 
     public void SaveCharacterToDisk(string SaveFileName) {
