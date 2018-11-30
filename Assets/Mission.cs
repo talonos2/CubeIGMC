@@ -17,7 +17,7 @@ public abstract class Mission : MonoBehaviour
         {
             p.shopButton.gameObject.SetActive(true);
         }
-        p.replayMissionText.text = "Replay";
+//        p.replayMissionText.text = "Replay";
         p.youHaveDiedScreen.gameObject.SetActive(true);
     }
 
