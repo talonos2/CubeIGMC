@@ -1,4 +1,5 @@
 ﻿using System;
+using UnityEngine;
 using UnityEngine.Networking;
 
 internal class LocalNetworkedPVPMover : SinglePlayerMover
@@ -42,4 +43,9 @@ internal class LocalNetworkedPVPMover : SinglePlayerMover
     {
         return parentGrid.seeded;
 }
+
+    internal String GetParentCharSheetString()
+    {
+        return JsonUtility.ToJson(parentGrid.player.GetCharacterSheet());
+    }
 }
