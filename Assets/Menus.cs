@@ -11,7 +11,10 @@ public class Menus : MonoBehaviour
 
     public GameObject theMenu;
 
-
+    public MissionManager getReady;
+    public Mission campaign;
+    public Mission localMulti;
+    public Mission onlineMulti;
 
     bool pause = false;
 
@@ -62,15 +65,25 @@ public class Menus : MonoBehaviour
 
     public void SinglePlayer()
     {
+        getReady.mission = campaign;
         Time.timeScale = 1;
         SceneManager.LoadScene("SampleScene");
     }
 
     public void ToMultiplayer()
     {
+        getReady.mission = onlineMulti;
         Time.timeScale = 1;
         SceneManager.LoadScene("SampleScene");
 
+    }
+
+
+    public void ToLocalMultiplayer()
+    {
+        getReady.mission = localMulti;
+        Time.timeScale = 1;
+        SceneManager.LoadScene("SampleScene");
     }
 
     public void Restart()

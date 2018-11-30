@@ -23,14 +23,14 @@ internal class LocalNetworkedPVPMover : SinglePlayerMover
     internal override void Tick(bool justExitedMenu)
     {
         base.Tick(justExitedMenu);
-        if (this.returnJustCCWed) { engineRoomNetworkManager.Send(AIPlayer.CCW_ROTATE); }
-        if (this.returnJustCWed) { engineRoomNetworkManager.Send(AIPlayer.CW_ROTATE); }
-        if (this.returnJustDowned) { engineRoomNetworkManager.Send(AIPlayer.DOWN); }
-        if (this.returnJustDropped) { engineRoomNetworkManager.Send(AIPlayer.DROP); }
-        if (this.returnJustLefted) { engineRoomNetworkManager.Send(AIPlayer.LEFT); }
-        if (this.returnJustRebooted) { engineRoomNetworkManager.Send(AIPlayer.REBOOT); }
-        if (this.returnJustRighted) { engineRoomNetworkManager.Send(AIPlayer.RIGHT); }
         if (this.returnJustUpped) { engineRoomNetworkManager.Send(AIPlayer.UP); }
+        if (this.returnJustDowned) { engineRoomNetworkManager.Send(AIPlayer.DOWN); }
+        if (this.returnJustLefted) { engineRoomNetworkManager.Send(AIPlayer.LEFT); }
+        if (this.returnJustRighted) { engineRoomNetworkManager.Send(AIPlayer.RIGHT); }
+        if (this.returnJustCWed) { engineRoomNetworkManager.Send(AIPlayer.CW_ROTATE); }
+        if (this.returnJustCCWed) { engineRoomNetworkManager.Send(AIPlayer.CCW_ROTATE); }
+        if (this.returnJustDropped) { engineRoomNetworkManager.Send(AIPlayer.DROP); }
+        if (this.returnJustRebooted) { engineRoomNetworkManager.Send(AIPlayer.REBOOT); }
     }
 
     internal void AcceptSeed(int value)

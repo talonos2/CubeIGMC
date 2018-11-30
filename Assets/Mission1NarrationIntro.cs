@@ -14,11 +14,12 @@ public class Mission1NarrationIntro : Mission
     private GameObject[] thingsToHide;
     private Camera cameraToDisable;
     private Transform cameraToMove;
-    private Vector3 toMoveCameraTo;
+    private Vector3 toMoveCameraTo = new Vector3(25,0,0);
     private SpaceshipPawn shipToMakeNotWiggle;
     private Light spaceLightToDisable;
     private GameObject ship;
     public GameObject firesToTurnOff;
+    public TextAsset doNothing;
 
     public AudioSource turnOnLightsSound;
     public AudioSource runningSound;
@@ -259,7 +260,7 @@ public class Mission1NarrationIntro : Mission
         thingsToHide[1] = pointers.ship2.gameObject;
         thingsToHide[2] = pointers.combatant1.multiplierText.gameObject;
         cameraToDisable = pointers.camera2;
-        cameraToMove = pointers.cameraWrapper1.transform;
+        cameraToMove = pointers.camera1.transform;
         shipToMakeNotWiggle = pointers.ship1;
         spaceLightToDisable = pointers.spaceLight;
         cameraToShake = pointers.spaceCamera.GetComponent<CameraShake>();
@@ -340,7 +341,7 @@ public class Mission1NarrationIntro : Mission
 
     internal override AIParams GetAIParams()
     {
-        return null;
+        return new AIParams(doNothing.text, false, 0, false);
     }
 
     internal override EngineRoomGameType GameType()

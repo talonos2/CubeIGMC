@@ -19,7 +19,6 @@ public class GameGrid : MonoBehaviour
     public TileFX[,] cellTypeFX = new TileFX[numCells.x, numCells.y];
     public PlayingPiece piecePrefab;
     public PowerupEffect powerUpEffect;
-    public TextAsset aIText;
     public CubeConversionManager cubeConversionManager;
 
     public GameObject attackCellPrefab;
@@ -39,7 +38,7 @@ public class GameGrid : MonoBehaviour
 
     internal AIPlayer LoadAI(bool isRobotic, float speed, bool loop, String json)
     {
-        string inputJson = aIText.text;
+        string inputJson = json;
         AIPlayer ai = JsonUtility.FromJson<AIPlayer>(inputJson);
         if (isRobotic)
         {
@@ -336,7 +335,7 @@ public class GameGrid : MonoBehaviour
         if (mover.GetInput(MoverCommand.DROP)) { TryDrop(); }
         if (mover.GetInput(MoverCommand.REBOOT)) { Reboot(); }
 
-        if (Time.timeSinceLevelLoad > 300 & isRecording & !hasSaved)
+        if (Time.timeSinceLevelLoad > 10 & isRecording & !hasSaved)
         {
             recorder.PrintOut();
             hasSaved = true;
@@ -820,6 +819,21 @@ public class GameGrid : MonoBehaviour
                 if (grid[x, y] != null)
                 {
                     grid[x, y].Sink(UnityEngine.Random.Range(0, 1.5f));
+                    grid[x, y] = null;
+                }
+            }
+        }
+    }
+
+    public void ClearBoardSilently()
+    {
+        for (int x = 0; x < numCells.x; x++)
+        {
+            for (int y = 0; y < numCells.y; y++)
+            {
+                if (grid[x, y] != null)
+                {
+                    GameObject.Destroy(grid[x, y].gameObject);
                     grid[x, y] = null;
                 }
             }
