@@ -99,8 +99,8 @@ public class Mission3NarractionIntro : Mission {
         shipWrapper.GetComponent<DestroySpaceshipOnDeath>().stuffToHide.Add(p.combatant2.multiplierText.GetComponent<SpriteRenderer>());
         shipWrapper.GetComponent<DestroySpaceshipOnDeath>().stuffToHide.Add(gridAttachedPieces[3].GetComponent<SpriteRenderer>());
         damageManager = p.combatant2.damageManager;
-        pointers.restartButton1.gameObject.SetActive(true);
-        pointers.restartButton2.gameObject.SetActive(true);
+        p.restartButton1.gameObject.SetActive(true);
+        p.restartButton2.gameObject.SetActive(true);
 
         narrations[0].gameObject.SetActive(true);
         MissionManager.isInCutscene = true;
