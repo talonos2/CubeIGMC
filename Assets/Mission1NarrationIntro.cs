@@ -266,6 +266,8 @@ public class Mission1NarrationIntro : Mission
         cameraToShake = pointers.spaceCamera.GetComponent<CameraShake>();
         gridToSetup = pointers.player1Grid;
         escapeParticles = pointers.ship1.engineParticles;
+        pointers.restartButton1.gameObject.SetActive(true);
+        pointers.restartButton2.gameObject.SetActive(true);
 
         narrations[0].gameObject.SetActive(true);
         foreach (GameObject go in thingsToHide)

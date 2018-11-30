@@ -88,6 +88,7 @@ internal class LocalPVPMover : Mover
         returnJustRebooted = false;
         returnJustDropped = false;
         returnJustCCWed = false;
+        returnJustCWed = false;
 
         returnJustUpped = HandleMovement(vert,ref isUpBeingHeld, ref timeSinceLastMoveUpEvent, ref justPressedUp, true);
         returnJustDowned = HandleMovement(vert, ref isDownBeingHeld, ref timeSinceLastMoveDownEvent, ref justPressedDown, false);
@@ -120,7 +121,7 @@ internal class LocalPVPMover : Mover
 
         //Handle rotations:
         returnJustCCWed = (Input.GetButtonDown(rot1));
-        returnJustCCWed = (Input.GetButtonDown(rot2));
+        returnJustCWed = (Input.GetButtonDown(rot2));
     }
 
 

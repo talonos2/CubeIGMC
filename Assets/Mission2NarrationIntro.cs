@@ -172,6 +172,8 @@ public class Mission2NarrationIntro : Mission
         shipToMakeFlyAway = p.ship1;
         mothershipToMoveIn.GetComponent<DestroySpaceshipOnDeath>().stuffToHide.Add(p.combatant2.multiplierText.GetComponent<SpriteRenderer>());
         mothershipToMoveIn.GetComponent<DestroySpaceshipOnDeath>().stuffToHide.Add(gridAttachedPieces[3].GetComponent<SpriteRenderer>());
+        p.restartButton1.gameObject.SetActive(true);
+        p.restartButton2.gameObject.SetActive(true);
 
         narrations[0].gameObject.SetActive(true);
         //gridToSetup.player.enemy.damageManager = damageManagerForDoor;

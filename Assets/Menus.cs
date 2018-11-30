@@ -14,7 +14,15 @@ public class Menus : MonoBehaviour
     public MissionManager getReady;
     public Mission campaign;
     public Mission localMulti;
-    public Mission onlineMulti;
+    public NetworkedMission onlineMulti;
+
+    public EngineRoomNetworkManager ernm;
+
+    public GameObject Primary;
+    public GameObject loginPage;
+
+    public InputField inputIP;
+
 
     bool pause = false;
 
@@ -30,8 +38,7 @@ public class Menus : MonoBehaviour
     // Use this for initialization
     void Start ()
     {
-
-
+        //Time.timeScale = 0;
 
     }
 	
@@ -72,10 +79,36 @@ public class Menus : MonoBehaviour
 
     public void ToMultiplayer()
     {
-        getReady.mission = onlineMulti;
-        Time.timeScale = 1;
-        SceneManager.LoadScene("SampleScene");
+        Primary.SetActive(false);
+        loginPage.SetActive(true);
 
+//        getReady.mission = onlineMulti;
+//        Time.timeScale = 1;
+//        SceneManager.LoadScene("SampleScene");
+
+    }
+
+    public void hostMultiplayer()
+    {
+        //Time.timeScale = 0;
+        getReady.mission = onlineMulti;
+        onlineMulti.isHost = true;
+
+        SceneManager.LoadScene("SampleScene");
+    }
+
+    public void joinMultiplayer()
+    {
+       // Time.timeScale = 1;
+        getReady.mission = onlineMulti;
+        if (inputIP.text == "")
+        {
+            return;
+        }
+        ernm.loadIPSlug(inputIP.text);
+        onlineMulti.isHost = false;
+
+        SceneManager.LoadScene("SampleScene");
     }
 
 
@@ -95,6 +128,14 @@ public class Menus : MonoBehaviour
     public void QuitToMenu()
     {
         SceneManager.LoadScene("MainMenu");
+    }
+
+    public void BackFromMulti()
+    {
+        loginPage.SetActive(false);
+        Primary.SetActive(true);
+
+
     }
 
     public void QuitGame()
