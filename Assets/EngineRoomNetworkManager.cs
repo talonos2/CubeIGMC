@@ -69,7 +69,7 @@ public class EngineRoomNetworkManager : MonoBehaviour
 
     internal void loadIPSlug(string text)
     {
-        this.ip = ip;
+        this.ip = text;
     }
 
     // Create a local client and connect to the local server
