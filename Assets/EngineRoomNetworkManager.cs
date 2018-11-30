@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Networking;
 using UnityEngine.Networking.NetworkSystem;
+using UnityEngine.SceneManagement;
 
 public class EngineRoomNetworkManager : MonoBehaviour
 {
@@ -47,7 +48,7 @@ public class EngineRoomNetworkManager : MonoBehaviour
         NetworkServer.Listen(4444);
         NetworkServer.RegisterHandler(MsgType.Connect, ServerHandlesConnection);
         NetworkServer.RegisterHandler(sendMoveMessageID, ServerHandlesMove);
-        myClient.RegisterHandler(sendSeedID, ServerAcceptsSeed);
+        NetworkServer.RegisterHandler(sendSeedID, ServerAcceptsSeed);
         isAtStartup = false;
     }
 
