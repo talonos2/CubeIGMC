@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.Networking;
 using UnityEngine.Networking.NetworkSystem;
 
@@ -16,6 +17,9 @@ public class EngineRoomNetworkManager : MonoBehaviour
     private RemoteNetworkedPVPMover moverListener;
     private LocalNetworkedPVPMover moverSender;
     private bool isServer;
+
+    public Text IPinput;
+
 
     internal void AttachToSenderMover(LocalNetworkedPVPMover localNetworkedPVPMover, bool isServer)
     {
@@ -50,11 +54,14 @@ public class EngineRoomNetworkManager : MonoBehaviour
     // Create a client and connect to the server port
     public void SetupClient()
     {
+        if (IPinput.text == "")
+            return;
+
         myClient = new NetworkClient();
         myClient.RegisterHandler(MsgType.Connect, OnConnected);
         myClient.RegisterHandler(sendMoveMessageID, RecieveMove);
         myClient.RegisterHandler(sendSeedID, ClientAcceptsSeed);
-        myClient.Connect("127.0.0.1", 4444);
+        myClient.Connect(IPinput.text, 4444);
         isAtStartup = false;
     }
 

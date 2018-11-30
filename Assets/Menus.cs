@@ -16,6 +16,12 @@ public class Menus : MonoBehaviour
     public Mission localMulti;
     public Mission onlineMulti;
 
+    public GameObject Primary;
+    public GameObject loginPage;
+
+    public InputField inputIP;
+
+
     bool pause = false;
 
     GameObject home;
@@ -30,7 +36,6 @@ public class Menus : MonoBehaviour
     // Use this for initialization
     void Start ()
     {
-
 
 
     }
@@ -72,9 +77,25 @@ public class Menus : MonoBehaviour
 
     public void ToMultiplayer()
     {
-        getReady.mission = onlineMulti;
-        Time.timeScale = 1;
-        SceneManager.LoadScene("SampleScene");
+        Primary.SetActive(false);
+        loginPage.SetActive(true);
+
+//        getReady.mission = onlineMulti;
+//        Time.timeScale = 1;
+//        SceneManager.LoadScene("SampleScene");
+
+    }
+
+    public void hostMultiplayer()
+    {
+
+
+    }
+
+    public void joinMultiplayer()
+    {
+        
+
 
     }
 
@@ -95,6 +116,14 @@ public class Menus : MonoBehaviour
     public void QuitToMenu()
     {
         SceneManager.LoadScene("MainMenu");
+    }
+
+    public void BackFromMulti()
+    {
+        loginPage.SetActive(false);
+        Primary.SetActive(true);
+
+
     }
 
     public void QuitGame()
