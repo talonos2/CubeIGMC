@@ -43,8 +43,8 @@ public class Combatant : MonoBehaviour
         //Example of making player 2 customly weaker or stronger. 
           // if (transform.parent.parent.parent.name.Equals("Player1")) {
       //          ThisPlayer.BaseHealth = 30;
-                ThisPlayer.WeaponEquippedID = 6;
-                ThisPlayer.ShieldEquippedID = 6;
+        //        ThisPlayer.WeaponEquippedID = 6;
+        //        ThisPlayer.ShieldEquippedID = 6;
        // }
 
 
