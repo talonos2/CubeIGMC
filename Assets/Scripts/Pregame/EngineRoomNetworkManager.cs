@@ -9,22 +9,31 @@ using UnityEngine.SceneManagement;
 
 public class EngineRoomNetworkManager : MonoBehaviour
 {
-    public bool isAtStartup = true;
-    NetworkClient myClient;
+    public static EngineRoomNetworkManager instance;
 
-    public short sendMoveMessageID = 1003;
-    public short sendSeedID = 1004;
-    public short sendCharSheet = 1005;
+    internal bool isAtStartup = true;
+    internal short sendMoveMessageID = 1003;
+    internal short sendSeedID = 1004;
+    internal short sendCharSheet = 1005;
 
+    private NetworkClient myClient;
     private RemoteNetworkedPVPMover moverListener;
     private LocalNetworkedPVPMover moverSender;
-    private GameGrid serverGrid;
-    private GameGrid clientGrid;
-    private bool isServer;
+    private bool isServer;                           //THIS IS PROBABLY WHAT"S WRONG WITH SENDING CHAR SHEETS. Where does it come from?
 
     private string ip;
-    public NetworkedMission omm;
 
+    void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else if (instance != this)
+        {
+            Destroy(gameObject);
+        }
+    }
 
     internal void AttachToSenderMover(LocalNetworkedPVPMover localNetworkedPVPMover, bool isServer)
     {
@@ -49,7 +58,6 @@ public class EngineRoomNetworkManager : MonoBehaviour
     // Create a server and listen on a port
     public void SetupServer()
     {
-        omm.isHost = true;
         NetworkServer.Listen(4444);
         NetworkServer.RegisterHandler(MsgType.Connect, ServerHandlesConnection);
         NetworkServer.RegisterHandler(sendMoveMessageID, ServerHandlesMove);
@@ -92,7 +100,7 @@ public class EngineRoomNetworkManager : MonoBehaviour
     public void OnConnected(NetworkMessage netMsg)
     {
         Debug.Log("Connected to server");
-        MissionManager.instance.weAreAllHere = true;
+        MissionManager.instance.DelayedCallback();
         if (!isServer)
         {
             myClient.Send(sendCharSheet, new StringMessage(moverSender.GetParentCharSheetString()));
@@ -103,7 +111,7 @@ public class EngineRoomNetworkManager : MonoBehaviour
     public void ServerHandlesConnection(NetworkMessage netMsg)
     {
         Debug.Log("Connected to client");
-        MissionManager.instance.weAreAllHere = true;
+        MissionManager.instance.DelayedCallback();
         if (isServer)
         {
             NetworkServer.SendToAll(sendSeedID, new IntegerMessage(moverSender.GetParentSeed()));

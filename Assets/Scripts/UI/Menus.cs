@@ -7,16 +7,7 @@ using UnityEngine.Networking;
 
 public class Menus : MonoBehaviour
 {
-
-
     public GameObject theMenu;
-
-    public MissionManager getReady;
-    public Mission campaign;
-    public Mission localMulti;
-    public NetworkedMission onlineMulti;
-
-    public EngineRoomNetworkManager ernm;
 
     public GameObject Primary;
     public GameObject loginPage;
@@ -25,17 +16,7 @@ public class Menus : MonoBehaviour
 
     public InputField inputIP;
 
-
     bool pause = false;
-
-    GameObject home;
-    GameObject guest;
-
-    GameGrid gameGridHome;
-    GameGrid gameGridGuest;
-
-    GameObject networker;
-
 
     // Use this for initialization
     void Start ()
@@ -74,8 +55,7 @@ public class Menus : MonoBehaviour
 
     public void SinglePlayer()
     {
-        getReady.mission = campaign;
-        Time.timeScale = 1;
+        CrossScenePlayerData.instance.missionNumToLoad = MissionManager.MISSION_1;
         SceneManager.LoadScene("SampleScene");
     }
 
@@ -84,40 +64,30 @@ public class Menus : MonoBehaviour
         Primary.SetActive(false);
         loginPage.SetActive(true);
         infoPage.SetActive(true);
-
-//        getReady.mission = onlineMulti;
-//        Time.timeScale = 1;
-//        SceneManager.LoadScene("SampleScene");
-
     }
 
-    public void hostMultiplayer()
+    public void HostMultiplayer()
     {
-        //Time.timeScale = 0;
-        getReady.mission = onlineMulti;
-        onlineMulti.isHost = true;
-
+        CrossScenePlayerData.instance.missionNumToLoad = MissionManager.ONLINE_MULTIPLAYER_HOST;
+        CrossScenePlayerData.isEnteringAsHost = true;
         SceneManager.LoadScene("SampleScene");
     }
 
     public void joinMultiplayer()
     {
-       // Time.timeScale = 1;
-        getReady.mission = onlineMulti;
+        CrossScenePlayerData.instance.missionNumToLoad = MissionManager.ONLINE_MULTIPLAYER_GUEST;
         if (inputIP.text == "")
         {
             return;
         }
-        ernm.loadIPSlug(inputIP.text);
-        onlineMulti.isHost = false;
-
+        EngineRoomNetworkManager.instance.loadIPSlug(inputIP.text);
         SceneManager.LoadScene("SampleScene");
     }
 
 
     public void ToLocalMultiplayer()
     {
-        getReady.mission = localMulti;
+        CrossScenePlayerData.instance.missionNumToLoad = MissionManager.LOCAL_MULTIPLAYER;
         Time.timeScale = 1;
         SceneManager.LoadScene("SampleScene");
     }
@@ -138,15 +108,12 @@ public class Menus : MonoBehaviour
         loginPage.SetActive(false);
         infoPage.SetActive(false);
         Primary.SetActive(true);
-
-
     }
 
     public void BackFromCharacterSelect()
     {
         LoadCharacterPage.SetActive(false);
         Primary.SetActive(true);
-
     }
 
     public void QuitGame()

@@ -197,11 +197,11 @@ public class CharacterSelectManager : MonoBehaviour {
         MainMenu.SetActive(true);
 
         if (GameType == 1) {
-            MissionManaged.GetComponent<MissionManager>().player1CharacterSheetPath = SelectedCharacterPath;
+            CrossScenePlayerData.instance.player1CharacterSheetPath = SelectedCharacterPath;
             ACanvas.GetComponent<Menus>().SinglePlayer();
         }
         else if (GameType == 2) {
-            MissionManaged.GetComponent<MissionManager>().player1CharacterSheetPath = SelectedCharacterPath;
+            CrossScenePlayerData.instance.player1CharacterSheetPath = SelectedCharacterPath;
             MainMenu.SetActive(false);
             LoadCharMenu.SetActive(true);
             LoadText.text = "Select Player 2:";
@@ -211,11 +211,11 @@ public class CharacterSelectManager : MonoBehaviour {
         }
         else if (GameType == 3) {
             Debug.Log("Did I get here");
-            MissionManaged.GetComponent<MissionManager>().player2CharacterSheetPath = SelectedCharacterPath;
+            CrossScenePlayerData.instance.player2CharacterSheetPath = SelectedCharacterPath;
             ACanvas.GetComponent<Menus>().ToLocalMultiplayer();
         }
         else if (GameType == 4) {
-            MissionManaged.GetComponent<MissionManager>().player1CharacterSheetPath = SelectedCharacterPath;
+            CrossScenePlayerData.instance.player1CharacterSheetPath = SelectedCharacterPath;
             ACanvas.GetComponent<Menus>().ToMultiplayerOptions();
         }
 

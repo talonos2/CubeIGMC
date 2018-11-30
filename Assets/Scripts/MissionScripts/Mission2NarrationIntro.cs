@@ -104,7 +104,7 @@ public class Mission2NarrationIntro : Mission
                 gridToSetup.ForcePieces(piecesToForce);
                 break;
             case 2:  // Narration done, Game starts
-                MissionManager.isInCutscene = false;
+                MissionManager.freezePlayerBoard = false;
                 rebootTutorialObject.SetActive(true);
                 MissionManager.triggerCallbacksOnShipReboot = true;
                 break;
@@ -112,7 +112,7 @@ public class Mission2NarrationIntro : Mission
                 mothershipToMoveIn.gameObject.transform.localPosition = new Vector3(19, 25.33f, -15.78f);
                 timeSinceStepStarted = 0;
                 rebootTutorialObject.SetActive(false);
-                MissionManager.isInCutscene = true;
+                MissionManager.freezePlayerBoard = true;
                 narrations[2].gameObject.SetActive(true);
                 MissionManager.triggerCallbacksOnShipReboot = false;
                 break;
@@ -129,14 +129,14 @@ public class Mission2NarrationIntro : Mission
             case 5:  //TutorialGone
                 postLockonMusic.Stop();
                 combatMusicThatsNotAsIntrusive.Play();
-                MissionManager.isInCutscene = false;
+                MissionManager.freezePlayerBoard = false;
                 MissionManager.freezeAI = false;
-                MissionManager.TriggerCallbackOnShipDestroyed = true;
+                MissionManager.triggerCallbackOnShipDestroyed = true;
                 break;
             case 6: // Tutorial complete, You talk
                 if (gridToSetup.player.IsAlive())
                 {
-                    MissionManager.isInCutscene = true;
+                    MissionManager.freezePlayerBoard = true;
                     MissionManager.freezeAI = true;
                     narrations[3].gameObject.SetActive(true);
                     tractorParticles.gameObject.SetActive(false);
@@ -169,7 +169,7 @@ public class Mission2NarrationIntro : Mission
     void OnEnable()
     {
         gridAttachedPieces = new GameObject[4];
-        PointerHolder p = MissionManager.instance.pointers;
+        CommonMissionScriptingTargets p = MissionManager.instance.pointers;
         gridAttachedPieces[0] = p.combatant1.healthBar.gameObject;
         gridAttachedPieces[1] = p.combatant2.healthBar.gameObject;
         gridAttachedPieces[2] = p.combatant2.multiplierText.gameObject;
@@ -190,7 +190,7 @@ public class Mission2NarrationIntro : Mission
 
         narrations[0].gameObject.SetActive(true);
         //gridToSetup.player.enemy.damageManager = damageManagerForDoor;
-        MissionManager.isInCutscene = true;
+        MissionManager.freezePlayerBoard = true;
     }
 
     // Update is called once per frame

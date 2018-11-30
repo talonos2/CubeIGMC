@@ -55,7 +55,7 @@ public class Mission3NarractionIntro : Mission {
             case 2:
                 timeSinceStepStarted = 0;
                 MissionManager.freezeAI = false;
-                MissionManager.isInCutscene = false;
+                MissionManager.freezePlayerBoard = false;
                 MissionManager.triggerCallbacksOnAttackHit = true;
                 preLockonMusic.Stop();
                 combatMusicThatsNotAsIntrusive.Play();
@@ -66,20 +66,20 @@ public class Mission3NarractionIntro : Mission {
                 break;
             case 3:
                 MissionManager.freezeAI = true;
-                MissionManager.isInCutscene = true;
+                MissionManager.freezePlayerBoard = true;
                 narrations[2].gameObject.SetActive(true);
                 MissionManager.triggerCallbacksOnAttackHit = false;
                 break;
             case 4:
                 MissionManager.freezeAI = false;
-                MissionManager.isInCutscene = false;
-                MissionManager.TriggerCallbackOnShipDestroyed = true;
+                MissionManager.freezePlayerBoard = false;
+                MissionManager.triggerCallbackOnShipDestroyed = true;
                 break;
             case 5:
                 if (gridToSetup.player.IsAlive())
                 {
                     MissionManager.freezeAI = true;
-                    MissionManager.isInCutscene = true;
+                    MissionManager.freezePlayerBoard = true;
                     narrations[3].gameObject.SetActive(true);
                 }
                 else
@@ -100,7 +100,7 @@ public class Mission3NarractionIntro : Mission {
     {
 
         gridAttachedPieces = new GameObject[4];
-        PointerHolder p = MissionManager.instance.pointers;
+        CommonMissionScriptingTargets p = MissionManager.instance.pointers;
         gridAttachedPieces[0] = p.combatant1.healthBar.gameObject;
         gridAttachedPieces[1] = p.combatant2.healthBar.gameObject;
         gridAttachedPieces[2] = p.combatant2.multiplierText.gameObject;
@@ -117,7 +117,7 @@ public class Mission3NarractionIntro : Mission {
         p.restartButton2.gameObject.SetActive(true);
 
         narrations[0].gameObject.SetActive(true);
-        MissionManager.isInCutscene = true;
+        MissionManager.freezePlayerBoard = true;
     }
 
     // Update is called once per frame

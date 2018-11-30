@@ -5,32 +5,40 @@ using UnityEngine.SceneManagement;
 
 public class MissionManager : MonoBehaviour
 {
-    public static MissionManager instance = null;//the single instance of design manager available
-    public HackyCallback grossCallbackHack;
-    public Mission mission;
-    public String player1CharacterSheetPath;
-    public String player2CharacterSheetPath;
+    public static MissionManager instance = null;
 
+    //These correspond to the missions, in whatever way they're slotted into the MissionManager in GameScreen.
+    //NOTE: If you change the order of the levels, it's your responsibility to update these numbers!
+    public const int LOCAL_MULTIPLAYER = 0;
+    public const int ONLINE_MULTIPLAYER_HOST = 1;
+    public const int ONLINE_MULTIPLAYER_GUEST = 2;
+    public const int RANDOM_SINGLE_PLAYER_MATCH = 3;
+    public const int MISSION_1 = 4;
+    public const int MISSION_2 = 5;
+    public const int MISSION_3 = 6;
+
+    //This is necessary to interact with the dialogue system, I think, but the least we can do is hide it.
+    private HackyCallback grossCallbackHack;
+
+    //Needed to know which mission to unblock.
+    private Mission mission;
+
+    //A list of missions. MissionManager queries the PlayerData to find out what mission to run, then runs it on awake. TODO
     public List<Mission> missions = new List<Mission>();
 
-    public List<AudioSource> allMusic = new List<AudioSource>();
-
-    public static bool isInCutscene;
-    internal static bool triggerCallbacksOnBlockDrop;
-    internal static bool triggerCallbacksOnAttackHit;
-    internal static bool triggerCallbacksOnShipReboot;
+    //COntrols to freeze boards.
+    internal static bool freezePlayerBoard;
     internal static bool freezeAI;
-    internal PointerHolder pointers;
-    public EngineRoomNetworkManager engineRoomNetworkManager;
 
-    internal bool weAreAllHere;
+    public CommonMissionScriptingTargets pointers;
 
-    public static bool TriggerCallbackOnShipDestroyed { get; internal set; }
+    //Callback booleans: Enable to "subscribe" to that callback and call Unblock when that event triggers.
+    public static bool triggerCallbackOnShipDestroyed;
+    public static bool triggerCallbacksOnBlockDrop;
+    public static bool triggerCallbacksOnAttackHit;
+    public static bool triggerCallbacksOnShipReboot;
+    public static bool triggerCallbackOnRemotePlayerConnected;
 
-    /// <summary>
-    /// Sets up the NarrationManager's singleton design pattern - only one instance of
-    /// the manager is allowed to exist and is referenced by the variable "instance"
-    /// </summary>
     void Awake()
     {
         if (instance == null)
@@ -41,7 +49,14 @@ public class MissionManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        DontDestroyOnLoad(this);
+
+        grossCallbackHack = transform.Find("This is a Callback").gameObject.GetComponent<HackyCallback>();
+
+        //I *think* this is the right place to call this:
+        if (CrossScenePlayerData.instance.missionNumToLoad != -1)
+        {
+            mission = missions[CrossScenePlayerData.instance.missionNumToLoad];
+        }
     }
 
     public void Update()
@@ -54,26 +69,18 @@ public class MissionManager : MonoBehaviour
         }
     }
 
-    void OnEnable()
+    public void DelayedCallback()
     {
-        //Tell our 'OnLevelFinishedLoading' function to start listening for a scene change as soon as this script is enabled.
-        SceneManager.sceneLoaded += OnLevelFinishedLoading;
+        grossCallbackHack.enabled = true;
     }
 
-    void OnDisable()
+    internal EngineRoomGameType GameType()
     {
-        //Tell our 'OnLevelFinishedLoading' function to stop listening for a scene change as soon as this script is disabled. Remember to always have an unsubscription for every delegate you subscribe to!
-        SceneManager.sceneLoaded -= OnLevelFinishedLoading;
+        return mission.GameType();
     }
 
-    void OnLevelFinishedLoading(Scene scene, LoadSceneMode mode)
+    internal AIParams GetAIParams()
     {
-        GameObject p = GameObject.Find("Pointer Holder");
-        if (p != null)
-        {
-            pointers = p.GetComponent<PointerHolder>();
-            mission.gameObject.SetActive(true);
-            pointers.narrationSystem.characterController = this.grossCallbackHack;
-        }
+        return mission.GetAIParams();
     }
 }

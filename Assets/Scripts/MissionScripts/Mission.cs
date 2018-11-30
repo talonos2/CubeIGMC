@@ -10,7 +10,7 @@ public abstract class Mission : MonoBehaviour
 
     internal void Win(bool shop)
     {
-        PointerHolder p = MissionManager.instance.pointers;
+        CommonMissionScriptingTargets p = MissionManager.instance.pointers;
         p.levelFinishedImage.sprite = p.campaignVictory;
         p.nextMissionButton.gameObject.SetActive(true);
         if (shop)
@@ -23,7 +23,7 @@ public abstract class Mission : MonoBehaviour
 
     internal void Lose()
     {
-        PointerHolder p = MissionManager.instance.pointers;
+        CommonMissionScriptingTargets p = MissionManager.instance.pointers;
         p.levelFinishedImage.sprite = p.campaignDefeat;
         p.nextMissionButton.gameObject.SetActive(false);
         p.shopButton.gameObject.SetActive(false);

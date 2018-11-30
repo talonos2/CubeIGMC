@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class NetworkedMission : Mission
+public abstract class NetworkedMission : Mission
 {
     internal override void Unblock()
     {
@@ -13,7 +13,7 @@ public class NetworkedMission : Mission
     // Use this for initialization
     void Start()
     {
-        PointerHolder p = MissionManager.instance.pointers;
+        CommonMissionScriptingTargets p = MissionManager.instance.pointers;
         darkness = p.daaaaaknesssss;
         tick = p.player1Grid.ominousTick;
     }
@@ -21,7 +21,6 @@ public class NetworkedMission : Mission
     public GameGrid gridToCheatWith;
     private float timeSinceStepStarted;
     public Image darkness;
-    public bool isHost;
 
     public SpriteRenderer waiting;
     public Image[] countdown;
@@ -71,17 +70,5 @@ public class NetworkedMission : Mission
     internal override AIParams GetAIParams()
     {
         return null;
-    }
-
-    internal override EngineRoomGameType GameType()
-    {
-        if (isHost)
-        {
-            return EngineRoomGameType.SERVER_PVP;
-        }
-        else
-        {
-            return EngineRoomGameType.CLIENT_PVP;
-        }
     }
 }

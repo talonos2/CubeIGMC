@@ -105,24 +105,24 @@ public class GameGrid : MonoBehaviour
             string dataPath;
 
 
-            dataPath = Path.Combine(Application.persistentDataPath, MissionManager.instance.player1CharacterSheetPath);
+            dataPath = Path.Combine(Application.persistentDataPath, CrossScenePlayerData.instance.player1CharacterSheetPath);
             if (!File.Exists(dataPath))
             {
-                player.SaveCharacterToDisk(MissionManager.instance.player1CharacterSheetPath);
+                player.SaveCharacterToDisk(CrossScenePlayerData.instance.player1CharacterSheetPath);
             }
 
-            player.SetCharacterSheet(MissionManager.instance.player1CharacterSheetPath);
+            player.SetCharacterSheet(CrossScenePlayerData.instance.player1CharacterSheetPath);
         }
     }
 
     internal void SetRemotePVPPlayer()
     {
-        mover = new RemoteNetworkedPVPMover(MissionManager.instance.engineRoomNetworkManager,MissionManager.instance.mission.GameType()==EngineRoomGameType.SERVER_PVP, player);
+        mover = new RemoteNetworkedPVPMover(EngineRoomNetworkManager.instance, MissionManager.instance.GameType()==EngineRoomGameType.SERVER_PVP, player);
     }
 
     internal void SetLocalPVPPlayer()
     {
-        mover = new LocalNetworkedPVPMover(player, ominousTick, MissionManager.instance.engineRoomNetworkManager, this, seeded, MissionManager.instance.mission.GameType() == EngineRoomGameType.SERVER_PVP);
+        mover = new LocalNetworkedPVPMover(player, ominousTick, EngineRoomNetworkManager.instance, this, seeded, MissionManager.instance.GameType() == EngineRoomGameType.SERVER_PVP);
     }
 
     public void SetGridCellTypeStateAndAttendentVFX()
@@ -316,7 +316,7 @@ public class GameGrid : MonoBehaviour
 
         justExitedMenu = false;
 
-        if (MissionManager.isInCutscene)
+        if (MissionManager.freezePlayerBoard)
         {
             return;
         }
@@ -447,7 +447,7 @@ public class GameGrid : MonoBehaviour
         player.DeleteAllEnergy();
         if (MissionManager.triggerCallbacksOnShipReboot)
         {
-            MissionManager.instance.grossCallbackHack.enabled = true;
+            MissionManager.instance.DelayedCallback();
         }
     }
 
@@ -673,7 +673,7 @@ public class GameGrid : MonoBehaviour
         //For tutorials; hack in a callback;
         if (MissionManager.triggerCallbacksOnBlockDrop)
         {
-            MissionManager.instance.grossCallbackHack.enabled = true;
+            MissionManager.instance.DelayedCallback();
         }
     }
 

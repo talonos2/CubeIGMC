@@ -156,7 +156,7 @@ public class Mission1NarrationIntro : Mission
                 narrations[4].gameObject.SetActive(true);
                 break;
             case 6: //narration finishes, game starts, "How to move and drop" tutorial.
-                MissionManager.isInCutscene = false;
+                MissionManager.freezePlayerBoard = false;
                 sneakyShipMusic.Play();
                 MissionManager.triggerCallbacksOnBlockDrop = true;
                 tutorialPlacement1.gameObject.SetActive(true);
@@ -196,14 +196,14 @@ public class Mission1NarrationIntro : Mission
                 tutorialTexts[3].gameObject.SetActive(true);
                 break;
             case 10: // Fourth block dropped, cutscene starts.
-                MissionManager.isInCutscene = true;
+                MissionManager.freezePlayerBoard = true;
                 tutorialPlacement4.gameObject.SetActive(false);
                 narrations[5].gameObject.SetActive(true);
                 tutorialTexts[3].gameObject.SetActive(false);
                 break;
             case 11: //Dialogue finished, attack spots appear.
                 gridToSetup.player.GetCharacterSheet().WeaponEquippedID = 1;
-                MissionManager.isInCutscene = false;
+                MissionManager.freezePlayerBoard = false;
                 gridToSetup.SetGridCellTypeStateAndAttendentVFX();
                 MissionManager.triggerCallbacksOnBlockDrop = false;
                 MissionManager.triggerCallbacksOnAttackHit = true;
@@ -211,7 +211,7 @@ public class Mission1NarrationIntro : Mission
                 gridToSetup.player.enemy.health = doorHPNum;
                 break;
             case 12: //Wall impacted. Stuff becomes intense. Cutscene starts.
-                MissionManager.isInCutscene = true;
+                MissionManager.freezePlayerBoard = true;
                 klaxonToTurnOn.TurnOn();
                 wallImpactExplosionSound.Play();
                 cameraToShake.ShakeCamera(3, 1);
@@ -220,10 +220,10 @@ public class Mission1NarrationIntro : Mission
                 narrations[6].gameObject.SetActive(true);
                 MissionManager.triggerCallbacksOnAttackHit = false;
                 tutorialTexts[4].gameObject.SetActive(false);
-                MissionManager.TriggerCallbackOnShipDestroyed = true;
+                MissionManager.triggerCallbackOnShipDestroyed = true;
                 break;
             case 13: //Cutscene ends.
-                MissionManager.isInCutscene = false;
+                MissionManager.freezePlayerBoard = false;
                 MissionManager.triggerCallbacksOnAttackHit = true;
                 doorHP.transform.GetChild(0).gameObject.GetComponent<Text>().text = "DOOR HP: " + (int)(gridToSetup.player.enemy.health / doorHPNum*100)+"%";
                 doorHP.SetActive(true);
@@ -239,7 +239,7 @@ public class Mission1NarrationIntro : Mission
                 else
                 {
                     doorHP.SetActive(false);
-                    MissionManager.isInCutscene = true;
+                    MissionManager.freezePlayerBoard = true;
                     narrations[7].gameObject.SetActive(true);
                 }
                 break;
@@ -253,7 +253,7 @@ public class Mission1NarrationIntro : Mission
     // Use this for initialization
     void OnEnable ()
     {
-        PointerHolder pointers = MissionManager.instance.pointers;
+        CommonMissionScriptingTargets pointers = MissionManager.instance.pointers;
         darkness = pointers.daaaaaknesssss;
         thingsToHide = new GameObject[3];
         thingsToHide[0] = pointers.combatant1.healthBar.gameObject;
@@ -281,7 +281,7 @@ public class Mission1NarrationIntro : Mission
         shipToMakeNotWiggle.enabled = false;
         gridToSetup.player.enemy.damageManager = damageManagerForDoor;
 
-        MissionManager.isInCutscene = true;
+        MissionManager.freezePlayerBoard = true;
     }
 
     private bool playedRunningSound;

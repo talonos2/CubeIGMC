@@ -8,11 +8,11 @@ public class AnnoyingTutorialPopup : MonoBehaviour {
     private float timeSoFar;
     public Image darkness;
     private bool hasPressedConfirm;
-    SpriteRenderer renderer;
+    SpriteRenderer sRenderer;
 
     // Use this for initialization
     void Start () {
-        renderer = this.GetComponent<SpriteRenderer>();
+        sRenderer = this.GetComponent<SpriteRenderer>();
     }
 	
 	// Update is called once per frame
@@ -27,13 +27,13 @@ public class AnnoyingTutorialPopup : MonoBehaviour {
         {
             darkness.color = new Color(0, 0, 0, Mathf.Lerp(0, .5f, timeSoFar * 6));
             this.transform.localPosition = (new Vector3(8, Mathf.Lerp(260, 310, timeSoFar * 6), -20));
-            renderer.color = new Color(1, 1, 1, Mathf.Lerp(0, 1, timeSoFar * 6));
+            sRenderer.color = new Color(1, 1, 1, Mathf.Lerp(0, 1, timeSoFar * 6));
         }
         else
         {
             darkness.color = new Color(0, 0, 0, Mathf.Lerp(.5f, 0, timeSoFar * 6));
             this.transform.localPosition = (new Vector3(8, Mathf.Lerp(310, 360, timeSoFar * 6), -20));
-            renderer.color = new Color(1, 1, 1, Mathf.Lerp(1, 0, timeSoFar * 6));
+            sRenderer.color = new Color(1, 1, 1, Mathf.Lerp(1, 0, timeSoFar * 6));
             if (timeSoFar >= 1)
             {
                 this.gameObject.SetActive(false);
@@ -44,7 +44,7 @@ public class AnnoyingTutorialPopup : MonoBehaviour {
         {
             timeSoFar = 0;
             hasPressedConfirm = true;
-            MissionManager.instance.grossCallbackHack.enabled = true;
+            MissionManager.instance.DelayedCallback();
         }
 
 	}

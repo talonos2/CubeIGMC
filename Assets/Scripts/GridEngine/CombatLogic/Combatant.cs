@@ -394,9 +394,9 @@ public class Combatant : MonoBehaviour
         if (!IsAlive())
         {
             damageManager.ExplodeRemainingShip();
-            if (MissionManager.TriggerCallbackOnShipDestroyed)
+            if (MissionManager.triggerCallbackOnShipDestroyed)
             {
-                MissionManager.instance.grossCallbackHack.enabled = true;
+                MissionManager.instance.DelayedCallback();
             }
             else
             {

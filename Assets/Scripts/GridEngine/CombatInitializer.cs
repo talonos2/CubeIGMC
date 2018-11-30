@@ -48,37 +48,38 @@ public class CombatInitializer : MonoBehaviour
             bool doStart = true;
             //There are three scenarios: Either we're against an AI, in local co-op, or online. Each one needs a different seed.
             //If against an AI, look at its info and extract a scene from it.
-            AIParams pars = MissionManager.instance.mission.GetAIParams();
+            AIParams pars = MissionManager.instance.GetAIParams();
             if (pars != null)
             {
                 AIPlayer ai = grid2.LoadAI(pars.robotic, pars.robotSpeed, pars.loop, pars.text);
                 randomSeed = ai.seed;
             }
-            //elseif connecting then get the seed from the host. (To Be Implemented)
-            else //Single player
+            else //If you are a guest player, this seed will be immediately replaced when you finish connecting.
             {
                 randomSeed = UnityEngine.Random.Range(1, 65535);
             }
-            if (MissionManager.instance.mission.GameType() == EngineRoomGameType.LOCAL_PVP)
+            EngineRoomGameType gameType = MissionManager.instance.GameType();
+            switch (gameType)
             {
-                grid1.SetLocalPVPMover(true);
-                grid2.SetLocalPVPMover(false);
-            }
-            if (MissionManager.instance.mission.GameType() == EngineRoomGameType.SERVER_PVP)
-            {
-                EngineRoomNetworkManager ernm = MissionManager.instance.engineRoomNetworkManager;
-                ernm.SetupLocalClient();
-                ernm.SetupServer();
-                grid2.SetRemotePVPPlayer();
-                grid1.SetLocalPVPPlayer();
-            }
-            if (MissionManager.instance.mission.GameType() == EngineRoomGameType.CLIENT_PVP)
-            {
-                EngineRoomNetworkManager ernm = MissionManager.instance.engineRoomNetworkManager;
-                ernm.SetupClient();
-                grid2.SetRemotePVPPlayer();
-                grid1.SetLocalPVPPlayer();
-                doStart = false; //Client waits to start until server says what the seed is.
+                case EngineRoomGameType.LOCAL_PVP:
+                    grid1.SetLocalPVPMover(true);
+                    grid2.SetLocalPVPMover(false);
+                    break;
+                case EngineRoomGameType.SERVER_PVP:
+                    EngineRoomNetworkManager.instance.SetupLocalClient();
+                    EngineRoomNetworkManager.instance.SetupServer();
+                    grid2.SetRemotePVPPlayer();
+                    grid1.SetLocalPVPPlayer();
+                    break;
+                case EngineRoomGameType.CLIENT_PVP:
+                    EngineRoomNetworkManager.instance.SetupClient();
+                    grid2.SetRemotePVPPlayer();
+                    grid1.SetLocalPVPPlayer();
+                    doStart = false; //Client waits to start until server says what the seed is.
+                    break;
+                case EngineRoomGameType.SINGLE_PLAYER:
+                    //NOOP
+                    break;
             }
 
             if (doStart)

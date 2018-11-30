@@ -12,7 +12,7 @@ public class FreePlayMission : Mission {
 
     // Use this for initialization
     void Start () {
-        PointerHolder p = MissionManager.instance.pointers;
+        CommonMissionScriptingTargets p = MissionManager.instance.pointers;
         darkness = p.daaaaaknesssss;
         p.restartButton1.gameObject.SetActive(true);
         p.restartButton2.gameObject.SetActive(true);
@@ -34,7 +34,7 @@ public class FreePlayMission : Mission {
     {
         if (timeSinceStepStarted == 0)
         {
-            MissionManager.isInCutscene = true;
+            MissionManager.freezePlayerBoard = true;
         }
         timeSinceStepStarted += Time.deltaTime;
         float brightness = Mathf.Clamp01(timeSinceStepStarted / 2);
@@ -50,7 +50,7 @@ public class FreePlayMission : Mission {
             }
             if (timeSinceStepStarted > 3.5)
             {
-                MissionManager.isInCutscene = false;
+                MissionManager.freezePlayerBoard = false;
             }
 
     }

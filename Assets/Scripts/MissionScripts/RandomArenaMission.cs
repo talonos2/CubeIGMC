@@ -17,7 +17,7 @@ public class RandomArenaMission : Mission
     // Use this for initialization
     void Start()
     {
-        PointerHolder p = MissionManager.instance.pointers;
+        CommonMissionScriptingTargets p = MissionManager.instance.pointers;
         darkness = p.daaaaaknesssss;
         randomGrid = p.player2Grid;
         randomCombatant = p.combatant2;
@@ -42,7 +42,7 @@ public class RandomArenaMission : Mission
         {
             randomCombatant.SetRandomNPC(level);
             music[level].Play();
-            MissionManager.isInCutscene = true;
+            MissionManager.freezePlayerBoard = true;
         }
 
         timeSinceStepStarted += Time.deltaTime;
@@ -59,7 +59,7 @@ public class RandomArenaMission : Mission
         }
         if (timeSinceStepStarted > 3.5)
         {
-            MissionManager.isInCutscene = false;
+            MissionManager.freezePlayerBoard = false;
         }
     }
 

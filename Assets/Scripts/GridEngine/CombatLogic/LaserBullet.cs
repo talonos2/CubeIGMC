@@ -24,7 +24,8 @@ public class LaserBullet : MonoBehaviour
             GameObject.Destroy(this.gameObject);
             if (MissionManager.triggerCallbacksOnAttackHit)
             {
-                MissionManager.instance.grossCallbackHack.enabled = true;
+                MissionManager.instance.DelayedCallback();
+                MissionManager.instance.DelayedCallback();
             }
         }
 		
