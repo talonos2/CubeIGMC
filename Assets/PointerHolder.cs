@@ -23,6 +23,16 @@ public class PointerHolder : MonoBehaviour
     public Button restartButton1;
     public Button restartButton2;
 
+    public Image levelFinishedImage;
+    public Sprite campaignVictory;
+    public Sprite campaignDefeat;
+
+    public Button shopButton;
+    public Button nextMissionButton;
+    public Text replayMissionText;
+
+    public GameObject youHaveDiedScreen;
+
     // Use this for initialization
     void Start () {
 		
