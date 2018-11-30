@@ -3,7 +3,7 @@ using UnityEngine;
 
 internal class SinglePlayerMover : Mover
 {
-    private Combatant player;
+    protected Combatant player;
     private AudioSource ominousTick;
     private bool isUpBeingHeld;
     private float timeSinceLastMoveUpEvent;

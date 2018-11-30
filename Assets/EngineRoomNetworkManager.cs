@@ -36,12 +36,12 @@ public class EngineRoomNetworkManager : MonoBehaviour
     {
         if (isServer)
         {
-            Debug.Log("Server sending: " + toSend);
+            //Debug.Log("Server sending: " + toSend);
             NetworkServer.SendToAll(sendMoveMessageID, new IntegerMessage(toSend));
         }
         else
         {
-            Debug.Log("Client sending: " + toSend);
+            //Debug.Log("Client sending: " + toSend);
             myClient.Send(sendMoveMessageID, new IntegerMessage(toSend));
         }
     }
@@ -93,7 +93,10 @@ public class EngineRoomNetworkManager : MonoBehaviour
     {
         Debug.Log("Connected to server");
         MissionManager.instance.weAreAllHere = true;
-        myClient.Send(sendSeedID, new StringMessage(moverSender.GetParentCharSheetString()));
+        if (!isServer)
+        {
+            myClient.Send(sendCharSheet, new StringMessage(moverSender.GetParentCharSheetString()));
+        }
     }
 
     // server function
@@ -101,8 +104,11 @@ public class EngineRoomNetworkManager : MonoBehaviour
     {
         Debug.Log("Connected to client");
         MissionManager.instance.weAreAllHere = true;
-        NetworkServer.SendToAll(sendSeedID, new IntegerMessage(moverSender.GetParentSeed()));
-        NetworkServer.SendToAll(sendSeedID, new StringMessage(moverSender.GetParentCharSheetString()));
+        if (isServer)
+        {
+            NetworkServer.SendToAll(sendSeedID, new IntegerMessage(moverSender.GetParentSeed()));
+            NetworkServer.SendToAll(sendCharSheet, new StringMessage(moverSender.GetParentCharSheetString()));
+        }
     }
 
     // client function
@@ -133,7 +139,7 @@ public class EngineRoomNetworkManager : MonoBehaviour
     public void ClientAcceptsCharSheet(NetworkMessage charSheetMessage)
     {
         String toReturn = charSheetMessage.ReadMessage<StringMessage>().value;
-
+        Debug.Log("Client gets: " + toReturn);
         if (!isServer)
         {
             moverListener.AcceptRemoteCharacterSheet(JsonUtility.FromJson<PlayerCharacterSheet>(toReturn));
@@ -143,7 +149,13 @@ public class EngineRoomNetworkManager : MonoBehaviour
 
     public void ServerAcceptsCharSheet(NetworkMessage charSheetMessage)
     {
+        if (charSheetMessage.conn.connectionId==0)
+        {
+            Debug.Log("Killed you!");
+            return;
+        }
         String toReturn = charSheetMessage.ReadMessage<StringMessage>().value;
+        Debug.Log("Server gets: " + toReturn);
         if (isServer)
         {
             moverListener.AcceptRemoteCharacterSheet(JsonUtility.FromJson<PlayerCharacterSheet>(toReturn));

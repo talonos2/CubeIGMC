@@ -2953,7 +2953,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &178464080
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2968,12 +2968,16 @@ MonoBehaviour:
   theMenu: {fileID: 1687384274}
   getReady: {fileID: 0}
   campaign: {fileID: 0}
+  campaign2: {fileID: 0}
+  campaign3: {fileID: 0}
+  campaign4: {fileID: 0}
   localMulti: {fileID: 0}
   onlineMulti: {fileID: 0}
   ernm: {fileID: 0}
   Primary: {fileID: 0}
   loginPage: {fileID: 0}
   infoPage: {fileID: 0}
+  LoadCharacterPage: {fileID: 0}
   inputIP: {fileID: 0}
 --- !u!114 &178464081
 MonoBehaviour:
@@ -5099,7 +5103,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 565802747}
-        m_MethodName: Pause
+        m_MethodName: sceneAdvance
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -6941,9 +6945,56 @@ Prefab:
       propertyPath: darkness
       value: 
       objectReference: {fileID: 1687384275}
+    - target: {fileID: 114899827479038178, guid: a6b117bd6ab899e41b656548b0b5ebe9,
+        type: 2}
+      propertyPath: mission
+      value: 
+      objectReference: {fileID: 2097024701}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a6b117bd6ab899e41b656548b0b5ebe9, type: 2}
   m_IsPrefabAsset: 0
+--- !u!114 &392443966 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 114450923043371848, guid: a6b117bd6ab899e41b656548b0b5ebe9,
+    type: 2}
+  m_PrefabInternal: {fileID: 392443965}
+  m_Script: {fileID: 11500000, guid: 2560331b3378a3241addb5e456ec60f3, type: 3}
+--- !u!114 &392443967 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 114369696648500618, guid: a6b117bd6ab899e41b656548b0b5ebe9,
+    type: 2}
+  m_PrefabInternal: {fileID: 392443965}
+  m_Script: {fileID: 11500000, guid: 9ed3945acecebf14aa843b116cbb25ee, type: 3}
+--- !u!114 &392443968 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 114625891606739024, guid: a6b117bd6ab899e41b656548b0b5ebe9,
+    type: 2}
+  m_PrefabInternal: {fileID: 392443965}
+  m_Script: {fileID: 11500000, guid: 7610b00e2b9fdab41a26080f6b47962e, type: 3}
+--- !u!114 &392443969 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 114416496394543776, guid: a6b117bd6ab899e41b656548b0b5ebe9,
+    type: 2}
+  m_PrefabInternal: {fileID: 392443965}
+  m_Script: {fileID: 11500000, guid: 876c618a85660234aae47f374d066ae9, type: 3}
+--- !u!114 &392443970 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 114419429734620310, guid: a6b117bd6ab899e41b656548b0b5ebe9,
+    type: 2}
+  m_PrefabInternal: {fileID: 392443965}
+  m_Script: {fileID: 11500000, guid: 541fdddc211bae942bebe13a5b2ed72a, type: 3}
+--- !u!114 &392443971 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 114935931831525738, guid: a6b117bd6ab899e41b656548b0b5ebe9,
+    type: 2}
+  m_PrefabInternal: {fileID: 392443965}
+  m_Script: {fileID: 11500000, guid: bcdb00faf292bd64e8161b9eb1290f8e, type: 3}
+--- !u!114 &392443972 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 114899827479038178, guid: a6b117bd6ab899e41b656548b0b5ebe9,
+    type: 2}
+  m_PrefabInternal: {fileID: 392443965}
+  m_Script: {fileID: 11500000, guid: 2da437bc5e27512408c2b8c19bb7f9d8, type: 3}
 --- !u!1 &402193080
 GameObject:
   m_ObjectHideFlags: 0
@@ -11102,14 +11153,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   theMenu: {fileID: 1563451132}
-  getReady: {fileID: 0}
-  campaign: {fileID: 0}
-  localMulti: {fileID: 0}
-  onlineMulti: {fileID: 0}
-  ernm: {fileID: 0}
+  getReady: {fileID: 392443972}
+  campaign: {fileID: 392443971}
+  campaign2: {fileID: 392443970}
+  campaign3: {fileID: 392443969}
+  campaign4: {fileID: 392443968}
+  localMulti: {fileID: 2097024701}
+  onlineMulti: {fileID: 392443967}
+  ernm: {fileID: 392443966}
   Primary: {fileID: 0}
   loginPage: {fileID: 0}
   infoPage: {fileID: 0}
+  LoadCharacterPage: {fileID: 0}
   inputIP: {fileID: 0}
 --- !u!1 &569007498
 GameObject:
@@ -19860,7 +19915,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.3, y: 0.31}
   m_AnchorMax: {x: 0.7, y: 0.42}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0.000061035156, y: -122.85}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &921721757
@@ -38003,7 +38058,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.000061035156}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1579589134 stripped
@@ -46243,7 +46298,7 @@ MonoBehaviour:
   campaignDefeat: {fileID: 21300000, guid: a7b4348497e0271489282f13f8c50c7c, type: 3}
   shopButton: {fileID: 298794920}
   nextMissionButton: {fileID: 281870221}
-  replayMissionText: {fileID: 0}
+  replayMissionText: {fileID: 966357281}
   youHaveDiedScreen: {fileID: 1578384414}
 --- !u!1001 &1951523521
 Prefab:
@@ -49810,6 +49865,12 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4596137841453722, guid: 8007da74be9e7b947b304fd4cbb68b9a,
     type: 2}
   m_PrefabInternal: {fileID: 2080038989}
+--- !u!114 &2097024701 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 114499502399387762, guid: a6b117bd6ab899e41b656548b0b5ebe9,
+    type: 2}
+  m_PrefabInternal: {fileID: 392443965}
+  m_Script: {fileID: 11500000, guid: 8dbd222894fcce24db00717ff31c17d7, type: 3}
 --- !u!1001 &2108488209
 Prefab:
   m_ObjectHideFlags: 0
@@ -50654,7 +50715,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 565802747}
-        m_MethodName: QuitGame
+        m_MethodName: QuitToMenu
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

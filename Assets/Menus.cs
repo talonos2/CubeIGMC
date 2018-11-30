@@ -8,11 +8,16 @@ using UnityEngine.Networking;
 public class Menus : MonoBehaviour
 {
 
+    int campaignCounter = 0;
 
     public GameObject theMenu;
 
     public MissionManager getReady;
     public Mission campaign;
+    public Mission campaign2;
+    public Mission campaign3;
+    public Mission campaign4;
+
     public Mission localMulti;
     public NetworkedMission onlineMulti;
 
@@ -141,8 +146,6 @@ public class Menus : MonoBehaviour
         loginPage.SetActive(false);
         infoPage.SetActive(false);
         Primary.SetActive(true);
-
-
     }
 
     public void BackFromCharacterSelect()
@@ -156,6 +159,34 @@ public class Menus : MonoBehaviour
     {
         Application.Quit();
     }
+
+    public void sceneAdvance()
+    {
+        Debug.Log(MissionManager.instance.mission);
+        if (MissionManager.instance.mission == campaign)
+        {
+            getReady.mission = campaign2;
+        }
+        else if (MissionManager.instance.mission == campaign2)
+        {
+            getReady.mission = campaign3;
+
+        }
+        else if (MissionManager.instance.mission == campaign3)
+        {
+            getReady.mission = campaign4;
+        }
+        else if (MissionManager.instance.mission == campaign4)
+        {
+            getReady.mission = campaign4;
+        }
+
+        Debug.Log(MissionManager.instance.mission);
+        Time.timeScale = 1;
+        SceneManager.LoadScene("SampleScene");
+        Debug.Log("didn't crash");
+    }
+
 
 
 
