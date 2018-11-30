@@ -48,6 +48,7 @@ internal class RemoteNetworkedPVPMover : Mover
         justDropped = false;
         justCWed = false;
         justCCWed = false;
+        justRebooted = false;
         if (commands.Count > 0)
         {
             int command = commands.Dequeue();
