@@ -1369,8 +1369,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 682532560}
-        m_MethodName: SetupClient
+      - m_Target: {fileID: 1272836302}
+        m_MethodName: joinMultiplayer
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1695,8 +1695,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 682532560}
-        m_MethodName: SetupServer
+      - m_Target: {fileID: 1272836302}
+        m_MethodName: hostMultiplayer
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2117,6 +2117,7 @@ MonoBehaviour:
   campaign: {fileID: 866990038}
   localMulti: {fileID: 349200297}
   onlineMulti: {fileID: 349200298}
+  ernm: {fileID: 682532560}
   Primary: {fileID: 858082987}
   loginPage: {fileID: 1683969655}
   inputIP: {fileID: 740862515}

@@ -16,6 +16,8 @@ public class Menus : MonoBehaviour
     public Mission localMulti;
     public Mission onlineMulti;
 
+    public EngineRoomNetworkManager ernm;
+
     public GameObject Primary;
     public GameObject loginPage;
 
@@ -36,7 +38,7 @@ public class Menus : MonoBehaviour
     // Use this for initialization
     void Start ()
     {
-
+        Time.timeScale = 0;
 
     }
 	
@@ -88,15 +90,22 @@ public class Menus : MonoBehaviour
 
     public void hostMultiplayer()
     {
+        Time.timeScale = 0;
+        getReady.mission = onlineMulti;
+        ernm.SetupServer();
 
 
+        SceneManager.LoadScene("SampleScene");
     }
 
     public void joinMultiplayer()
     {
-        
+        Time.timeScale = 1;
+        getReady.mission = onlineMulti;
+        ernm.SetupClient();
 
 
+        SceneManager.LoadScene("SampleScene");
     }
 
 
