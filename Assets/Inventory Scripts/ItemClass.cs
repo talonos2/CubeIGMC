@@ -485,29 +485,29 @@ public class ItemClass {
                 }
                 break;
             case 6:
-                for (int x = 0; x < 5; x++)
+                for (int x = 0; x < 4; x++)
                 {
                     for (int y = 0; y < 4; y++)
                     {
                         if (y == 0)
                             cellTypes[x + 9, 13 - y] = CellType.SHIELD;
                         if (y == 1 && x < 4)
-                            cellTypes[x + 9, 13 - y] = CellType.SHIELD;
+                            cellTypes[x + 8, 13 - y] = CellType.SHIELD;
                         if (y == 2 && x < 3)
-                            cellTypes[x + 9, 13 - y] = CellType.SHIELD;
+                            cellTypes[x + 8, 13 - y] = CellType.SHIELD;
                         if (y == 3 && x < 2)
-                            cellTypes[x + 9, 13 - y] = CellType.SHIELD;
+                            cellTypes[x + 8, 13 - y] = CellType.SHIELD;
 
                     }
                 }
                 break;
             case 7:
-                for (int x = 0; x < 6; x++)
+                for (int x = 0; x < 5; x++)
                 {
                     for (int y = 0; y < 5; y++)
                     {
                         if (y == 0)
-                            cellTypes[x + 8, 14 - y] = CellType.SHIELD;
+                            cellTypes[x + 9, 14 - y] = CellType.SHIELD;
                         if (y == 1 && x < 5)
                             cellTypes[x + 8, 14 - y] = CellType.SHIELD;
                         if (y == 2 && x < 4)
@@ -526,8 +526,8 @@ public class ItemClass {
                 {
                     for (int y = 0; y < 6; y++)
                     {
-                        if (y == 0 && x < 6)
-                            cellTypes[x + 8, 14 - y] = CellType.SHIELD;
+                        if (y == 0 && x < 5)
+                            cellTypes[x + 9, 14 - y] = CellType.SHIELD;
                         if (y == 1 && x < 6)
                             cellTypes[x + 8, 14 - y] = CellType.SHIELD;
                         if (y == 2 && x < 5)
@@ -635,8 +635,8 @@ public class ItemClass {
                 {
                     for (int y = 0; y < 4; y++)
                     {
-                        if (y == 0)
-                            cellTypes[6 - x, 13 - y] = CellType.ATTACK;
+                        if (y == 0 && x < 4)
+                            cellTypes[5 - x, 13 - y] = CellType.ATTACK;
                         if (y == 1 && x < 4)
                             cellTypes[6 - x, 13 - y] = CellType.ATTACK;
                         if (y == 2 && x < 3)
@@ -652,8 +652,8 @@ public class ItemClass {
                 {
                     for (int y = 0; y < 5; y++)
                     {
-                        if (y == 0)
-                            cellTypes[6 - x, 14 - y] = CellType.ATTACK;
+                        if (y == 0 && x < 4)
+                            cellTypes[5 - x, 14 - y] = CellType.ATTACK;
                         if (y == 1 && x < 5)
                             cellTypes[6 - x, 14 - y] = CellType.ATTACK;
                         if (y == 2 && x < 4)
@@ -672,8 +672,8 @@ public class ItemClass {
                 {
                     for (int y = 0; y < 6; y++)
                     {
-                        if (y == 0 && x<6)
-                            cellTypes[6 - x, 14 - y] = CellType.ATTACK;
+                        if (y == 0 && x<5)
+                            cellTypes[5 - x, 14 - y] = CellType.ATTACK;
                         if (y == 1 && x < 6)
                             cellTypes[6 - x, 14 - y] = CellType.ATTACK;
                         if (y == 2 && x < 5)

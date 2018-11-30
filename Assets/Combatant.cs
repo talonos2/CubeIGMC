@@ -41,11 +41,11 @@ public class Combatant : MonoBehaviour
 //        Debug.Log("This game grid = " + ThisGameGrid);
 
         //Example of making player 2 customly weaker or stronger. 
-      //     if (transform.parent.parent.parent.name.Equals("Player2")) {
+          // if (transform.parent.parent.parent.name.Equals("Player1")) {
       //          ThisPlayer.BaseHealth = 30;
-     //           ThisPlayer.WeaponEquippedID = 8;
-     //           ThisPlayer.ShieldEquippedID = 8;
-    //    }
+                ThisPlayer.WeaponEquippedID = 6;
+                ThisPlayer.ShieldEquippedID = 6;
+       // }
 
 
         health = ThisPlayer.GetMaxHealth();
