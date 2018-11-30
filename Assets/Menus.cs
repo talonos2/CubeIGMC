@@ -21,6 +21,7 @@ public class Menus : MonoBehaviour
     public GameObject Primary;
     public GameObject loginPage;
     public GameObject infoPage;
+    public GameObject LoadCharacterPage;
 
     public InputField inputIP;
 
@@ -138,6 +139,13 @@ public class Menus : MonoBehaviour
         infoPage.SetActive(false);
         Primary.SetActive(true);
 
+
+    }
+
+    public void BackFromCharacterSelect()
+    {
+        LoadCharacterPage.SetActive(false);
+        Primary.SetActive(true);
 
     }
 

@@ -17,6 +17,10 @@ public class CharacterSelectManager : MonoBehaviour {
     public Transform SelectedImage2;
     public Transform SelectedImage3;
     public Transform MissionManaged;
+    public Transform ACanvas;
+    public GameObject MainMenu;
+    public GameObject LoadCharMenu;
+    public Text LoadText;
 
     public int CurrentlySelectedPosition=1;
     public string SaveFile1 = "Save1.txt";
@@ -24,10 +28,11 @@ public class CharacterSelectManager : MonoBehaviour {
     public string SaveFile3 = "Save3.txt";
     private int TimeSinceLastInput = 11;
     private int ScrollingRight = 0;
-    private Mission missionWeAreGoingTo;
+    //private Mission missionWeAreGoingTo;
     public PlayerCharacterSheet Character1;
     public PlayerCharacterSheet Character2;
     public PlayerCharacterSheet Character3;
+    private int GameType = 1;
 
     private int ScrollingLeft = 0;
 
@@ -65,7 +70,7 @@ public class CharacterSelectManager : MonoBehaviour {
     {
         CurrentlySelectedPosition = 1;
         isSelected1.GetComponent<Image>().color = new Color(0f, 0f, 0f, 0.392f);
-        missionWeAreGoingTo = MissionManaged.GetComponent<MissionManager>().mission;
+        //missionWeAreGoingTo = MissionManaged.GetComponent<MissionManager>().mission;
     }
     // Update is called once per frame
     void Update () {
@@ -172,21 +177,75 @@ public class CharacterSelectManager : MonoBehaviour {
 
     public void CharacterIsSelected()
     {
-
+        string SelectedCharacterPath = "";
         if (CurrentlySelectedPosition == 1) {
             SelectedImage1.GetComponent<Image>().enabled = true;
+            SelectedCharacterPath = SaveFile1;
         }
         if (CurrentlySelectedPosition == 2)
         {
             SelectedImage2.GetComponent<Image>().enabled = true;
+            SelectedCharacterPath = SaveFile2;
         }
         if (CurrentlySelectedPosition == 3)
         {
             SelectedImage3.GetComponent<Image>().enabled = true;
+            SelectedCharacterPath = SaveFile3;
         }
 
-        
+        LoadCharMenu.SetActive(false);
+        MainMenu.SetActive(true);
 
+        if (GameType == 1) {
+            MissionManaged.GetComponent<MissionManager>().player1CharacterSheetPath = SelectedCharacterPath;
+            ACanvas.GetComponent<Menus>().SinglePlayer();
+        }
+        else if (GameType == 2) {
+            MissionManaged.GetComponent<MissionManager>().player1CharacterSheetPath = SelectedCharacterPath;
+            MainMenu.SetActive(false);
+            LoadCharMenu.SetActive(true);
+            LoadText.text = "Select Player 2:";
+            GameType = 3;
+            //RefreshCharacterSheet();
+        }
+        else if (GameType == 3) {
+            MissionManaged.GetComponent<MissionManager>().player2CharacterSheetPath = SelectedCharacterPath;
+           // ACanvas.GetComponent<Menus>().ToLocalMultiplayer();
+        }
+        else if (GameType == 4) {
+            MissionManaged.GetComponent<MissionManager>().player1CharacterSheetPath = SelectedCharacterPath;
+            ACanvas.GetComponent<Menus>().ToMultiplayerOptions();
+        }
+
+
+
+
+    }
+
+    public void SinglePlayerGetChar() {
+        LoadCharMenu.SetActive(true);
+        MainMenu.SetActive(false);
+        GameType = 1;
+        //ACanvas.GetComponent<Menus>().SinglePlayer();
+    }
+
+    public void MultiPlayerGetChar() {
+        LoadCharMenu.SetActive(true);
+        MainMenu.SetActive(false);
+        GameType = 2;
+        LoadText.text = "Select Player 1:";
+       // if (GameType == 2) {
+           // GameType = 3;
+           // ResetCharacterSelect();
+        //}
+        //ACanvas.GetComponent<Menus>().ToLocalMultiplayer();
+    }
+
+    public void NetworkMultiplayerGetChar() {
+        LoadCharMenu.SetActive(true);
+        MainMenu.SetActive(false);
+        GameType = 4;
+        //ACanvas.GetComponent<Menus>().ToMultiplayerOptions();
     }
 
 }
