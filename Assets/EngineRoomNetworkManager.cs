@@ -139,7 +139,7 @@ public class EngineRoomNetworkManager : MonoBehaviour
     public void ClientAcceptsCharSheet(NetworkMessage charSheetMessage)
     {
         String toReturn = charSheetMessage.ReadMessage<StringMessage>().value;
-
+        Debug.Log("Client gets: " + toReturn);
         if (!isServer)
         {
             moverListener.AcceptRemoteCharacterSheet(JsonUtility.FromJson<PlayerCharacterSheet>(toReturn));
@@ -149,7 +149,13 @@ public class EngineRoomNetworkManager : MonoBehaviour
 
     public void ServerAcceptsCharSheet(NetworkMessage charSheetMessage)
     {
+        if (charSheetMessage.conn.connectionId==0)
+        {
+            Debug.Log("Killed you!");
+            return;
+        }
         String toReturn = charSheetMessage.ReadMessage<StringMessage>().value;
+        Debug.Log("Server gets: " + toReturn);
         if (isServer)
         {
             moverListener.AcceptRemoteCharacterSheet(JsonUtility.FromJson<PlayerCharacterSheet>(toReturn));

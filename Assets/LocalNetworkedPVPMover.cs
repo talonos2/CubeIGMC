@@ -46,6 +46,6 @@ internal class LocalNetworkedPVPMover : SinglePlayerMover
 
     internal String GetParentCharSheetString()
     {
-        return JsonUtility.ToJson(parentGrid.player.GetCharacterSheet());
+        return JsonUtility.ToJson(player.GetCharacterSheet());
     }
 }
