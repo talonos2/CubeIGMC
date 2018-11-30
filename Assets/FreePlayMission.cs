@@ -48,7 +48,7 @@ public class FreePlayMission : Mission {
                     ticks[x] = true;
                 }
             }
-            if (timeSinceStepStarted > 4.5)
+            if (timeSinceStepStarted > 3.5)
             {
                 MissionManager.isInCutscene = false;
             }

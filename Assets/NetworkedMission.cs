@@ -23,7 +23,7 @@ public class NetworkedMission : Mission
     public Image darkness;
     public bool isHost;
 
-    public Image waiting;
+    public SpriteRenderer waiting;
     public Image[] countdown;
 
     public bool cheaty;
@@ -60,7 +60,7 @@ public class NetworkedMission : Mission
                     ticks[x] = true;
                 }
             }
-            if (timeSinceStepStarted > 4.5)
+            if (timeSinceStepStarted > 3.5)
             {
                 MissionManager.isInCutscene = false;
             }
