@@ -3046,6 +3046,9 @@ MonoBehaviour:
   campaign: {fileID: 0}
   localMulti: {fileID: 0}
   onlineMulti: {fileID: 0}
+  Primary: {fileID: 0}
+  loginPage: {fileID: 0}
+  inputIP: {fileID: 0}
 --- !u!114 &178464081
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10791,6 +10794,9 @@ MonoBehaviour:
   campaign: {fileID: 0}
   localMulti: {fileID: 0}
   onlineMulti: {fileID: 0}
+  Primary: {fileID: 0}
+  loginPage: {fileID: 0}
+  inputIP: {fileID: 0}
 --- !u!1 &569007498
 GameObject:
   m_ObjectHideFlags: 0
@@ -37508,7 +37514,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1563451133
 RectTransform:
   m_ObjectHideFlags: 0
