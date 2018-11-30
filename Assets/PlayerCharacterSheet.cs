@@ -35,9 +35,9 @@ public class PlayerCharacterSheet
     private float Psi=0;
     private float BaseEngineSpeed = 8f;
     public bool UnusedSave = true;
-    public int WeaponEquippedID = 1;
+    public int WeaponEquippedID = 3;
     public int ArmorEquippedID = 0;
-    public int ShieldEquippedID = 1;
+    public int ShieldEquippedID = 3;
     public int EngineEquippedID = 0;
     public int MiscEquippedID = 0;
     public int lastMissionBeaten = 0;
