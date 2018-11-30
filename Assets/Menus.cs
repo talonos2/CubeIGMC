@@ -20,6 +20,7 @@ public class Menus : MonoBehaviour
 
     public GameObject Primary;
     public GameObject loginPage;
+    public GameObject infoPage;
 
     public InputField inputIP;
 
@@ -77,10 +78,11 @@ public class Menus : MonoBehaviour
         SceneManager.LoadScene("SampleScene");
     }
 
-    public void ToMultiplayer()
+    public void ToMultiplayerOptions()
     {
         Primary.SetActive(false);
         loginPage.SetActive(true);
+        infoPage.SetActive(true);
 
 //        getReady.mission = onlineMulti;
 //        Time.timeScale = 1;
@@ -133,6 +135,7 @@ public class Menus : MonoBehaviour
     public void BackFromMulti()
     {
         loginPage.SetActive(false);
+        infoPage.SetActive(false);
         Primary.SetActive(true);
 
 
