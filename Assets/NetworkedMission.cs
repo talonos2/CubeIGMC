@@ -35,15 +35,15 @@ public class NetworkedMission : Mission
     // Update is called once per frame
     void Update()
     {
-        if (timeSinceStepStarted == 0)
+        /*if (timeSinceStepStarted == 0)
         {
             MissionManager.isInCutscene = true;
-        }
+        }*/
         timeSinceStepStarted += Time.deltaTime;
         float brightness = Mathf.Clamp01(timeSinceStepStarted / 2);
         darkness.color = new Color(0, 0, 0, 1 - brightness);
 
-        if (MissionManager.instance.weAreAllHere == true)
+        /*if (MissionManager.instance.weAreAllHere == true)
         {
             waiting.gameObject.SetActive(false);
             starting = true;
@@ -64,7 +64,7 @@ public class NetworkedMission : Mission
             {
                 MissionManager.isInCutscene = false;
             }
-        }
+        }*/
 
     }
 
