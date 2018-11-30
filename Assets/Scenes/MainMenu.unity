@@ -212,7 +212,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &70192610
 RectTransform:
   m_ObjectHideFlags: 0
@@ -294,6 +294,7 @@ MonoBehaviour:
   ACanvas: {fileID: 1272836306}
   MainMenu: {fileID: 858082987}
   LoadCharMenu: {fileID: 70192609}
+  LoadText: {fileID: 2116022695}
   CurrentlySelectedPosition: 1
   SaveFile1: Save1.txt
   SaveFile2: Save2.txt
@@ -3999,7 +4000,7 @@ GameObject:
   - component: {fileID: 2116022696}
   - component: {fileID: 2116022695}
   m_Layer: 5
-  m_Name: Text (1)
+  m_Name: Load Character
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
