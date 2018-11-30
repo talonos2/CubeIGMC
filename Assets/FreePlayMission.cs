@@ -14,6 +14,8 @@ public class FreePlayMission : Mission {
     void Start () {
         PointerHolder p = MissionManager.instance.pointers;
         darkness = p.daaaaaknesssss;
+        p.restartButton1.gameObject.SetActive(true);
+        p.restartButton2.gameObject.SetActive(true);
     }
 
     public GameGrid gridToCheatWith;

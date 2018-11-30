@@ -21,6 +21,8 @@ public class RandomArenaMission : Mission
         darkness = p.daaaaaknesssss;
         randomGrid = p.player2Grid;
         randomCombatant = p.combatant2;
+        p.restartButton1.gameObject.SetActive(true);
+        p.restartButton2.gameObject.SetActive(true);
     }
 
     private GameGrid randomGrid;

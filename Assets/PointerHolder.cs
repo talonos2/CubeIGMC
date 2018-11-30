@@ -20,6 +20,8 @@ public class PointerHolder : MonoBehaviour
     public NarrationManager narrationSystem;
     public GameObject cameraWrapper1;
     public GameObject cameraWrapper2;
+    public Button restartButton1;
+    public Button restartButton2;
 
     // Use this for initialization
     void Start () {
