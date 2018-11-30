@@ -32,7 +32,7 @@ public class CharacterSelectManager : MonoBehaviour {
     public PlayerCharacterSheet Character1;
     public PlayerCharacterSheet Character2;
     public PlayerCharacterSheet Character3;
-    private int GameType = 1;
+    private int GameType =0;
 
     private int ScrollingLeft = 0;
 
@@ -179,17 +179,17 @@ public class CharacterSelectManager : MonoBehaviour {
     {
         string SelectedCharacterPath = "";
         if (CurrentlySelectedPosition == 1) {
-            SelectedImage1.GetComponent<Image>().enabled = true;
+            //SelectedImage1.GetComponent<Image>().enabled = true;
             SelectedCharacterPath = SaveFile1;
         }
         if (CurrentlySelectedPosition == 2)
         {
-            SelectedImage2.GetComponent<Image>().enabled = true;
+            //SelectedImage2.GetComponent<Image>().enabled = true;
             SelectedCharacterPath = SaveFile2;
         }
         if (CurrentlySelectedPosition == 3)
         {
-            SelectedImage3.GetComponent<Image>().enabled = true;
+            //SelectedImage3.GetComponent<Image>().enabled = true;
             SelectedCharacterPath = SaveFile3;
         }
 
@@ -206,11 +206,13 @@ public class CharacterSelectManager : MonoBehaviour {
             LoadCharMenu.SetActive(true);
             LoadText.text = "Select Player 2:";
             GameType = 3;
+
             //RefreshCharacterSheet();
         }
         else if (GameType == 3) {
+            Debug.Log("Did I get here");
             MissionManaged.GetComponent<MissionManager>().player2CharacterSheetPath = SelectedCharacterPath;
-           // ACanvas.GetComponent<Menus>().ToLocalMultiplayer();
+            ACanvas.GetComponent<Menus>().ToLocalMultiplayer();
         }
         else if (GameType == 4) {
             MissionManaged.GetComponent<MissionManager>().player1CharacterSheetPath = SelectedCharacterPath;
