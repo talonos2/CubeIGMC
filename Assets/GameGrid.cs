@@ -63,6 +63,12 @@ public class GameGrid : MonoBehaviour
         player.enemy.ThisGameGrid.SetSeedAndStart(value);
     }
 
+    internal void getCharSheetFromServer(int value)
+    {
+
+
+    }
+
     public PlayingPiece currentPiece;
     private PlayingPiece nextPiece;
 
@@ -98,6 +104,7 @@ public class GameGrid : MonoBehaviour
         {
             string dataPath;
 
+
             dataPath = Path.Combine(Application.persistentDataPath, MissionManager.instance.player1CharacterSheetPath);
             if (!File.Exists(dataPath))
             {
@@ -110,7 +117,7 @@ public class GameGrid : MonoBehaviour
 
     internal void SetRemotePVPPlayer()
     {
-        mover = new RemoteNetworkedPVPMover(MissionManager.instance.engineRoomNetworkManager,MissionManager.instance.mission.GameType()==EngineRoomGameType.SERVER_PVP);
+        mover = new RemoteNetworkedPVPMover(MissionManager.instance.engineRoomNetworkManager,MissionManager.instance.mission.GameType()==EngineRoomGameType.SERVER_PVP, player);
     }
 
     internal void SetLocalPVPPlayer()

@@ -14,9 +14,12 @@ public class EngineRoomNetworkManager : MonoBehaviour
 
     public short sendMoveMessageID = 1003;
     public short sendSeedID = 1004;
+    public short sendCharSheet = 1005;
 
     private RemoteNetworkedPVPMover moverListener;
     private LocalNetworkedPVPMover moverSender;
+    private GameGrid serverGrid;
+    private GameGrid clientGrid;
     private bool isServer;
 
     private string ip;
@@ -51,6 +54,7 @@ public class EngineRoomNetworkManager : MonoBehaviour
         NetworkServer.RegisterHandler(MsgType.Connect, ServerHandlesConnection);
         NetworkServer.RegisterHandler(sendMoveMessageID, ServerHandlesMove);
         NetworkServer.RegisterHandler(sendSeedID, ServerAcceptsSeed);
+        NetworkServer.RegisterHandler(sendCharSheet, ServerAcceptsCharSheet);
         isAtStartup = false;
     }
 
@@ -63,6 +67,7 @@ public class EngineRoomNetworkManager : MonoBehaviour
         myClient.RegisterHandler(MsgType.Connect, OnConnected);
         myClient.RegisterHandler(sendMoveMessageID, RecieveMove);
         myClient.RegisterHandler(sendSeedID, ClientAcceptsSeed);
+        myClient.RegisterHandler(sendCharSheet, ClientAcceptsCharSheet);
         myClient.Connect(ip, 4444);
         isAtStartup = false;
     }
@@ -79,6 +84,7 @@ public class EngineRoomNetworkManager : MonoBehaviour
         myClient.RegisterHandler(MsgType.Connect, OnConnected);
         myClient.RegisterHandler(sendMoveMessageID, RecieveMove);
         myClient.RegisterHandler(sendSeedID, ClientAcceptsSeed);
+        myClient.RegisterHandler(sendCharSheet, ServerAcceptsCharSheet);
         isAtStartup = false;
     }
 
@@ -86,6 +92,7 @@ public class EngineRoomNetworkManager : MonoBehaviour
     public void OnConnected(NetworkMessage netMsg)
     {
         Debug.Log("Connected to server");
+        MissionManager.instance.weAreAllHere = true;
         //myClient.Send(sendMoveMessageID, new IntegerMessage(254));
     }
 
@@ -93,6 +100,7 @@ public class EngineRoomNetworkManager : MonoBehaviour
     public void ServerHandlesConnection(NetworkMessage netMsg)
     {
         Debug.Log("Connected to client");
+        MissionManager.instance.weAreAllHere = true;
         NetworkServer.SendToAll(sendSeedID, new IntegerMessage(moverSender.GetParentSeed()));
     }
 
@@ -119,6 +127,26 @@ public class EngineRoomNetworkManager : MonoBehaviour
     {
         this.moverListener = mover;
         this.isServer = isServer;
+    }
+
+    public void ClientAcceptsCharSheet(NetworkMessage charSheetMessage)
+    {
+        String toReturn = charSheetMessage.ReadMessage<StringMessage>().value;
+
+        if (!isServer)
+        {
+            moverListener.AcceptRemoteCharacterSheet(JsonUtility.FromJson<PlayerCharacterSheet>(toReturn));
+        }
+
+    }
+
+    public void ServerAcceptsCharSheet(NetworkMessage charSheetMessage)
+    {
+        String toReturn = charSheetMessage.ReadMessage<StringMessage>().value;
+        if (isServer)
+        {
+            moverListener.AcceptRemoteCharacterSheet(JsonUtility.FromJson<PlayerCharacterSheet>(toReturn));
+        }
     }
 
     public void ClientAcceptsSeed(NetworkMessage seedMessage)

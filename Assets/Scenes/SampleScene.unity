@@ -1337,12 +1337,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 67898602}
   m_Mesh: {fileID: 4300000, guid: 8fac29760943c3a4bbafad01e838ea5c, type: 3}
---- !u!114 &75153912 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 114935931831525738, guid: a6b117bd6ab899e41b656548b0b5ebe9,
-    type: 2}
-  m_PrefabInternal: {fileID: 392443965}
-  m_Script: {fileID: 11500000, guid: bcdb00faf292bd64e8161b9eb1290f8e, type: 3}
 --- !u!1 &82887053
 GameObject:
   m_ObjectHideFlags: 0
@@ -2959,7 +2953,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &178464080
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6927,16 +6921,6 @@ Prefab:
       propertyPath: cameraToMove
       value: 
       objectReference: {fileID: 591614716}
-    - target: {fileID: 114369696648500618, guid: a6b117bd6ab899e41b656548b0b5ebe9,
-        type: 2}
-      propertyPath: gridToCheatWith
-      value: 
-      objectReference: {fileID: 1488115336}
-    - target: {fileID: 114369696648500618, guid: a6b117bd6ab899e41b656548b0b5ebe9,
-        type: 2}
-      propertyPath: darkness
-      value: 
-      objectReference: {fileID: 1687384275}
     - target: {fileID: 114499502399387762, guid: a6b117bd6ab899e41b656548b0b5ebe9,
         type: 2}
       propertyPath: gridToCheatWith
@@ -6947,11 +6931,16 @@ Prefab:
       propertyPath: darkness
       value: 
       objectReference: {fileID: 1687384275}
-    - target: {fileID: 114899827479038178, guid: a6b117bd6ab899e41b656548b0b5ebe9,
+    - target: {fileID: 114369696648500618, guid: a6b117bd6ab899e41b656548b0b5ebe9,
         type: 2}
-      propertyPath: mission
+      propertyPath: gridToCheatWith
       value: 
-      objectReference: {fileID: 75153912}
+      objectReference: {fileID: 1488115336}
+    - target: {fileID: 114369696648500618, guid: a6b117bd6ab899e41b656548b0b5ebe9,
+        type: 2}
+      propertyPath: darkness
+      value: 
+      objectReference: {fileID: 1687384275}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a6b117bd6ab899e41b656548b0b5ebe9, type: 2}
   m_IsPrefabAsset: 0
@@ -37803,7 +37792,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1563451133
 RectTransform:
   m_ObjectHideFlags: 0
@@ -37959,7 +37948,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1578384415
 MonoBehaviour:
   m_ObjectHideFlags: 0

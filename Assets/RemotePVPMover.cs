@@ -27,11 +27,14 @@ internal class RemoteNetworkedPVPMover : Mover
     public const int DROP = 10;
     public const int REBOOT = 11;
 
+    private Combatant toOverwrite;
+
     private Queue<int> commands = new Queue<int>();
 
-    public RemoteNetworkedPVPMover(EngineRoomNetworkManager ernm, bool isServer)
+    public RemoteNetworkedPVPMover(EngineRoomNetworkManager ernm, bool isServer, Combatant toOverwrite)
     {
         ernm.AttachToListenerMover(this, isServer);
+        this.toOverwrite = toOverwrite;
     }
 
     internal void HandleMove(int command)
@@ -112,5 +115,10 @@ internal class RemoteNetworkedPVPMover : Mover
                 return justRebooted;
         }
         return false;
+    }
+
+    internal void AcceptRemoteCharacterSheet(PlayerCharacterSheet sheet)
+    {
+        toOverwrite.SetCharacterSheet(sheet);
     }
 }
