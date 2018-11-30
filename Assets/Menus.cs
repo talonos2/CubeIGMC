@@ -46,7 +46,13 @@ public class Menus : MonoBehaviour
     void Start ()
     {
         //Time.timeScale = 0;
+        localMulti = GameObject.Find("Free Play Mission").GetComponent<FreePlayMission>();
+        getReady = GameObject.Find("EngineRoomMissionManager").GetComponent<MissionManager>();
 
+        ernm = GameObject.Find("EngineRoomNetworkManager").GetComponent<EngineRoomNetworkManager>();
+        onlineMulti = GameObject.Find("Online Multiplayer Mission").GetComponent<NetworkedMission>();
+
+        //campaign2 = GameObject.Find("mission2").GetComponent<Mission>();
     }
 	
 	// Update is called once per frame
