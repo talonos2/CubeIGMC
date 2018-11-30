@@ -146,8 +146,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0.25, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0.0020751953, y: -0.0023345947}
+  m_SizeDelta: {x: 0.0041809, y: 0.0046387}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &6542334
 MonoBehaviour:
@@ -3478,9 +3478,10 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: To host a game, you may need to forward port 4444 to your computer. Look
-    for help in the discord if you get stuck. The full version of this game would
-    have online matchmaking lobbies!
+  m_Text: To host a game, you may need to forward port 4444. Then give your opponent
+    your IP address and have them type it in, and click join. Look for help in the
+    discord if you get stuck. The full version of this game would have online matchmaking
+    lobbies!
 --- !u!222 &1915216103
 CanvasRenderer:
   m_ObjectHideFlags: 0
