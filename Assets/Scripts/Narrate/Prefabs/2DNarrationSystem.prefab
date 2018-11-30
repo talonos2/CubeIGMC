@@ -262,6 +262,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   OnByDefault: 1
   displayArea: {fileID: 123948}
+  portrait: {fileID: 0}
   textUI: {fileID: 11422524}
   scrollRect: {fileID: 11421782}
   fontSizeModifier: 24

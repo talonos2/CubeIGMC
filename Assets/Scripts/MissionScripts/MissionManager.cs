@@ -76,13 +76,4 @@ public class MissionManager : MonoBehaviour
             pointers.narrationSystem.characterController = this.grossCallbackHack;
         }
     }
-
-    public void StopAllMusic()
-    {
-        foreach (AudioSource music in allMusic)
-        {
-            music.Stop();
-        }
-    }
-
 }
