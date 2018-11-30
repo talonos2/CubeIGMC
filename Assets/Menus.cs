@@ -81,8 +81,8 @@ public class Menus : MonoBehaviour
     {
         getReady.mission = campaign;
         Time.timeScale = 1;
-        SceneManager.LoadScene("ShopMenu");
-        //SceneManager.LoadScene("SampleScene");
+        //SceneManager.LoadScene("ShopMenu");
+        SceneManager.LoadScene("SampleScene");
     }
 
     public void ToMultiplayerOptions()
