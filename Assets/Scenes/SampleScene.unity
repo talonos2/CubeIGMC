@@ -2946,7 +2946,6 @@ GameObject:
   - component: {fileID: 178464083}
   - component: {fileID: 178464082}
   - component: {fileID: 178464081}
-  - component: {fileID: 178464080}
   m_Layer: 5
   m_Name: DarknessCanvas
   m_TagString: Untagged
@@ -2954,31 +2953,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &178464080
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 178464079}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8d33a451981840b40a5b89cf211aeec9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  theMenu: {fileID: 1687384274}
-  getReady: {fileID: 0}
-  campaign: {fileID: 0}
-  campaign2: {fileID: 0}
-  campaign3: {fileID: 0}
-  campaign4: {fileID: 0}
-  localMulti: {fileID: 0}
-  onlineMulti: {fileID: 0}
-  ernm: {fileID: 0}
-  Primary: {fileID: 0}
-  loginPage: {fileID: 0}
-  infoPage: {fileID: 0}
-  LoadCharacterPage: {fileID: 0}
-  inputIP: {fileID: 0}
 --- !u!114 &178464081
 MonoBehaviour:
   m_ObjectHideFlags: 0
