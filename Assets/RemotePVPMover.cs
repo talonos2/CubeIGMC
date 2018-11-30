@@ -113,4 +113,9 @@ internal class RemoteNetworkedPVPMover : Mover
         }
         return false;
     }
+
+    internal void AcceptRemoteCharacterSheet(PlayerCharacterSheet sheet)
+    {
+
+    }
 }
