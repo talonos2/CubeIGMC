@@ -6693,11 +6693,6 @@ Prefab:
       propertyPath: darkness
       value: 
       objectReference: {fileID: 1687384275}
-    - target: {fileID: 114899827479038178, guid: a6b117bd6ab899e41b656548b0b5ebe9,
-        type: 2}
-      propertyPath: mission
-      value: 
-      objectReference: {fileID: 1085091124}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a6b117bd6ab899e41b656548b0b5ebe9, type: 2}
   m_IsPrefabAsset: 0
@@ -24521,12 +24516,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1076447599}
   m_Mesh: {fileID: 4300000, guid: aad26453ab060fb45a11de569a2c40ec, type: 3}
---- !u!114 &1085091124 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 114419429734620310, guid: a6b117bd6ab899e41b656548b0b5ebe9,
-    type: 2}
-  m_PrefabInternal: {fileID: 392443965}
-  m_Script: {fileID: 11500000, guid: 541fdddc211bae942bebe13a5b2ed72a, type: 3}
 --- !u!1 &1089283755
 GameObject:
   m_ObjectHideFlags: 0
