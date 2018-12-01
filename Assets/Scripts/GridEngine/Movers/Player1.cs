@@ -96,7 +96,7 @@ internal class LocalPVPMover : Mover
         returnJustRighted = HandleMovement(horiz, ref isRightBeingHeld, ref timeSinceLastMoveRightEvent, ref justPressedRight, true);
 
         //Handle Reboot
-        if ((Input.GetButton("Rotate1_P1") && Input.GetButton("Rotate2_P1")))
+        if ((Input.GetButton(rot1) && Input.GetButton(rot2)))
         {
             float oldTimeHeld = timeHeldBothRotatesAtOnce;
             timeHeldBothRotatesAtOnce += Time.deltaTime;
