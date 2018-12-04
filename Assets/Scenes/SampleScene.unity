@@ -2880,7 +2880,6 @@ GameObject:
   - component: {fileID: 178464083}
   - component: {fileID: 178464082}
   - component: {fileID: 178464081}
-  - component: {fileID: 178464080}
   m_Layer: 5
   m_Name: DarknessCanvas
   m_TagString: Untagged
@@ -2888,23 +2887,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &178464080
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 178464079}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8d33a451981840b40a5b89cf211aeec9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  theMenu: {fileID: 1687384274}
-  Primary: {fileID: 0}
-  loginPage: {fileID: 0}
-  infoPage: {fileID: 0}
-  LoadCharacterPage: {fileID: 0}
-  inputIP: {fileID: 0}
 --- !u!114 &178464081
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2981,6 +2963,11 @@ RectTransform:
   m_AnchoredPosition: {x: 298, y: 266}
   m_SizeDelta: {x: 800, y: 449.8943}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!212 &181888029 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 212528095408873132, guid: a6b117bd6ab899e41b656548b0b5ebe9,
+    type: 2}
+  m_PrefabInternal: {fileID: 1604852730}
 --- !u!1 &182668320
 GameObject:
   m_ObjectHideFlags: 0
@@ -5029,7 +5016,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 565802747}
-        m_MethodName: Pause
+        m_MethodName: MenuNextMission
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5189,7 +5176,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 565802747}
-        m_MethodName: Pause
+        m_MethodName: MenuBuyParts
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -8800,6 +8787,11 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 511672972}
   m_Mesh: {fileID: 4300000, guid: 8fac29760943c3a4bbafad01e838ea5c, type: 3}
+--- !u!82 &511801210 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 82620371351280854, guid: 4684f26b2ed62c24abf1295afe8f9e3f,
+    type: 2}
+  m_PrefabInternal: {fileID: 1194386915}
 --- !u!1 &514650536
 GameObject:
   m_ObjectHideFlags: 0
@@ -10723,7 +10715,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 565802747}
-        m_MethodName: QuitToMenu
+        m_MethodName: MenuQuit
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -10876,15 +10868,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 565802742}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8d33a451981840b40a5b89cf211aeec9, type: 3}
+  m_Script: {fileID: 11500000, guid: af6a0691ea3a95943b7b0f3efc428ce3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  theMenu: {fileID: 1563451132}
-  Primary: {fileID: 0}
-  loginPage: {fileID: 0}
-  infoPage: {fileID: 0}
-  LoadCharacterPage: {fileID: 0}
-  inputIP: {fileID: 0}
+  pauseMenu: {fileID: 1563451132}
+  nopeSound: {fileID: 223981301}
 --- !u!1 &569007498
 GameObject:
   m_ObjectHideFlags: 0
@@ -15777,6 +15765,11 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!82 &714774952 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 82902672876122634, guid: 4684f26b2ed62c24abf1295afe8f9e3f,
+    type: 2}
+  m_PrefabInternal: {fileID: 1194386915}
 --- !u!1001 &718546729
 Prefab:
   m_ObjectHideFlags: 0
@@ -18000,6 +17993,11 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 832198137}
   m_Mesh: {fileID: 4300000, guid: aad26453ab060fb45a11de569a2c40ec, type: 3}
+--- !u!82 &832790137 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 82057775152476164, guid: 4684f26b2ed62c24abf1295afe8f9e3f,
+    type: 2}
+  m_PrefabInternal: {fileID: 1194386915}
 --- !u!1 &833796753
 GameObject:
   m_ObjectHideFlags: 0
@@ -19612,7 +19610,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &921721756
 RectTransform:
   m_ObjectHideFlags: 0
@@ -19627,8 +19625,8 @@ RectTransform:
   m_Father: {fileID: 1578384417}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.3, y: 0.31}
-  m_AnchorMax: {x: 0.7, y: 0.42}
+  m_AnchorMin: {x: 0.3, y: 0.2}
+  m_AnchorMax: {x: 0.7, y: 0.31}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -19672,7 +19670,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 565802747}
-        m_MethodName: Restart
+        m_MethodName: MenuRestart
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -21615,6 +21613,11 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 976947925}
   m_Mesh: {fileID: 4300000, guid: 8fac29760943c3a4bbafad01e838ea5c, type: 3}
+--- !u!212 &977140020 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 212753116966059740, guid: a6b117bd6ab899e41b656548b0b5ebe9,
+    type: 2}
+  m_PrefabInternal: {fileID: 1604852730}
 --- !u!1 &981132859
 GameObject:
   m_ObjectHideFlags: 0
@@ -22860,7 +22863,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 565802747}
-        m_MethodName: Pause
+        m_MethodName: MenuResume
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -24346,6 +24349,11 @@ MonoBehaviour:
     type: 2}
   m_PrefabInternal: {fileID: 1046724294}
   m_Script: {fileID: 11500000, guid: 45334f1dc498b0a46ad4e5f37219e0d4, type: 3}
+--- !u!82 &1051737315 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 82283111550084892, guid: 4684f26b2ed62c24abf1295afe8f9e3f,
+    type: 2}
+  m_PrefabInternal: {fileID: 1194386915}
 --- !u!1 &1051759532
 GameObject:
   m_ObjectHideFlags: 0
@@ -24452,7 +24460,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 565802747}
-        m_MethodName: QuitGame
+        m_MethodName: MenuQuit
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -27625,6 +27633,48 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &1194386915
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4004906907328356, guid: 4684f26b2ed62c24abf1295afe8f9e3f, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: -10.5546875
+      objectReference: {fileID: 0}
+    - target: {fileID: 4004906907328356, guid: 4684f26b2ed62c24abf1295afe8f9e3f, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: -19.085938
+      objectReference: {fileID: 0}
+    - target: {fileID: 4004906907328356, guid: 4684f26b2ed62c24abf1295afe8f9e3f, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 30.78125
+      objectReference: {fileID: 0}
+    - target: {fileID: 4004906907328356, guid: 4684f26b2ed62c24abf1295afe8f9e3f, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4004906907328356, guid: 4684f26b2ed62c24abf1295afe8f9e3f, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4004906907328356, guid: 4684f26b2ed62c24abf1295afe8f9e3f, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4004906907328356, guid: 4684f26b2ed62c24abf1295afe8f9e3f, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4004906907328356, guid: 4684f26b2ed62c24abf1295afe8f9e3f, type: 2}
+      propertyPath: m_RootOrder
+      value: 17
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 4684f26b2ed62c24abf1295afe8f9e3f, type: 2}
+  m_IsPrefabAsset: 0
 --- !u!1001 &1194593002
 Prefab:
   m_ObjectHideFlags: 0
@@ -31844,7 +31894,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1461837485
 RectTransform:
   m_ObjectHideFlags: 0
@@ -31904,7 +31954,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 565802747}
-        m_MethodName: Restart
+        m_MethodName: MenuRestart
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -32681,7 +32731,7 @@ MonoBehaviour:
   pressToContinue: 1
   buttonName: AdvanceDialogue
   disableCharacterWhileNarrating: 1
-  characterController: {fileID: 0}
+  characterController: {fileID: 2085083200}
   defaultPhraseDuration: 3
   isPlaying: 0
 --- !u!82 &1520819632
@@ -33322,6 +33372,11 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 114607879805139690, guid: a6b117bd6ab899e41b656548b0b5ebe9,
+        type: 2}
+      propertyPath: gridAttachedPieces.Array.size
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4443392315464270, guid: a6b117bd6ab899e41b656548b0b5ebe9, type: 2}
       propertyPath: m_LocalPosition.x
       value: -10.5546875
@@ -33359,6 +33414,56 @@ Prefab:
       propertyPath: pointers
       value: 
       objectReference: {fileID: 1948206311}
+    - target: {fileID: 114607879805139690, guid: a6b117bd6ab899e41b656548b0b5ebe9,
+        type: 2}
+      propertyPath: preLockonMusic
+      value: 
+      objectReference: {fileID: 832790137}
+    - target: {fileID: 114607879805139690, guid: a6b117bd6ab899e41b656548b0b5ebe9,
+        type: 2}
+      propertyPath: postLockonMusic
+      value: 
+      objectReference: {fileID: 714774952}
+    - target: {fileID: 114607879805139690, guid: a6b117bd6ab899e41b656548b0b5ebe9,
+        type: 2}
+      propertyPath: combatMusicThatsNotAsIntrusive
+      value: 
+      objectReference: {fileID: 1051737315}
+    - target: {fileID: 114607879805139690, guid: a6b117bd6ab899e41b656548b0b5ebe9,
+        type: 2}
+      propertyPath: loseMusic
+      value: 
+      objectReference: {fileID: 511801210}
+    - target: {fileID: 114257269911725710, guid: a6b117bd6ab899e41b656548b0b5ebe9,
+        type: 2}
+      propertyPath: aiThatDoesNothing
+      value: 
+      objectReference: {fileID: 4900000, guid: e90d561a39795bb4e87a44f364d2e81d, type: 3}
+    - target: {fileID: 114947769325133490, guid: a6b117bd6ab899e41b656548b0b5ebe9,
+        type: 2}
+      propertyPath: preLockonMusic
+      value: 
+      objectReference: {fileID: 832790137}
+    - target: {fileID: 114947769325133490, guid: a6b117bd6ab899e41b656548b0b5ebe9,
+        type: 2}
+      propertyPath: combatMusicThatsNotAsIntrusive
+      value: 
+      objectReference: {fileID: 1051737315}
+    - target: {fileID: 114947769325133490, guid: a6b117bd6ab899e41b656548b0b5ebe9,
+        type: 2}
+      propertyPath: loseMusic
+      value: 
+      objectReference: {fileID: 511801210}
+    - target: {fileID: 114033432838041570, guid: a6b117bd6ab899e41b656548b0b5ebe9,
+        type: 2}
+      propertyPath: waiting
+      value: 
+      objectReference: {fileID: 181888029}
+    - target: {fileID: 114107318555443306, guid: a6b117bd6ab899e41b656548b0b5ebe9,
+        type: 2}
+      propertyPath: waiting
+      value: 
+      objectReference: {fileID: 977140020}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a6b117bd6ab899e41b656548b0b5ebe9, type: 2}
   m_IsPrefabAsset: 0
@@ -38486,6 +38591,50 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1814121093}
   m_Mesh: {fileID: 4300000, guid: 8fac29760943c3a4bbafad01e838ea5c, type: 3}
+--- !u!1 &1827427856
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1827427858}
+  - component: {fileID: 1827427857}
+  m_Layer: 0
+  m_Name: CrossScenePlayerData
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1827427857
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1827427856}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 77cce8a79865a194294ad940dd2fef7d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  missionNumToLoad: 4
+  player1CharacterSheetPath: Save1.txt
+  player2CharacterSheetPath: Save1.txt
+  ipSlug: 
+--- !u!4 &1827427858
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1827427856}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -55.399525, y: 25.664202, z: 77.2}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 16
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1830410993
 GameObject:
   m_ObjectHideFlags: 0
@@ -40424,7 +40573,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1890996302
 RectTransform:
   m_ObjectHideFlags: 0
@@ -40484,7 +40633,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 565802747}
-        m_MethodName: Restart
+        m_MethodName: MenuRestart
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -41552,6 +41701,9 @@ MonoBehaviour:
   camera1: {fileID: 56811801}
   camera2: {fileID: 8762011}
   spaceCamera: {fileID: 1545254992}
+  cameraShaker1: {fileID: 56811802}
+  cameraShaker2: {fileID: 8762012}
+  spaceCameraShaker: {fileID: 1545254994}
   combatant1: {fileID: 1637675550}
   combatant2: {fileID: 2080038990}
   daaaaaknesssss: {fileID: 1687384275}
@@ -41566,9 +41718,10 @@ MonoBehaviour:
   campaignDefeat: {fileID: 21300000, guid: e0701416d579e534f81d1f3f0afdbdd6, type: 3}
   shopButton: {fileID: 298794920}
   nextMissionButton: {fileID: 281870221}
-  replayMissionText: {fileID: 617894925}
+  replayMissionText: {fileID: 966357281}
   singlePlayerVictoryOrDefeatSprite: {fileID: 389891482}
   gameStartTickSound: {fileID: 983583426}
+  missionFinishedScreen: {fileID: 1578384414}
 --- !u!1001 &1951523521
 Prefab:
   m_ObjectHideFlags: 0
@@ -45134,6 +45287,12 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4596137841453722, guid: 8007da74be9e7b947b304fd4cbb68b9a,
     type: 2}
   m_PrefabInternal: {fileID: 2080038989}
+--- !u!114 &2085083200 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 114374142072397446, guid: a6b117bd6ab899e41b656548b0b5ebe9,
+    type: 2}
+  m_PrefabInternal: {fileID: 1604852730}
+  m_Script: {fileID: 11500000, guid: 277fb25d08e8bc24090f6f7a9c845c19, type: 3}
 --- !u!1001 &2108488209
 Prefab:
   m_ObjectHideFlags: 0
@@ -45978,7 +46137,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 565802747}
-        m_MethodName: QuitGame
+        m_MethodName: MenuQuit
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

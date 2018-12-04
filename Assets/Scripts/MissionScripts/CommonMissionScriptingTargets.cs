@@ -13,6 +13,9 @@ public class CommonMissionScriptingTargets : MonoBehaviour
     public Camera camera1;
     public Camera camera2;
     public Camera spaceCamera;
+    public CameraShake cameraShaker1;
+    public CameraShake cameraShaker2;
+    public CameraShake spaceCameraShaker;
     public Combatant combatant1;
     public Combatant combatant2;
     public Image daaaaaknesssss;
@@ -34,6 +37,7 @@ public class CommonMissionScriptingTargets : MonoBehaviour
     public GameObject singlePlayerVictoryOrDefeatSprite;
 
     public AudioSource gameStartTickSound;
+    public GameObject missionFinishedScreen;
 
     // Use this for initialization
     void Start () {

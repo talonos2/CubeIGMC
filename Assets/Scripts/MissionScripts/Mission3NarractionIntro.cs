@@ -7,31 +7,20 @@ using UnityEngine.UI;
 public class Mission3NarractionIntro : Mission {
 
     public TimerNarrationTrigger[] narrations;
-    public GameObject[] gridAttachedPieces;
+    private GameObject[] gridAttachedPieces;
 
     private int stepNum;
     private float timeSinceStepStarted;
 
-    public Image darkness;
+    private List<GameObject> pawnToHide;
 
-    public GameGrid gridToSetup;
-    public GameGrid gridToTurnIntoAI;
-
-    public List<GameObject> pawnToHide;
-
-    public AudioSource preLockonMusic;
-    public AudioSource combatMusicThatsNotAsIntrusive;
-
-    public DamageManager damageManager;
+    private DamageManager damageManager;
     public DestroySpaceshipOnDeath moreStuffToExplodeOnDeath;
 
-    public GameObject cameraToMove;
     public TextAsset[] droneAIs;
 
     private bool shipIsMovingIn;
     private float shipMovingInTime;
-
-    public AudioSource loseMusic;
 
     public GameObject shipWrapper;
 
@@ -44,21 +33,21 @@ public class Mission3NarractionIntro : Mission {
         switch (stepNum)
         {
             case 1:  // Finish First Narration, Tractor beam turns on, begin second narration;
-                darkness.color = new Color(0, 0, 0, 0);
+                pointers.daaaaaknesssss.color = new Color(0, 0, 0, 0);
                 shipIsMovingIn = true;
 
                 narrations[1].gameObject.SetActive(true);
                 timeSinceStepStarted = 0;
-                shipWrapper.transform.parent = gridToTurnIntoAI.player.pawn.transform;
-                gridToTurnIntoAI.player.pawn.gameObject.SetActive(true);
+                shipWrapper.transform.parent = pointers.ship2.transform;
+                pointers.ship2.gameObject.SetActive(true);
                 break;
             case 2:
                 timeSinceStepStarted = 0;
                 MissionManager.freezeAI = false;
                 MissionManager.freezePlayerBoard = false;
                 MissionManager.triggerCallbacksOnAttackHit = true;
-                preLockonMusic.Stop();
-                combatMusicThatsNotAsIntrusive.Play();
+                MusicManager.instance.StopAllMusic();
+                MusicManager.instance.music[MusicManager.BLASTING_THROUGH_WALLS].Play();
                 foreach (GameObject go in gridAttachedPieces)
                 {
                     go.SetActive(true);
@@ -76,7 +65,7 @@ public class Mission3NarractionIntro : Mission {
                 MissionManager.triggerCallbackOnShipDestroyed = true;
                 break;
             case 5:
-                if (gridToSetup.player.IsAlive())
+                if (pointers.combatant1.IsAlive())
                 {
                     MissionManager.freezeAI = true;
                     MissionManager.freezePlayerBoard = true;
@@ -84,8 +73,8 @@ public class Mission3NarractionIntro : Mission {
                 }
                 else
                 {
-                    combatMusicThatsNotAsIntrusive.Stop();
-                    loseMusic.Play();
+                    MusicManager.instance.StopAllMusic();
+                    MusicManager.instance.music[MusicManager.TITLE_SCREEN].Play();
                     Lose();
                 }
                 break;
@@ -100,21 +89,17 @@ public class Mission3NarractionIntro : Mission {
     {
 
         gridAttachedPieces = new GameObject[4];
-        CommonMissionScriptingTargets p = MissionManager.instance.pointers;
-        gridAttachedPieces[0] = p.combatant1.healthBar.gameObject;
-        gridAttachedPieces[1] = p.combatant2.healthBar.gameObject;
-        gridAttachedPieces[2] = p.combatant2.multiplierText.gameObject;
-        gridAttachedPieces[3] = p.player2Grid.transform.Find("NextPieceText").gameObject;
-        darkness = p.daaaaaknesssss;
-        gridToSetup = p.player1Grid;
-        gridToTurnIntoAI = p.player2Grid;
-        pawnToHide = p.ship2.stuffToHideIfThisPawnIsDisabledByTheMission;
-        cameraToMove = p.cameraWrapper2.gameObject;
-        shipWrapper.GetComponent<DestroySpaceshipOnDeath>().stuffToHide.Add(p.combatant2.multiplierText.GetComponent<SpriteRenderer>());
+        pointers = MissionManager.instance.pointers;
+        gridAttachedPieces[0] = pointers.combatant1.healthBar.gameObject;
+        gridAttachedPieces[1] = pointers.combatant2.healthBar.gameObject;
+        gridAttachedPieces[2] = pointers.combatant2.multiplierText.gameObject;
+        gridAttachedPieces[3] = pointers.player2Grid.transform.Find("NextPieceText").gameObject;
+        pawnToHide = pointers.ship2.stuffToHideIfThisPawnIsDisabledByTheMission;
+        shipWrapper.GetComponent<DestroySpaceshipOnDeath>().stuffToHide.Add(pointers.combatant2.multiplierText.GetComponent<SpriteRenderer>());
         shipWrapper.GetComponent<DestroySpaceshipOnDeath>().stuffToHide.Add(gridAttachedPieces[3].GetComponent<SpriteRenderer>());
-        damageManager = p.combatant2.damageManager;
-        p.restartButton1.gameObject.SetActive(true);
-        p.restartButton2.gameObject.SetActive(true);
+        damageManager = pointers.combatant2.damageManager;
+        pointers.restartButton1.gameObject.SetActive(true);
+        pointers.restartButton2.gameObject.SetActive(true);
 
         narrations[0].gameObject.SetActive(true);
         MissionManager.freezePlayerBoard = true;
@@ -128,7 +113,7 @@ public class Mission3NarractionIntro : Mission {
             if (timeSinceStepStarted == 0)
             {
                 MissionManager.freezeAI = true;
-                cameraToMove.transform.localPosition = new Vector3(-25, 32, -18.7f);
+                pointers.cameraWrapper2.transform.localPosition = new Vector3(-25, 32, -18.7f);
                 //gridToSetup.player.
                 foreach (GameObject part in pawnToHide)
                 {
@@ -138,12 +123,13 @@ public class Mission3NarractionIntro : Mission {
                 {
                     go.SetActive(false);
                 }
-                preLockonMusic.Play();
+                MusicManager.instance.StopAllMusic();
+                MusicManager.instance.music[MusicManager.CUTSCENE_1].Play();
                 damageManager.stuffThatHappensInTheFinalExplosion.Add(moreStuffToExplodeOnDeath);
             }
             timeSinceStepStarted += Time.deltaTime;
             float brightness = Mathf.Clamp01(timeSinceStepStarted / 2);
-            darkness.color = new Color(0, 0, 0, 1 - brightness);
+            pointers.daaaaaknesssss.color = new Color(0, 0, 0, 1 - brightness);
         }
         if (shipIsMovingIn)
         {
@@ -154,7 +140,7 @@ public class Mission3NarractionIntro : Mission {
         {
             timeSinceStepStarted += Time.deltaTime;
             float cameraPosit = Mathf.Lerp(-33f, 0, timeSinceStepStarted / 3);
-            cameraToMove.transform.localPosition = new Vector3(cameraPosit, 32, -18.7f);
+            pointers.cameraWrapper2.transform.localPosition = new Vector3(cameraPosit, 32, -18.7f);
         }
     }
 

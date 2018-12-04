@@ -45,6 +45,11 @@ public class CrossScenePlayerData : MonoBehaviour
     /// </summary>
     public string player2CharacterSheetPath;
 
+    /// <summary>
+    /// The ip of the host to connect to.
+    /// </summary>
+    public string ipSlug;
+
     void Awake()
     {
         if (instance == null)

@@ -22,6 +22,8 @@ public class FreePlayMission : Mission
         if (timeSinceStepStarted == 0)
         {
             MissionManager.freezePlayerBoard = true;
+            MusicManager.instance.StopAllMusic();
+            MusicManager.instance.music[MusicManager.CUTSCENE_1].Play();
         }
 
         timeSinceStepStarted += Time.deltaTime;

@@ -66,12 +66,13 @@ public class CombatInitializer : MonoBehaviour
                     grid2.SetLocalPVPMover(false);
                     break;
                 case EngineRoomGameType.SERVER_PVP:
-                    EngineRoomNetworkManager.instance.SetupLocalClient();
+                    //EngineRoomNetworkManager.instance.SetupLocalClient();
                     EngineRoomNetworkManager.instance.SetupServer();
                     grid2.SetRemotePVPPlayer();
                     grid1.SetLocalPVPPlayer();
                     break;
                 case EngineRoomGameType.CLIENT_PVP:
+                    EngineRoomNetworkManager.instance.loadIPSlug(CrossScenePlayerData.instance.ipSlug);
                     EngineRoomNetworkManager.instance.SetupClient();
                     grid2.SetRemotePVPPlayer();
                     grid1.SetLocalPVPPlayer();

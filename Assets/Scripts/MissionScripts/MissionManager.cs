@@ -52,16 +52,22 @@ public class MissionManager : MonoBehaviour
 
         grossCallbackHack = transform.Find("This is a Callback").gameObject.GetComponent<HackyCallback>();
 
-        //I *think* this is the right place to call this:
-        if (CrossScenePlayerData.instance.missionNumToLoad != -1)
-        {
-            mission = missions[CrossScenePlayerData.instance.missionNumToLoad];
-            mission.gameObject.SetActive(true);
-        }
     }
+
+    private bool started;
 
     public void Update()
     {
+        if (!started)
+        {
+            started = true;
+            //I *think* this is the right place to call this:
+            if (CrossScenePlayerData.instance.missionNumToLoad != -1)
+            {
+                mission = missions[CrossScenePlayerData.instance.missionNumToLoad];
+                mission.gameObject.SetActive(true);
+            }
+        }
         //I have no idea how to do callbacks, so let's pretend this is how I'm supposed to do it.
         if (grossCallbackHack.enabled)
         {

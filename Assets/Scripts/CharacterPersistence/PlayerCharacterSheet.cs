@@ -149,7 +149,6 @@ public class PlayerCharacterSheet
     public static PlayerCharacterSheet LoadFromDisk(string savedFileName) {
         string dataPath;
         dataPath=Path.Combine(Application.persistentDataPath, savedFileName);
-        Debug.Log(dataPath);
         using (StreamReader streamReader = File.OpenText(dataPath)) {
             string loadedString = streamReader.ReadToEnd();
             return JsonUtility.FromJson<PlayerCharacterSheet>(loadedString);

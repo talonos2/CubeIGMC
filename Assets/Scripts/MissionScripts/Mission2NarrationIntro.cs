@@ -13,35 +13,25 @@ public class Mission2NarrationIntro : Mission
     private int stepNum;
     private float timeSinceStepStarted;
     private Vector3 storedHomePosition;
-    public Image darkness;
     
-    public HackyCallback hackyCallback;
     public ParticleSystem tractorParticles;
 
-    public GameGrid gridToSetup;
-    public GameGrid gridToTurnIntoAI;
-    public List<GameObject> pawnToHide;
+    private List<GameObject> pawnToHide;
 
-    public AudioSource tractorBeamLockonSound;
+    private AudioSource tractorBeamLockonSound;
+    private DamageManager damageManagerForTractorBeam;
     public AudioSource spaceDoorOpenSound;
-
-    public AudioSource preLockonMusic;
-    public AudioSource postLockonMusic;
-    public AudioSource combatMusicThatsNotAsIntrusive;
-    public AudioSource loseMusic;
 
     public AnnoyingTutorialPopup shieldInfo;
 
     public GameObject mothershipToMoveIn;
 
-    public DamageManager damageManagerForTractorBeam;
     public DestroySpaceshipOnDeath moreStuffToExplodeOnDeath;
-    private float TractorBeamHPNum = 25;
 
-    public GameObject cameraToMove;
+    public float TractorBeamHPNum = 25;
+
     public TextAsset tractorBeamAI;
 
-    public SpaceshipPawn shipToMakeFlyAway;
     private bool sceneSwitched;
 
     //Ship is at x=32, goes to 19.
@@ -53,19 +43,21 @@ public class Mission2NarrationIntro : Mission
         switch (stepNum)
         {
             case 1:  // Finish First Narration, Tractor beam turns on, begin second narration;
-                darkness.color = new Color(0, 0, 0, 0);
+                pointers.daaaaaknesssss.color = new Color(0, 0, 0, 0);
                 tractorParticles.gameObject.SetActive(true);
                 narrations[1].gameObject.SetActive(true);
                 timeSinceStepStarted = 0;
 
-                preLockonMusic.Stop();
-                postLockonMusic.Play();
+                MusicManager.instance.StopAllMusic();
+                MusicManager.instance.music[MusicManager.TRACTOR_BEAM].Play();
                 tractorBeamLockonSound.Play();
 
                 List<int[,]> piecesToForce = new List<int[,]>
                 {
                     new int[3, 3] { { 1, 1, 1 }, { 1, 1, 1 }, { 1, 0, 1 } }
                 };
+
+                GameGrid gridToSetup = pointers.player1Grid;
                 gridToSetup.DropNewCubeAt(1, 3);
                 gridToSetup.DropNewCubeAt(3, 4);
                 gridToSetup.DropNewCubeAt(6, 3);
@@ -117,8 +109,8 @@ public class Mission2NarrationIntro : Mission
                 MissionManager.triggerCallbacksOnShipReboot = false;
                 break;
             case 4:  //Narration complete, tutorial thing pops up
-                gridToSetup.player.GetCharacterSheet().ShieldEquippedID = 1;
-                gridToSetup.SetGridCellTypeStateAndAttendentVFX();
+                pointers.player1Grid.player.GetCharacterSheet().ShieldEquippedID = 1;
+                pointers.player1Grid.SetGridCellTypeStateAndAttendentVFX();
                 foreach (GameObject go in gridAttachedPieces)
                 {
                     go.SetActive(true);
@@ -127,14 +119,14 @@ public class Mission2NarrationIntro : Mission
 
                 break;
             case 5:  //TutorialGone
-                postLockonMusic.Stop();
-                combatMusicThatsNotAsIntrusive.Play();
+                MusicManager.instance.StopAllMusic();
+                MusicManager.instance.music[MusicManager.BLASTING_THROUGH_WALLS].Play();
                 MissionManager.freezePlayerBoard = false;
                 MissionManager.freezeAI = false;
                 MissionManager.triggerCallbackOnShipDestroyed = true;
                 break;
             case 6: // Tutorial complete, You talk
-                if (gridToSetup.player.IsAlive())
+                if (pointers.combatant1.IsAlive())
                 {
                     MissionManager.freezePlayerBoard = true;
                     MissionManager.freezeAI = true;
@@ -143,16 +135,16 @@ public class Mission2NarrationIntro : Mission
                 }
                 else
                 {
-                    combatMusicThatsNotAsIntrusive.Stop();
-                    loseMusic.Play();
+                    MusicManager.instance.StopAllMusic();
+                    MusicManager.instance.music[MusicManager.TITLE_SCREEN].Play();
                     Lose();
                 }
                 break;
             case 7:
                 timeSinceStepStarted = 0f;
-                this.storedHomePosition = shipToMakeFlyAway.rootPosition;
-                shipToMakeFlyAway.SetHomePosition(new Vector3 (-5, 12.5f, 25), shipToMakeFlyAway.transform.rotation);
-                shipToMakeFlyAway.takeoff(2, shipToMakeFlyAway.transform.position, shipToMakeFlyAway.transform.rotation);
+                this.storedHomePosition = pointers.ship1.rootPosition;
+                pointers.ship1.SetHomePosition(new Vector3 (-5, 12.5f, 25), pointers.ship1.transform.rotation);
+                pointers.ship1.takeoff(2, pointers.ship1.transform.position, pointers.ship1.transform.rotation);
                 narrations[4].gameObject.SetActive(true);
                 break;
             case 8: //Talk is over, level is over.
@@ -169,24 +161,19 @@ public class Mission2NarrationIntro : Mission
     void OnEnable()
     {
         gridAttachedPieces = new GameObject[4];
-        CommonMissionScriptingTargets p = MissionManager.instance.pointers;
-        gridAttachedPieces[0] = p.combatant1.healthBar.gameObject;
-        gridAttachedPieces[1] = p.combatant2.healthBar.gameObject;
-        gridAttachedPieces[2] = p.combatant2.multiplierText.gameObject;
-        gridAttachedPieces[3] = p.player2Grid.transform.Find("NextPieceText").gameObject;
-        darkness = p.daaaaaknesssss;
-        gridToSetup = p.player1Grid;
-        gridToTurnIntoAI = p.player2Grid;
-        pawnToHide = p.ship2.stuffToHideIfThisPawnIsDisabledByTheMission;
-        pawnToHide.Add(p.ship2.transform.Find("Shield").gameObject);
-        tractorBeamLockonSound = p.ship1.getHitHeavySound;
-        damageManagerForTractorBeam = p.combatant2.damageManager;
-        cameraToMove = p.cameraWrapper2.gameObject;
-        shipToMakeFlyAway = p.ship1;
-        mothershipToMoveIn.GetComponent<DestroySpaceshipOnDeath>().stuffToHide.Add(p.combatant2.multiplierText.GetComponent<SpriteRenderer>());
+        pointers = MissionManager.instance.pointers;
+        gridAttachedPieces[0] = pointers.combatant1.healthBar.gameObject;
+        gridAttachedPieces[1] = pointers.combatant2.healthBar.gameObject;
+        gridAttachedPieces[2] = pointers.combatant2.multiplierText.gameObject;
+        gridAttachedPieces[3] = pointers.player2Grid.transform.Find("NextPieceText").gameObject;
+        pawnToHide = pointers.ship2.stuffToHideIfThisPawnIsDisabledByTheMission;
+        pawnToHide.Add(pointers.ship2.transform.Find("Shield").gameObject);
+        tractorBeamLockonSound = pointers.ship1.getHitHeavySound;
+        damageManagerForTractorBeam = pointers.combatant2.damageManager;
+        mothershipToMoveIn.GetComponent<DestroySpaceshipOnDeath>().stuffToHide.Add(pointers.combatant2.multiplierText.GetComponent<SpriteRenderer>());
         mothershipToMoveIn.GetComponent<DestroySpaceshipOnDeath>().stuffToHide.Add(gridAttachedPieces[3].GetComponent<SpriteRenderer>());
-        p.restartButton1.gameObject.SetActive(true);
-        p.restartButton2.gameObject.SetActive(true);
+        pointers.restartButton1.gameObject.SetActive(true);
+        pointers.restartButton2.gameObject.SetActive(true);
 
         narrations[0].gameObject.SetActive(true);
         //gridToSetup.player.enemy.damageManager = damageManagerForDoor;
@@ -201,9 +188,9 @@ public class Mission2NarrationIntro : Mission
             if (timeSinceStepStarted == 0)
             {
                 MissionManager.freezeAI = true;
-                gridToSetup.SetGridCellTypeStateAndAttendentVFX();
-                gridToSetup.player.energy = 160;
-                cameraToMove.transform.localPosition = new Vector3(-25, 32, -18.7f);
+                pointers.player1Grid.SetGridCellTypeStateAndAttendentVFX();
+                pointers.player1Grid.player.energy = 160;
+                pointers.cameraWrapper2.transform.localPosition = new Vector3(-25, 32, -18.7f);
                 //gridToSetup.player.
                 foreach (GameObject part in pawnToHide)
                 {
@@ -213,13 +200,14 @@ public class Mission2NarrationIntro : Mission
                 {
                     go.SetActive(false);
                 }
-                preLockonMusic.Play();
+                MusicManager.instance.StopAllMusic();
+                MusicManager.instance.music[MusicManager.CUTSCENE_1].Play();
             }
             timeSinceStepStarted += Time.deltaTime;
             float brightness = Mathf.Clamp01(timeSinceStepStarted / 2);
-            darkness.color = new Color(0, 0, 0, 1 - brightness);
-            gridToTurnIntoAI.player.health = TractorBeamHPNum;
-            gridToTurnIntoAI.player.SetCharacterSheet(2);
+            pointers.daaaaaknesssss.color = new Color(0, 0, 0, 1 - brightness);
+            pointers.player2Grid.player.health = TractorBeamHPNum;
+            pointers.player2Grid.player.SetCharacterSheet(2);
         }
         else if (stepNum < 3)
         {
@@ -232,7 +220,7 @@ public class Mission2NarrationIntro : Mission
                     piecesToForce.AddRange(getForcedPieces());
                 }
 
-                gridToTurnIntoAI.ForcePieces(piecesToForce);
+                pointers.player2Grid.ForcePieces(piecesToForce);
                 damageManagerForTractorBeam.stuffThatHappensInTheFinalExplosion.Add(moreStuffToExplodeOnDeath);
             }
             timeSinceStepStarted += Time.deltaTime;
@@ -243,7 +231,7 @@ public class Mission2NarrationIntro : Mission
         {
             timeSinceStepStarted += Time.deltaTime;
             float cameraPosit = Mathf.Lerp(-33f, 0, timeSinceStepStarted/10);
-            cameraToMove.transform.localPosition = new Vector3(cameraPosit, 32, -18.7f);
+            pointers.cameraWrapper2.transform.localPosition = new Vector3(cameraPosit, 32, -18.7f);
         }
         else if (stepNum < 1000)
         {
@@ -251,23 +239,21 @@ public class Mission2NarrationIntro : Mission
             if (timeSinceStepStarted < 3)
             {
                 Color colorToTurnDarkness = new Color(0, 0, 0, Mathf.Lerp(0, 1, timeSinceStepStarted / 2));
-                darkness.color = colorToTurnDarkness;
-                combatMusicThatsNotAsIntrusive.volume = Mathf.Lerp(1, 0, timeSinceStepStarted / 3);
+                pointers.daaaaaknesssss.color = colorToTurnDarkness;
+                MusicManager.instance.FadeOuMusic(MusicManager.BLASTING_THROUGH_WALLS, 3);
             }
             else
             {
                 if (!sceneSwitched)
                 {
                     sceneSwitched = true;
-                    gridToSetup.ClearBoardSilently();
+                    pointers.player1Grid.ClearBoardSilently();
                     moreStuffToExplodeOnDeath.gameObject.SetActive(false);
-                    combatMusicThatsNotAsIntrusive.Stop();
-                    preLockonMusic.Play();
-                    shipToMakeFlyAway.SetHomePosition(storedHomePosition, shipToMakeFlyAway.transform.rotation);
-                    shipToMakeFlyAway.takeoff(.1f, storedHomePosition, shipToMakeFlyAway.transform.rotation);
+                    MusicManager.instance.FadeMusic(MusicManager.CUTSCENE_1, 3, 1);
+                    pointers.ship1.SetHomePosition(storedHomePosition, pointers.ship1.transform.rotation);
+                    pointers.ship1.takeoff(.1f, storedHomePosition, pointers.ship1.transform.rotation);
                 }
-                preLockonMusic.volume = Mathf.Lerp(0, 1, (timeSinceStepStarted - 3));
-                darkness.color = new Color(0, 0, 0, Mathf.Lerp(1, 0, (timeSinceStepStarted - 4) / 2));
+                pointers.daaaaaknesssss.color = new Color(0, 0, 0, Mathf.Lerp(1, 0, (timeSinceStepStarted - 4) / 2));
             }
         }
     }

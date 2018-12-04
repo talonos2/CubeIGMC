@@ -7,7 +7,6 @@ public class RandomArenaMission : Mission
 {
     public TextAsset[] AITexts;
     public int level = 0;
-    public AudioSource[] music;
 
     internal override void Unblock()
     {
@@ -41,7 +40,8 @@ public class RandomArenaMission : Mission
         if (timeSinceStepStarted == 0)
         {
             randomCombatant.SetRandomNPC(level);
-            music[level].Play();
+            MusicManager.instance.StopAllMusic();
+            MusicManager.instance.music[MusicManager.CUTSCENE_1].Play();
             MissionManager.freezePlayerBoard = true;
         }
 

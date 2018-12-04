@@ -16,11 +16,11 @@ public class MusicManager : MonoBehaviour
     private float[] fadeVolumes;
     private float[] fadeStartVolumes;
 
-    const int SKEAKY_SHIP = 0;
-    const int BLASTING_THROUGH_WALLS = 1;
-    const int CUTSCENE_1 = 2;
-    const int TRACTOR_BEAM = 3;
-    const int TITLE_SCREEN = 4;
+    public const int SKEAKY_SHIP = 0;
+    public const int BLASTING_THROUGH_WALLS = 1;
+    public const int CUTSCENE_1 = 2;
+    public const int TRACTOR_BEAM = 3;
+    public const int TITLE_SCREEN = 4;
 
     // Use this for initialization
     void Start()
@@ -57,6 +57,17 @@ public class MusicManager : MonoBehaviour
             {
                 fadeLengths[x] -= Time.deltaTime;
                 music[x].volume = Mathf.Lerp(fadeStartVolumes[x], fadeVolumes[x], 1 - (fadeLengths[x] / fadeStartTimes[x]));
+                if (music[x].volume <= 0)
+                {
+                    music[x].Stop();
+                }
+                else
+                {
+                    if (!music[x].isPlaying)
+                    {
+                        music[x].Play();
+                    }
+                }
             }
         }
     }
@@ -78,7 +89,7 @@ public class MusicManager : MonoBehaviour
         fadeStartVolumes[num] = music[num].volume;
     }
 
-    public void FadeOutc(int num, float time)
+    public void FadeOuMusic(int num, float time)
     {
         FadeMusic(num, time, 0);
     }

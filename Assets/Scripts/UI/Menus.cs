@@ -21,17 +21,13 @@ public class Menus : MonoBehaviour
     // Use this for initialization
     void Start ()
     {
-        //Time.timeScale = 0;
 
     }
 	
 	// Update is called once per frame
 	void Update ()
     {
-        if (Input.GetButtonDown("Escape"))
-        {
-            Pause();
-        }
+
     }
 
 
@@ -39,7 +35,6 @@ public class Menus : MonoBehaviour
     public void Pause()  //called by escape key and "resume" button
     {
         pause = !pause;
-
 
         if (pause)
         {
@@ -75,12 +70,13 @@ public class Menus : MonoBehaviour
 
     public void JoinMultiplayer()
     {
+        Debug.Log(CrossScenePlayerData.instance);
         CrossScenePlayerData.instance.missionNumToLoad = MissionManager.ONLINE_MULTIPLAYER_GUEST;
         if (inputIP.text == "")
         {
             return;
         }
-        EngineRoomNetworkManager.instance.loadIPSlug(inputIP.text);
+        CrossScenePlayerData.instance.ipSlug = inputIP.text;
         SceneManager.LoadScene("SampleScene");
     }
 

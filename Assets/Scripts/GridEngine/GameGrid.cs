@@ -215,7 +215,6 @@ public class GameGrid : MonoBehaviour
     private PlayingPiece MakeAPiece()
     {
 
-        Debug.Log("Piece Made");
         PlayingPiece toReturn = GameObject.Instantiate(piecePrefab);
 
         if (forcedPieces.Count > 0)
@@ -241,7 +240,6 @@ public class GameGrid : MonoBehaviour
         PlayingPiece oldPiece2 = nextPiece;
         currentPiece = MakeAPiece();
         nextPiece = MakeAPiece();
-        Debug.Log(oldPiece1);
         GameObject.Destroy(oldPiece1.gameObject);
         GameObject.Destroy(oldPiece2.gameObject);
 

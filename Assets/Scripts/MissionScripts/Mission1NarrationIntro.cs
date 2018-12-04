@@ -8,18 +8,11 @@ public class Mission1NarrationIntro : Mission
 {
     public TimerNarrationTrigger[] narrations;
     public GameObject[] tutorialTexts;
-    private int stepNum;
-    private float timeSinceStepStarted;
-    private Image darkness;
+
     private GameObject[] thingsToHide;
-    private Camera cameraToDisable;
-    private Transform cameraToMove;
-    private Vector3 toMoveCameraTo = new Vector3(25,0,0);
-    private SpaceshipPawn shipToMakeNotWiggle;
-    private Light spaceLightToDisable;
-    private GameObject ship;
-    public GameObject firesToTurnOff;
-    public TextAsset doNothing;
+
+    public Vector3 toMoveCameraTo = new Vector3(25,0,0);
+    public TextAsset aiThatDoesNothing;
 
     public AudioSource turnOnLightsSound;
     public AudioSource runningSound;
@@ -29,7 +22,6 @@ public class Mission1NarrationIntro : Mission
     public AudioSource wallImpactExplosionSound;
 
     public KlaxonSpin klaxonToTurnOn;
-    private CameraShake cameraToShake;
 
     public Vector3 person1Start;
     public Vector3 person1End;
@@ -45,22 +37,30 @@ public class Mission1NarrationIntro : Mission
     public GameObject tutorialPlacement3;
     public GameObject tutorialPlacement4;
     public GameObject doorHP;
+    
+    public DamageManager damageManagerForDoor;
+    public float doorHPNum = 30;
+    public GameObject structure;
+    public float shipAccelleration = .5f;
 
-    private GameGrid gridToSetup;
+    private GameObject escapeParticles;
 
-    public AudioSource sneakyShipMusic;
-    public AudioSource blastingTHroughWallsMusic;
+    private int stepNum;
+    private float timeSinceStepStarted;
+    private bool firstRun = true;
+    private bool victoryScreen;
+    private bool playedRunningSound;
 
 
     internal override void Unblock()
     {
-        Debug.Log(stepNum++);
+        stepNum++;
         switch (stepNum)
         {
             case 1:  // Finish first narration, characters walk in.
                 timeSinceStepStarted = 0f;
-                ship.transform.localPosition = new Vector3(-58, 5.67f, 15.38f); //DON'T LOOK! MAGIC NUMBERS!
-                ship.transform.localRotation = Quaternion.Euler(new Vector3(-180, -90, 121.93f));
+                pointers.ship1.gameObject.transform.localPosition = new Vector3(-58, 5.67f, 15.38f); //DON'T LOOK! MAGIC NUMBERS!
+                pointers.ship1.gameObject.transform.localRotation = Quaternion.Euler(new Vector3(-180, -90, 121.93f));
                 turnOnLightsSound.Play();
                 //Turn on lights
                 //Tiny figures walk up to ship.
@@ -74,9 +74,9 @@ public class Mission1NarrationIntro : Mission
                 break;
             case 4:  //Narration finishes, ships takes off, next narration plays.
                 startShipSound.Play();
-                shipToMakeNotWiggle.takeoff(5, ship.transform.position, ship.transform.rotation);
-                shipToMakeNotWiggle.enabled = true;
-                shipToMakeNotWiggle.SetHomePosition(new Vector3(-8, 6.25f, 15f), Quaternion.Euler(new Vector3(-180, -90, 120f)));
+                pointers.ship1.takeoff(5, pointers.ship1.transform.position, pointers.ship1.transform.rotation);
+                pointers.ship1.enabled = true;
+                pointers.ship1.SetHomePosition(new Vector3(-8, 6.25f, 15f), Quaternion.Euler(new Vector3(-180, -90, 120f)));
                 person1.gameObject.SetActive(false);
                 person2.gameObject.SetActive(false);
                 narrations[3].gameObject.SetActive(true);
@@ -88,10 +88,11 @@ public class Mission1NarrationIntro : Mission
                 piecesToForce.Add(new int[3, 3] { { 1, 1, 0 }, { 1, 1, 0 }, { 1, 1, 0 } });
                 piecesToForce.Add(new int[3, 3] { { 0, 1, 0 }, { 0, 1, 0 }, { 0, 1, 0 } });
 
-                Debug.Log("Start of cubes");
-
+                GameGrid gridToSetup = pointers.player1Grid;
 
                 gridToSetup.ForcePieces(piecesToForce);
+
+                //This is ugly, and we can do better.
 
                 gridToSetup.DropNewCubeAt(5, 5);
                 gridToSetup.DropNewCubeAt(5, 6);
@@ -150,21 +151,19 @@ public class Mission1NarrationIntro : Mission
 
                 gridToSetup.SetGridCellTypeStateAndAttendentVFX();
 
-                Debug.Log("end of cubes");
-
                 timeSinceStepStarted = 0f;
                 narrations[4].gameObject.SetActive(true);
                 break;
             case 6: //narration finishes, game starts, "How to move and drop" tutorial.
                 MissionManager.freezePlayerBoard = false;
-                sneakyShipMusic.Play();
+                MusicManager.instance.music[MusicManager.SKEAKY_SHIP].Play();
                 MissionManager.triggerCallbacksOnBlockDrop = true;
                 tutorialPlacement1.gameObject.SetActive(true);
                 List<Vector2> placements6 = new List<Vector2>(new Vector2[1] { new Vector2(11, 5) });
                 List<int> rotations6 = new List<int>(new int[1] { 0 });
-                gridToSetup.AddForcedPosition(rotations6, placements6);
-                gridToSetup.player.bulletFlightTime = 1;
-                shipToMakeNotWiggle.distanceBetweenShips = 9;
+                pointers.player1Grid.AddForcedPosition(rotations6, placements6);
+                pointers.player1Grid.player.bulletFlightTime = 1;
+                pointers.ship1.distanceBetweenShips = 9;
                 tutorialTexts[0].gameObject.SetActive(true);
                 break;
             case 7: //first block placed, "How to rotate" tutorial plays.
@@ -172,7 +171,7 @@ public class Mission1NarrationIntro : Mission
                 tutorialPlacement2.gameObject.SetActive(true);
                 List<Vector2> placements7 = new List<Vector2>(new Vector2[1] { new Vector2(3, 5) });
                 List<int> rotations7 = new List<int>(new int[1] { 2 });
-                gridToSetup.AddForcedPosition(rotations7, placements7);
+                pointers.player1Grid.AddForcedPosition(rotations7, placements7);
                 tutorialTexts[0].gameObject.SetActive(false);
                 tutorialTexts[1].gameObject.SetActive(true);
                 break;
@@ -181,7 +180,7 @@ public class Mission1NarrationIntro : Mission
                 tutorialPlacement3.gameObject.SetActive(true);
                 List<Vector2> placements8 = new List<Vector2>(new Vector2[2] { new Vector2(7, 12), new Vector2(7,11 )});
                 List<int> rotations8 = new List<int>(new int[2] { 0,2 });
-                gridToSetup.AddForcedPosition(rotations8, placements8);
+                pointers.player1Grid.AddForcedPosition(rotations8, placements8);
                 tutorialTexts[1].gameObject.SetActive(false);
                 tutorialTexts[2].gameObject.SetActive(true);
                 break;
@@ -191,7 +190,7 @@ public class Mission1NarrationIntro : Mission
                 tutorialPlacement4.gameObject.SetActive(true);
                 List<Vector2> placements9 = new List<Vector2>(new Vector2[2] { new Vector2(7, 16), new Vector2(7, 16) });
                 List<int> rotations9 = new List<int>(new int[2] { 1, 3 });
-                gridToSetup.AddForcedPosition(rotations9, placements9);
+                pointers.player1Grid.AddForcedPosition(rotations9, placements9);
                 tutorialTexts[2].gameObject.SetActive(false);
                 tutorialTexts[3].gameObject.SetActive(true);
                 break;
@@ -202,21 +201,21 @@ public class Mission1NarrationIntro : Mission
                 tutorialTexts[3].gameObject.SetActive(false);
                 break;
             case 11: //Dialogue finished, attack spots appear.
-                gridToSetup.player.GetCharacterSheet().WeaponEquippedID = 1;
+                pointers.player1Grid.player.GetCharacterSheet().WeaponEquippedID = 1;
                 MissionManager.freezePlayerBoard = false;
-                gridToSetup.SetGridCellTypeStateAndAttendentVFX();
+                pointers.player1Grid.SetGridCellTypeStateAndAttendentVFX();
                 MissionManager.triggerCallbacksOnBlockDrop = false;
                 MissionManager.triggerCallbacksOnAttackHit = true;
                 tutorialTexts[4].gameObject.SetActive(true);
-                gridToSetup.player.enemy.health = doorHPNum;
+                pointers.player1Grid.player.enemy.health = doorHPNum;
                 break;
             case 12: //Wall impacted. Stuff becomes intense. Cutscene starts.
                 MissionManager.freezePlayerBoard = true;
                 klaxonToTurnOn.TurnOn();
                 wallImpactExplosionSound.Play();
-                cameraToShake.ShakeCamera(3, 1);
-                sneakyShipMusic.Stop();
-                blastingTHroughWallsMusic.Play();
+                pointers.spaceCameraShaker.ShakeCamera(3, 1);
+                MusicManager.instance.StopAllMusic();
+                MusicManager.instance.music[MusicManager.BLASTING_THROUGH_WALLS].Play();
                 narrations[6].gameObject.SetActive(true);
                 MissionManager.triggerCallbacksOnAttackHit = false;
                 tutorialTexts[4].gameObject.SetActive(false);
@@ -225,14 +224,14 @@ public class Mission1NarrationIntro : Mission
             case 13: //Cutscene ends.
                 MissionManager.freezePlayerBoard = false;
                 MissionManager.triggerCallbacksOnAttackHit = true;
-                doorHP.transform.GetChild(0).gameObject.GetComponent<Text>().text = "DOOR HP: " + (int)(gridToSetup.player.enemy.health / doorHPNum*100)+"%";
+                doorHP.transform.GetChild(0).gameObject.GetComponent<Text>().text = "DOOR HP: " + (int)(pointers.combatant2.health / doorHPNum*100)+"%";
                 doorHP.SetActive(true);
                 break;
             case 14:
                 wallImpactExplosionSound.Play();
-                cameraToShake.ShakeCamera(3, 1);
-                doorHP.transform.GetChild(0).gameObject.GetComponent<Text>().text = "DOOR HP: " + (int)(gridToSetup.player.enemy.health / doorHPNum * 100) + "%";
-                if (gridToSetup.player.enemy.IsAlive())
+                pointers.spaceCameraShaker.ShakeCamera(3, 1);
+                doorHP.transform.GetChild(0).gameObject.GetComponent<Text>().text = "DOOR HP: " + (int)(pointers.combatant2.health / doorHPNum * 100) + "%";
+                if (pointers.combatant2.IsAlive())
                 {
                     stepNum--;
                 }
@@ -241,11 +240,13 @@ public class Mission1NarrationIntro : Mission
                     doorHP.SetActive(false);
                     MissionManager.freezePlayerBoard = true;
                     narrations[7].gameObject.SetActive(true);
+                    MissionManager.triggerCallbacksOnAttackHit = false;
                 }
                 break;
             case 15: // Cutscene ends, door is gone. Fly fly away!
                 timeSinceStepStarted = 0f;
                 escapeParticles.SetActive(true);
+                MissionManager.triggerCallbacksOnAttackHit = false;
                 break;
         }
 }
@@ -253,18 +254,11 @@ public class Mission1NarrationIntro : Mission
     // Use this for initialization
     void OnEnable ()
     {
-        CommonMissionScriptingTargets pointers = MissionManager.instance.pointers;
-        darkness = pointers.daaaaaknesssss;
+        pointers = MissionManager.instance.pointers;
         thingsToHide = new GameObject[3];
         thingsToHide[0] = pointers.combatant1.healthBar.gameObject;
         thingsToHide[1] = pointers.ship2.gameObject;
         thingsToHide[2] = pointers.combatant1.multiplierText.gameObject;
-        cameraToDisable = pointers.camera2;
-        cameraToMove = pointers.camera1.transform;
-        shipToMakeNotWiggle = pointers.ship1;
-        spaceLightToDisable = pointers.spaceLight;
-        cameraToShake = pointers.spaceCamera.GetComponent<CameraShake>();
-        gridToSetup = pointers.player1Grid;
         escapeParticles = pointers.ship1.engineParticles;
         pointers.restartButton1.gameObject.SetActive(true);
         pointers.restartButton2.gameObject.SetActive(true);
@@ -274,32 +268,20 @@ public class Mission1NarrationIntro : Mission
         {
             go.SetActive(false);
         }
-        cameraToDisable.enabled = false;
-        cameraToMove.localPosition = toMoveCameraTo;
-        ship = shipToMakeNotWiggle.gameObject;
-        spaceLightToDisable.enabled = false;
-        shipToMakeNotWiggle.enabled = false;
-        gridToSetup.player.enemy.damageManager = damageManagerForDoor;
+        pointers.camera2.enabled = false;
+        pointers.camera1.transform.localPosition = toMoveCameraTo;
+        pointers.spaceLight.enabled = false;
+        pointers.ship1.enabled = false;
+        pointers.player1Grid.player.enemy.damageManager = damageManagerForDoor;
 
         MissionManager.freezePlayerBoard = true;
     }
 
-    private bool playedRunningSound;
-    public DamageManager damageManagerForDoor;
-    private float doorHPNum = 30;
-    public GameObject structure;
-    private float shipAccelleration = .5f;
-    private GameObject escapeParticles;
-
-    private bool firstRun = true;
-    private bool victoryScreen;
-
-    // Update is called once per frame
     void Update()
     {
         if (firstRun)
         {
-            gridToSetup.player.SetCharacterSheet(0);
+            pointers.player1Grid.player.SetCharacterSheet(0);
             firstRun = false;
         }
         //Run in.
@@ -307,7 +289,7 @@ public class Mission1NarrationIntro : Mission
         {
             timeSinceStepStarted += Time.deltaTime;
             float brightness = Mathf.Clamp01(timeSinceStepStarted / 2);
-            darkness.color = new Color(0, 0, 0, 1 - brightness);
+            pointers.daaaaaknesssss.color = new Color(0, 0, 0, 1 - brightness);
             float personPosit1time = Mathf.Clamp01((timeSinceStepStarted - 2f) / 2f);
             float personPosit2time = Mathf.Clamp01((timeSinceStepStarted - 2.2f) / 2f);
             Vector3 personPosit1 = Vector3.Lerp(person1Start, person1End, personPosit1time);
@@ -324,7 +306,6 @@ public class Mission1NarrationIntro : Mission
             {
                 hackyCallback.enabled = true;
             }
-            //firesToTurnOff.gameObject.SetActive(false);
         }
 
         //Board slides up
@@ -333,7 +314,7 @@ public class Mission1NarrationIntro : Mission
         {
             timeSinceStepStarted += Time.deltaTime;
             float t = Mathf.Cos(Mathf.Clamp01(timeSinceStepStarted / 2) * Mathf.PI);
-            cameraToMove.localPosition = Vector3.Lerp(Vector3.zero, toMoveCameraTo, t);
+            pointers.camera1.transform.localPosition = Vector3.Lerp(Vector3.zero, toMoveCameraTo, t);
         }
 
         if (stepNum == 15)
@@ -350,7 +331,7 @@ public class Mission1NarrationIntro : Mission
 
     internal override AIParams GetAIParams()
     {
-        return new AIParams(doNothing.text, false, 0, false);
+        return new AIParams(aiThatDoesNothing.text, false, 0, false);
     }
 
     internal override EngineRoomGameType GameType()

@@ -43,8 +43,8 @@ public class Combatant : MonoBehaviour
         //Example of making player 2 customly weaker or stronger. 
           // if (transform.parent.parent.parent.name.Equals("Player1")) {
       //          ThisPlayer.BaseHealth = 30;
-                ThisPlayer.WeaponEquippedID = 6;
-                ThisPlayer.ShieldEquippedID = 6;
+                //ThisPlayer.WeaponEquippedID = 6;
+                //ThisPlayer.ShieldEquippedID = 6;
        // }
 
 
@@ -358,13 +358,11 @@ public class Combatant : MonoBehaviour
             damage -= shields;
             shields = 0;
             health -= damage;
-            Debug.Log("Damage has been taken: " + damage + ", " + health);
         }
 
         if (damage <= 0)
         {
             //No damage left; shield absorbed it all.
-            Debug.Log("Shield Sound");
             pawn.shieldSound.Stop();
             pawn.shieldSound.Play();
         }
